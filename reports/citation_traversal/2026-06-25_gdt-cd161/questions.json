@@ -1,0 +1,13 @@
+{
+  "run_id": "2026-06-25_gdt-cd161",
+  "created": "2026-06-25T22:03:22+00:00",
+  "questions": [
+    {
+      "qid": "q1",
+      "text": "Other than the Vδ TCR chains, which cell-surface markers define the human γδ T-cell subsets identified here — specifically, what roles do CD161 and HLA-DR play in distinguishing these subsets?",
+      "seeds": [
+        "DOI:10.1186/s12979-022-00269-w"
+      ]
+    }
+  ]
+}
