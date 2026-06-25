@@ -80,7 +80,8 @@ the key is picked up.
 ## Input data
 
 The single source of truth is a
-[Google Sheet](https://docs.google.com/spreadsheets/d/1uWwczLxgbpWMmXycL8Thq5NVExzlib4A/edit).
+Google Sheet (ask for access)
+
 Key tabs:
 
 - **`Marker Combinations`** — master definition of SOULCAP cell types by
