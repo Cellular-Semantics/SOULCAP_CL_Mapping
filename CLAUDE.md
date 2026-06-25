@@ -21,7 +21,11 @@ See [README.md](README.md) for the full overview and setup.
     this project populates.
   - **`Citation Mgr`** — reference papers per major cell type.
 - Pull the latest snapshot with **`uv run soulcap-sync`**. This writes
-  `data/soulcap_source.xlsx` and one CSV per tab under `data/`.
+  `data/soulcap_source.xlsx` and one CSV per tab under `data/`, then validates
+  the marker strings against the grammar and regenerates
+  `reports/marker_validation.md`.
+- Validate marker strings on demand with **`uv run soulcap-validate`** (runs the
+  EBNF validator over `data/marker_combinations.csv`).
 - **`data/` is a regenerable cache and is gitignored. Never hand-edit it.** Any
   data correction must be made in the Google Sheet, then re-synced. When you
   find data errors, report them (see `reports/`) rather than patching the CSV.
@@ -35,8 +39,8 @@ See [README.md](README.md) for the full overview and setup.
 | [ROADMAP.md](ROADMAP.md) | Planned work / milestones and their deliverables and dependencies. |
 | [Notes.md](Notes.md) | Scratch notes on data sources + a marker-syntax quick reference. |
 | [MARKER_SYNTAX.md](MARKER_SYNTAX.md) | **Canonical spec** of the marker expression language (human-readable guide + EBNF). Cite this for anything parsing/validating marker strings. |
-| [reports/](reports/) | Generated analysis reports (e.g. `marker_string_issues.md`). New reports go here. |
-| `src/soulcap_cl_mapping/` | All Python code. `sync_sheets.py` provides the `soulcap-sync` CLI. |
+| [reports/](reports/) | Analysis reports. `marker_string_issues.md` is the curated review; `marker_validation.md` is **auto-generated** by the EBNF validator on each sync. New reports go here. |
+| `src/soulcap_cl_mapping/` | All Python code. `sync_sheets.py` → `soulcap-sync` CLI; `marker_syntax.py` → `soulcap-validate` CLI (EBNF validator). |
 | `tests/` | Unit tests (mirror `src/` layout). |
 | `data/` | Gitignored cache of the synced sheet (CSV + xlsx). |
 | `pyproject.toml` | Project metadata, deps, and the `soulcap-sync` entry point. |

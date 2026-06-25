@@ -57,6 +57,12 @@ def workbook_bytes(tmp_path: Path) -> bytes:
     return wb.read_bytes()
 
 
+@pytest.fixture(autouse=True)
+def _stub_marker_validation(monkeypatch):
+    """Keep sync tests from touching the real reports/ directory."""
+    monkeypatch.setattr(ss, "validate_marker_csv", lambda path: [])
+
+
 # --------------------------------------------------------------------------- #
 # Pure functions
 # --------------------------------------------------------------------------- #
