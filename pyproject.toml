@@ -17,6 +17,7 @@ soulcap-sync = "soulcap_cl_mapping.sync_sheets:main"
 [project.optional-dependencies]
 dev = [
     "pytest>=8.0",
+    "pytest-cov>=5.0",
     "ruff>=0.6",
 ]
 
@@ -29,3 +30,8 @@ packages = ["src/soulcap_cl_mapping"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+addopts = "--cov=soulcap_cl_mapping --cov-report=term-missing --cov-fail-under=80"
+
+[tool.coverage.run]
+branch = true
+source = ["soulcap_cl_mapping"]
