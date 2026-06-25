@@ -43,19 +43,35 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 uv sync
 ```
 
-### 2. Configure the Asta API token
+### 2. MCP servers (Claude Code)
 
-This project uses the [Asta](https://allenai.org/asta/resources/mcp) tools (via
-MCP) for literature search. Request an Asta token from
-<https://allenai.org/asta/resources/mcp>, then create a file named `.env` at the
-root of the repository containing:
+The MCP servers used by this project — `Asta_semanticscholar` (literature
+search), `artl-mcp`, and `ols4` — are defined in the committed
+[.mcp.json](.mcp.json) and enabled for the project in the committed
+`.claude/settings.json`. No per-developer action is needed to enable them.
 
+### 3. Configure the Asta API token
+
+The [Asta](https://allenai.org/asta/resources/mcp) tools require a personal API
+key. Request one from <https://allenai.org/asta/resources/mcp>, then add it to
+your **local, gitignored** Claude Code settings at
+`.claude/settings.local.json`:
+
+```json
+{
+  "env": {
+    "ASTA_API_KEY": "{token}"
+  }
+}
 ```
-ASTA_API_KEY={token}
-```
 
-Replace `{token}` with your actual token. The `.env` file is gitignored and must
-not be committed.
+Replace `{token}` with your actual key. Claude Code reads this `env` block at
+startup and expands `${ASTA_API_KEY}` into the `x-api-key` header in
+[.mcp.json](.mcp.json).
+
+`.claude/settings.local.json` is gitignored and must **never** be committed —
+it is the only place the secret lives. Restart Claude Code after editing it so
+the key is picked up.
 
 ## Input data
 
