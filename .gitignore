@@ -1,2 +1,45 @@
+# Environment / secrets
 .env
 .venv
+venv/
+env/
+
+# Regenerable cache pulled from the Google Sheets master — never hand-edit.
+# Run `soulcap-sync` to (re)create.
+data/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Packaging / build artifacts
+build/
+dist/
+*.egg-info/
+*.egg
+.eggs/
+wheels/
+
+# Test / coverage / type-check caches
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# uv
+# (uv.lock is intentionally tracked)
+
+# OS / editor cruft
+.DS_Store
+*.swp
+.idea/
+.vscode/
