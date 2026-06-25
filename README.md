@@ -1,5 +1,7 @@
 # SOULCAP ↔ Cell Ontology Mapping
 
+Warning - any mappings found on this repo or linked to from it are a work in progress. They are NOT official products of SOULCAP or the Cell Ontology
+
 ## Aims
 
 Build mappings between [SOULCAP](https://soulcap.org/) and the
@@ -30,7 +32,9 @@ the life sciences.
 
 ## Setup
 
-### 1. Install UV and create the environment
+### 1. Clone this repo
+
+### 2. Install UV and create the environment
 
 Install [UV](https://docs.astral.sh/uv/), then use it to create a virtual
 environment with the project dependencies:
