@@ -21,6 +21,8 @@ from pathlib import Path
 import pandas as pd
 import requests
 
+from soulcap_cl_mapping.marker_syntax import validate_marker_csv
+
 # The SOULCAP master workbook. Override with --sheet-id or the
 # SOULCAP_SHEET_ID environment variable.
 DEFAULT_SHEET_ID = "1uWwczLxgbpWMmXycL8Thq5NVExzlib4A"
@@ -94,6 +96,10 @@ def sync(
     if write_csv:
         print("Exploding tabs to CSV ...")
         explode_to_csv(xlsx_path, data_dir)
+        marker_csv = data_dir / "marker_combinations.csv"
+        if marker_csv.exists():
+            print("Validating marker strings ...")
+            validate_marker_csv(marker_csv)
     return xlsx_path
 
 

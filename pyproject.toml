@@ -13,6 +13,9 @@ dependencies = [
 
 [project.scripts]
 soulcap-sync = "soulcap_cl_mapping.sync_sheets:main"
+soulcap-validate = "soulcap_cl_mapping.marker_syntax:main"
+soulcap-cache = "soulcap_cl_mapping.snippet_cache:main"
+soulcap-validate-report = "soulcap_cl_mapping.report_validator:main"
 
 [project.optional-dependencies]
 dev = [

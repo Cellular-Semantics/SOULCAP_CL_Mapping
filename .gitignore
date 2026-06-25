@@ -8,6 +8,10 @@ env/
 # Run `soulcap-sync` to (re)create.
 data/
 
+# Citation-traversal snippet caches + generated reports (regenerable; see the
+# `citation-traversal` skill).
+reports/citation_traversal/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
