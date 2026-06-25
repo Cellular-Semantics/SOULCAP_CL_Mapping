@@ -3,5 +3,18 @@
     "Asta_semanticscholar",
     "artl-mcp",
     "ols4"
-  ]
+  ],
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "uv run python \"$CLAUDE_PROJECT_DIR/.claude/hooks/validate_report_quotes.py\""
+          }
+        ]
+      }
+    ]
+  }
 }

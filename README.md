@@ -112,3 +112,20 @@ SOULCAP_SHEET_ID=<id> uv run soulcap-sync
 
 > The sheet must be shared as *"anyone with the link can view"* for the
 > unauthenticated export to work.
+
+## Skills & literature workflows
+
+This repo ships Claude Code skills under `.claude/skills/`:
+
+- **`citation-traversal`** — answer a specific research question from a set of
+  seed papers via a two-round ASTA (Semantic Scholar) citation traversal:
+  `snippet_search` the seeds, follow the inline references that support the
+  answering sentences, `snippet_search` those cited papers, cache every snippet,
+  then synthesise a referenced summary. Every quote in the summary must be
+  verbatim from a cached snippet — a PreToolUse hook
+  (`.claude/hooks/validate_report_quotes.py`) blocks the report otherwise. Caches
+  and reports land under `reports/citation_traversal/<run_id>/` (gitignored).
+  Supporting CLIs: `soulcap-cache` (persist snippet results) and
+  `soulcap-validate-report` (manual quote check). See the
+  [skill](.claude/skills/citation-traversal/SKILL.md).
+- **`ontology-term-lookup`** — resolve biological terms to ontology labels via OLS4.

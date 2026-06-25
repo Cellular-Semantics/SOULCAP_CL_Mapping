@@ -39,11 +39,13 @@ See [README.md](README.md) for the full overview and setup.
 | [ROADMAP.md](ROADMAP.md) | Planned work / milestones and their deliverables and dependencies. |
 | [Notes.md](Notes.md) | Scratch notes on data sources + a marker-syntax quick reference. |
 | [MARKER_SYNTAX.md](MARKER_SYNTAX.md) | **Canonical spec** of the marker expression language (human-readable guide + EBNF). Cite this for anything parsing/validating marker strings. |
-| [reports/](reports/) | Analysis reports. `marker_string_issues.md` is the curated review; `marker_validation.md` is **auto-generated** by the EBNF validator on each sync. New reports go here. |
-| `src/soulcap_cl_mapping/` | All Python code. `sync_sheets.py` → `soulcap-sync` CLI; `marker_syntax.py` → `soulcap-validate` CLI (EBNF validator). |
+| [reports/](reports/) | Analysis reports. `marker_string_issues.md` is the curated review; `marker_validation.md` is **auto-generated** by the EBNF validator on each sync. New reports go here. `reports/citation_traversal/` holds gitignored, regenerable snippet caches + summaries from the `citation-traversal` skill. |
+| `src/soulcap_cl_mapping/` | All Python code. `sync_sheets.py` → `soulcap-sync`; `marker_syntax.py` → `soulcap-validate` (EBNF validator); `snippet_cache.py` → `soulcap-cache`; `report_validator.py` → `soulcap-validate-report`. |
 | `tests/` | Unit tests (mirror `src/` layout). |
+| `.claude/skills/` | Project skills — see [citation-traversal](.claude/skills/citation-traversal/SKILL.md) and `ontology-term-lookup`. |
+| `.claude/hooks/` | Claude Code hooks. `validate_report_quotes.py` is a PreToolUse guard that blocks writing a citation-traversal report whose quotes aren't verbatim in the snippet cache. |
 | `data/` | Gitignored cache of the synced sheet (CSV + xlsx). |
-| `pyproject.toml` | Project metadata, deps, and the `soulcap-sync` entry point. |
+| `pyproject.toml` | Project metadata, deps, and the CLI entry points. |
 | `.mcp.json` | MCP servers available in this project (see below). |
 | `.env` | `ASTA_API_KEY=...` (gitignored; required for the Asta MCP server). |
 
@@ -87,3 +89,19 @@ This mirrors what CI runs on every PR, so a clean local pass means a clean CI.
 
 There is also an `ontology-term-lookup` skill for resolving biological terms to
 exact ontology labels via OLS4 — prefer it for term resolution.
+
+## Skills
+
+- **`citation-traversal`** — answer a research question from explicit seed papers
+  via a two-round ASTA citation traversal (snippet_search seeds → follow the
+  inline references supporting the answering sentences → snippet_search those
+  cited papers), caching every snippet and synthesising a quoted summary. A
+  PreToolUse hook (`.claude/hooks/validate_report_quotes.py`) blocks the report if
+  any quote isn't verbatim in the cache. See
+  [SKILL.md](.claude/skills/citation-traversal/SKILL.md).
+- **`ontology-term-lookup`** — resolve biological terms to ontology labels via OLS4.
+
+> Local RAG indexing (a `local-paper-index` skill) was trialled here but removed
+> to avoid confusion — it was copied verbatim from `atlas_chat` and unused.
+> Revisit if we need to fold locally-indexed snippets (for non-ASTA papers) into
+> citation traversal.
