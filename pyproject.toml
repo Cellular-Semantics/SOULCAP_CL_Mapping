@@ -9,6 +9,8 @@ dependencies = [
     "pandas>=2.2",
     "requests>=2.32",
     "openpyxl>=3.1",
+    "SPARQLWrapper>=2.0",
+    "certifi>=2024.0",
 ]
 
 [project.scripts]
@@ -16,6 +18,7 @@ soulcap-sync = "soulcap_cl_mapping.sync_sheets:main"
 soulcap-validate = "soulcap_cl_mapping.marker_syntax:main"
 soulcap-cache = "soulcap_cl_mapping.snippet_cache:main"
 soulcap-validate-report = "soulcap_cl_mapping.report_validator:main"
+soulcap-cl-pro = "soulcap_cl_mapping.cl_pro:main"
 
 [project.optional-dependencies]
 dev = [

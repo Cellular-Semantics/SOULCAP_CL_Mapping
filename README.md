@@ -113,6 +113,29 @@ SOULCAP_SHEET_ID=<id> uv run soulcap-sync
 > The sheet must be shared as *"anyone with the link can view"* for the
 > unauthenticated export to work.
 
+## CL ↔ PR (Cell Ontology → PRO) marker relationships
+
+The Cell Ontology already defines many cell types by their protein markers via
+logical axioms. To use these as a SOULCAP↔CL mapping reference, pull them from
+the [Ubergraph](https://ubergraph.apps.renci.org/sparql) SPARQL endpoint:
+
+```bash
+uv run soulcap-cl-pro
+```
+
+This regenerates two artifacts under `reports/`:
+
+- **`cl_pro_relationships.md`** — CL-centric: each cell type with its PR markers
+  grouped by sense (positive / negative / high / low), annotated with CD
+  synonyms and mouse/human UniProt IDs, flagging inferred-only edges.
+- **`cl_pro_relationships.tsv`** — one row per (cell, relation, PR) for diffing
+  across CL/PRO releases.
+
+```bash
+uv run soulcap-cl-pro --reports-dir other/   # write elsewhere
+uv run soulcap-cl-pro --endpoint <url>        # use a different SPARQL endpoint
+```
+
 ## Skills & literature workflows
 
 This repo ships Claude Code skills under `.claude/skills/`:
