@@ -16,6 +16,7 @@ CD19 = f"{OBO}PR_000001002"  # has a CD-style related synonym in fixtures
 CD20 = f"{OBO}PR_000001289"
 CD3E = f"{OBO}PR_000001020"
 B_CELL = f"{OBO}CL_0000236"
+OTHER_CELL = f"{OBO}CL_0000084"  # T cell — used for cross-cell assertions
 HAS_PMP = f"{OBO}RO_0002104"  # has plasma membrane part -> positive
 LACKS_PMP = f"{OBO}CL_4030046"  # lacks_plasma_membrane_part -> negative
 EXPRESSES = f"{OBO}RO_0002292"  # expresses -> positive
@@ -120,11 +121,14 @@ def make_query_fn(responses: dict[str, list[dict]]):
 def test_fetch_relationships_flags_asserted_vs_inferred():
     query_fn = make_query_fn(
         {
-            # ASSERTED_QUERY: only the CD19 edge is directly asserted.
+            # ASSERTED_QUERY: CD19 asserted on the B cell; CD20 asserted on
+            # another cell (so CD20 is a known marker, just inferred *here*).
             "SELECT DISTINCT ?cell ?r ?pr": [
-                {"cell": B_CELL, "r": HAS_PMP, "pr": CD19}
+                {"cell": B_CELL, "r": HAS_PMP, "pr": CD19},
+                {"cell": OTHER_CELL, "r": HAS_PMP, "pr": CD20},
             ],
-            # RELATIONSHIPS_QUERY (redundant): two edges, CD20 inferred only.
+            # RELATIONSHIPS_QUERY (redundant): on the B cell, CD19 is asserted
+            # and CD20 is inferred-only.
             "?clab": [
                 {
                     "cell": B_CELL,
@@ -144,17 +148,38 @@ def test_fetch_relationships_flags_asserted_vs_inferred():
         }
     )
     rels = cl_pro.fetch_relationships(query_fn)
-    by_pr = {r["pr"]: r for r in rels}
+    by_pr = {r["pr"]: r for r in rels if r["cell"] == B_CELL}
     assert by_pr[CD19]["asserted"] is True
     assert by_pr[CD20]["asserted"] is False
     assert by_pr[CD19]["sense"] == cl_pro.POSITIVE
     assert by_pr[CD19]["cell_label"] == "B cell"
 
 
+def test_fetch_relationships_drops_unasserted_pr_generalisations():
+    # A PR that is never asserted as a marker on any cell (e.g. the inferred
+    # "has part some protein" generalisation) is dropped entirely.
+    protein = f"{OBO}PR_000000001"
+    query_fn = make_query_fn(
+        {
+            "SELECT DISTINCT ?cell ?r ?pr": [
+                {"cell": B_CELL, "r": HAS_PMP, "pr": CD19}
+            ],
+            "?clab": [
+                {"cell": B_CELL, "r": HAS_PMP, "pr": CD19},
+                {"cell": B_CELL, "r": HAS_PMP, "pr": protein},
+            ],
+        }
+    )
+    rels = cl_pro.fetch_relationships(query_fn)
+    assert {r["pr"] for r in rels} == {CD19}
+
+
 def test_fetch_relationships_relation_label_falls_back_to_curie():
     query_fn = make_query_fn(
         {
-            "SELECT DISTINCT ?cell ?r ?pr": [],
+            "SELECT DISTINCT ?cell ?r ?pr": [
+                {"cell": B_CELL, "r": HAS_PMP, "pr": CD19}
+            ],
             "?clab": [{"cell": B_CELL, "r": HAS_PMP, "pr": CD19}],
         }
     )

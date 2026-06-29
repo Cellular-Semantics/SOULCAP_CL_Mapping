@@ -249,15 +249,25 @@ def fetch_relationships(query_fn: QueryFn = run_sparql) -> list[dict]:
     vs ``has_part``); the raw query then repeats each edge once per label. We
     collapse to one label per entity and one edge per distinct (cell, relation,
     pr) triple.
+
+    Edges are restricted to PR terms that are *directly asserted as a marker on
+    some cell* (the nonredundant PR set). This keeps specific markers inherited
+    by subtypes (flagged inferred-only) while dropping the generic PR-hierarchy
+    generalisations the reasoner also entails — e.g. ``protein`` or ``amino acid
+    chain`` ("has part some protein"), which are not useful markers and carry no
+    cell-type-specific metadata.
     """
     asserted_rows = query_fn(ASSERTED_QUERY)
     asserted = {(r["cell"], r["r"], r["pr"]) for r in asserted_rows}
+    asserted_prs = {r["pr"] for r in asserted_rows}
 
     cell_labels: dict[str, str] = {}
     relation_labels: dict[str, str] = {}
     edges: dict[tuple[str, str, str], dict] = {}
     for row in query_fn(RELATIONSHIPS_QUERY):
         cell, relation, pr = row["cell"], row["r"], row["pr"]
+        if pr not in asserted_prs:
+            continue
         if row.get("clab"):
             cell_labels.setdefault(cell, row["clab"])
         if row.get("rlab"):
