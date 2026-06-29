@@ -31,6 +31,7 @@ import argparse
 import os
 import re
 import sys
+from collections import defaultdict
 from datetime import date
 from pathlib import Path
 from typing import Callable
@@ -215,6 +216,24 @@ SELECT DISTINCT ?cell ?r ?pr WHERE {
 """
 )
 
+# Transitive sub-property relations *among the marker relations only* — used to
+# prune property-hierarchy redundancy. The redundant graph materialises every
+# super-property, so the same (cell, PR) appears under a specific relation and
+# all its ancestors (e.g. ``has plasma membrane part`` ⊑ ``has part``); we keep
+# only the most specific. (Redundancy entailed via property *chains* rather than
+# the sub-property hierarchy is out of scope here.)
+SUBPROPERTY_QUERY = (
+    _PREFIXES
+    + f"""
+SELECT DISTINCT ?sub ?super WHERE {{
+  VALUES ?sub {{ {_MARKER_VALUES} }}
+  VALUES ?super {{ {_MARKER_VALUES} }}
+  ?sub rdfs:subPropertyOf+ ?super .
+  FILTER ( ?sub != ?super )
+}}
+"""
+)
+
 # Per-PR metadata: label, taxon (mouse/human only), all synonym scopes, dbxrefs.
 # CD names can live in any synonym scope (or the label); UniProtKB xrefs on a
 # taxon-tagged PR give the species-specific UniProt mapping.
@@ -297,14 +316,22 @@ def fetch_relationships(query_fn: QueryFn = run_sparql) -> list[dict]:
     part some amino acid chain"), which carry no cell-type-specific metadata.
     Terms in :data:`EXCLUDED_PRS` (e.g. the root ``protein`` class) are dropped
     too, even though they are asserted.
+
+    Property-hierarchy redundancy is also removed: for each (cell, PR) pair we
+    keep only the most specific relation(s), dropping any relation that is a
+    super-property of another relation present for that pair (e.g. ``has part``
+    when ``has plasma membrane part`` is also present). See
+    :func:`fetch_relation_ancestors`.
     """
     asserted_rows = query_fn(ASSERTED_QUERY)
     asserted = {(r["cell"], r["r"], r["pr"]) for r in asserted_rows}
     asserted_prs = {r["pr"] for r in asserted_rows}
+    ancestors = fetch_relation_ancestors(query_fn)
 
     cell_labels: dict[str, str] = {}
     relation_labels: dict[str, str] = {}
     edges: dict[tuple[str, str, str], dict] = {}
+    relations_by_pair: dict[tuple[str, str], set[str]] = defaultdict(set)
     for row in query_fn(RELATIONSHIPS_QUERY):
         cell, relation, pr = row["cell"], row["r"], row["pr"]
         if pr not in asserted_prs or pr in EXCLUDED_PRS:
@@ -313,6 +340,7 @@ def fetch_relationships(query_fn: QueryFn = run_sparql) -> list[dict]:
             cell_labels.setdefault(cell, row["clab"])
         if row.get("rlab"):
             relation_labels.setdefault(relation, row["rlab"])
+        relations_by_pair[(cell, pr)].add(relation)
         edges.setdefault(
             (cell, relation, pr),
             {
@@ -324,13 +352,30 @@ def fetch_relationships(query_fn: QueryFn = run_sparql) -> list[dict]:
             },
         )
 
-    rels = list(edges.values())
-    for rel in rels:
-        rel["cell_label"] = cell_labels.get(rel["cell"], "")
-        rel["relation_label"] = relation_labels.get(
-            rel["relation"], curie(rel["relation"])
-        )
+    rels = []
+    for (cell, relation, pr), edge in edges.items():
+        present = relations_by_pair[(cell, pr)]
+        # Drop this relation if it is a super-property of another relation also
+        # present for the same (cell, PR): the specific one entails it.
+        if any(relation in ancestors.get(other, ()) for other in present):
+            continue
+        edge["cell_label"] = cell_labels.get(cell, "")
+        edge["relation_label"] = relation_labels.get(relation, curie(relation))
+        rels.append(edge)
     return rels
+
+
+def fetch_relation_ancestors(query_fn: QueryFn = run_sparql) -> dict[str, set[str]]:
+    """Return each marker relation's super-properties *within the marker set*.
+
+    Keyed by relation IRI; the value is the set of ancestor relation IRIs
+    (transitive ``rdfs:subPropertyOf``). Used to prune redundant super-property
+    edges in :func:`fetch_relationships`.
+    """
+    ancestors: dict[str, set[str]] = defaultdict(set)
+    for row in query_fn(SUBPROPERTY_QUERY):
+        ancestors[row["sub"]].add(row["super"])
+    return ancestors
 
 
 def _split(value: str) -> list[str]:

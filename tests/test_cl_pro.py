@@ -18,6 +18,7 @@ CD3E = f"{OBO}PR_000001020"
 B_CELL = f"{OBO}CL_0000236"
 OTHER_CELL = f"{OBO}CL_0000084"  # T cell — used for cross-cell assertions
 HAS_PMP = f"{OBO}RO_0002104"  # has plasma membrane part -> positive
+HAS_PART = f"{OBO}BFO_0000051"  # has part (super-property of HAS_PMP)
 LACKS_PMP = f"{OBO}CL_4030046"  # lacks_plasma_membrane_part -> negative
 EXPRESSES = f"{OBO}RO_0002292"  # expresses -> positive
 
@@ -172,6 +173,56 @@ def test_fetch_relationships_drops_unasserted_pr_generalisations():
     )
     rels = cl_pro.fetch_relationships(query_fn)
     assert {r["pr"] for r in rels} == {CD19}
+
+
+def test_fetch_relation_ancestors():
+    query_fn = make_query_fn(
+        {
+            "subPropertyOf": [
+                {"sub": HAS_PMP, "super": HAS_PART},
+                {"sub": f"{OBO}RO_0015015", "super": HAS_PMP},
+                {"sub": f"{OBO}RO_0015015", "super": HAS_PART},
+            ]
+        }
+    )
+    anc = cl_pro.fetch_relation_ancestors(query_fn)
+    assert anc[HAS_PMP] == {HAS_PART}
+    assert anc[f"{OBO}RO_0015015"] == {HAS_PMP, HAS_PART}
+
+
+def test_fetch_relationships_prunes_super_property_edges():
+    # Same (cell, PR) under both has-part and the more specific
+    # has-plasma-membrane-part: keep only the specific one.
+    query_fn = make_query_fn(
+        {
+            "subPropertyOf": [{"sub": HAS_PMP, "super": HAS_PART}],
+            "SELECT DISTINCT ?cell ?r ?pr": [
+                {"cell": B_CELL, "r": HAS_PART, "pr": CD19},
+                {"cell": B_CELL, "r": HAS_PMP, "pr": CD19},
+            ],
+            "?clab": [
+                {"cell": B_CELL, "r": HAS_PART, "pr": CD19},
+                {"cell": B_CELL, "r": HAS_PMP, "pr": CD19},
+            ],
+        }
+    )
+    rels = cl_pro.fetch_relationships(query_fn)
+    assert [(r["relation"], r["pr"]) for r in rels] == [(HAS_PMP, CD19)]
+
+
+def test_fetch_relationships_keeps_general_relation_when_alone():
+    # has-part with no more-specific relation present is kept.
+    query_fn = make_query_fn(
+        {
+            "subPropertyOf": [{"sub": HAS_PMP, "super": HAS_PART}],
+            "SELECT DISTINCT ?cell ?r ?pr": [
+                {"cell": B_CELL, "r": HAS_PART, "pr": CD19}
+            ],
+            "?clab": [{"cell": B_CELL, "r": HAS_PART, "pr": CD19}],
+        }
+    )
+    rels = cl_pro.fetch_relationships(query_fn)
+    assert [(r["relation"], r["pr"]) for r in rels] == [(HAS_PART, CD19)]
 
 
 def test_fetch_relationships_excludes_root_protein_even_if_asserted():
