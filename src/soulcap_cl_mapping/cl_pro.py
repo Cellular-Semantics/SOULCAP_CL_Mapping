@@ -29,6 +29,7 @@ from __future__ import annotations
 
 import argparse
 import os
+import re
 import sys
 from datetime import date
 from pathlib import Path
@@ -43,6 +44,11 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_REPORTS_DIR = REPO_ROOT / "reports"
 
 OBO = "http://purl.obolibrary.org/obo/"
+
+# PR terms that are too generic to be useful markers and are excluded from the
+# report even when asserted on a cell (e.g. the root ``protein`` class, which
+# appears as "lacks plasma membrane part protein" etc.).
+EXCLUDED_PRS = {f"{OBO}PR_000000001"}  # protein
 
 # NCBITaxon IDs we care about for species-specific markers / UniProt mining.
 TAXA = {
@@ -133,6 +139,36 @@ def sense_of(relation_iri: str) -> str:
     return RELATION_SENSE.get(relation_iri, OTHER)
 
 
+# A CD ("cluster of differentiation") token: CD or CDw, a number, and an
+# optional short alphanumeric suffix (CD3, CD8a, CD45RA, CDw199).
+_CD_RE = re.compile(r"\bCDw?\d+[A-Za-z0-9]{0,4}\b")
+
+# Synonym scopes searched for CD names, in order of preference. ``label`` is the
+# entity's own rdfs:label; the rest are the oboInOwl synonym scopes.
+CD_SOURCE_ORDER = ["label", "exact", "related", "narrow", "broad"]
+
+
+def find_cd_synonyms(meta_entry: dict) -> list[tuple[str, str]]:
+    """Return ``(cd_token, source_scope)`` pairs found across a PR's names.
+
+    Scans the label and every synonym scope for CD tokens. Each distinct token
+    is reported once, attributed to the first scope (per :data:`CD_SOURCE_ORDER`)
+    it appears in — so a CD id is found wherever PRO happens to record it, not
+    only in related synonyms.
+    """
+    found: dict[str, str] = {}
+    for scope in CD_SOURCE_ORDER:
+        values = (
+            [meta_entry.get("label", "")]
+            if scope == "label"
+            else meta_entry.get(scope, [])
+        )
+        for value in values:
+            for token in _CD_RE.findall(value or ""):
+                found.setdefault(token, scope)
+    return sorted(found.items())
+
+
 # --------------------------------------------------------------------------- #
 # Queries
 # --------------------------------------------------------------------------- #
@@ -179,8 +215,8 @@ SELECT DISTINCT ?cell ?r ?pr WHERE {
 """
 )
 
-# Per-PR metadata: label, taxon (mouse/human only), synonyms, dbxrefs.
-# Related synonyms are a good source of CD names; UniProtKB xrefs on a
+# Per-PR metadata: label, taxon (mouse/human only), all synonym scopes, dbxrefs.
+# CD names can live in any synonym scope (or the label); UniProtKB xrefs on a
 # taxon-tagged PR give the species-specific UniProt mapping.
 PR_METADATA_QUERY = (
     _PREFIXES
@@ -190,6 +226,8 @@ SELECT DISTINCT ?pr
   (GROUP_CONCAT(DISTINCT STR(?species); separator="|") AS ?taxon)
   (GROUP_CONCAT(DISTINCT STR(?es); separator="|") AS ?exact_syn)
   (GROUP_CONCAT(DISTINCT STR(?rs); separator="|") AS ?rel_syn)
+  (GROUP_CONCAT(DISTINCT STR(?bs); separator="|") AS ?broad_syn)
+  (GROUP_CONCAT(DISTINCT STR(?ns); separator="|") AS ?narrow_syn)
   (GROUP_CONCAT(DISTINCT STR(?dbx); separator="|") AS ?xrefs)
 WHERE {
   ?pr rdfs:isDefinedBy obo:pr.owl .
@@ -198,6 +236,8 @@ WHERE {
   ?pr rdfs:label ?plab .
   OPTIONAL { ?pr oio:hasExactSynonym ?es }
   OPTIONAL { ?pr oio:hasRelatedSynonym ?rs }
+  OPTIONAL { ?pr oio:hasBroadSynonym ?bs }
+  OPTIONAL { ?pr oio:hasNarrowSynonym ?ns }
   OPTIONAL { ?pr oio:hasDbXref ?dbx }
   OPTIONAL {
     ?pr obo:RO_0002160 ?species .
@@ -253,9 +293,10 @@ def fetch_relationships(query_fn: QueryFn = run_sparql) -> list[dict]:
     Edges are restricted to PR terms that are *directly asserted as a marker on
     some cell* (the nonredundant PR set). This keeps specific markers inherited
     by subtypes (flagged inferred-only) while dropping the generic PR-hierarchy
-    generalisations the reasoner also entails — e.g. ``protein`` or ``amino acid
-    chain`` ("has part some protein"), which are not useful markers and carry no
-    cell-type-specific metadata.
+    generalisations the reasoner also entails — e.g. ``amino acid chain`` ("has
+    part some amino acid chain"), which carry no cell-type-specific metadata.
+    Terms in :data:`EXCLUDED_PRS` (e.g. the root ``protein`` class) are dropped
+    too, even though they are asserted.
     """
     asserted_rows = query_fn(ASSERTED_QUERY)
     asserted = {(r["cell"], r["r"], r["pr"]) for r in asserted_rows}
@@ -266,7 +307,7 @@ def fetch_relationships(query_fn: QueryFn = run_sparql) -> list[dict]:
     edges: dict[tuple[str, str, str], dict] = {}
     for row in query_fn(RELATIONSHIPS_QUERY):
         cell, relation, pr = row["cell"], row["r"], row["pr"]
-        if pr not in asserted_prs:
+        if pr not in asserted_prs or pr in EXCLUDED_PRS:
             continue
         if row.get("clab"):
             cell_labels.setdefault(cell, row["clab"])
@@ -298,19 +339,27 @@ def _split(value: str) -> list[str]:
 
 
 def fetch_pr_metadata(query_fn: QueryFn = run_sparql) -> dict[str, dict]:
-    """Return per-PR metadata keyed by PR IRI."""
+    """Return per-PR metadata keyed by PR IRI.
+
+    ``cd`` holds the CD tokens detected across the label and all synonym scopes,
+    as ``(token, source_scope)`` pairs (see :func:`find_cd_synonyms`).
+    """
     meta: dict[str, dict] = {}
     for row in query_fn(PR_METADATA_QUERY):
         xrefs = _split(row.get("xrefs", ""))
-        meta[row["pr"]] = {
+        entry = {
             "label": (row.get("label", "") or "").split("|")[0],
             "taxa": [TAXA[t] for t in _split(row.get("taxon", "")) if t in TAXA],
-            "cd": _split(row.get("rel_syn", "")),
-            "exact_syn": _split(row.get("exact_syn", "")),
+            "exact": _split(row.get("exact_syn", "")),
+            "related": _split(row.get("rel_syn", "")),
+            "broad": _split(row.get("broad_syn", "")),
+            "narrow": _split(row.get("narrow_syn", "")),
             "xrefs": xrefs,
             # Species-specific UniProt: the PR is itself taxon-scoped.
             "uniprot": [x for x in xrefs if x.startswith("UniProtKB:")],
         }
+        entry["cd"] = find_cd_synonyms(entry)
+        meta[row["pr"]] = entry
     return meta
 
 
@@ -355,7 +404,7 @@ def _marker_line(rel: dict, meta: dict, uniprot: dict) -> str:
     parts = [f"`{curie(pr)}` {label}"]
     cd = info.get("cd", [])
     if cd:
-        parts.append(f"CD/syn: {', '.join(cd)}")
+        parts.append("CD: " + ", ".join(f"{tok} ({scope})" for tok, scope in cd))
     ups = _uniprot_for(pr, meta, uniprot)
     if ups["human"]:
         parts.append(f"UniProt(human): {', '.join(ups['human'])}")
@@ -443,10 +492,10 @@ def render_tsv(rels: list[dict], meta: dict, uniprot: dict) -> str:
             curie(r["relation"]),
             r["relation_label"],
             r["sense"],
-            "yes" if r["asserted"] else "no",
+            str(r["asserted"]),
             curie(r["pr"]),
             info.get("label", ""),
-            "; ".join(info.get("cd", [])),
+            "; ".join(f"{tok} ({scope})" for tok, scope in info.get("cd", [])),
             "; ".join(ups["human"]),
             "; ".join(ups["mouse"]),
             "; ".join(info.get("xrefs", [])),

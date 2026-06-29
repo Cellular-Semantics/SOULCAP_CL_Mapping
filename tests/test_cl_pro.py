@@ -174,6 +174,25 @@ def test_fetch_relationships_drops_unasserted_pr_generalisations():
     assert {r["pr"] for r in rels} == {CD19}
 
 
+def test_fetch_relationships_excludes_root_protein_even_if_asserted():
+    protein = f"{OBO}PR_000000001"
+    assert protein in cl_pro.EXCLUDED_PRS
+    query_fn = make_query_fn(
+        {
+            "SELECT DISTINCT ?cell ?r ?pr": [
+                {"cell": B_CELL, "r": HAS_PMP, "pr": CD19},
+                {"cell": B_CELL, "r": LACKS_PMP, "pr": protein},
+            ],
+            "?clab": [
+                {"cell": B_CELL, "r": HAS_PMP, "pr": CD19},
+                {"cell": B_CELL, "r": LACKS_PMP, "pr": protein},
+            ],
+        }
+    )
+    rels = cl_pro.fetch_relationships(query_fn)
+    assert {r["pr"] for r in rels} == {CD19}
+
+
 def test_fetch_relationships_relation_label_falls_back_to_curie():
     query_fn = make_query_fn(
         {
@@ -194,7 +213,8 @@ def test_fetch_pr_metadata_shapes_rows():
             "rdfs:label ?plab": [
                 {
                     "pr": CD19,
-                    "label": "CD19 molecule",
+                    # CD token only present in a related synonym, not the label.
+                    "label": "B-lymphocyte antigen",
                     "rel_syn": "CD19",
                     "exact_syn": "B4",
                     "xrefs": "IUPHARobj:2764|PIRSF:PIRSF016630",
@@ -209,12 +229,35 @@ def test_fetch_pr_metadata_shapes_rows():
         }
     )
     meta = cl_pro.fetch_pr_metadata(query_fn)
-    assert meta[CD19]["label"] == "CD19 molecule"
-    assert meta[CD19]["cd"] == ["CD19"]
+    assert meta[CD19]["label"] == "B-lymphocyte antigen"
+    # CD detected in the related-synonym scope.
+    assert meta[CD19]["cd"] == [("CD19", "related")]
+    assert meta[CD19]["related"] == ["CD19"]
     assert meta[CD19]["uniprot"] == []  # no UniProtKB xref
     human = meta[f"{OBO}PR_Q9UIK5"]
     assert human["taxa"] == ["human"]
     assert human["uniprot"] == ["UniProtKB:Q9UIK5"]
+
+
+def test_find_cd_synonyms_scans_all_scopes_with_priority():
+    # CD45RA in label wins over the same token in a related synonym; CD3 only in
+    # narrow scope is still found; non-CD strings are ignored.
+    entry = {
+        "label": "receptor-type protein CD45RA",
+        "exact": ["PTPRC"],
+        "related": ["CD45RA", "CD45"],
+        "narrow": ["CD3"],
+        "broad": ["leukocyte antigen"],
+    }
+    cd = dict(cl_pro.find_cd_synonyms(entry))
+    assert cd["CD45RA"] == "label"  # label has priority over related
+    assert cd["CD45"] == "related"
+    assert cd["CD3"] == "narrow"
+    assert "PTPRC" not in cd
+
+
+def test_find_cd_synonyms_none():
+    assert cl_pro.find_cd_synonyms({"label": "interleukin-2", "exact": ["IL2"]}) == []
 
 
 def test_fetch_uniprot_neutral_groups_by_species():
@@ -263,16 +306,14 @@ def fixture_data():
         CD19: {
             "label": "CD19 molecule",
             "taxa": [],
-            "cd": ["CD19"],
-            "exact_syn": [],
+            "cd": [("CD19", "related")],
             "xrefs": ["IUPHARobj:2764"],
             "uniprot": [],
         },
         CD3E: {
             "label": "CD3 epsilon",
             "taxa": [],
-            "cd": ["T3E"],
-            "exact_syn": [],
+            "cd": [],
             "xrefs": [],
             "uniprot": [],
         },
@@ -287,7 +328,7 @@ def test_render_markdown(fixture_data):
     assert "**Positive (marker present)**" in md
     assert "**Negative (marker absent)**" in md
     assert "`PR:000001002` CD19 molecule" in md
-    assert "CD/syn: CD19" in md
+    assert "CD: CD19 (related)" in md
     assert "UniProt(human): UniProtKB:P15391" in md
     assert "UniProt(mouse): UniProtKB:P25918" in md
     # The negative, inferred-only edge is flagged.
@@ -301,9 +342,9 @@ def test_render_tsv(fixture_data):
     assert len(lines) == 3  # header + 2 edges
     cd19_row = next(line for line in lines if "PR:000001002" in line)
     cells = cd19_row.split("\t")
-    assert cells[cl_pro.TSV_COLUMNS.index("asserted")] == "yes"
+    assert cells[cl_pro.TSV_COLUMNS.index("asserted")] == "True"
     assert cells[cl_pro.TSV_COLUMNS.index("uniprot_human")] == "UniProtKB:P15391"
-    assert cells[cl_pro.TSV_COLUMNS.index("cd_synonym")] == "CD19"
+    assert cells[cl_pro.TSV_COLUMNS.index("cd_synonym")] == "CD19 (related)"
 
 
 def test_clean_tsv_strips_delimiters():
