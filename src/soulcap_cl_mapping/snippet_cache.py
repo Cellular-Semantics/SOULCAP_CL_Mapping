@@ -243,9 +243,7 @@ def _extract_data(asta_result: dict) -> list:
     return data if isinstance(data, list) else []
 
 
-def load_records(
-    run_id: str, qid: str, root: str | Path | None = None
-) -> list[dict]:
+def load_records(run_id: str, qid: str, root: str | Path | None = None) -> list[dict]:
     """Return all cached snippet records for a question (empty if none)."""
     path = question_file(run_id, qid, root)
     if not path.exists():
@@ -351,7 +349,9 @@ def main(argv: list[str] | None = None) -> int:
             root=args.root,
         )
         total = len(load_records(args.run, args.qid, root=args.root))
-        print(f"appended {n} new snippet(s) to {args.qid} (round {args.round}); {total} total")
+        print(
+            f"appended {n} new snippet(s) to {args.qid} (round {args.round}); {total} total"
+        )
         return 0
 
     # show

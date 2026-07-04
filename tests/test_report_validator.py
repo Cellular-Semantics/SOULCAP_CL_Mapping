@@ -96,7 +96,9 @@ def test_validate_report_reads_cache(tmp_path):
     sc.append_snippets("run", "q1", 1, "q", {"result": {"data": [item]}}, root=tmp_path)
 
     report = tmp_path / "report.md"
-    report.write_text(_report('> "Natural killer cells express CD56 at varying levels"'))
+    report.write_text(
+        _report('> "Natural killer cells express CD56 at varying levels"')
+    )
     passed, errors = rv.validate_report(report, "run", "q1", root=tmp_path)
     assert passed and errors == []
 
@@ -114,26 +116,68 @@ def test_validate_report_no_cache_fails(tmp_path):
 # --------------------------------------------------------------------------- #
 def test_main_clean_exit0(tmp_path, capsys):
     sc.append_snippets(
-        "run", "q1", 1, "q",
-        {"data": [{"paper": {"corpusId": "1"}, "snippet": {"text": "hello world", "snippetOffset": {}}}]},
+        "run",
+        "q1",
+        1,
+        "q",
+        {
+            "data": [
+                {
+                    "paper": {"corpusId": "1"},
+                    "snippet": {"text": "hello world", "snippetOffset": {}},
+                }
+            ]
+        },
         root=tmp_path,
     )
     report = tmp_path / "report.md"
     report.write_text(_report('> "hello world"'))
-    rc = rv.main(["--report", str(report), "--run", "run", "--qid", "q1", "--root", str(tmp_path)])
+    rc = rv.main(
+        [
+            "--report",
+            str(report),
+            "--run",
+            "run",
+            "--qid",
+            "q1",
+            "--root",
+            str(tmp_path),
+        ]
+    )
     assert rc == 0
     assert "OK" in capsys.readouterr().out
 
 
 def test_main_failure_exit1(tmp_path, capsys):
     sc.append_snippets(
-        "run", "q1", 1, "q",
-        {"data": [{"paper": {"corpusId": "1"}, "snippet": {"text": "hello world", "snippetOffset": {}}}]},
+        "run",
+        "q1",
+        1,
+        "q",
+        {
+            "data": [
+                {
+                    "paper": {"corpusId": "1"},
+                    "snippet": {"text": "hello world", "snippetOffset": {}},
+                }
+            ]
+        },
         root=tmp_path,
     )
     report = tmp_path / "report.md"
     report.write_text(_report('> "fabricated"'))
-    rc = rv.main(["--report", str(report), "--run", "run", "--qid", "q1", "--root", str(tmp_path)])
+    rc = rv.main(
+        [
+            "--report",
+            str(report),
+            "--run",
+            "run",
+            "--qid",
+            "q1",
+            "--root",
+            str(tmp_path),
+        ]
+    )
     assert rc == 1
     assert "FAILED" in capsys.readouterr().out
 
