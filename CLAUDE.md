@@ -26,6 +26,12 @@ See [README.md](README.md) for the full overview and setup.
   `reports/marker_validation.md`.
 - Validate marker strings on demand with **`uv run soulcap-validate`** (runs the
   EBNF validator over `data/marker_combinations.csv`).
+- Document the CL→PR marker axioms already in the Cell Ontology with
+  **`uv run soulcap-cl-pro`**. This queries the Ubergraph SPARQL endpoint and
+  regenerates `reports/cl_pro_relationships.md` + `.tsv` (CL cell types with
+  their PR markers grouped by sense, plus CD synonyms and UniProt IDs). Unlike
+  `data/`, these reports are committed snapshots — but still regenerable, so
+  don't hand-edit them.
 - **`data/` is a regenerable cache and is gitignored. Never hand-edit it.** Any
   data correction must be made in the Google Sheet, then re-synced. When you
   find data errors, report them (see `reports/`) rather than patching the CSV.
@@ -39,8 +45,8 @@ See [README.md](README.md) for the full overview and setup.
 | [ROADMAP.md](ROADMAP.md) | Planned work / milestones and their deliverables and dependencies. |
 | [Notes.md](Notes.md) | Scratch notes on data sources + a marker-syntax quick reference. |
 | [MARKER_SYNTAX.md](MARKER_SYNTAX.md) | **Canonical spec** of the marker expression language (human-readable guide + EBNF). Cite this for anything parsing/validating marker strings. |
-| [reports/](reports/) | Analysis reports. `marker_string_issues.md` is the curated review; `marker_validation.md` is **auto-generated** by the EBNF validator on each sync. New reports go here. `reports/citation_traversal/` holds gitignored, regenerable snippet caches + summaries from the `citation-traversal` skill. |
-| `src/soulcap_cl_mapping/` | All Python code. `sync_sheets.py` → `soulcap-sync`; `marker_syntax.py` → `soulcap-validate` (EBNF validator); `snippet_cache.py` → `soulcap-cache`; `report_validator.py` → `soulcap-validate-report`. |
+| [reports/](reports/) | Analysis reports. `marker_string_issues.md` is the curated review; `marker_validation.md` is **auto-generated** by the EBNF validator on each sync. `cl_pro_relationships.md`/`.tsv` are **auto-generated** by `soulcap-cl-pro` from Ubergraph. New reports go here. `reports/citation_traversal/` holds gitignored, regenerable snippet caches + summaries from the `citation-traversal` skill. |
+| `src/soulcap_cl_mapping/` | All Python code. `sync_sheets.py` → `soulcap-sync`; `marker_syntax.py` → `soulcap-validate` (EBNF validator); `snippet_cache.py` → `soulcap-cache`; `report_validator.py` → `soulcap-validate-report`; `cl_pro.py` → `soulcap-cl-pro` (CL→PR relationships via Ubergraph SPARQL). |
 | `tests/` | Unit tests (mirror `src/` layout). |
 | `.claude/skills/` | Project skills — see [citation-traversal](.claude/skills/citation-traversal/SKILL.md) and `ontology-term-lookup`. |
 | `.claude/hooks/` | Claude Code hooks. `validate_report_quotes.py` is a PreToolUse guard that blocks writing a citation-traversal report whose quotes aren't verbatim in the snippet cache. |
