@@ -22,6 +22,7 @@ soulcap-cl-pro = "soulcap_cl_mapping.cl_pro:main"
 soulcap-lookup = "soulcap_cl_mapping.ols4_lookup:main"
 soulcap-match = "soulcap_cl_mapping.cl_match:main"
 soulcap-tokens = "soulcap_cl_mapping.marker_syntax:tokens_main"
+soulcap-hgnc = "soulcap_cl_mapping.hgnc_map:main"
 
 [project.optional-dependencies]
 dev = [
