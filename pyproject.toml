@@ -20,6 +20,7 @@ soulcap-cache = "soulcap_cl_mapping.snippet_cache:main"
 soulcap-validate-report = "soulcap_cl_mapping.report_validator:main"
 soulcap-cl-pro = "soulcap_cl_mapping.cl_pro:main"
 soulcap-lookup = "soulcap_cl_mapping.ols4_lookup:main"
+soulcap-match = "soulcap_cl_mapping.cl_match:main"
 soulcap-tokens = "soulcap_cl_mapping.marker_syntax:tokens_main"
 
 [project.optional-dependencies]
