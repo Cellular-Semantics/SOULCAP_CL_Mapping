@@ -122,6 +122,19 @@ type, proposed CL term + ID, match type (broad/exact), rationale, and the marker
 
 ---
 
+## CL term corrections
+
+Issues discovered during mapping where CL itself needs updating. Tracked in
+[reports/cl_term_issues.md](reports/cl_term_issues.md) and as GitHub issues on
+this repo (labelled `cl-correction`). Each entry should eventually be filed
+upstream to `obophenotype/cell-ontology`.
+
+| Issue | Terms | Status |
+|-------|-------|--------|
+| [#13 NKT cell naming](https://github.com/Cellular-Semantics/SOULCAP_CL_Mapping/issues/13) | CL:4052055 → "CD56-positive T cell, human"; CL:0000814 → "iNKT cell" | Open — not yet filed upstream |
+
+---
+
 ## Cross-cutting dependencies
 
 - **Marker parser/validator.** Milestones 1, 3, and 4 all need a parser built
