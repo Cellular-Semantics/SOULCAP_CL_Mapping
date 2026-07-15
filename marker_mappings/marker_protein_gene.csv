@@ -1,0 +1,76 @@
+marker_token,marker_synonyms,source_columns,pro_id,pro_label,uniprot_id,uniprot_label,gene_symbol,hgnc_id,ncbi_gene_id,mapping_method,confidence,evidence,notes
+CCR4,CCR4|CD194,Required phenotypic markers,PR:000001200,C-C chemokine receptor type 4,P51679,C-C chemokine receptor type 4,CCR4,HGNC:1605,,inferred,high,reports/cl_pro_relationships.tsv,
+CCR6,CCR6|CD196,Required phenotypic markers,PR:000001202,C-C chemokine receptor type 6,P51684,C-C chemokine receptor type 6,CCR6,HGNC:1607,,inferred,high,reports/cl_pro_relationships.tsv,
+CD10,,Required phenotypic markers,PR:000001898,neprilysin,P08473,neprilysin,MME,HGNC:7154,,cl_pro_tsv,high,reports/cl_pro_relationships.tsv,
+CD117,,Required phenotypic markers,PR:000002065,mast/stem cell growth factor receptor,P10721,mast/stem cell growth factor receptor,KIT,HGNC:6342,,cl_pro_tsv,high,reports/cl_pro_relationships.tsv,
+CD11c,,Ideal exclusion|Required phenotypic markers,PR:000001013,integrin alpha-X,P20702,integrin alpha-X,ITGAX,HGNC:6152,,cl_pro_tsv,high,reports/cl_pro_relationships.tsv,
+CD123,,Ideal exclusion|Required exclusion|Required phenotypic markers,PR:000001865,interleukin-3 receptor class 2 alpha chain,P26951,interleukin-3 receptor class 2 alpha chain,IL3RA,HGNC:6012,,cl_pro_tsv,high,reports/cl_pro_relationships.tsv,
+CD127,,Ideal exclusion|Required phenotypic markers,PR:000001869,interleukin-7 receptor subunit alpha,P16871,interleukin-7 receptor subunit alpha,IL7R,HGNC:6024,,cl_pro_tsv,high,reports/cl_pro_relationships.tsv,
+CD138,,Required phenotypic markers,PR:000001935,syndecan-1,P18827,syndecan-1,SDC1,HGNC:10658,,cl_pro_tsv,high,reports/cl_pro_relationships.tsv,
+CD14,,Ideal exclusion|Required exclusion|Required phenotypic markers,PR:000001889,CD14 molecule,P08571,CD14 molecule,CD14,HGNC:1628,,cl_pro_tsv,high,reports/cl_pro_relationships.tsv,
+CD141,,Required phenotypic markers,PR:000002105,thrombomodulin,P07204,thrombomodulin,THBD,HGNC:11784,,cl_pro_tsv,high,reports/cl_pro_relationships.tsv,
+CD15,,Ideal exclusion|Required exclusion|Required phenotypic markers,PR:000001456,"alpha-(1,3)-fucosyltransferase 4",P22083,"alpha-(1,3)-fucosyltransferase 4",FUT4,HGNC:4015,,cl_pro_tsv,high,reports/cl_pro_relationships.tsv,
+CD16,,Ideal exclusion|Required exclusion|Required phenotypic markers,PR:000001483,low affinity immunoglobulin gamma Fc region receptor III,,low affinity immunoglobulin gamma Fc region receptor III,,,,cl_pro_tsv,high,reports/cl_pro_relationships.tsv,
+CD161,,Ideal phenotypic markers|Required phenotypic markers,PR:Q12918,killer cell lectin-like receptor subfamily B member 1 (human),Q12918,killer cell lectin-like receptor subfamily B member 1 (human),KLRB1,HGNC:6373,,cl_pro_tsv,high,reports/cl_pro_relationships.tsv,
+CD172a,,Ideal phenotypic markers,PR:000001968,tyrosine-protein phosphatase non-receptor type substrate 1,P78324,tyrosine-protein phosphatase non-receptor type substrate 1,SIRPA,HGNC:9662,,cl_pro_tsv,high,reports/cl_pro_relationships.tsv,
+CD183,CXCR3|CD183,Required phenotypic markers,PR:000001207,C-X-C chemokine receptor type 3,P49682,C-X-C chemokine receptor type 3,CXCR3,HGNC:4540,,cl_pro_tsv,high,reports/cl_pro_relationships.tsv,
+CD185,CXCR5|CD185,Required phenotypic markers,PR:000001209,C-X-C chemokine receptor type 5,P32302,C-X-C chemokine receptor type 5,CXCR5,HGNC:1060,,cl_pro_tsv,high,reports/cl_pro_relationships.tsv,
+CD19,,Ideal exclusion|Required exclusion|Required phenotypic markers,PR:000001002,CD19 molecule,P15391,CD19 molecule,CD19,HGNC:1633,,cl_pro_tsv,high,reports/cl_pro_relationships.tsv,
+CD193,,Required exclusion|Required phenotypic markers,PR:000001255,C-C chemokine receptor type 3,P51677,C-C chemokine receptor type 3,CCR3,HGNC:1604,,cl_pro_tsv,high,reports/cl_pro_relationships.tsv,
+CD194,CCR4|CD194,Required phenotypic markers,PR:000001200,C-C chemokine receptor type 4,P51679,C-C chemokine receptor type 4,CCR4,HGNC:1605,,cl_pro_tsv,high,reports/cl_pro_relationships.tsv,
+CD196,CCR6|CD196,Required phenotypic markers,PR:000001202,C-C chemokine receptor type 6,P51684,C-C chemokine receptor type 6,CCR6,HGNC:1607,,cl_pro_tsv,high,reports/cl_pro_relationships.tsv,
+CD198,,Ideal phenotypic markers,PR:000001204,C-C chemokine receptor type 8,,C-C chemokine receptor type 8,,,,ols4,high,https://www.ebi.ac.uk/ols4/api/search?q=CCR8&ontology=pr; https://nodenormalization-sri.renci.org/1.3/get_normalized_nodes?curie=PR:000001204,
+CD1c,,Required phenotypic markers,PR:000002027,T-cell surface glycoprotein CD1c,P29017,T-cell surface glycoprotein CD1c,CD1C,HGNC:1636,,cl_pro_tsv,high,reports/cl_pro_relationships.tsv,
+CD1d-a-GalCer,,Required phenotypic markers,,,,,,,,manual,low,,lipid antigen (alpha-galactosylceramide) presented by CD1d; not a protein marker
+CD20,,Ideal phenotypic markers|Required exclusion|Required phenotypic markers,PR:000001289,membrane-spanning 4-domains subfamily A member 1,P11836,membrane-spanning 4-domains subfamily A member 1,MS4A1,HGNC:7315,,cl_pro_tsv,high,reports/cl_pro_relationships.tsv,
+CD21,,Required phenotypic markers,PR:000001338,complement receptor type 2,P20023,complement receptor type 2,CR2,HGNC:2336,,cl_pro_tsv,high,reports/cl_pro_relationships.tsv,
+CD24,,Required phenotypic markers,PR:000001932,signal transducer CD24,P25063,signal transducer CD24,CD24,HGNC:1645,,cl_pro_tsv,high,reports/cl_pro_relationships.tsv,
+CD25,,Required phenotypic markers,PR:000001380,interleukin-2 receptor subunit alpha,P01589,interleukin-2 receptor subunit alpha,IL2RA,HGNC:6008,,cl_pro_tsv,high,reports/cl_pro_relationships.tsv,
+CD27,,Required phenotypic markers,PR:000001963,CD27 molecule,P26842,CD27 molecule,CD27,HGNC:11922,,cl_pro_tsv,high,reports/cl_pro_relationships.tsv,
+CD294,,Ideal phenotypic markers|Required phenotypic markers,PR:Q9Y5Y4,prostaglandin D2 receptor 2 (human),Q9Y5Y4,prostaglandin D2 receptor 2 (human),PTGDR2,HGNC:4502,,cl_pro_tsv,high,reports/cl_pro_relationships.tsv,
+CD3,,Ideal exclusion|Required exclusion|Required phenotypic markers,PR:000001020,CD3 epsilon,P07766,CD3 epsilon,CD3E,HGNC:1674,,cl_pro_tsv,high,reports/cl_pro_relationships.tsv,
+CD303,,Required exclusion|Required phenotypic markers,PR:000001292,C-type lectin domain family 4 member C,Q8WTT0,C-type lectin domain family 4 member C,CLEC4C,HGNC:13258,,cl_pro_tsv,high,reports/cl_pro_relationships.tsv,
+CD33,,Ideal phenotypic markers|Required exclusion|Required phenotypic markers,PR:000001892,CD33 molecule,P20138,CD33 molecule,CD33,HGNC:1659,,cl_pro_tsv,high,reports/cl_pro_relationships.tsv,
+CD34,,Required exclusion,PR:000001003,CD34 molecule,P28906,CD34 molecule,CD34,HGNC:1662,,cl_pro_tsv,high,reports/cl_pro_relationships.tsv,
+CD38,,Required phenotypic markers,PR:000001408,ADP-ribosyl cyclase/cyclic ADP-ribose hydrolase 1,P28907,ADP-ribosyl cyclase/cyclic ADP-ribose hydrolase 1,CD38,HGNC:1667,,cl_pro_tsv,high,reports/cl_pro_relationships.tsv,
+CD4,,Required phenotypic markers,PR:000001004,CD4 molecule,P01730,CD4 molecule,CD4,HGNC:1678,,cl_pro_tsv,high,reports/cl_pro_relationships.tsv,
+CD45,,Required phenotypic markers,PR:000001006,receptor-type tyrosine-protein phosphatase C,P08575,receptor-type tyrosine-protein phosphatase C,PTPRC,HGNC:9666,,cl_pro_tsv,high,reports/cl_pro_relationships.tsv,
+CD56,,Ideal exclusion|Required exclusion|Required phenotypic markers,PR:000001024,neural cell adhesion molecule 1,P13591,neural cell adhesion molecule 1,NCAM1,HGNC:7656,,cl_pro_tsv,high,reports/cl_pro_relationships.tsv,
+CD57,,Required phenotypic markers,,,,,,,,ols4,low,https://www.ebi.ac.uk/ols4/api/search?q=CD57&ontology=pr,B3GAT1 / HNK-1 epitope; HNK-1 carbohydrate epitope synthesised by B3GAT1
+CD64,,Ideal phenotypic markers|Required exclusion|Required phenotypic markers,PR:000001465,high affinity immunoglobulin gamma Fc receptor I,P12314,high affinity immunoglobulin gamma Fc receptor I,FCGR1A,HGNC:3613,,cl_pro_tsv,high,reports/cl_pro_relationships.tsv,
+CD66b,,Ideal exclusion|Required exclusion|Required phenotypic markers,PR:000001332,cell adhesion molecule CEACAM8,P31997,cell adhesion molecule CEACAM8,CEACAM8,HGNC:1820,,cl_pro_tsv,high,reports/cl_pro_relationships.tsv,
+CD8,,Required phenotypic markers,PR:000001084,T-cell surface glycoprotein CD8 alpha chain,P01732,T-cell surface glycoprotein CD8 alpha chain,CD8A,HGNC:1706,,cl_pro_tsv,high,reports/cl_pro_relationships.tsv,
+CXCR3,CXCR3|CD183,Required phenotypic markers,PR:000001207,C-X-C chemokine receptor type 3,P49682,C-X-C chemokine receptor type 3,CXCR3,HGNC:4540,,inferred,high,reports/cl_pro_relationships.tsv,
+CXCR5,CXCR5|CD185,Required phenotypic markers,PR:000001209,C-X-C chemokine receptor type 5,P32302,C-X-C chemokine receptor type 5,CXCR5,HGNC:1060,,inferred,high,reports/cl_pro_relationships.tsv,
+FceR1a,,Ideal phenotypic markers|Required phenotypic markers,PR:000007431,high affinity immunoglobulin epsilon receptor subunit alpha,,high affinity immunoglobulin epsilon receptor subunit alpha,,,,ols4,high,https://www.ebi.ac.uk/ols4/api/search?q=FCER1A&ontology=pr; https://nodenormalization-sri.renci.org/1.3/get_normalized_nodes?curie=PR:000007431,high-affinity IgE receptor alpha chain
+HLA-DR,,Ideal exclusion|Ideal phenotypic markers|Required phenotypic markers,PR:000002015,MHC class II histocompatibility antigen alpha chain DRA,,MHC class II histocompatibility antigen alpha chain DRA,,,,ols4,high,https://www.ebi.ac.uk/ols4/api/search?q=HLA-DRA&ontology=pr; https://nodenormalization-sri.renci.org/1.3/get_normalized_nodes?curie=PR:000002015,HLA-DR is a heterodimer of HLA-DRA + HLA-DRB1; mapped to HLA-DRA as primary chain
+IFNg,,Ideal phenotypic markers,,,P01579,interferon gamma,IFNG,HGNC:5438,,monarch,high,https://rest.genenames.org/fetch/symbol/IFNG,intracellular marker
+IL-13,,Ideal phenotypic markers,,,P35225,interleukin 13,IL13,HGNC:5973,,monarch,high,https://rest.genenames.org/fetch/symbol/IL13,intracellular marker
+IL-17a,,Ideal phenotypic markers,,,Q16552,interleukin 17A,IL17A,HGNC:5981,,monarch,high,https://rest.genenames.org/fetch/symbol/IL17A,intracellular marker
+IL-4,,Ideal phenotypic markers,,,P05112,interleukin 4,IL4,HGNC:6014,,monarch,high,https://rest.genenames.org/fetch/symbol/IL4,intracellular marker
+IL-5,,Ideal phenotypic markers,,,P05113,interleukin 5,IL5,HGNC:6016,,monarch,high,https://rest.genenames.org/fetch/symbol/IL5,intracellular marker
+IL-9,,Ideal phenotypic markers,,,P15248,interleukin 9,IL9,HGNC:6029,,monarch,high,https://rest.genenames.org/fetch/symbol/IL9,intracellular marker
+IgA,,Required phenotypic markers,,,,,,,,manual,low,,Immunoglobulin heavy-chain class A; encoded by IGHA1 and IGHA2 gene family. No single PR ID or UniProt accession covers all isotypes.
+IgD,,Required phenotypic markers,,,,,,,,manual,low,,Immunoglobulin heavy-chain class D; encoded by IGHD. No single PR ID or UniProt accession.
+IgE,,Required phenotypic markers,,,,,,,,manual,low,,Immunoglobulin heavy-chain class E; encoded by IGHE. No single PR ID or UniProt accession.
+IgG,,Required phenotypic markers,,,,,,,,manual,low,,Immunoglobulin heavy-chain class G; encoded by IGHG1/IGHG2/IGHG3/IGHG4 gene family. No single PR ID or UniProt accession covers all subclasses.
+IgM,,Required phenotypic markers,,,,,,,,manual,low,,Immunoglobulin heavy-chain class M; encoded by IGHM. No single PR ID or UniProt accession.
+MR1,,Required phenotypic markers,,,Q95460,"major histocompatibility complex, class I-related",MR1,HGNC:4975,,manual,high,https://rest.genenames.org/fetch/symbol/MR1,MHC-related protein 1; also used as 'MR1 tetramer' reagent for MAIT cell detection
+TCR,,Ideal phenotypic markers|Required phenotypic markers,,,,,,,,manual,medium,,pan-TCR marker; not specific to a single gene
+TCRVa24,,Required phenotypic markers,,,,,TRAV10,HGNC:12103,,manual,medium,https://rest.genenames.org/fetch/symbol/TRAV10,IMGT nomenclature: TRAV10
+TCRVa24-Ja18,,Required phenotypic markers,,,,,TRAV10,HGNC:12103,,manual,medium,https://rest.genenames.org/fetch/symbol/TRAV10,Invariant iNKT TCR chain; two-gene marker TRAV10+TRAJ18; gene_symbol populated with TRAV10 as primary TRAV gene
+TCRVa7.2,,Required phenotypic markers,,,,,TRAV1-2,HGNC:12102,,manual,medium,https://rest.genenames.org/fetch/symbol/TRAV1-2,IMGT nomenclature: TRAV1-2
+TCRVb11,,Required phenotypic markers,,,,,TRBV25-1,HGNC:12205,,manual,medium,https://rest.genenames.org/fetch/symbol/TRBV25-1,IMGT nomenclature: TRBV25-1
+TCRVd2,,Required phenotypic markers,,,,,TRDV2,HGNC:12263,,manual,medium,https://rest.genenames.org/fetch/symbol/TRDV2,IMGT nomenclature: TRDV2
+TCRVg9,,Required phenotypic markers,,,,,TRGV9,HGNC:12295,,manual,medium,https://rest.genenames.org/fetch/symbol/TRGV9,IMGT nomenclature: TRGV9
+TCRab,,Required phenotypic markers,,,,,,,,manual,medium,,pan-αβ TCR marker; recognises assembled αβ heterodimer
+TCRgd,,Required phenotypic markers,,,,,,,,manual,medium,,pan-γδ TCR marker; recognises assembled γδ heterodimer
+TCRva24,,Required phenotypic markers,,,,,TRAV10,HGNC:12103,,manual,medium,https://rest.genenames.org/fetch/symbol/TRAV10,Likely duplicate of TCRVa24 (different capitalisation) — data quality issue; mapped identically to TCRVa24 / TRAV10
+Tetramer,,Required phenotypic markers,,,,,,,,manual,low,,generic reagent term; not a specific protein
+V,,Ideal phenotypic markers|Required phenotypic markers,,,,,,,,manual,low,,likely parsing artifact from multi-word TCR gene name — data quality issue; see reports/marker_validation.md
+VB11,,Required phenotypic markers,,,,,TRBV25-1,HGNC:12205,,manual,medium,https://rest.genenames.org/fetch/symbol/TRBV25-1,Duplicate of TCRVb11 (uppercase) — data quality issue; same mapping as TCRVb11 / TRBV25-1
+Vb11,,Required phenotypic markers,,,,,TRBV25-1,HGNC:12205,,manual,medium,https://rest.genenames.org/fetch/symbol/TRBV25-1,Duplicate of TCRVb11 — data quality issue; same mapping as TCRVb11 / TRBV25-1
+Vd1,,Required phenotypic markers,,,,,TRDV1,HGNC:12262,,manual,medium,https://rest.genenames.org/fetch/symbol/TRDV1,IMGT nomenclature: TRDV1
+delta,,Ideal phenotypic markers|Required phenotypic markers,,,,,,,,manual,low,,likely parsing artifact from multi-word TCR gene name — data quality issue; see reports/marker_validation.md
+delta1,,Ideal phenotypic markers,,,,,,,,manual,low,,likely parsing artifact from multi-word TCR gene name — data quality issue; see reports/marker_validation.md
+gamma,,Ideal phenotypic markers|Required phenotypic markers,,,,,,,,manual,low,,likely parsing artifact from multi-word TCR gene name — data quality issue; see reports/marker_validation.md
