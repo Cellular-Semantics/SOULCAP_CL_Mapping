@@ -15,7 +15,7 @@ See [CLAUDE.md](../CLAUDE.md) for project conventions.
 **Repo issue:** [#13 NKT cell naming](https://github.com/Cellular-Semantics/SOULCAP_CL_Mapping/issues/13)
 **Filed by:** Kelly Lundsten · 2026-07-08
 **Reference:** [PMC6647187](https://pmc.ncbi.nlm.nih.gov/articles/PMC6647187/)
-**Status:** Open — not yet filed upstream to `obophenotype/cell-ontology`
+**Status:** Filed upstream — awaiting CL maintainer review
 
 #### CL:4052055 — "Mature NK T cell, human"
 
@@ -50,8 +50,9 @@ TCRVβ11+) correspond specifically to the iNKT lineage. Renaming to "iNKT cell"
 and scoping the definition accordingly prevents conflation with vNKT and CD56+ T
 cells.
 
-**Upstream action needed:** File issue against `obophenotype/cell-ontology`
-requesting label change + definition update for both terms.
+**Upstream issues filed:**
+- CL:4052055 → https://github.com/obophenotype/cell-ontology/issues/3663
+- CL:0000814 → https://github.com/obophenotype/cell-ontology/issues/3664
 
 ---
 

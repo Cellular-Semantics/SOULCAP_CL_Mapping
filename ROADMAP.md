@@ -131,7 +131,7 @@ upstream to `obophenotype/cell-ontology`.
 
 | Issue | Terms | Status |
 |-------|-------|--------|
-| [#13 NKT cell naming](https://github.com/Cellular-Semantics/SOULCAP_CL_Mapping/issues/13) | CL:4052055 → "CD56-positive T cell, human"; CL:0000814 → "iNKT cell" | Open — not yet filed upstream |
+| [#13 NKT cell naming](https://github.com/Cellular-Semantics/SOULCAP_CL_Mapping/issues/13) | CL:4052055 → "CD56-positive T cell, human"; CL:0000814 → "iNKT cell" | Filed upstream: [CL#3663](https://github.com/obophenotype/cell-ontology/issues/3663), [CL#3664](https://github.com/obophenotype/cell-ontology/issues/3664) |
 
 ---
 
