@@ -54,6 +54,29 @@ cells.
 - CL:4052055 → https://github.com/obophenotype/cell-ontology/issues/3663
 - CL:0000814 → https://github.com/obophenotype/cell-ontology/issues/3664
 
+### Monocyte corrections — CL:0000576, CL:0000860, CL:0002393, CL:0000875
+
+**Repo issue:** [#12 Clarification of monocytes](https://github.com/Cellular-Semantics/SOULCAP_CL_Mapping/issues/12)
+**Filed by:** Kelly Lundsten
+**Status:** Filed upstream — awaiting CL maintainer review
+
+**Upstream issue filed:**
+- CL:0000576/0000860/0002393/0000875 → https://github.com/obophenotype/cell-ontology/issues/3665
+
+#### Changes requested
+
+1. **Typo fix** — `CX3CCR1` and `CXCCR1` → `CX3CR1` in CL:0000576 and CL:0000875
+2. **Duplicated description** — remove duplicate block from CL:0000860 (classical monocyte)
+3. **Mouse marker string** (CL:0000576) — replace `F4/80-mid, GR1-low` with `CD64 lo/- F4/80 lo/- MHCII lo/- CD3- CD19- B220- CD11b+/hi Ly-6G- CD317- Siglec-F- Ly-6C+/- CX3CR1+ CD11c+/- CD49b+/- CD192+/-`; rationale: GR-1 recognises both Ly-6C and Ly-6G; monocytes are Ly-6G− and Ly-6C+/−
+4. **Human marker string** (CL:0000576) — replace CD192/CX3CR1 as pan-monocyte markers with `CD45+ CD66b- CD3- CD19- CD56- CD123 lo/- CD33+ CD11c lo/+ HLA-DR lo/+ CD14+/- CD16+/-`; CD192/CX3CR1 are subset discriminators, not pan-monocyte gates; all monocytes are not CD14+
+5. **Tri-subset markers** per Ziegler-Heitbrock et al. 2010 (PMID:20628149; DOI:10.1182/blood-2010-02-258558):
+
+| Term | CL ID | Correct markers |
+|------|-------|-----------------|
+| Classical monocyte | CL:0000860 | CD14^hi CD16^− CD11c^lo HLA-DR^lo |
+| Intermediate monocyte | CL:0002393 | CD14^hi/+ CD16^+/hi CD11c^hi HLA-DR^hi |
+| Non-classical monocyte | CL:0000875 | CD14^lo/− CD16^hi CD11c^hi HLA-DR^+ |
+
 ---
 
 ## Resolved issues
