@@ -106,6 +106,31 @@ def test_extract_hgnc_missing_label() -> None:
 
 
 # --------------------------------------------------------------------------- #
+# strip_isoform_suffix (pure)
+# --------------------------------------------------------------------------- #
+
+
+def test_strip_isoform_suffix_removes_suffix() -> None:
+    assert hgnc_map.strip_isoform_suffix("UniProtKB:P16871-1") == "UniProtKB:P16871"
+
+
+def test_strip_isoform_suffix_no_suffix() -> None:
+    assert hgnc_map.strip_isoform_suffix("UniProtKB:P16871") == "UniProtKB:P16871"
+
+
+def test_strip_isoform_suffix_multi_digit() -> None:
+    assert hgnc_map.strip_isoform_suffix("UniProtKB:P08575-10") == "UniProtKB:P08575"
+
+
+def test_strip_isoform_suffix_non_uniprot_unchanged() -> None:
+    assert hgnc_map.strip_isoform_suffix("PR:000001002") == "PR:000001002"
+
+
+def test_strip_isoform_suffix_empty_string() -> None:
+    assert hgnc_map.strip_isoform_suffix("") == ""
+
+
+# --------------------------------------------------------------------------- #
 # collect_pr_mappings (pure)
 # --------------------------------------------------------------------------- #
 
@@ -139,6 +164,13 @@ def test_collect_pr_mappings_multi_uniprot_takes_first() -> None:
     ]
     result = hgnc_map.collect_pr_mappings(rows)
     assert result == {"PR:000001002": "UniProtKB:P15391"}
+
+
+def test_collect_pr_mappings_strips_isoform_suffix() -> None:
+    """Isoform suffix is stripped so Monarch receives the canonical accession."""
+    rows = [{"pr": "PR:000001015", "uniprot_human": "UniProtKB:P08575-8"}]
+    result = hgnc_map.collect_pr_mappings(rows)
+    assert result == {"PR:000001015": "UniProtKB:P08575"}
 
 
 def test_collect_pr_mappings_no_uniprot() -> None:
