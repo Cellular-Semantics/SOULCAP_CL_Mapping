@@ -324,6 +324,36 @@ def search_ols4_pr(
     return None
 
 
+def fetch_pr_by_uniprot(
+    uniprot_id: str,
+    session: requests.Session,
+    ols4_url: str = OLS4_BASE,
+) -> dict[str, str] | None:
+    """Fetch the PRO term for a human UniProt accession (``PR:<accession>``).
+
+    PRO mints organism-specific protein terms as ``PR:<UniProt accession>``.
+    This is far more reliable than a free-text gene-symbol search against the
+    PR ontology, which tends to surface isoform/receptor noise instead of the
+    plain gene product (e.g. searching "IL4" or "interleukin-4" never
+    surfaces ``PR:P05112`` itself). Returns ``None`` if PRO has no term for
+    this accession, or if *uniprot_id* is empty.
+    """
+    if not uniprot_id:
+        return None
+    iri = f"http://purl.obolibrary.org/obo/PR_{uniprot_id}"
+    resp = session.get(
+        f"{ols4_url}/ontologies/pr/terms", params={"iri": iri}, timeout=30
+    )
+    if resp.status_code == 404:
+        return None
+    resp.raise_for_status()
+    terms = resp.json().get("_embedded", {}).get("terms", [])
+    if not terms:
+        return None
+    term = terms[0]
+    return {"pr_id": term.get("obo_id", ""), "pr_label": term.get("label", "")}
+
+
 def fetch_hgnc_by_symbol(
     symbol: str,
     session: requests.Session,
@@ -547,9 +577,10 @@ def resolve_group4(
     gene_symbol: str,
     session: requests.Session,
     hgnc_url: str = HGNC_REST_URL,
+    ols4_url: str = OLS4_BASE,
     sleep_between: float = 0.2,
 ) -> dict[str, str]:
-    """Resolve a Group 4 cytokine token via the HGNC REST API."""
+    """Resolve a Group 4 cytokine token via the HGNC REST API, then PRO."""
     hgnc_data = fetch_hgnc_by_symbol(gene_symbol, session, hgnc_url=hgnc_url)
 
     if sleep_between > 0:
@@ -561,12 +592,22 @@ def resolve_group4(
     protein_name = hgnc_data["name"] if hgnc_data else ""
     evidence = f"{hgnc_url}/fetch/symbol/{gene_symbol}"
 
+    pr_id = pr_label = ""
+    if uniprot_id:
+        if sleep_between > 0:
+            time.sleep(sleep_between)
+        pr_result = fetch_pr_by_uniprot(uniprot_id, session, ols4_url=ols4_url)
+        if pr_result:
+            pr_id = pr_result["pr_id"]
+            pr_label = pr_result["pr_label"]
+            evidence += f"; {ols4_url}/ontologies/pr/terms?iri=obo:PR_{uniprot_id}"
+
     return {
         "marker_token": token,
         "marker_synonyms": "",
         "source_columns": source_columns,
-        "pro_id": "",
-        "pro_label": "",
+        "pro_id": pr_id,
+        "pro_label": pr_label,
         "uniprot_id": uniprot_id,
         "uniprot_label": protein_name,
         "gene_symbol": approved_symbol,
@@ -586,9 +627,16 @@ def resolve_group6_gene_token(
     extra_notes: str,
     session: requests.Session,
     hgnc_url: str = HGNC_REST_URL,
+    ols4_url: str = OLS4_BASE,
     sleep_between: float = 0.2,
 ) -> dict[str, str]:
-    """Resolve a Group 6 TCR gene token via the HGNC REST API."""
+    """Resolve a Group 6 TCR gene token via the HGNC REST API, then PRO.
+
+    Germline TCR V/D/J gene segments don't all have a PRO entry (PRO tends to
+    catalog the rearranged/assembled chain, not every germline segment), so a
+    PRO hit here is a bonus, not a requirement — a miss keeps confidence at
+    the pre-existing "medium" level established by the gene mapping alone.
+    """
     hgnc_data = fetch_hgnc_by_symbol(imgt_gene, session, hgnc_url=hgnc_url)
 
     if sleep_between > 0:
@@ -596,7 +644,18 @@ def resolve_group6_gene_token(
 
     hgnc_id = hgnc_data["hgnc_id"] if hgnc_data else ""
     approved_symbol = hgnc_data["gene_symbol"] if hgnc_data else imgt_gene
+    uniprot_id = hgnc_data["uniprot_id"] if hgnc_data else ""
     evidence = f"{hgnc_url}/fetch/symbol/{imgt_gene}"
+
+    pr_id = pr_label = ""
+    if uniprot_id:
+        if sleep_between > 0:
+            time.sleep(sleep_between)
+        pr_result = fetch_pr_by_uniprot(uniprot_id, session, ols4_url=ols4_url)
+        if pr_result:
+            pr_id = pr_result["pr_id"]
+            pr_label = pr_result["pr_label"]
+            evidence += f"; {ols4_url}/ontologies/pr/terms?iri=obo:PR_{uniprot_id}"
 
     base_note = f"IMGT nomenclature: {imgt_gene}"
     notes = f"{base_note}; {extra_notes}" if extra_notes else base_note
@@ -605,10 +664,10 @@ def resolve_group6_gene_token(
         "marker_token": token,
         "marker_synonyms": "",
         "source_columns": source_columns,
-        "pro_id": "",
-        "pro_label": "",
-        "uniprot_id": "",
-        "uniprot_label": "",
+        "pro_id": pr_id,
+        "pro_label": pr_label,
+        "uniprot_id": uniprot_id,
+        "uniprot_label": pr_label,
         "gene_symbol": approved_symbol,
         "hgnc_id": hgnc_id,
         "ncbi_gene_id": "",
@@ -624,9 +683,10 @@ def resolve_group7_mr1(
     source_columns: str,
     session: requests.Session,
     hgnc_url: str = HGNC_REST_URL,
+    ols4_url: str = OLS4_BASE,
     sleep_between: float = 0.2,
 ) -> dict[str, str]:
-    """Resolve MR1 (MHC-related protein 1) via the HGNC REST API."""
+    """Resolve MR1 (MHC-related protein 1) via the HGNC REST API, then PRO."""
     hgnc_data = fetch_hgnc_by_symbol("MR1", session, hgnc_url=hgnc_url)
 
     if sleep_between > 0:
@@ -638,12 +698,22 @@ def resolve_group7_mr1(
     protein_name = hgnc_data["name"] if hgnc_data else ""
     evidence = f"{hgnc_url}/fetch/symbol/MR1"
 
+    pr_id = pr_label = ""
+    if uniprot_id:
+        if sleep_between > 0:
+            time.sleep(sleep_between)
+        pr_result = fetch_pr_by_uniprot(uniprot_id, session, ols4_url=ols4_url)
+        if pr_result:
+            pr_id = pr_result["pr_id"]
+            pr_label = pr_result["pr_label"]
+            evidence += f"; {ols4_url}/ontologies/pr/terms?iri=obo:PR_{uniprot_id}"
+
     return {
         "marker_token": token,
         "marker_synonyms": "",
         "source_columns": source_columns,
-        "pro_id": "",
-        "pro_label": "",
+        "pro_id": pr_id,
+        "pro_label": pr_label,
         "uniprot_id": uniprot_id,
         "uniprot_label": protein_name,
         "gene_symbol": approved_symbol,
@@ -776,6 +846,7 @@ def run(
                 gene_sym,
                 sess,
                 hgnc_url=hgnc_url,
+                ols4_url=ols4_url,
                 sleep_between=sleep_between,
             )
             output_rows.append(row)
@@ -801,6 +872,7 @@ def run(
                 extra,
                 sess,
                 hgnc_url=hgnc_url,
+                ols4_url=ols4_url,
                 sleep_between=sleep_between,
             )
             output_rows.append(row)
@@ -854,6 +926,7 @@ def run(
                     sc,
                     sess,
                     hgnc_url=hgnc_url,
+                    ols4_url=ols4_url,
                     sleep_between=sleep_between,
                 )
             else:

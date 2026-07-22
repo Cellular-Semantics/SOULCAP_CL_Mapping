@@ -136,6 +136,33 @@ uv run soulcap-cl-pro --reports-dir other/   # write elsewhere
 uv run soulcap-cl-pro --endpoint <url>        # use a different SPARQL endpoint
 ```
 
+## Candidate CL matching (`soulcap-match`)
+
+Ranks CL terms against a SOULCAP marker profile, scored from
+`cl_pro_relationships.tsv`. Single-profile mode (paste the four marker columns
+for one cell type):
+
+```bash
+uv run soulcap-match --req-excl "CD14- CD3- CD19-" --req-pheno "CD45+ CD56+/hi" --parent "NK cell"
+```
+
+Batch mode scores every row of `data/marker_combinations.csv` in one pass:
+
+```bash
+uv run soulcap-match --batch                # -> reports/candidate_cl_mappings_batch.tsv
+uv run soulcap-match --batch --lexical       # + name-based OLS4 CL search and an
+                                              #   agreement report (reports/candidate_cl_mappings_agreement.tsv)
+```
+
+Marker-axiom scoring can only rank CL terms that already have a PR axiom in
+`cl_pro_relationships.tsv` — many CL terms (including some "obvious" parent
+classes) have none and are invisible to it. `--lexical` adds an independent
+name-based candidate per row; rows where both approaches agree are a much
+stronger signal than either alone. **Treat batch output as an unreviewed draft
+shortlist** — check the `contradictions`/`marker_conflict` columns before
+trusting a rank-1 pick, since shared exclusion markers can inflate scores for
+biologically wrong candidates.
+
 ## Skills & literature workflows
 
 This repo ships Claude Code skills under `.claude/skills/`:
