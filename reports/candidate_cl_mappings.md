@@ -260,3 +260,90 @@ as matched.
   DC family section above.
 - Extend this report to the remaining `Marker Combinations` rows once
   Milestone 2 (literature evidence, Dr. Diehl) covers more cell types.
+
+---
+
+## Monocyte family
+
+**SOULCAP definitions:** Mono (parent, `CD14+/- CD11c+/-` — both variable,
+non-discriminating), CMo (`CD14+ CD16-`), NCMo (`CD14lo/- CD16+`), IntMo
+(`CD14+ CD16hi`). All four share the same Required exclusion string.
+
+| SOULCAP | Proposed CL term | Proposed CL ID | Match type | Source |
+|---|---|---|---|---|
+| Mono | monocyte | `CL:0000576` | Exact | OAK-verified (exact label); OLS4 was timing out at lookup time |
+| CMo | classical monocyte | `CL:0000860` | Exact | OAK-verified (exact label) |
+| NCMo | non-classical monocyte | `CL:0000875` | Exact | OAK-verified (exact label) |
+| IntMo | intermediate monocyte | `CL:0002393` | Exact | OAK-verified (exact label) |
+
+**Rationale:** All four are clean name matches, cross-checked with OAK
+(`sqlite:obo:cl`, exact label hits) after OLS4 REST search was returning
+`ReadTimeout` errors when this batch was worked. Marker-axiom scoring
+top-ranked unrelated myelocyte/basophil precursor terms for all four rows
+(shared-negative-marker inflation, the same failure mode documented
+elsewhere in this report) — these are lexical matches, not marker-confirmed.
+
+**CL gap — already tracked, not new:** `CL:0000860`/`CL:0000875`/`CL:0002393`
+currently assert only CCR2 (CD192, high on classical / negative on
+intermediate) and CX3CR1 (high on non-classical) plus lineage-exclusion
+negatives — **none of them assert the CD14/CD16 axioms that actually define
+these three subsets** (per Ziegler-Heitbrock et al. 2010, PMID:20628149).
+This is exactly what repo issue
+[#12](https://github.com/Cellular-Semantics/SOULCAP_CL_Mapping/issues/12)
+(filed upstream: [CL#3665](https://github.com/obophenotype/cell-ontology/issues/3665))
+already covers — no new issue needed, just citing it here since it directly
+explains why these four rows can only be matched lexically, not confirmed by
+CL's current marker axioms. `CL:0000576` (plain "monocyte") has no marker
+axioms at all in `cl_pro_relationships.tsv` — the same axiom-gap pattern seen
+on other general parent classes (NK, ILC, cDC) — logged in `gaps.tsv`.
+
+**Sheet data issue:** all four rows' `Required exclusion` column reads
+`CD56- CD19- ([CD123hi]- CD303-) ([CD123hi|CD193-)` — the second group is
+missing a `]` after `CD123hi` (should likely read `([CD123hi]-|CD193-)`,
+matching the pattern used in the cDC/pDC rows). Affects the same 4 rows
+identically since they share this string. Logged in `gaps.tsv`; cannot be
+fixed here (Google Sheet is the source of truth).
+
+---
+
+## Neutrophil / Eosinophil
+
+**SOULCAP definitions:** share `CD3- CD56- CD14lo/- CD123-` exclusion.
+Neutrophil requires `(CD15hi|CD66b+) CD193- CD16hi`; Eosinophil requires
+`(CD15hi|CD66b+) CD193+ CD16-` — differ only in CD193/CD16.
+
+| SOULCAP | Proposed CL term | Proposed CL ID | Match type | Source |
+|---|---|---|---|---|
+| Neutrophil | neutrophil | `CL:0000775` | Exact | Lexical + marker (CD66b matched via OR-group; CD19-/CD3- matched) |
+| Eosinophil | eosinophil | `CL:0000771` | Exact | Lexical + marker (CD193+ **directly asserted**, not inferred — strong match) |
+
+**Rationale:** Both are clean lexical matches (OAK-confirmed exact label),
+and unlike the monocyte family, CL *does* assert relevant markers here.
+`CL:0000771` directly asserts CD193 (CCR3) positive — not flagged
+`(inferred only)` — which precisely matches SOULCAP's Eosinophil-defining
+CD193+ requirement; both terms assert CD66b positive, satisfying the
+`(CD15hi|CD66b+)` OR-group shared by both SOULCAP rows. This is one of the
+stronger marker-confirmed matches in this report, not just a lexical pick.
+
+---
+
+## B cell (parent)
+
+**SOULCAP definition:** `(CD14-|CD33-|CD64-) CD3- CD56-` exclusion;
+`live/ CD45+ (CD20+|CD19+)` required phenotypic markers.
+
+| Field | Value |
+|---|---|
+| Proposed CL term | B cell |
+| Proposed CL ID | `CL:0000236` |
+| Match type | Exact |
+
+**Rationale:** Batch lexical search (OLS4) returned **no candidate at all**
+for this row — worth noting as its own small finding: OLS4's REST search
+appears to return nothing useful for the bare two-word query "B cell" (not a
+sheet typo this time; the row's Full Name is exactly "B cell"). Found instead
+via `soulcap-oak-match "B cell"`, which returned `CL:0000236` as a clean
+exact-label/exact-synonym hit. Marker-axiom scoring found no useful
+candidates either (`CL:0000236` has no rows in `cl_pro_relationships.tsv` —
+same parent-class axiom-gap pattern as NK/ILC/cDC/plain-monocyte). Logged in
+`gaps.tsv`.

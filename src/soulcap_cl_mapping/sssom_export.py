@@ -209,6 +209,76 @@ CURATED_MAPPINGS: list[dict] = [
         "cl_label": "mature basophil",
         "match_type": "Exact",
     },
+    {
+        "abbreviation": "Mono",
+        "subject_label": "Monocyte",
+        "cl_id": "CL:0000576",
+        "cl_label": "monocyte",
+        "match_type": "Exact",
+        "evidence_override": "no_marker_axiom",
+        "note": "OAK-verified exact label match (OLS4 was timing out); "
+        "CL:0000576 has no marker axioms recorded at all.",
+    },
+    {
+        "abbreviation": "CMo",
+        "subject_label": "Classical Monocyte",
+        "cl_id": "CL:0000860",
+        "cl_label": "classical monocyte",
+        "match_type": "Exact",
+        "evidence_override": "no_marker_axiom",
+        "note": "OAK-verified exact label match. CL:0000860 asserts only CCR2 "
+        "(CD192) and lineage negatives, not the CD14/CD16 axioms that "
+        "actually define this subset — already tracked by repo issue #12.",
+    },
+    {
+        "abbreviation": "NCMo",
+        "subject_label": "Non-classical Monocyte",
+        "cl_id": "CL:0000875",
+        "cl_label": "non-classical monocyte",
+        "match_type": "Exact",
+        "evidence_override": "no_marker_axiom",
+        "note": "OAK-verified exact label match. CL:0000875 asserts only "
+        "CX3CR1 and lineage negatives, not the CD14/CD16 axioms that "
+        "actually define this subset — already tracked by repo issue #12.",
+    },
+    {
+        "abbreviation": "IntMo",
+        "subject_label": "Intermediate Monocyte",
+        "cl_id": "CL:0002393",
+        "cl_label": "intermediate monocyte",
+        "match_type": "Exact",
+        "evidence_override": "no_marker_axiom",
+        "note": "OAK-verified exact label match. CL:0002393 asserts only CCR2 "
+        "(CD192, negative) and lineage negatives, not the CD14/CD16 axioms "
+        "that actually define this subset — already tracked by repo issue #12.",
+    },
+    {
+        "abbreviation": "Neutrophil",
+        "subject_label": "Neutrophil",
+        "cl_id": "CL:0000775",
+        "cl_label": "neutrophil",
+        "match_type": "Exact",
+    },
+    {
+        "abbreviation": "Eosinophil",
+        "subject_label": "Eosinophil",
+        "cl_id": "CL:0000771",
+        "cl_label": "eosinophil",
+        "match_type": "Exact",
+        "note": "CD193 (CCR3) positive is directly asserted (not inferred) on "
+        "CL:0000771, precisely matching SOULCAP's defining CD193+ requirement "
+        "— one of the stronger marker-confirmed matches in this set.",
+    },
+    {
+        "abbreviation": "B cell",
+        "subject_label": "B cell",
+        "cl_id": "CL:0000236",
+        "cl_label": "B cell",
+        "match_type": "Exact",
+        "evidence_override": "no_marker_axiom",
+        "note": "OLS4 REST search returned zero hits for this exact query; "
+        "found instead via OAK. CL:0000236 has no marker axioms recorded.",
+    },
 ]
 
 _PREDICATE_BY_MATCH_TYPE = {
