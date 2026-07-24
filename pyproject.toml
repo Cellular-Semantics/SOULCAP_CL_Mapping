@@ -11,6 +11,8 @@ dependencies = [
     "openpyxl>=3.1",
     "SPARQLWrapper>=2.0",
     "certifi>=2024.0",
+    "oaklib>=0.6.23",
+    "sssom>=0.4.17",
 ]
 
 [project.scripts]
@@ -24,6 +26,8 @@ soulcap-match = "soulcap_cl_mapping.cl_match:main"
 soulcap-tokens = "soulcap_cl_mapping.marker_syntax:tokens_main"
 soulcap-hgnc = "soulcap_cl_mapping.hgnc_map:main"
 soulcap-map = "soulcap_cl_mapping.marker_map:main"
+soulcap-oak-match = "soulcap_cl_mapping.oak_match:main"
+soulcap-sssom = "soulcap_cl_mapping.sssom_export:main"
 
 [project.optional-dependencies]
 dev = [
@@ -54,3 +58,7 @@ python_version = "3.12"
 disallow_untyped_defs = true
 warn_return_any = true
 warn_unused_ignores = true
+
+[[tool.mypy.overrides]]
+module = ["oaklib.*", "sssom.*", "sssom_schema.*", "curies.*"]
+ignore_missing_imports = true

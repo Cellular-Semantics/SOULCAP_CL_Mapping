@@ -163,6 +163,56 @@ shortlist** — check the `contradictions`/`marker_conflict` columns before
 trusting a rank-1 pick, since shared exclusion markers can inflate scores for
 biologically wrong candidates.
 
+## OAK lexical/synonym matching (`soulcap-oak-match`)
+
+A second, independent lexical matcher using [OAK](https://incatools.github.io/ontology-access-kit/)
+(Ontology Access Kit) instead of the OLS4 REST API:
+
+```bash
+uv run soulcap-oak-match "Natural Killer Cell"
+uv run soulcap-oak-match "NK cell" --top 5
+```
+
+Uses OAK's `sqlite:obo:cl` adapter — a search-optimised local database that
+ranks exact label/synonym matches first by construction (OLS4's free-text
+relevance ranking, by contrast, can bury an exact match behind dozens of
+more-specific subtype variants). Downloads and caches a local CL database
+(~100MB) on first use; instant afterwards.
+
+## SSSOM mapping export (`soulcap-sssom`)
+
+Exports the curated Milestone 4 mapping decisions (`CURATED_MAPPINGS` in
+`sssom_export.py`, kept in sync by hand with `candidate_cl_mappings.md`) as a
+standard [SSSOM](https://mapping-commons.github.io/sssom/) TSV, instead of
+writing OWL axioms directly:
+
+```bash
+uv run soulcap-sssom                          # -> reports/candidate_cl_mappings.sssom.tsv
+uv run soulcap-sssom --robot-template out.tsv # + a ROBOT `template` TSV (see below)
+```
+
+`confidence` and `comment` are derived automatically — not hand-typed — from
+whether CL directly asserts the matched marker axiom(s), only has them by
+inference, or has no marker axiom for the term at all. This is what lets the
+output distinguish "CL confirms this" from "this is only supported by
+inferred markers," per row.
+
+## ROBOT ontology QC
+
+`.github/workflows/robot-qc.yml` runs on every PR:
+
+- **Upstream CL audit** — downloads CL's `cl-base.owl` (import-free release
+  artifact) and runs `robot report` + `robot reason` (ELK) on it standalone,
+  independent of anything in this repo. Catches pre-existing CL bugs (e.g.
+  duplicate equivalence/subclass axioms) worth reporting upstream.
+- **Our mappings, merged** — converts the curated SSSOM mapping set into
+  *true* logical OWL axioms (`soulcap-sssom --robot-template`; SSSOM's own
+  OWL writer only emits `skos:exactMatch` as a non-logical annotation, which
+  a reasoner ignores — see `write_robot_template()`'s docstring), merges them
+  into CL as new classes via `robot template`, and re-runs report/reason on
+  the merged result to catch problems our own proposed mappings would
+  introduce.
+
 ## Skills & literature workflows
 
 This repo ships Claude Code skills under `.claude/skills/`:

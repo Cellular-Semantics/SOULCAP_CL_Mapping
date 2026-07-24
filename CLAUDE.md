@@ -45,8 +45,8 @@ See [README.md](README.md) for the full overview and setup.
 | [ROADMAP.md](ROADMAP.md) | Planned work / milestones and their deliverables and dependencies. |
 | [Notes.md](Notes.md) | Scratch notes on data sources + a marker-syntax quick reference. |
 | [MARKER_SYNTAX.md](MARKER_SYNTAX.md) | **Canonical spec** of the marker expression language (human-readable guide + EBNF). Cite this for anything parsing/validating marker strings. |
-| [reports/](reports/) | Analysis reports. `marker_string_issues.md` is the curated review; `marker_validation.md` is **auto-generated** by the EBNF validator on each sync. `cl_pro_relationships.md`/`.tsv` are **auto-generated** by `soulcap-cl-pro` from Ubergraph. `cl_term_issues.md` tracks proposed CL corrections found during mapping work. `candidate_cl_mappings.md` is the Milestone 4 deliverable — proposed SOULCAP→CL mappings with rationale and evidence. `candidate_cl_mappings_batch.tsv`/`candidate_cl_mappings_agreement.tsv` are **auto-generated** by `soulcap-match --batch [--lexical]` (issue #6) — a marker-axiom-only pass and a marker/lexical agreement pass across every SOULCAP cell type; treat as an unreviewed draft shortlist (conflicts must be checked), not curated output. New reports go here. `reports/citation_traversal/` holds gitignored, regenerable snippet caches + summaries from the `citation-traversal` skill. |
-| `src/soulcap_cl_mapping/` | All Python code. `sync_sheets.py` → `soulcap-sync`; `marker_syntax.py` → `soulcap-validate` (EBNF validator); `snippet_cache.py` → `soulcap-cache`; `report_validator.py` → `soulcap-validate-report`; `cl_pro.py` → `soulcap-cl-pro` (CL→PR relationships via Ubergraph SPARQL). |
+| [reports/](reports/) | Analysis reports. `marker_string_issues.md` is the curated review; `marker_validation.md` is **auto-generated** by the EBNF validator on each sync. `cl_pro_relationships.md`/`.tsv` are **auto-generated** by `soulcap-cl-pro` from Ubergraph. `cl_term_issues.md` tracks proposed CL corrections found during mapping work. `candidate_cl_mappings.md` is the Milestone 4 deliverable — proposed SOULCAP→CL mappings with rationale and evidence. `candidate_cl_mappings_batch.tsv`/`candidate_cl_mappings_agreement.tsv` are **auto-generated** by `soulcap-match --batch [--lexical]` (issue #6) — a marker-axiom-only pass and a marker/lexical agreement pass across every SOULCAP cell type; treat as an unreviewed draft shortlist (conflicts must be checked), not curated output. `candidate_cl_mappings.sssom.tsv` is **auto-generated** by `soulcap-sssom` from the curated `CURATED_MAPPINGS` table in `sssom_export.py` (kept in sync by hand with `candidate_cl_mappings.md`) — standard SSSOM format, with `confidence`/`comment` derived from whether the match is backed by a directly-asserted CL marker axiom, an inferred-only one, or none at all (lexical/name match only). `gaps.tsv` is a curated, hand-maintained log of cases where SOULCAP has no reasonable CL match, CL conflicts with a marker panel, CL has an axiom gap, or the sheet itself has a data problem — separate from the mapping table; matching GitHub issues use the `gap` label (`.github/ISSUE_TEMPLATE/mapping_gap.yml`). New reports go here. `reports/citation_traversal/` holds gitignored, regenerable snippet caches + summaries from the `citation-traversal` skill. |
+| `src/soulcap_cl_mapping/` | All Python code. `sync_sheets.py` → `soulcap-sync`; `marker_syntax.py` → `soulcap-validate` (EBNF validator); `snippet_cache.py` → `soulcap-cache`; `report_validator.py` → `soulcap-validate-report`; `cl_pro.py` → `soulcap-cl-pro` (CL→PR relationships via Ubergraph SPARQL); `cl_match.py` → `soulcap-match` (marker-axiom + lexical CL candidate scoring, single-profile or `--batch`); `oak_match.py` → `soulcap-oak-match` (OAK sqlite-backed lexical/synonym CL search — downloads/caches a local CL database on first use, ~100MB); `sssom_export.py` → `soulcap-sssom` (curated mappings → SSSOM TSV, with confidence derived from CL marker-axiom assertion status). |
 | `tests/` | Unit tests (mirror `src/` layout). |
 | `.claude/skills/` | Project skills — see [citation-traversal](.claude/skills/citation-traversal/SKILL.md) and `ontology-term-lookup`. |
 | `.claude/hooks/` | Claude Code hooks. `validate_report_quotes.py` is a PreToolUse guard that blocks writing a citation-traversal report whose quotes aren't verbatim in the snippet cache. |
@@ -64,7 +64,15 @@ documents at the repo root.
 - **All code lives under `src/`** (package `soulcap_cl_mapping`).
 - **All code must have ≥80% unit-test coverage**, with tests under `tests/`
   using a standard harness (`pytest`).
-- **GitHub Actions must run the tests on all PRs.**
+- **GitHub Actions must run the tests on all PRs.** `.github/workflows/tests.yml`
+  runs lint/format/mypy/pytest. `.github/workflows/robot-qc.yml` runs ROBOT
+  ontology QC on every PR: one job audits upstream CL (`cl-base.owl`, the
+  import-free release artifact) standalone with `robot report` + `robot
+  reason` (ELK), independent of our mappings; a second job converts the
+  curated SSSOM mapping set into true logical OWL axioms (via
+  `soulcap-sssom --robot-template`) and re-runs the same checks on CL merged
+  with those axioms, to catch problems our own proposed mappings would
+  introduce.
 - Use **UV** for environment and dependency management (`uv sync`,
   `uv run ...`). Don't invoke `pip` directly.
 - The marker expression language is precisely defined in
@@ -106,6 +114,12 @@ exact ontology labels via OLS4 — prefer it for term resolution.
   any quote isn't verbatim in the cache. See
   [SKILL.md](.claude/skills/citation-traversal/SKILL.md).
 - **`ontology-term-lookup`** — resolve biological terms to ontology labels via OLS4.
+- **`soulcap-cl-matching`** — propose a CL match for a SOULCAP cell type using
+  both marker-axiom scoring (`soulcap-match`) and lexical search, cross-checked
+  against each other and verified via direct OLS4 lookup when uncertain, then
+  written into `reports/candidate_cl_mappings.md` with rationale and evidence.
+  The Milestone 4 workflow. See
+  [SKILL.md](.claude/skills/soulcap-cl-matching/SKILL.md).
 
 > Local RAG indexing (a `local-paper-index` skill) was trialled here but removed
 > to avoid confusion — it was copied verbatim from `atlas_chat` and unused.

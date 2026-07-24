@@ -607,7 +607,7 @@ def write_batch_tsv(path: Path, results: list[dict]) -> None:
 # cl_pro_relationships.tsv — many CL terms, including "obvious" parent
 # classes, have no marker axiom at all and are invisible to it).
 # --------------------------------------------------------------------------- #
-def _lexical_query_for_row(row: dict) -> str:
+def _lexical_query_for_row(row: dict[str, str]) -> str:
     """Pick the best available search text for a row: Full Name, else Abbreviation."""
     full_name = row.get("Full Name", "").strip()
     return full_name or row.get("Abbreviation", "").strip()
