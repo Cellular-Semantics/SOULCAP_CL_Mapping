@@ -347,3 +347,262 @@ exact-label/exact-synonym hit. Marker-axiom scoring found no useful
 candidates either (`CL:0000236` has no rows in `cl_pro_relationships.tsv` —
 same parent-class axiom-gap pattern as NK/ILC/cDC/plain-monocyte). Logged in
 `gaps.tsv`.
+
+---
+
+## Plasma cell lineage — ASC / Plasmablast / Plasma Cell
+
+**SOULCAP definitions:** ASC (parent, `CD19+ CD27+/hi CD38hi`), PB
+(`+ CD138-`), PC (`+ CD138+`, ideal `CD20-`).
+
+| SOULCAP | Proposed CL term | Proposed CL ID | Match type | Source |
+|---|---|---|---|---|
+| ASC | antibody secreting cell | `CL:0000946` | Exact | Lexical |
+| PB | plasmablast | `CL:0000980` | Exact | Lexical |
+| PC | plasma cell | `CL:0000786` | Exact | Lexical |
+
+**Rationale:** All three are clean exact-name lexical matches. Marker-axiom
+scoring found nothing useful for any of the three (top candidates were
+mouse-nomenclature "B220" memory B cell terms — see the B cell maturation
+tree below for why that pattern recurs across this whole lineage) — these
+are lexical matches, not marker-confirmed. PC's marker top-1 (`CL:0000962`
+Bm2 B cell) showed a conflict on the *ideal* `CD20-` marker; non-disqualifying
+and irrelevant once the correct lexical match is used instead.
+
+---
+
+## B cell maturation tree — Transitional / Mature / Naive / Double-negative
+
+**SOULCAP definitions:** Transitional (parent, **no marker data in the
+sheet at all** — see `gaps.tsv`), T1/T2 B (`CD27- (CD38hi|CD10hi) CD24hi`),
+Mature B (parent, `CD27- CD38lo/-`), T3 (`CD27- (CD38lo/-|CD10lo) CD24+
+IgD+`), Naive (`CD27- (CD38lo/-|CD10-) CD24- IgD+`), BDN (parent, `CD27-
+(CD38lo/-|CD10-) CD24- IgD-`), BDN1–4 (BDN + CD21/CD11c/CD185/IgE
+combinations).
+
+| SOULCAP | Proposed CL term | Proposed CL ID | Match type | Source |
+|---|---|---|---|---|
+| T1/T2 B | transitional stage B cell | `CL:0000818` | Broad | OAK-verified — SOULCAP combines T1+T2 into one gate; CL:0000818 is the parent of both `CL:0000958` (T1) and `CL:0000959` (T2), which CL keeps separate |
+| Mature B | mature B cell | `CL:0000785` | Exact | Lexical |
+| T3 | T3 B cell | `CL:0000960` | Exact | Lexical |
+| Naive | naive B cell | `CL:0000788` | Exact | Lexical |
+| BDN | double negative memory B cell | `CL:0000981` | Exact | OAK-verified — batch lexical had wrongly picked `CL:0002103` "**IgG-positive** double negative memory B cell," an overly-specific child term |
+| BDN1 / BDN2 / BDN3 / BDN4 | double negative memory B cell | `CL:0000981` | Broad | No CL subtype terms exist for this DN1–4 scheme — see CL gap below |
+
+**Rationale:** Marker-axiom scoring was useless across this entire tree —
+every row's top candidates were CL terms using **mouse** B-cell-development
+nomenclature (`B220-positive/negative CD38-positive/negative ...`), which
+share enough generic negative markers with SOULCAP's human panel to score
+well without being biologically relevant. All picks above are lexical,
+cross-checked with direct OAK verification wherever the batch lexical output
+looked suspicious.
+
+**CL gap — BDN1–4:** SOULCAP defines four "double negative" B cell subsets
+(BDN1–4) using CD21/CD11c/CD185(CXCR5)/IgE combinations — this is the
+DN1–DN4 atypical/age-associated B cell classification scheme from the
+autoimmunity/aging literature. Direct searches for "DN1 B cell" through
+"DN4 B cell" and "atypical memory B cell" returned **zero CL hits** — CL only
+has the general parent `CL:0000981` "double negative memory B cell," with no
+further subtyping. All four SOULCAP subsets currently collapse to the same
+Broad match. Logged in `gaps.tsv`.
+
+**Note — Transitional (parent):** not mapped here (no marker data to derive
+a match from, and the row is presumably meant as a pure category label like
+Mature B / BDN / Bmem) — see `gaps.tsv` for the existing `no_reasonable_cl_match`
+entry. If a plain label match is wanted despite the empty markers, `CL:0000818`
+"transitional stage B cell" is the obvious lexical candidate, parallel to how
+T1/T2 B was resolved above.
+
+---
+
+## Memory B cell tree
+
+**SOULCAP definitions:** Bmem (parent, `CD27+ CD38lo/-`), then split by
+Ig isotype: IgD only (`IgD+ IgM-`), Unswitched (`IgD+ IgM+`), IgM only
+(`IgD- IgM+`), Switched (parent, `IgD- IgM-`), then IgA/IgG/IgE
+(Switched + single Ig-class positive).
+
+| SOULCAP | Proposed CL term | Proposed CL ID | Match type | Source |
+|---|---|---|---|---|
+| Bmem | memory B cell | `CL:0000787` | Exact | Lexical |
+| IgD only | — | — | — | **No CL match found — see gap below** |
+| Unswitched | unswitched memory B cell | `CL:0000970` | Exact | Lexical, OAK-confirmed |
+| IgM only | IgM memory B cell | `CL:0000971` | Exact | Lexical, OAK-confirmed |
+| Switched | class switched memory B cell | `CL:0000972` | Exact | OAK-verified — batch lexical had wrongly picked `CL:0002117` "**IgG-negative** class switched memory B cell," an overly-specific child term |
+| IgA | IgA memory B cell | `CL:0000973` | Exact | Lexical, OAK-confirmed |
+| IgG | IgG memory B cell | `CL:0000979` | Exact | OAK-verified — batch lexical had wrongly picked `CL:0002117` "**IgG-negative** class switched memory B cell," the **opposite polarity** of what SOULCAP's IgG row defines |
+| IgE | IgE memory B cell | `CL:0000948` | Exact | Lexical, OAK-confirmed |
+
+**Rationale:** Same pattern as the maturation tree — marker scoring found
+nothing useful (mouse B220 terms again), so these are lexical matches. Two
+of the batch's raw lexical picks (Switched, IgG) were caught and corrected
+here: both had landed on `CL:0002117`, a specific IgG-**negative** subtype,
+which is simply wrong for the IgG row (opposite Ig-class polarity) and
+imprecise for Switched (too specific — excludes IgG-switched cells from the
+"switched" parent category, which shouldn't exclude any Ig class).
+
+**CL gap — "IgD only" memory B cell:** SOULCAP distinguishes IgD⁺IgM⁻
+("IgD only") from IgD⁺IgM⁺ ("Unswitched") memory B cells as two separate
+populations. Direct searches for "IgD-positive memory B cell" and "IgD only
+memory B cell" returned **zero CL hits**; the only IgD-related term found is
+`CL:0001053` "IgD-negative memory B cell" — the **opposite** polarity, not a
+match. This looks like a genuine CL gap (no term for the IgD⁺IgM⁻ subset)
+rather than a naming mismatch — flagged, not mapped. Logged in `gaps.tsv`.
+
+---
+
+# T cell tree
+
+The T cell branch is much larger (83 remaining rows) and includes 26 rows
+with **no `Full Name` populated in the sheet at all** — those are documented
+separately below rather than guessed at. Marker-axiom scoring was uniformly
+useless across every row in this branch (top candidates were consistently
+unrelated myeloid/NK terms — `Gr1-low myeloid suppressor cell`, `myeloid
+dendritic cell, human` — sharing generic lineage-exclusion markers with
+almost every SOULCAP T cell row). Every mapping below is lexical/name-based,
+verified directly via OAK rather than trusted from the raw batch output,
+since the raw lexical picks were wrong or missing for a large fraction of
+this branch too (see notes per group).
+
+## Core T cell lineage
+
+| SOULCAP | Proposed CL term | Proposed CL ID | Match type |
+|---|---|---|---|
+| T cell | T cell | `CL:0000084` | Exact |
+| TCRab | alpha-beta T cell | `CL:0000789` | Exact |
+| TCRgd | gamma-delta T cell | `CL:0000798` | Exact |
+| iNKT | mature NK T cell | `CL:0000814` | Exact |
+| MAIT | mucosal-associated invariant T cell | `CL:0000940` | Exact |
+| CD4+ TCRab T cell | CD4-positive, alpha-beta T cell | `CL:0000624` | Exact |
+| CD8+ TCRab T cell | CD8-positive, alpha-beta T cell | `CL:0000625` | Exact |
+| CD4-/CD8- TCRgd | CD4-negative, CD8-negative gamma-delta T cell | `CL:0000803` | Exact |
+
+**Note — iNKT / `CL:0000814`:** this is the **same term** already flagged in
+[repo issue #13](https://github.com/Cellular-Semantics/SOULCAP_CL_Mapping/issues/13)
+as needing a rename to "iNKT cell" (currently labelled "mature NK T cell,"
+filed upstream, awaiting CL maintainer review — see `cl_term_issues.md`). The
+mapping is correct either way; just noting it inherits that pending
+correction.
+
+## Combined-lineage (αβ+γδ) and double-positive/double-negative gaps
+
+SOULCAP has four rows that combine alpha-beta **and** gamma-delta T cells
+under one CD4/CD8 gate (`CD4+ T cell`, `CD8+ T cell`, `CD4+/CD8+ T cell`,
+`CD4-/CD8- T cell`), plus double-positive and double-negative alpha-beta and
+gamma-delta variants. CL organizes CD4/CD8 status **primarily under the
+alpha-beta lineage** and does not have combined αβ+γδ terms, a clean
+double-positive alpha-beta term, or a *peripheral* (non-thymic) double-negative
+alpha-beta term — direct searches for "double positive T cell," "double
+negative alpha-beta T cell," and "CD4-positive T cell" (unqualified) all
+returned nothing or only thymocyte-stage terms (thymocytes are the wrong
+tissue/maturity stage for a blood/PBMC flow panel).
+
+| SOULCAP | Proposed CL term | Proposed CL ID | Match type | Note |
+|---|---|---|---|---|
+| CD4+ T cell | CD4-positive, alpha-beta T cell | `CL:0000624` | Broad | Alpha-beta dominates the CD4+ compartment; CL has no combined αβ+γδ CD4+ term |
+| CD8+ T cell | CD8-positive, alpha-beta T cell | `CL:0000625` | Broad | Same reasoning |
+| CD4+/CD8+ T cell | alpha-beta T cell | `CL:0000789` | Broad — **gap** | No CD4+CD8+ double-positive term found at all (peripheral DP T cells are themselves biologically unusual) |
+| CD4-/CD8- T cell | T cell | `CL:0000084` | Broad — **gap** | No peripheral (non-thymic) double-negative term spanning both TCR types |
+| CD4+/CD8+ TCRab T cell | alpha-beta T cell | `CL:0000789` | Broad — **gap** | Same DP gap, alpha-beta-restricted |
+| CD4-/CD8- TCRab T cell | alpha-beta T cell | `CL:0000789` | Broad — **gap** | Only `CL:0002489` "double negative **thymocyte**" found — wrong tissue/stage |
+| CD4+ TCRgd T cell | gamma-delta T cell | `CL:0000798` | Broad — **gap** | CD4+ gd T cells are atypical/rare in normal blood; no CL term found |
+| CD8+ TCRgd T cell | gamma-delta T cell | `CL:0000798` | Broad — **gap** | No CL term found |
+| CD4+/CD8+ TCRgd | gamma-delta T cell | `CL:0000798` | Broad — **gap** | No CL term found |
+
+All seven "gap" rows above are logged in `gaps.tsv` as one grouped entry
+(CL's CD4/CD8 vocabulary being alpha-beta-centric), rather than seven
+separate entries, since it's the same underlying structural gap.
+
+## CD56+ T cell family
+
+SOULCAP defines 13 CD56+ T cell variants crossing CD56 positivity with
+CD4/CD8/DP/DN status and TCRab/TCRgd lineage. CL has exactly **one** term at
+this level of granularity:
+
+| SOULCAP | Proposed CL term | Proposed CL ID | Match type |
+|---|---|---|---|
+| CD56+ T cell, CD56+ CD4 T cell, CD56+ CD8 T cell, CD56+ TCRab, CD56+ CD4+ TCRab, CD56+ CD8+ TCRab, CD56+ CD4+/CD8+ TCRab, CD56+ CD4-/CD8- TCRab, CD56+ TCRgd, CD56+ CD4+ TCRgd, CD56+ CD8+ TCRgd, CD56+ CD4+/CD8+ TCRgd, CD56+ CD8-/CD8- TCRgd | mature NK T cell, human | `CL:4052055` | Broad (all 13) |
+
+**Rationale:** `CL:4052055`'s current label is "Mature NK T cell, human" —
+this is the **other** term from repo issue #13, already proposed for renaming
+to "CD56-positive T cell, human" (filed upstream as
+[CL#3663](https://github.com/obophenotype/cell-ontology/issues/3663), awaiting
+review). It is the correct conceptual match for this whole family; CL simply
+doesn't subdivide "CD56-positive T cell" by CD4/CD8/TCR-type the way
+SOULCAP's panel does, so all 13 rows collapse to the same Broad match. The
+raw batch lexical output was **unreliable** for this family (results ranged
+from `hematopoietic stem cell` to `mature neutrophil` — direct OAK
+verification via "mature NK T cell, human" was necessary, not optional).
+Logged as one grouped `cl_axiom_gap`-style entry in `gaps.tsv`.
+
+## Naive / central memory / effector memory / TEMRA tree
+
+SOULCAP crosses four differentiation states (naive, central memory Tcm,
+effector memory Tem, CD45RA+ effector memory/TEMRA) with CD4/CD8 status and,
+separately, TCRab/TCRgd lineage — 24 rows. CL has clean, well-established
+terms for the **CD4/CD8 × alpha-beta** combinations; it does not have
+gamma-delta-specific or lineage-combined (αβ+γδ) versions of any of them.
+
+| SOULCAP | Proposed CL term | Proposed CL ID | Match type |
+|---|---|---|---|
+| Tnaive (general) | naive T cell | `CL:0000898` | Exact |
+| CD4+ TCRab Tnaive | naive thymus-derived CD4-positive, alpha-beta T cell | `CL:0000895` | Exact |
+| CD8+ TCRab Tnaive | naive thymus-derived CD8-positive, alpha-beta T cell | `CL:0000900` | Exact |
+| CD4+ TCRab Tcm | central memory CD4-positive, alpha-beta T cell | `CL:0000904` | Exact |
+| CD8+ TCRab Tcm | central memory CD8-positive, alpha-beta T cell | `CL:0000907` | Exact |
+| CD4+ TCRab Tem | effector memory CD4-positive, alpha-beta T cell | `CL:0000905` | Exact |
+| CD8+ TCRab Tem | effector memory CD8-positive, alpha-beta T cell | `CL:0000913` | Exact |
+| CD4+ TCRab Temra | effector memory CD45RA-positive, alpha-beta T cell, terminally differentiated | `CL:4030002` | Exact |
+| CD4+ Tnaive (general) | naive thymus-derived CD4-positive, alpha-beta T cell | `CL:0000895` | Broad |
+| CD8+ Tnaive (general) | naive thymus-derived CD8-positive, alpha-beta T cell | `CL:0000900` | Broad |
+| CD4+ Tcm (general) | central memory CD4-positive, alpha-beta T cell | `CL:0000904` | Broad |
+| CD8+ Tcm (general) | central memory CD8-positive, alpha-beta T cell | `CL:0000907` | Broad |
+| CD4+ Tem (general) | effector memory CD4-positive, alpha-beta T cell | `CL:0000905` | Broad |
+| CD8+ Tem (general) | effector memory CD8-positive, alpha-beta T cell | `CL:0000913` | Broad |
+| CD4+ Temra (general) | effector memory CD45RA-positive, alpha-beta T cell, terminally differentiated | `CL:4030002` | Broad |
+| Tcm (general, no CD4/CD8) | T cell | `CL:0000084` | Broad — **gap** |
+| Tem (general, no CD4/CD8) | T cell | `CL:0000084` | Broad — **gap** |
+| Temra (general, no CD4/CD8) | T cell | `CL:0000084` | Broad — **gap** |
+| CD4+ TCRgd Tnaive, CD4+ TCRgd Tcm, CD4+ TCRgd Tem, CD4+ TCRgd Temra | gamma-delta T cell | `CL:0000798` | Broad — **gap** |
+| CD8+ TCRgd Tnaive, CD8+ TCRgd Tcm, CD8+ TCRgd Tem | gamma-delta T cell | `CL:0000798` | Broad — **gap** |
+| CD8+ Temra (general), CD8+ TCRab Temra | effector memory CD8-positive, alpha-beta T cell | `CL:0000913` | Broad — **gap** |
+
+**Rationale:** Direct OAK searches confirm CL has **no** generic
+"central/effector memory T cell" term spanning both CD4 and CD8 (only the
+CD4-specific and CD8-specific versions exist), **no** gamma-delta-specific
+differentiation-state terms at all, and — asymmetrically — **no CD8+-specific
+TEMRA term** with the "terminally differentiated" qualifier that exists for
+CD4+ (`CL:4030002`). That last asymmetry is worth a closer look; not filed as
+a formal CL gap yet since it needs a second check against CL's own hierarchy
+before concluding it's a genuine omission rather than something named
+differently. All "gap" rows above are logged in `gaps.tsv`, grouped by
+category rather than one row each.
+
+## Rows with no `Full Name` in the sheet — not mapped
+
+26 rows in this branch have an **empty `Full Name` field** in the master
+sheet (`Conv TCRab` and its CD4+/CD8+/DP/DN children; `T helper`, `T
+cytotoxic`, `Tfh`, `CD4 PanT helper`, `CD4 PanT Treg`; `ConT Treg-like`,
+`ConT Tfh-like`, `Th1-like` / `Th2-like` / `Th9-like` / `Th17-like`; and the
+`Vg9`/`Vd1`/`Vd2`/`Vd3`/`Vg9 Vd1`/`Vg9 Vd2` gamma-delta TCR-usage subsets).
+**Not mapped here** — inventing a name for an unnamed row isn't a call this
+report should make.
+
+Two things worth flagging explicitly:
+
+1. **A likely data bug**, not just a missing name: `Th1-like`, `Th2-like`,
+   `Th9-like`, and `Th17-like` each appear **twice** in the sheet. One copy
+   (parented under "CD4 ConT") has iNKT-style `TCRVa24-Ja18`/`CD1d-a-GalCer`
+   marker strings that look like they were copy-pasted from an adjacent iNKT
+   row rather than genuine Th-subset markers. The other copy (no parent) has
+   the biologically-correct Th-subset chemokine receptor panel (`CD183`/CXCR3,
+   `CD185`/CXCR5, `CD194`/CCR4, `CD196`/CCR6) matching the classic
+   Th1/Th2/Th9/Th17 definitions. This looks like a genuine sheet error, not
+   two intentional variants.
+2. **For when these get named**, a few obvious CL matches are already
+   confirmed and ready: `T helper` → `CL:0000912` "helper T cell"; `T
+   cytotoxic` → `CL:0000910` "cytotoxic T cell". The rest would need their
+   own verification once named.
+
+Logged as one grouped entry in `gaps.tsv` rather than 26 separate rows.
+rather than a naming mismatch — flagged, not mapped. Logged in `gaps.tsv`.
