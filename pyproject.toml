@@ -13,6 +13,12 @@ dependencies = [
     "certifi>=2024.0",
     "oaklib>=0.6.23",
     "sssom>=0.4.17",
+    # eutils==0.6.0 (the version uv resolves on Python <3.12, a transitive
+    # dependency of oaklib) still does `import pkg_resources` at module
+    # load; setuptools >=81 removed pkg_resources entirely, breaking any
+    # import of oaklib (and therefore soulcap-oak-match) on Python 3.11.
+    # Pin until eutils/oaklib drop the pkg_resources dependency upstream.
+    "setuptools<81",
 ]
 
 [project.scripts]

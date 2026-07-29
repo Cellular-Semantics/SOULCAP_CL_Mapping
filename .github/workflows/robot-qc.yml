@@ -89,7 +89,12 @@ jobs:
         run: uv run soulcap-sssom --robot-template mapping-template.tsv
 
       - name: Merge our mappings into CL as new classes + logical axioms
-        run: ./robot template --input cl-base.owl --template mapping-template.tsv --output merged.owl
+        run: |
+          ./robot template \
+            --prefix "SOULCAP: https://soulcap.org/cell_type/" \
+            --input cl-base.owl \
+            --template mapping-template.tsv \
+            --output merged.owl
 
       - name: ROBOT report on the merged ontology
         run: ./robot report --input merged.owl --fail-on ERROR --output merged-report.tsv
