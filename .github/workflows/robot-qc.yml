@@ -4,10 +4,13 @@ on:
   pull_request:
 
 jobs:
-  # Standalone audit of upstream CL, independent of anything in this repo —
-  # catches pre-existing CL bugs (e.g. duplicate equivalence/subclass axioms,
-  # unsatisfiable classes) worth reporting upstream. Not a check on our own
-  # mappings; see robot-check-our-mappings for that.
+  # Standalone, read-only audit of upstream CL — never merges anything from
+  # this repo into it, never asserts our candidate mappings as true. Catches
+  # pre-existing CL bugs (e.g. duplicate equivalence/subclass axioms,
+  # unsatisfiable classes) worth reporting upstream. Our own candidate
+  # mappings stay as SSSOM (reports/candidate_cl_mappings.sssom.tsv) — a
+  # proposal for human review, not something this repo should unilaterally
+  # convert into OWL axioms and reason over as if already accepted.
   robot-upstream-cl:
     name: ROBOT report + reason — upstream CL
     runs-on: ubuntu-latest
@@ -44,77 +47,4 @@ jobs:
           path: |
             cl-base-report.tsv
             cl-base-reasoned.owl
-          if-no-files-found: ignore
-
-  # Checks whether OUR proposed mappings would introduce a problem: converts
-  # the curated SSSOM mapping set into true logical OWL axioms (equivalentClass
-  # for exact matches, subClassOf for broad — see write_robot_template() in
-  # sssom_export.py, and why SSSOM's own OWL writer isn't used for this),
-  # merges them into CL as new classes, then runs the same report/reason
-  # checks over the merged result.
-  robot-check-our-mappings:
-    name: ROBOT report + reason — CL + our SSSOM mappings
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5
-        with:
-          enable-cache: true
-
-      - name: Set up Python
-        run: uv python install 3.12
-
-      - name: Install dependencies
-        run: uv sync --frozen --extra dev
-
-      - name: Set up Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: "21"
-
-      - name: Install ROBOT
-        run: |
-          curl -sL -o robot.jar https://github.com/ontodev/robot/releases/latest/download/robot.jar
-          curl -sL -o robot https://raw.githubusercontent.com/ontodev/robot/master/bin/robot
-          chmod +x robot
-          echo "$PWD" >> "$GITHUB_PATH"
-
-      - name: Download CL (base, import-free release artifact)
-        run: curl -sL -o cl-base.owl http://purl.obolibrary.org/obo/cl/cl-base.owl
-
-      - name: Build SSSOM + ROBOT template from curated mappings
-        run: uv run soulcap-sssom --robot-template mapping-template.tsv
-
-      - name: Merge our mappings into CL as new classes + logical axioms
-        run: |
-          ./robot template \
-            --prefix "SOULCAP: https://soulcap.org/cell_type/" \
-            --input cl-base.owl \
-            --template mapping-template.tsv \
-            annotate \
-            --ontology-iri "https://github.com/Cellular-Semantics/SOULCAP_CL_Mapping/merged-qc" \
-            --annotation dc:title "CL merged with SOULCAP candidate mappings (CI QC artifact)" \
-            --annotation dc:description "Ephemeral merge of CL base plus the SSSOM-derived candidate mappings, for ROBOT report/reason checks only -- not a published ontology." \
-            --annotation dc:license "https://creativecommons.org/licenses/by/4.0/" \
-            --output merged.owl
-
-      - name: ROBOT report on the merged ontology
-        run: ./robot report --input merged.owl --fail-on ERROR --output merged-report.tsv
-
-      - name: ROBOT reason (ELK) on the merged ontology
-        run: ./robot reason --input merged.owl --reasoner ELK --output merged-reasoned.owl
-
-      - name: Upload merged QC artifacts
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: robot-merged-mappings-qc
-          path: |
-            reports/candidate_cl_mappings.sssom.tsv
-            mapping-template.tsv
-            merged-report.tsv
-            merged-reasoned.owl
           if-no-files-found: ignore

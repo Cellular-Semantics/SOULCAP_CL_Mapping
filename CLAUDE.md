@@ -65,14 +65,12 @@ documents at the repo root.
 - **All code must have ≥80% unit-test coverage**, with tests under `tests/`
   using a standard harness (`pytest`).
 - **GitHub Actions must run the tests on all PRs.** `.github/workflows/tests.yml`
-  runs lint/format/mypy/pytest. `.github/workflows/robot-qc.yml` runs ROBOT
-  ontology QC on every PR: one job audits upstream CL (`cl-base.owl`, the
-  import-free release artifact) standalone with `robot report` + `robot
-  reason` (ELK), independent of our mappings; a second job converts the
-  curated SSSOM mapping set into true logical OWL axioms (via
-  `soulcap-sssom --robot-template`) and re-runs the same checks on CL merged
-  with those axioms, to catch problems our own proposed mappings would
-  introduce.
+  runs lint/format/mypy/pytest. `.github/workflows/robot-qc.yml` runs a
+  read-only ROBOT audit of upstream CL (`cl-base.owl`, the import-free release
+  artifact) with `robot report` + `robot reason` (ELK), independent of our
+  mappings. It never merges our own candidate mappings into CL or reasons
+  over them as if accepted — those stay as SSSOM (`soulcap-sssom`), a
+  proposal for human review, not something this repo asserts unilaterally.
 - Use **UV** for environment and dependency management (`uv sync`,
   `uv run ...`). Don't invoke `pip` directly.
 - The marker expression language is precisely defined in

@@ -187,8 +187,7 @@ standard [SSSOM](https://mapping-commons.github.io/sssom/) TSV, instead of
 writing OWL axioms directly:
 
 ```bash
-uv run soulcap-sssom                          # -> reports/candidate_cl_mappings.sssom.tsv
-uv run soulcap-sssom --robot-template out.tsv # + a ROBOT `template` TSV (see below)
+uv run soulcap-sssom # -> reports/candidate_cl_mappings.sssom.tsv
 ```
 
 `confidence` and `comment` are derived automatically — not hand-typed — from
@@ -197,21 +196,20 @@ inference, or has no marker axiom for the term at all. This is what lets the
 output distinguish "CL confirms this" from "this is only supported by
 inferred markers," per row.
 
+SSSOM is the final output here, deliberately: these are proposed mappings for
+human review, not assertions this repo makes unilaterally. This module does
+not convert them into OWL logical axioms or merge them into CL.
+
 ## ROBOT ontology QC
 
-`.github/workflows/robot-qc.yml` runs on every PR:
-
-- **Upstream CL audit** — downloads CL's `cl-base.owl` (import-free release
-  artifact) and runs `robot report` + `robot reason` (ELK) on it standalone,
-  independent of anything in this repo. Catches pre-existing CL bugs (e.g.
-  duplicate equivalence/subclass axioms) worth reporting upstream.
-- **Our mappings, merged** — converts the curated SSSOM mapping set into
-  *true* logical OWL axioms (`soulcap-sssom --robot-template`; SSSOM's own
-  OWL writer only emits `skos:exactMatch` as a non-logical annotation, which
-  a reasoner ignores — see `write_robot_template()`'s docstring), merges them
-  into CL as new classes via `robot template`, and re-runs report/reason on
-  the merged result to catch problems our own proposed mappings would
-  introduce.
+`.github/workflows/robot-qc.yml` runs on every PR and audits upstream CL —
+downloads CL's `cl-base.owl` (import-free release artifact) and runs
+`robot report` + `robot reason` (ELK) on it standalone, independent of
+anything in this repo. Catches pre-existing CL bugs (e.g. duplicate
+equivalence/subclass axioms) worth reporting upstream. It never touches our
+own candidate mappings — those stay as SSSOM, a proposal for human review,
+not something this repo should unilaterally convert into OWL axioms and merge
+into CL as if already accepted.
 
 ## Skills & literature workflows
 

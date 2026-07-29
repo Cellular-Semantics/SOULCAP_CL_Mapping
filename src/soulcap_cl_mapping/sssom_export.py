@@ -8,10 +8,15 @@ reviews them and writes the accepted decision into
 small curated table in ``CURATED_MAPPINGS`` below (structured, one row per
 decision). This module turns that curated table into a proper SSSOM
 mapping set — the standard machine-readable format for cross-resource
-mappings — rather than writing OWL axioms directly. A separate function,
-:func:`write_robot_template`, converts SSSOM rows into a ROBOT ``template``
-TSV (true logical OWL axioms) for the CI ontology-QC pipeline; see
-``.github/workflows/robot-qc.yml``.
+mappings — rather than writing OWL axioms directly.
+
+SSSOM is the final output here, deliberately. Converting these mappings
+into OWL logical axioms (``owl:equivalentClass``/``rdfs:subClassOf``) and
+merging them into CL would assert them as *true*, which isn't this repo's
+call to make unilaterally — that's for CL maintainers to accept, after
+review, not something to automate. (An earlier version of this module did
+exactly that as a CI check; removed after review feedback that it
+overstepped.)
 
 Confidence and the ``comment`` field are **not** hand-typed per row — they
 are derived automatically from whether CL directly asserts the matched
@@ -854,60 +859,6 @@ def write_sssom(path: Path, rows: list[dict]) -> None:
 
 
 # --------------------------------------------------------------------------- #
-# ROBOT template — true logical axioms, for reasoner QC
-# --------------------------------------------------------------------------- #
-# NOTE: SSSOM's own OWL serialisation (sssom.writers.write_owl) emits
-# skos:exactMatch as a plain annotation on a reified owl:Axiom — a reasoner
-# does not interpret that as logically meaningful, so merging *that* into CL
-# and reasoning over it can never surface a problem our mappings introduce.
-# A ROBOT `template` (https://robot.obolibrary.org/template) declares each
-# SOULCAP subject as a new class and asserts a *true* logical relationship —
-# owl:equivalentClass for an exact match, rdfs:subClassOf for a broad one —
-# which is what makes a merged-and-reasoned check meaningful.
-ROBOT_TEMPLATE_HEADER = ["ID", "LABEL", "equivalent to", "subclass of"]
-ROBOT_TEMPLATE_ROBOT_ROW = ["ID", "LABEL", "EC %", "SC %"]
-
-
-def build_robot_template_rows(rows: list[dict]) -> list[list[str]]:
-    """Convert SSSOM mapping rows into ROBOT template data rows.
-
-    The ROBOT ``LABEL`` column is derived from ``subject_id``, not
-    ``subject_label`` — ``subject_label`` is the SOULCAP sheet's own
-    ``Full Name`` and is **not** guaranteed unique (e.g. the WB and PBMC
-    preps of Basophil both have Full Name "Basophil"), whereas ``subject_id``
-    always is, by construction. Reusing the same label on two different new
-    classes trips ROBOT report's ``duplicate_label`` ERROR check.
-    """
-    template_rows = []
-    for r in rows:
-        is_exact = r["predicate_id"] == "skos:exactMatch"
-        local_name = r["subject_id"].removeprefix("SOULCAP:").replace("_", " ")
-        template_rows.append(
-            [
-                r["subject_id"],
-                local_name,
-                r["object_id"] if is_exact else "",
-                r["object_id"] if not is_exact else "",
-            ]
-        )
-    return template_rows
-
-
-def write_robot_template(path: Path, rows: list[dict]) -> None:
-    """Write a ROBOT ``template`` TSV built from SSSOM mapping rows.
-
-    See :data:`ROBOT_TEMPLATE_HEADER` for why this exists instead of just
-    using SSSOM's own OWL writer.
-    """
-    path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("w", encoding="utf-8", newline="") as fh:
-        writer = csv.writer(fh, delimiter="\t")
-        writer.writerow(ROBOT_TEMPLATE_HEADER)
-        writer.writerow(ROBOT_TEMPLATE_ROBOT_ROW)
-        writer.writerows(build_robot_template_rows(rows))
-
-
-# --------------------------------------------------------------------------- #
 # CLI
 # --------------------------------------------------------------------------- #
 def main(argv: list[str] | None = None) -> int:
@@ -927,14 +878,6 @@ def main(argv: list[str] | None = None) -> int:
         default=DEFAULT_OUT,
         help=f"Output path (default: {DEFAULT_OUT}).",
     )
-    parser.add_argument(
-        "--robot-template",
-        type=Path,
-        default=None,
-        metavar="PATH",
-        help="Also write a ROBOT `template` TSV (true logical axioms, for "
-        "`robot template`/`robot reason` QC — see write_robot_template()).",
-    )
     args = parser.parse_args(argv)
 
     if not args.tsv.exists():
@@ -948,15 +891,11 @@ def main(argv: list[str] | None = None) -> int:
         assertion_status = load_assertion_status(args.tsv)
         rows = build_mapping_rows(CURATED_MAPPINGS, assertion_status)
         write_sssom(args.out, rows)
-        if args.robot_template:
-            write_robot_template(args.robot_template, rows)
     except Exception as exc:  # noqa: BLE001
         print(f"error: {exc}", file=sys.stderr)
         return 1
 
     print(f"Wrote {len(rows)} mappings to {args.out}")
-    if args.robot_template:
-        print(f"Wrote ROBOT template to {args.robot_template}")
     return 0
 
 
