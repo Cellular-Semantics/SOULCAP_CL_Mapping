@@ -869,14 +869,23 @@ ROBOT_TEMPLATE_ROBOT_ROW = ["ID", "LABEL", "EC %", "SC %"]
 
 
 def build_robot_template_rows(rows: list[dict]) -> list[list[str]]:
-    """Convert SSSOM mapping rows into ROBOT template data rows."""
+    """Convert SSSOM mapping rows into ROBOT template data rows.
+
+    The ROBOT ``LABEL`` column is derived from ``subject_id``, not
+    ``subject_label`` — ``subject_label`` is the SOULCAP sheet's own
+    ``Full Name`` and is **not** guaranteed unique (e.g. the WB and PBMC
+    preps of Basophil both have Full Name "Basophil"), whereas ``subject_id``
+    always is, by construction. Reusing the same label on two different new
+    classes trips ROBOT report's ``duplicate_label`` ERROR check.
+    """
     template_rows = []
     for r in rows:
         is_exact = r["predicate_id"] == "skos:exactMatch"
+        local_name = r["subject_id"].removeprefix("SOULCAP:").replace("_", " ")
         template_rows.append(
             [
                 r["subject_id"],
-                r["subject_label"],
+                local_name,
                 r["object_id"] if is_exact else "",
                 r["object_id"] if not is_exact else "",
             ]

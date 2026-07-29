@@ -94,6 +94,11 @@ jobs:
             --prefix "SOULCAP: https://soulcap.org/cell_type/" \
             --input cl-base.owl \
             --template mapping-template.tsv \
+            annotate \
+            --ontology-iri "https://github.com/Cellular-Semantics/SOULCAP_CL_Mapping/merged-qc" \
+            --annotation dc:title "CL merged with SOULCAP candidate mappings (CI QC artifact)" \
+            --annotation dc:description "Ephemeral merge of CL base plus the SSSOM-derived candidate mappings, for ROBOT report/reason checks only -- not a published ontology." \
+            --annotation dc:license "https://creativecommons.org/licenses/by/4.0/" \
             --output merged.owl
 
       - name: ROBOT report on the merged ontology

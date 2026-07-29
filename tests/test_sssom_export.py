@@ -284,7 +284,7 @@ def test_build_robot_template_rows_exact_uses_equivalent_to():
         {"CL:1": True},
     )
     template_rows = se.build_robot_template_rows(rows)
-    assert template_rows == [["SOULCAP:X", "X cell", "CL:1", ""]]
+    assert template_rows == [["SOULCAP:X", "X", "CL:1", ""]]
 
 
 def test_build_robot_template_rows_broad_uses_subclass_of():
@@ -301,7 +301,38 @@ def test_build_robot_template_rows_broad_uses_subclass_of():
         {"CL:1": True},
     )
     template_rows = se.build_robot_template_rows(rows)
-    assert template_rows == [["SOULCAP:X", "X cell", "", "CL:1"]]
+    assert template_rows == [["SOULCAP:X", "X", "", "CL:1"]]
+
+
+def test_build_robot_template_rows_label_derived_from_id_not_subject_label():
+    # Regression: subject_label (SOULCAP's own Full Name) is NOT guaranteed
+    # unique -- e.g. the WB and PBMC preps of Basophil both have Full Name
+    # "Basophil" -- so reusing it as the ROBOT LABEL trips the
+    # duplicate_label ERROR check. Deriving from subject_id (always unique)
+    # avoids that by construction.
+    rows = se.build_mapping_rows(
+        [
+            {
+                "abbreviation": "Basophil (PBMC)",
+                "subject_label": "Basophil",
+                "cl_id": "CL:1",
+                "cl_label": "x",
+                "match_type": "Exact",
+            },
+            {
+                "abbreviation": "Basophil (WB)",
+                "subject_label": "Basophil",
+                "cl_id": "CL:1",
+                "cl_label": "x",
+                "match_type": "Exact",
+            },
+        ],
+        {"CL:1": True},
+    )
+    template_rows = se.build_robot_template_rows(rows)
+    labels = [tr[1] for tr in template_rows]
+    assert len(labels) == len(set(labels)), f"duplicate ROBOT labels: {labels}"
+    assert labels == ["Basophil (PBMC)", "Basophil (WB)"]
 
 
 def test_write_robot_template_has_header_and_robot_row(tmp_path):
@@ -322,7 +353,20 @@ def test_write_robot_template_has_header_and_robot_row(tmp_path):
     lines = out_path.read_text(encoding="utf-8").splitlines()
     assert lines[0] == "ID\tLABEL\tequivalent to\tsubclass of"
     assert lines[1] == "ID\tLABEL\tEC %\tSC %"
-    assert lines[2] == "SOULCAP:X\tX cell\tCL:1\t"
+    assert lines[2] == "SOULCAP:X\tX\tCL:1\t"
+
+
+def test_curated_mappings_robot_labels_have_no_collisions():
+    # Guards against the real duplicate_label bug this was written to catch,
+    # for the actual curated table (not just a synthetic example).
+    assertion_status: dict[str, bool] = {}
+    rows = se.build_mapping_rows(se.CURATED_MAPPINGS, assertion_status)
+    template_rows = se.build_robot_template_rows(rows)
+    labels = [tr[1] for tr in template_rows]
+    assert len(labels) == len(set(labels)), (
+        "duplicate ROBOT labels in CURATED_MAPPINGS: "
+        f"{[label for label in labels if labels.count(label) > 1]}"
+    )
 
 
 def test_main_writes_robot_template_when_requested(tmp_path):
