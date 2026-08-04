@@ -34,6 +34,7 @@ soulcap-hgnc = "soulcap_cl_mapping.hgnc_map:main"
 soulcap-map = "soulcap_cl_mapping.marker_map:main"
 soulcap-oak-match = "soulcap_cl_mapping.oak_match:main"
 soulcap-sssom = "soulcap_cl_mapping.sssom_export:main"
+soulcap-europepmc = "soulcap_cl_mapping.europepmc_search:main"
 
 [project.optional-dependencies]
 dev = [
