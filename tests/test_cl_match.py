@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import csv
+import pytest
 from pathlib import Path
 from unittest.mock import patch
 
@@ -118,7 +119,7 @@ def test_extract_group_level_qualifier():
 def test_extract_skips_unqualified():
     # bare marker with no qualifier should be skipped
     result = cm.extract_signed_markers("CD45")
-    assert result == []
+    assert result == [("CD45", "unknown")]
 
 
 def test_extract_empty_expr():
@@ -126,8 +127,8 @@ def test_extract_empty_expr():
 
 
 def test_extract_invalid_expr():
-    # Should not raise, just return empty
-    assert cm.extract_signed_markers("((((") == []
+    with pytest.raises(cm.MarkerSyntaxError):
+        cm.extract_signed_markers("((((")
 
 
 # --------------------------------------------------------------------------- #
@@ -178,14 +179,9 @@ def test_clauses_group_without_pipe_flattens_like_old_behaviour():
     assert not any(isinstance(c, list) for c in result)
 
 
-def test_clauses_bracket_group_qualifier_falls_back_no_regression():
-    # [HLA-DR+ CD11chi]- (De Morgan negation of a compound group) is out of
-    # scope — must fall back to flattening each leaf with its own qualifier,
-    # same as extract_signed_markers, not crash or misbehave.
+def test_clauses_bracket_group_qualifier_preserves_negation():
     result = cm.extract_marker_clauses("[HLA-DR+ CD11chi]-")
-    assert ("HLA-DR", "positive") in result
-    assert ("CD11C", "positive") in result
-    assert not any(isinstance(c, list) for c in result)
+    assert result == [[("HLA-DR", "not:positive"), ("CD11C", "not:high")]]
 
 
 def test_clauses_skips_gate():
@@ -200,11 +196,13 @@ def test_clauses_empty_expr():
 
 
 def test_clauses_invalid_expr_does_not_raise():
-    assert cm.extract_marker_clauses("((((") == []
+    with pytest.raises(cm.MarkerSyntaxError):
+        cm.extract_marker_clauses("((((")
 
 
 def test_clauses_unbalanced_closing_bracket_does_not_raise():
-    assert cm.extract_marker_clauses("CD45+)") is not None
+    with pytest.raises(cm.MarkerSyntaxError):
+        cm.extract_marker_clauses("CD45+)")
 
 
 def test_clauses_nested_or_degrades_gracefully_no_crash():
@@ -952,7 +950,7 @@ def test_write_batch_tsv(tmp_path):
     assert out_path.exists()
     content = out_path.read_text(encoding="utf-8")
     assert "CL:0000623" in content
-    assert content.startswith("abbreviation\t")
+    assert content.startswith("subject_id\tspecimen\tabbreviation\t")
 
 
 def test_main_batch_writes_tsv(tmp_path, capsys):
@@ -1275,7 +1273,7 @@ def test_write_agreement_tsv(tmp_path):
     out_path = tmp_path / "nested" / "agreement.tsv"
     cm.write_agreement_tsv(out_path, merged)
     content = out_path.read_text(encoding="utf-8")
-    assert content.startswith("abbreviation\t")
+    assert content.startswith("subject_id\tspecimen\tabbreviation\t")
     assert "CL:0000623" in content
     assert "yes" in content
 

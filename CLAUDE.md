@@ -13,6 +13,21 @@ See [README.md](README.md) for the full overview and setup.
 
 ## Source of truth & data flow
 
+**Mapping implementation update (2026-09-08):** The Sheet still owns source
+definitions. Proposed mapping decisions now live in
+`mappings/curated_mappings.tsv`, with permanent local IDs in
+`mappings/soulcap_entities.tsv`; see [mappings/README.md](mappings/README.md).
+`CURATED_MAPPINGS` is only a compatibility view loaded from that TSV.
+`soulcap-sssom` generates the candidate Markdown and SSSOM from the same rows,
+with per-profile marker evidence and input hashes. Never edit the generated
+candidate report or duplicate decisions in Python. Historical narrative and
+the sheet-confirmation note are preserved in
+`reports/candidate_cl_mappings_narrative.md`. Fixed confidence tiers are retired;
+curator, lexical, literature, and marker evidence remain separate. This
+supersedes older descriptions below of hand-synchronized mappings and
+term-wide confidence. Validation, token extraction, and scoring share the
+AST in `marker_syntax.py`, compiled/evaluated by `phenotype.py`.
+
 - The **master data is a Google Sheet**, not anything in this repo:
   <https://docs.google.com/spreadsheets/d/1uWwczLxgbpWMmXycL8Thq5NVExzlib4A/edit>
 - Key tabs:
@@ -48,7 +63,7 @@ See [README.md](README.md) for the full overview and setup.
 | [reports/](reports/) | Analysis reports. `marker_string_issues.md` is the curated review; `marker_validation.md` is **auto-generated** by the EBNF validator on each sync. `cl_pro_relationships.md`/`.tsv` are **auto-generated** by `soulcap-cl-pro` from Ubergraph. `cl_term_issues.md` tracks proposed CL corrections found during mapping work. `candidate_cl_mappings.md` is the Milestone 4 deliverable — proposed SOULCAP→CL mappings with rationale and evidence. `candidate_cl_mappings_batch.tsv`/`candidate_cl_mappings_agreement.tsv` are **auto-generated** by `soulcap-match --batch [--lexical]` (issue #6) — a marker-axiom-only pass and a marker/lexical agreement pass across every SOULCAP cell type; treat as an unreviewed draft shortlist (conflicts must be checked), not curated output. `candidate_cl_mappings.sssom.tsv` is **auto-generated** by `soulcap-sssom` from the curated `CURATED_MAPPINGS` table in `sssom_export.py` (kept in sync by hand with `candidate_cl_mappings.md`) — standard SSSOM format, with `confidence`/`comment` derived from whether the match is backed by a directly-asserted CL marker axiom, an inferred-only one, or none at all (lexical/name match only). `gaps.tsv` is a curated, hand-maintained log of cases where SOULCAP has no reasonable CL match, CL conflicts with a marker panel, CL has an axiom gap, or the sheet itself has a data problem — separate from the mapping table; matching GitHub issues use the `gap` label (`.github/ISSUE_TEMPLATE/mapping_gap.yml`). `pro_marker_species_support.tsv` is the issue #11 deliverable — for each (CL cell type, general PRO marker) pair SOULCAP's mappings actually touch, whether literature supports the marker as human, mouse, or both, or `insufficient_evidence`; built by the `pro-marker-species-support` skill, every quote verified verbatim against its source before writing. New reports go here. `reports/citation_traversal/` holds gitignored, regenerable snippet caches + summaries from the `citation-traversal` skill. |
 | `src/soulcap_cl_mapping/` | All Python code. `sync_sheets.py` → `soulcap-sync`; `marker_syntax.py` → `soulcap-validate` (EBNF validator); `snippet_cache.py` → `soulcap-cache`; `report_validator.py` → `soulcap-validate-report`; `cl_pro.py` → `soulcap-cl-pro` (CL→PR relationships via Ubergraph SPARQL); `cl_match.py` → `soulcap-match` (marker-axiom + lexical CL candidate scoring, single-profile or `--batch`); `oak_match.py` → `soulcap-oak-match` (OAK sqlite-backed lexical/synonym CL search — downloads/caches a local CL database on first use, ~100MB); `sssom_export.py` → `soulcap-sssom` (curated mappings → SSSOM TSV, with confidence derived from CL marker-axiom assertion status); `pro_species_support.py` (scopes CL PRO markers needing species-specificity literature support — no CLI, called as a library from the `pro-marker-species-support` skill); `europepmc_search.py` → `soulcap-europepmc` (free, keyless Europe PMC search — fallback literature source when the Asta MCP server isn't reachable). |
 | `tests/` | Unit tests (mirror `src/` layout). |
-| `.claude/skills/` | Project skills — see [citation-traversal](.claude/skills/citation-traversal/SKILL.md), `ontology-term-lookup`, and [pro-marker-species-support](.claude/skills/pro-marker-species-support/SKILL.md). |
+| `.claude/skills/` | Project skills — see [citation-traversal](.claude/skills/citation-traversal/SKILL.md), `ontology-term-lookup`, [pro-marker-species-support](.claude/skills/pro-marker-species-support/SKILL.md), [gap-issue-filing](.claude/skills/gap-issue-filing/SKILL.md), [roadmap-status-sync](.claude/skills/roadmap-status-sync/SKILL.md), and [mapping-audit](.claude/skills/mapping-audit/SKILL.md). |
 | `.claude/hooks/` | Claude Code hooks. `validate_report_quotes.py` is a PreToolUse guard that blocks writing a citation-traversal report whose quotes aren't verbatim in the snippet cache. |
 | `data/` | Gitignored cache of the synced sheet (CSV + xlsx). |
 | `pyproject.toml` | Project metadata, deps, and the CLI entry points. |
@@ -125,6 +140,22 @@ exact ontology labels via OLS4 — prefer it for term resolution.
   reachable) or the keyless `soulcap-europepmc` fallback, writing verdicts to
   `reports/pro_marker_species_support.tsv`. The issue #11 workflow. See
   [SKILL.md](.claude/skills/pro-marker-species-support/SKILL.md).
+- **`gap-issue-filing`** — turn unfiled rows in `reports/gaps.tsv` into GitHub
+  issues from the `mapping_gap` template, checking for duplicates first and
+  writing the resulting issue URL back into the row. See
+  [SKILL.md](.claude/skills/gap-issue-filing/SKILL.md).
+- **`roadmap-status-sync`** — recompute each `ROADMAP.md` milestone's status
+  from what's actually on disk (deliverable files, row counts, linked issue
+  states) and correct any stale ⬜/🟡/✅/⛔ marker, so the roadmap never
+  undersells or oversells progress again. See
+  [SKILL.md](.claude/skills/roadmap-status-sync/SKILL.md).
+- **`mapping-audit`** — re-verify curated SOULCAP→CL mappings in
+  `candidate_cl_mappings.sssom.tsv` against current CL marker axioms and
+  literature evidence, catching drift or a `match_type` that no longer fits
+  its evidence tier. The Milestone 3 workflow, run today in reduced form
+  (evidence/drift only, not curator-intent capture) pending the Sheet gaining
+  its planned broad/exact + comment columns. See
+  [SKILL.md](.claude/skills/mapping-audit/SKILL.md).
 
 > Local RAG indexing (a `local-paper-index` skill) was trialled here but removed
 > to avoid confusion — it was copied verbatim from `atlas_chat` and unused.

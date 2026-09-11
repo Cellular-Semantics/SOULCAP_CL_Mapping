@@ -109,7 +109,7 @@ subtypes, not on the class itself.
 ### Missing human-specific "group 1 innate lymphoid cell" term
 
 **Repo issue:** [#14 Missing human-specific 'group 1 innate lymphoid cell' term (CL)](https://github.com/Cellular-Semantics/SOULCAP_CL_Mapping/issues/14)
-**Reference:** SOULCAP `ILC1` row ([data/marker_combinations.csv](../data/marker_combinations.csv)); [reports/candidate_cl_mappings.md](candidate_cl_mappings.md#ilc-family--innate-lymphoid-cells)
+**Reference:** SOULCAP `ILC1` row ([data/marker_combinations.csv](../data/marker_combinations.csv)); [reports/candidate_cl_mappings.md](candidate_cl_mappings_narrative.md#ilc-family--innate-lymphoid-cells)
 **Status:** Filed as a repo issue — not yet filed upstream to `obophenotype/cell-ontology`
 
 **Rationale:** CL distinguishes species-specific variants for two of the

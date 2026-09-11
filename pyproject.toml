@@ -22,6 +22,9 @@ dependencies = [
 ]
 
 [project.scripts]
+soulcap-audit = "soulcap_cl_mapping.audit:main"
+soulcap-evaluate = "soulcap_cl_mapping.evaluation:main"
+soulcap-cache-terms = "soulcap_cl_mapping.candidate_index:cache_main"
 soulcap-sync = "soulcap_cl_mapping.sync_sheets:main"
 soulcap-validate = "soulcap_cl_mapping.marker_syntax:main"
 soulcap-cache = "soulcap_cl_mapping.snippet_cache:main"
@@ -51,6 +54,10 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/soulcap_cl_mapping"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"mappings/soulcap_entities.tsv" = "soulcap_cl_mapping/_registry/soulcap_entities.tsv"
+"mappings/curated_mappings.tsv" = "soulcap_cl_mapping/_registry/curated_mappings.tsv"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

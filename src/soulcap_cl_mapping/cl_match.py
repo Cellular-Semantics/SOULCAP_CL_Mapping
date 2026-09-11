@@ -37,13 +37,14 @@ from __future__ import annotations
 
 import argparse
 import csv
+import json
 import re
 import sys
 import time
 from pathlib import Path
 
-from soulcap_cl_mapping import ols4_lookup
-from soulcap_cl_mapping.marker_syntax import GATE, _is_qualifier, _split_word, _tokenize
+from soulcap_cl_mapping import ols4_lookup, phenotype, registry
+from soulcap_cl_mapping.marker_syntax import MARKER_COLUMNS, MarkerSyntaxError
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_TSV = REPO_ROOT / "reports" / "cl_pro_relationships.tsv"
@@ -54,6 +55,8 @@ DEFAULT_TOP = 8
 DEFAULT_BATCH_TOP = 3
 
 BATCH_TSV_FIELDS = [
+    "subject_id",
+    "specimen",
     "abbreviation",
     "full_name",
     "parent",
@@ -69,6 +72,9 @@ BATCH_TSV_FIELDS = [
     "gaps",
     "disqualified",
     "note",
+    "candidate_sources",
+    "lexical_evidence",
+    "resolution_evidence",
 ]
 
 # Weight applied to required vs ideal marker columns.
@@ -96,7 +102,9 @@ def _parse_cd_synonyms(synonym_str: str) -> set[str]:
     return tokens
 
 
-def build_cl_index(rows: list[dict]) -> dict[str, dict]:
+def build_cl_index(
+    rows: list[dict], marker_map: Path | None = None, term_cache: Path | None = None
+) -> dict[str, dict]:
     """Return ``{cl_id: {label, positive, negative, high, low}}`` from TSV rows.
 
     ``high``/``low`` track "has high/low plasma membrane amount" axioms
@@ -104,6 +112,9 @@ def build_cl_index(rows: list[dict]) -> dict[str, dict]:
     marker is *expressed* (just at a given level), so they are never treated
     as equivalent to ``negative`` (marker absent) during scoring.
     """
+    from soulcap_cl_mapping import candidate_index
+
+    resolver = candidate_index.marker_resolver(marker_map) if marker_map else None
     index: dict[str, dict] = {}
     for row in rows:
         cl_id = row["cell"]
@@ -114,11 +125,34 @@ def build_cl_index(rows: list[dict]) -> dict[str, dict]:
                 "negative": set(),
                 "high": set(),
                 "low": set(),
+                "intermediate": set(),
             }
         sense = row.get("sense", "")
         cd_tokens = _parse_cd_synonyms(row.get("cd_synonym", ""))
-        if sense in ("positive", "negative", "high", "low"):
+        if resolver is not None:
+            cd_tokens, evidence = candidate_index.expand_axiom(row, resolver)
+            index[cl_id].setdefault("resolution_evidence", []).append(
+                {
+                    "sense": sense,
+                    "pr": row.get("pr", ""),
+                    "asserted": row.get("asserted", ""),
+                    "paths": evidence,
+                }
+            )
+        if sense in ("positive", "negative", "high", "low", "intermediate"):
             index[cl_id][sense].update(cd_tokens)
+    if term_cache:
+        for cl_id, term in candidate_index.load_terms(term_cache).items():
+            entry = index.setdefault(
+                cl_id,
+                {
+                    "label": term["label"],
+                    "lexical_only": True,
+                    "positive": set(),
+                    "negative": set(),
+                },
+            )
+            entry["lexical_names"] = [term["label"], *term["exact_synonyms"]]
     return index
 
 
@@ -138,187 +172,21 @@ def _hint_words(*texts: str) -> set[str]:
 # --------------------------------------------------------------------------- #
 # Marker expression → (token, sense) extraction
 # --------------------------------------------------------------------------- #
-def _qual_sense(qual: str) -> str:
-    """Map a qualifier string to ``'positive'``, ``'negative'``, or ``'variable'``."""
-    parts = qual.split("/")
-    first = parts[0]
-    if first in ("+", "hi"):
-        return "positive"
-    if first in ("-", "lo", "int"):
-        return "negative"
-    return "variable"
+Clause = phenotype.Clause
 
 
 def extract_signed_markers(expr: str) -> list[tuple[str, str]]:
-    """Return ``(MARKER_UPPER, sense)`` for every qualified token in *expr*.
-
-    Sense is ``'positive'`` or ``'negative'``. Tokens with no qualifier and
-    group-level-only qualifiers are skipped (ambiguous without full parse).
-    The live/ gate prefix is ignored.
-    """
-    try:
-        tokens = _tokenize(expr)
-    except Exception:  # noqa: BLE001
-        return []
-
-    results: list[tuple[str, str]] = []
-    # Track the qualifier of the most recently closed group so we can apply it
-    # to unqualified members. Stack entries: qualifier string or None.
-    pending_group_qual: list[str | None] = []
-    i = 0
-    n = len(tokens)
-
-    while i < n:
-        kind, text = tokens[i]
-        if kind == "WS" or kind == "|":
-            i += 1
-        elif kind in ("(", "["):
-            pending_group_qual.append(None)
-            i += 1
-        elif kind in (")", "]"):
-            i += 1
-            # Peek: is the next WORD a standalone qualifier?
-            if i < n and tokens[i][0] == "WORD" and _is_qualifier(tokens[i][1]):
-                pending_group_qual.append(tokens[i][1])
-                i += 1
-            else:
-                pending_group_qual.append(None)
-        elif kind == "WORD":
-            if text == GATE:
-                i += 1
-                continue
-            try:
-                marker, qual = _split_word(text)
-            except Exception:  # noqa: BLE001
-                i += 1
-                continue
-            if qual:
-                sense = _qual_sense(qual)
-            elif pending_group_qual and pending_group_qual[-1]:
-                sense = _qual_sense(pending_group_qual[-1])
-            else:
-                i += 1
-                continue  # truly unqualified — skip
-            if sense != "variable":
-                results.append((marker.upper(), sense))
-            i += 1
-        else:
-            i += 1
-
-    return results
-
-
-# A required/ideal marker "clause" for score_cl_terms: either a plain
-# (MARKER, sense) tuple (a single required condition) or a list of such
-# tuples — an OR-group satisfied by *any one* alternative, not all.
-Clause = tuple[str, str] | list[tuple[str, str]]
+    """Return literals for display; scoring must use the Boolean clauses."""
+    return [
+        literal
+        for clause in extract_marker_clauses(expr)
+        for literal in ([clause] if isinstance(clause, tuple) else clause)
+    ]
 
 
 def extract_marker_clauses(expr: str) -> list[Clause]:
-    """Tokenize *expr* into AND-joined clauses, modelling ``|`` as true OR.
-
-    :func:`extract_signed_markers` flattens a ``|``-joined OR-group like
-    ``(CD193+|FceR1a+|HLA-DR-|CD303-)`` into four independently-**required**
-    markers — i.e. it silently turns "at least one of these" into "all of
-    these", which is wrong per MARKER_SYNTAX.md §1.4. That mistranslation
-    made scoring reject candidates that only need to satisfy one
-    alternative: ``CL:0000043`` (mature basophil) never scored as a match
-    for SOULCAP's Basophil profile, because CL doesn't assert *all four*
-    alternatives simultaneously — only some.
-
-    This function fixes that for the common case: a bracket directly
-    containing ``|``-joined atoms that **each already carry their own
-    qualifier** (every real example in the current sheet looks like this)
-    is returned as one clause — a list of alternatives — instead of being
-    flattened. :func:`score_cl_terms` treats such a clause as satisfied if
-    *any* alternative matches, and contradicted only if *every* alternative
-    is actively contradicted.
-
-    Scope: anything more complex — an unqualified member relying on a
-    group-level qualifier, a nested group, or a trailing qualifier negating
-    a compound AND-group (``[HLA-DR+ CD11chi]-``, MARKER_SYNTAX.md §1.6,
-    which needs De Morgan expansion) — falls back to flattening every leaf
-    as independently required, i.e. :func:`extract_signed_markers`'s
-    existing (imperfect but non-regressed) behaviour.
-    """
-    try:
-        tokens = _tokenize(expr)
-    except Exception:  # noqa: BLE001
-        return []
-
-    # frames[d] holds items collected directly at nesting depth d (index 0
-    # = top level). An item is ("leaf", marker, sense) or ("clause", alts).
-    frames: list[list[tuple]] = [[]]
-    saw_pipe: list[bool] = [False]
-
-    i = 0
-    n = len(tokens)
-    while i < n:
-        kind, text = tokens[i]
-        if kind == "WS":
-            i += 1
-        elif kind == "|":
-            saw_pipe[-1] = True
-            i += 1
-        elif kind in ("(", "["):
-            frames.append([])
-            saw_pipe.append(False)
-            i += 1
-        elif kind in (")", "]"):
-            if len(frames) <= 1:
-                # Unbalanced closing bracket with no matching open — nothing
-                # to pop; skip it (and any trailing qualifier) and keep the
-                # top-level frame intact, matching extract_signed_markers's
-                # leniency toward malformed input.
-                i += 1
-                if i < n and tokens[i][0] == "WORD" and _is_qualifier(tokens[i][1]):
-                    i += 1
-                continue
-            items = frames.pop()
-            had_pipe = saw_pipe.pop()
-            i += 1
-            group_qual = None
-            if i < n and tokens[i][0] == "WORD" and _is_qualifier(tokens[i][1]):
-                group_qual = tokens[i][1]
-                i += 1
-            parent = frames[-1]
-            all_leaves = bool(items) and all(kind_ == "leaf" for kind_, *_ in items)
-            simple_group = group_qual is None or _qual_sense(group_qual) == "variable"
-            if had_pipe and all_leaves and simple_group:
-                parent.append(("clause", [(m, s) for _, m, s in items]))
-            else:
-                parent.extend(items)
-        elif kind == "WORD":
-            if text == GATE:
-                i += 1
-                continue
-            try:
-                marker, qual = _split_word(text)
-            except Exception:  # noqa: BLE001
-                i += 1
-                continue
-            if qual:
-                sense = _qual_sense(qual)
-                if sense != "variable":
-                    frames[-1].append(("leaf", marker.upper(), sense))
-            # else: truly unqualified — skip (matches extract_signed_markers)
-            i += 1
-        else:
-            i += 1
-
-    # Unbalanced open brackets: flatten remaining frames into the top level.
-    while len(frames) > 1:
-        items = frames.pop()
-        frames[-1].extend(items)
-
-    clauses: list[Clause] = []
-    for kind_, *rest in frames[0]:
-        if kind_ == "leaf":
-            marker, sense = rest
-            clauses.append((marker, sense))
-        else:
-            clauses.append(rest[0])
-    return clauses
+    """Compile the shared AST, preserving alternatives and compound negation."""
+    return phenotype.clauses(expr)
 
 
 def _eval_alternative(
@@ -328,28 +196,24 @@ def _eval_alternative(
     absent: set[str],
     high: set[str],
     low: set[str],
+    intermediate: set[str] | None = None,
 ) -> tuple[str, str]:
     """Evaluate one (marker, sense) alternative against a CL term's axioms.
 
     Returns ``(status, display)`` where status is ``"matched"``,
     ``"contradicted"``, or ``"gap"``.
     """
-    in_expressed = marker in expressed
-    in_absent = marker in absent
-    symbol = "+" if sense == "positive" else "-"
+    symbol = {"positive": "+", "negative": "-"}.get(sense, ":" + sense)
     tag = " (hi)" if marker in high else " (dim)" if marker in low else ""
     display = f"{marker}{symbol}{tag}"
-    if sense == "positive":
-        if in_expressed:
-            return "matched", display
-        if in_absent:
-            return "contradicted", display
-        return "gap", display
-    if in_absent:
-        return "matched", display
-    if in_expressed:
-        return "contradicted", display
-    return "gap", display
+    entry = {
+        "positive": expressed,
+        "negative": absent,
+        "high": high,
+        "low": low,
+        "intermediate": intermediate or set(),
+    }
+    return phenotype.evaluate(marker, sense, entry), display
 
 
 # --------------------------------------------------------------------------- #
@@ -396,7 +260,8 @@ def score_cl_terms(
         pos = entry["positive"]
         high = entry.get("high", set())
         low = entry.get("low", set())
-        expressed = pos | high | low
+        intermediate = entry.get("intermediate", set())
+        expressed = pos | high | low | intermediate
         absent = entry["negative"]
         score = 0
         matched: list[str] = []
@@ -411,7 +276,7 @@ def score_cl_terms(
             for clause in markers:
                 alternatives = [clause] if isinstance(clause, tuple) else clause
                 statuses = [
-                    _eval_alternative(m, s, expressed, absent, high, low)
+                    _eval_alternative(m, s, expressed, absent, high, low, intermediate)
                     for m, s in alternatives
                 ]
                 matched_display = next(
@@ -471,7 +336,9 @@ def score_cl_terms(
 def load_marker_combinations(path: Path) -> list[dict]:
     """Load the synced SOULCAP ``Marker Combinations`` tab (sheet columns)."""
     with path.open(encoding="utf-8", newline="") as fh:
-        return list(csv.DictReader(fh))
+        rows = list(csv.DictReader(fh))
+    index = registry.entity_index()
+    return [{**row, "subject_id": registry.row_id(row, index)} for row in rows]
 
 
 def score_marker_combinations_row(
@@ -492,12 +359,24 @@ def score_marker_combinations_row(
     existing_cl_id = row.get("OLS CL identifier", "").strip()
 
     identity = {
+        "subject_id": registry.row_id(row),
+        "specimen": row.get("WB or PBMC", ""),
         "abbreviation": abbreviation,
         "full_name": full_name,
         "parent": parent,
         "type_of_match": type_of_match,
         "existing_cl_id": existing_cl_id,
     }
+
+    for column in MARKER_COLUMNS:
+        try:
+            extract_marker_clauses(row.get(column, ""))
+        except MarkerSyntaxError as exc:
+            return {
+                **identity,
+                "candidates": [],
+                "note": f"invalid expression in {column}: {exc}",
+            }
 
     required = extract_marker_clauses(
         row.get("Required exclusion", "")
@@ -506,11 +385,24 @@ def score_marker_combinations_row(
         row.get("Ideal exclusion", "")
     ) + extract_marker_clauses(row.get("Ideal phenotypic markers", ""))
 
-    if not required and not ideal:
+    if not phenotype.has_qualified(required + ideal):
         return {**identity, "candidates": [], "note": "no qualified markers found"}
 
+    from soulcap_cl_mapping.candidate_index import lexical_candidates
+
     hints = _hint_words(full_name, parent, abbreviation)
-    scored = score_cl_terms(cl_index, required, ideal, hints)
+    lexical = lexical_candidates(row, cl_index)
+    pool = {
+        k: v for k, v in cl_index.items() if not v.get("lexical_only") or k in lexical
+    }
+    scored = score_cl_terms(pool, required, ideal, hints)
+    for candidate in scored:
+        entry = cl_index[candidate["cl_id"]]
+        candidate["candidate_sources"] = (
+            ["marker_axioms"] if not entry.get("lexical_only") else []
+        ) + (["local_lexical"] if candidate["cl_id"] in lexical else [])
+        candidate["lexical_evidence"] = lexical.get(candidate["cl_id"])
+        candidate["resolution_evidence"] = entry.get("resolution_evidence", [])
     return {**identity, "candidates": scored[:top_n], "note": ""}
 
 
@@ -545,14 +437,18 @@ def batch_results_to_tsv_rows(results: list[dict]) -> list[dict]:
     tsv_rows: list[dict] = []
     for r in results:
         identity = {
-            k: r[k]
-            for k in (
-                "abbreviation",
-                "full_name",
-                "parent",
-                "type_of_match",
-                "existing_cl_id",
-            )
+            "subject_id": r.get("subject_id", ""),
+            "specimen": r.get("specimen", ""),
+            **{
+                k: r[k]
+                for k in (
+                    "abbreviation",
+                    "full_name",
+                    "parent",
+                    "type_of_match",
+                    "existing_cl_id",
+                )
+            },
         }
         if not r["candidates"]:
             tsv_rows.append(
@@ -584,6 +480,11 @@ def batch_results_to_tsv_rows(results: list[dict]) -> list[dict]:
                     "contradictions": ", ".join(cand["contradictions"]),
                     "gaps": ", ".join(cand["gaps"]),
                     "disqualified": "yes" if cand.get("disqualified") else "no",
+                    "candidate_sources": json.dumps(cand.get("candidate_sources", [])),
+                    "lexical_evidence": json.dumps(cand.get("lexical_evidence")),
+                    "resolution_evidence": json.dumps(
+                        cand.get("resolution_evidence", [])
+                    ),
                     "note": "",
                 }
             )
@@ -648,6 +549,8 @@ def run_lexical_batch(
             continue
 
         identity = {
+            "subject_id": registry.row_id(row),
+            "specimen": row.get("WB or PBMC", ""),
             "abbreviation": abbreviation,
             "full_name": full_name,
             "parent": row.get("Parent", "").strip(),
@@ -696,18 +599,38 @@ def merge_marker_and_lexical(
     survives both a marker-axiom check and an independent name-similarity
     check.
     """
-    lexical_by_key = {r["abbreviation"]: r for r in lexical_results}
+
+    def key(row: dict) -> str:
+        return registry.row_id(
+            {
+                "subject_id": row.get("subject_id", ""),
+                "Abbreviation": row["abbreviation"],
+                "Parent": row.get("parent", ""),
+                "WB or PBMC": row.get("specimen", ""),
+            }
+        )
+
+    lexical_by_key = {key(r): r for r in lexical_results}
+    if len(lexical_by_key) != len(lexical_results):
+        raise ValueError(
+            "Duplicate lexical row identities; provide distinct subject_id values"
+        )
     merged = []
     for m in marker_results:
-        lex = lexical_by_key.get(m["abbreviation"], {"candidates": [], "note": ""})
+        lex = lexical_by_key.get(key(m), {"candidates": [], "note": ""})
         marker_top = m["candidates"][0] if m["candidates"] else None
         lexical_top = lex["candidates"][0] if lex["candidates"] else None
         agreement = bool(
-            marker_top and lexical_top and marker_top["cl_id"] == lexical_top["cl_id"]
+            marker_top
+            and lexical_top
+            and not marker_top.get("disqualified")
+            and marker_top["cl_id"] == lexical_top["cl_id"]
         )
         merged.append(
             {
                 "abbreviation": m["abbreviation"],
+                "subject_id": key(m),
+                "specimen": m.get("specimen", ""),
                 "full_name": m["full_name"],
                 "parent": m["parent"],
                 "type_of_match": m["type_of_match"],
@@ -729,6 +652,8 @@ def merge_marker_and_lexical(
 
 
 AGREEMENT_TSV_FIELDS = [
+    "subject_id",
+    "specimen",
     "abbreviation",
     "full_name",
     "parent",
@@ -763,10 +688,7 @@ def write_agreement_tsv(path: Path, merged_rows: list[dict]) -> None:
 def _format_clause(clause: Clause) -> str:
     """Render a Clause for CLI display: ``MARKER+``/``-``, or ``(A+|B-)`` for
     an OR-group."""
-    if isinstance(clause, tuple):
-        marker, sense = clause
-        return f"{marker}{'+' if sense == 'positive' else '-'}"
-    return "(" + "|".join(_format_clause(alt) for alt in clause) + ")"
+    return phenotype.display(clause)
 
 
 def format_result(rank: int, r: dict) -> str:
@@ -877,6 +799,16 @@ def main(argv: list[str] | None = None) -> int:
         metavar="PATH",
         help=f"--lexical output TSV path (default: {DEFAULT_AGREEMENT_OUT}).",
     )
+    parser.add_argument(
+        "--marker-map",
+        type=Path,
+        help="Enable conservative alias/PRO resolution using this registry CSV",
+    )
+    parser.add_argument(
+        "--term-cache",
+        type=Path,
+        help="Add candidates from a local CL label/exact-synonym JSON cache",
+    )
     args = parser.parse_args(argv)
 
     if args.batch is None and not any(
@@ -903,7 +835,7 @@ def main(argv: list[str] | None = None) -> int:
         top_n = args.top if args.top is not None else DEFAULT_BATCH_TOP
         try:
             rows = load_tsv(args.tsv)
-            cl_index = build_cl_index(rows)
+            cl_index = build_cl_index(rows, args.marker_map, args.term_cache)
             combo_rows = load_marker_combinations(combos_path)
             results = run_batch(
                 combo_rows, cl_index, top_n=top_n, ready_only=args.ready_only
@@ -912,7 +844,7 @@ def main(argv: list[str] | None = None) -> int:
             unscored = sum(1 for r in results if not r["candidates"])
             print(
                 f"Scored {len(results)} SOULCAP cell types against "
-                f"{len(cl_index)} CL terms ({unscored} had no qualified markers)."
+                f"{len(cl_index)} CL terms ({unscored} unscored: invalid or no qualified markers)."
             )
             print(f"Wrote {args.batch_out}")
 
@@ -938,7 +870,18 @@ def main(argv: list[str] | None = None) -> int:
 
     try:
         rows = load_tsv(args.tsv)
-        cl_index = build_cl_index(rows)
+        cl_index = build_cl_index(rows, args.marker_map, args.term_cache)
+        if args.term_cache:
+            from soulcap_cl_mapping.candidate_index import lexical_candidates
+
+            lexical = lexical_candidates(
+                {"Full Name": args.subset or args.parent}, cl_index
+            )
+            cl_index = {
+                k: v
+                for k, v in cl_index.items()
+                if not v.get("lexical_only") or k in lexical
+            }
 
         required = extract_marker_clauses(args.req_excl) + extract_marker_clauses(
             args.req_pheno
@@ -947,7 +890,7 @@ def main(argv: list[str] | None = None) -> int:
             args.ideal_pheno
         )
 
-        if not required and not ideal:
+        if not phenotype.has_qualified(required + ideal):
             print("error: no qualified markers found in expressions.", file=sys.stderr)
             return 1
 
