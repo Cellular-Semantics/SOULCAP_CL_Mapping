@@ -1,0 +1,50 @@
+name: ROBOT ontology QC
+
+on:
+  pull_request:
+
+jobs:
+  # Standalone, read-only audit of upstream CL — never merges anything from
+  # this repo into it, never asserts our candidate mappings as true. Catches
+  # pre-existing CL bugs (e.g. duplicate equivalence/subclass axioms,
+  # unsatisfiable classes) worth reporting upstream. Our own candidate
+  # mappings stay as SSSOM (reports/candidate_cl_mappings.sssom.tsv) — a
+  # proposal for human review, not something this repo should unilaterally
+  # convert into OWL axioms and reason over as if already accepted.
+  robot-upstream-cl:
+    name: ROBOT report + reason — upstream CL
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - name: Install ROBOT
+        run: |
+          curl -sL -o robot.jar https://github.com/ontodev/robot/releases/latest/download/robot.jar
+          curl -sL -o robot https://raw.githubusercontent.com/ontodev/robot/master/bin/robot
+          chmod +x robot
+          echo "$PWD" >> "$GITHUB_PATH"
+
+      - name: Download CL (base, import-free release artifact)
+        run: curl -sL -o cl-base.owl http://purl.obolibrary.org/obo/cl/cl-base.owl
+
+      - name: ROBOT report — structural issues (duplicate axioms etc.)
+        run: ./robot report --input cl-base.owl --fail-on ERROR --output cl-base-report.tsv
+
+      - name: ROBOT reason (ELK) — unsatisfiable classes / bad entailments
+        run: ./robot reason --input cl-base.owl --reasoner ELK --output cl-base-reasoned.owl
+
+      - name: Upload upstream QC artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: robot-upstream-cl-qc
+          path: |
+            cl-base-report.tsv
+            cl-base-reasoned.owl
+          if-no-files-found: ignore

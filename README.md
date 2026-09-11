@@ -77,6 +77,116 @@ startup and expands `${ASTA_API_KEY}` into the `x-api-key` header in
 it is the only place the secret lives. Restart Claude Code after editing it so
 the key is picked up.
 
+## Unified audit dashboard
+
+Generate an offline dashboard from the local data and mapping registries:
+
+```bash
+uv run soulcap-audit
+```
+
+Open [reports/audit_dashboard.html](reports/audit_dashboard.html) in a browser.
+It includes searchable, filterable review tables for SOULCAP entities, proposed
+CL targets, prioritized findings, marker coverage, gaps, species evidence, and
+input provenance. Expand a row to inspect its evidence and source references.
+No server, network calls, or additional dashboard dependencies are required.
+
+The command also writes [audit_summary.md](reports/audit_summary.md) and
+[audit_data.json](reports/audit_data.json). Use `--root PATH` for another repository
+snapshot, `--out-dir PATH` for another output directory, or `--strict` to return
+exit code 1 when error findings exist (reports are still generated).
+
+The audit recomputes marker evidence without changing source data or mappings.
+Missing inputs are reported as unavailable, not zero. Local hashes and export
+evidence are checked for drift; upstream freshness is not checked. Historical
+agreement reports and family-level gaps are not silently joined to entity IDs.
+Mapping proposals and marker compatibility do **not** establish equivalence.
+
+## Matcher evaluation
+
+```bash
+uv run soulcap-evaluate
+uv run soulcap-audit
+```
+
+The first command writes `reports/matcher_evaluation.md`, `.json`, and `.tsv`;
+the second refreshes the dashboard's evaluation view. Evaluation is offline and
+uses the production matcher unchanged, including its name hints and tie order.
+It measures CL target retrieval, not the correctness of an equivalence relation.
+
+Existing mapping proposals automatically form a **provisional agreement** cohort.
+The separate [benchmark TSV](mappings/matcher_benchmark.tsv) starts empty: no
+proposal is automatically certified as ground truth. Add manually reviewed cases
+with columns `subject_id`, `acceptable_cl_ids` (`|`-separated alternatives),
+`match_type` (`Exact`, `Broad`, `Narrow`, `Related`), `review_status` (`reviewed`
+or `provisional`), and `evidence_reference` (required for reviewed cases).
+One case represents a subject/relation within a cohort. An explicit provisional
+case overrides that subject/relation's proposal-derived targets. Review statuses
+in the proposal registry never automatically promote cases to the reviewed cohort.
+
+Top-1/3/5 hit rates and mean reciprocal rank include every cohort case in their
+denominators, with zero credit for unscorable profiles and absent targets. Empty
+cohorts report unavailable metrics. Best/worst tie bounds expose ordering
+sensitivity; disqualified candidates are retained and flagged, not endorsed.
+Exact/Broad/Narrow/Related results are reported separately. Profile drift requires
+review before scoring; benchmark targets must be re-reviewed if definitions change.
+
+To compare against a saved JSON baseline without overwriting it:
+
+```bash
+uv run soulcap-evaluate --baseline reports/matcher_evaluation.json --out-dir reports/evaluation-next
+```
+
+Use `--root PATH` or `--benchmark PATH` for other snapshots/case files. The JSON
+records input and matcher-source hashes. Input/configuration drift marks baseline
+comparisons non-equivalent; rank changes are descriptive, not significance tests.
+The dashboard reads the default report location and checks local hashes; a custom
+benchmark is unverified unless its contents match the default benchmark.
+Missing or malformed required inputs fail before reports are written.
+
+## Alias/protein-aware matching and local candidate coverage
+
+The enhanced modes are explicit opt-ins; omitting the flags preserves the legacy
+marker scorer. They do not change curated mapping decisions or the separate
+mapping-evidence/SSSOM export engine.
+
+```bash
+uv run soulcap-match --batch --marker-map marker_mappings/marker_protein_gene.csv --term-cache reports/cl_lexical_cache.json --batch-out reports/candidate_cl_mappings_enhanced.tsv
+uv run soulcap-evaluate --marker-map marker_mappings/marker_protein_gene.csv --term-cache reports/cl_lexical_cache.json --baseline reports/matcher_evaluation_baseline.json
+uv run soulcap-audit
+```
+
+Marker resolution uses explicit registry aliases and exact PRO identity, preserving
+positive/negative and expression-level distinctions. Ambiguous aliases, multiple
+PRO targets, and records describing complexes, subunits, or reagents are withheld
+from automatic protein equivalence. Related/broad ontology synonyms do not imply
+identity. No gene-symbol, cross-species, or protein-hierarchy equivalence is inferred.
+Resolution paths are recorded in candidate evidence; withheld cases are listed in
+evaluation JSON under `marker_resolution_issues`.
+
+The local lexical cache contains active CL labels and exact synonyms from a local
+OAK SQLite snapshot, with a source-database hash. To rebuild from your own snapshot:
+
+```bash
+uv run soulcap-cache-terms --database PATH_TO_CL_DB --out reports/cl_lexical_cache.json
+```
+
+No network services are contacted. The cache extraction timestamp is not an
+ontology release date or upstream freshness check. Lexical candidates use the source
+full name (abbreviation fallback), never expected mapping targets: normalized exact
+matches first, then word overlap of at least 0.5, limited to 20 candidates per row.
+They are unioned with marker candidates and scored with the existing weights;
+missing axioms remain unknown, not supporting evidence. Invalid/no-qualified-marker
+profiles remain unscored. Single-profile CLI searches use `--subset` or `--parent`.
+
+The evaluation distinguishes targets absent from the global index from targets
+present but not retrieved for a row. Candidate-source labels, lexical evidence,
+and protein-resolution paths are exported in batch TSV and evaluation JSON.
+The original baseline is preserved in `reports/matcher_evaluation_baseline.json`;
+controlled runs are in `reports/evaluation-legacy/` and `reports/evaluation-alias/`.
+Mode/input changes make comparisons descriptive rather than equivalent-condition
+regression tests. Broader coverage alone does not establish better ranking.
+
 ## Input data
 
 The single source of truth is a
@@ -135,6 +245,100 @@ This regenerates two artifacts under `reports/`:
 uv run soulcap-cl-pro --reports-dir other/   # write elsewhere
 uv run soulcap-cl-pro --endpoint <url>        # use a different SPARQL endpoint
 ```
+
+## Candidate CL matching (`soulcap-match`)
+
+Validation, token extraction, and scoring share one phenotype AST. Boolean
+negation and expression levels are preserved. Malformed profiles are flagged
+without producing marker candidates; missing axioms remain unknown. Batch
+outputs include stable `subject_id` and specimen context so duplicate
+abbreviations cannot be merged accidentally. Token regeneration also refuses
+invalid source expressions. See [MARKER_SYNTAX.md](MARKER_SYNTAX.md#4-implementation-semantics).
+
+The committed agreement TSV predates this parser/identity migration. Regenerate
+it with `soulcap-match --batch --lexical` before comparing it with current
+batch results; cached old lexical results cannot safely distinguish all
+duplicated source rows.
+
+Ranks CL terms against a SOULCAP marker profile, scored from
+`cl_pro_relationships.tsv`. Single-profile mode (paste the four marker columns
+for one cell type):
+
+```bash
+uv run soulcap-match --req-excl "CD14- CD3- CD19-" --req-pheno "CD45+ CD56+/hi" --parent "NK cell"
+```
+
+Batch mode scores every row of `data/marker_combinations.csv` in one pass:
+
+```bash
+uv run soulcap-match --batch                # -> reports/candidate_cl_mappings_batch.tsv
+uv run soulcap-match --batch --lexical       # + name-based OLS4 CL search and an
+                                              #   agreement report (reports/candidate_cl_mappings_agreement.tsv)
+```
+
+Marker-axiom scoring can only rank CL terms that already have a PR axiom in
+`cl_pro_relationships.tsv` — many CL terms (including some "obvious" parent
+classes) have none and are invisible to it. `--lexical` adds an independent
+name-based candidate per row; rows where both approaches agree are a much
+stronger signal than either alone. **Treat batch output as an unreviewed draft
+shortlist** — check the `contradictions`/`marker_conflict` columns before
+trusting a rank-1 pick, since shared exclusion markers can inflate scores for
+biologically wrong candidates.
+
+## OAK lexical/synonym matching (`soulcap-oak-match`)
+
+A second, independent lexical matcher using [OAK](https://incatools.github.io/ontology-access-kit/)
+(Ontology Access Kit) instead of the OLS4 REST API:
+
+```bash
+uv run soulcap-oak-match "Natural Killer Cell"
+uv run soulcap-oak-match "NK cell" --top 5
+```
+
+Uses OAK's `sqlite:obo:cl` adapter — a search-optimised local database that
+ranks exact label/synonym matches first by construction (OLS4's free-text
+relevance ranking, by contrast, can bury an exact match behind dozens of
+more-specific subtype variants). Downloads and caches a local CL database
+(~100MB) on first use; instant afterwards.
+
+## SSSOM mapping export (`soulcap-sssom`)
+
+The decision source is [mappings/curated_mappings.tsv](mappings/curated_mappings.tsv).
+The [entity registry](mappings/soulcap_entities.tsv) supplies permanent local
+SOULCAP IDs; [registry documentation](mappings/README.md) explains identity
+resolution, migration aliases, review status, and evidence fields.
+
+```bash
+uv run soulcap-sssom
+```
+
+This generates `reports/candidate_cl_mappings.sssom.tsv`, the readable
+`reports/candidate_cl_mappings.md`, and an input-hash provenance sidecar.
+The original detailed rationale, including sheet-confirmation notes, is
+preserved in [the narrative archive](reports/candidate_cl_mappings_narrative.md).
+
+Evidence is evaluated against each source phenotype: required-marker matches,
+contradictions, unknown clauses, ideal-marker conflicts, and direct versus
+inferred support. Current sheet confirmation, lexical evidence, and literature
+evidence remain separate. Missing or malformed profiles are explicitly flagged.
+Numeric confidence is omitted pending calibration, and all mappings remain
+proposals requiring review. Marker compatibility alone does not prove that two
+cell-type definitions are equivalent.
+
+Use `--source`, `--mappings`, `--tsv`, `--out`, and `--review-out` to
+select inputs and output locations. Existing abbreviation-based subject IDs
+are retained in the registry's `legacy_subject_id` column.
+
+## ROBOT ontology QC
+
+`.github/workflows/robot-qc.yml` runs on every PR and audits upstream CL —
+downloads CL's `cl-base.owl` (import-free release artifact) and runs
+`robot report` + `robot reason` (ELK) on it standalone, independent of
+anything in this repo. Catches pre-existing CL bugs (e.g. duplicate
+equivalence/subclass axioms) worth reporting upstream. It never touches our
+own candidate mappings — those stay as SSSOM, a proposal for human review,
+not something this repo should unilaterally convert into OWL axioms and merge
+into CL as if already accepted.
 
 ## Skills & literature workflows
 

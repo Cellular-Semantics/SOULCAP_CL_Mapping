@@ -66,17 +66,17 @@ def explode_to_csv(xlsx_path: Path, data_dir: Path) -> list[Path]:
     xl = pd.ExcelFile(xlsx_path, engine="openpyxl")
     written: list[Path] = []
     for sheet in xl.sheet_names:
-        raw = xl.parse(sheet, header=None)
+        raw = xl.parse(sheet, header=None)  # type: ignore[attr-defined]
         if raw.empty:
             print(f"  skip (empty): {sheet}")
             continue
         if sheet in HEADER_ROW_SHEETS:
             # Keep every column — including currently-empty target columns
             # such as 'OLS CL identifier' that this project will populate.
-            df = xl.parse(sheet, header=0).dropna(how="all")
+            df = xl.parse(sheet, header=0).dropna(how="all")  # type: ignore[attr-defined]
         else:
             df = raw.dropna(how="all").dropna(axis=1, how="all")
-        out = data_dir / f"{_slug(sheet)}.csv"
+        out = data_dir / f"{_slug(str(sheet))}.csv"
         df.to_csv(out, index=False)
         written.append(out)
         print(f"  {sheet:40s} -> {out.name}  ({df.shape[0]}x{df.shape[1]})")
