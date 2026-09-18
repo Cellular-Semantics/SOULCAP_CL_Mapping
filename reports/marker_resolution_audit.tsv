@@ -1,0 +1,74 @@
+marker_token	representation	protein_resolution	canonical	legacy_axiom_rows	enhanced_axiom_rows	gained	lost	rationale	source_ref
+CCR4	single_protein	allow	CCR4	0	4	4	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#CCR4
+CCR6	single_protein	allow	CCR6	0	8	8	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#CCR6
+CD10	single_protein	allow	CD10	20	20	0	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#CD10
+CD117	single_protein	allow	CD117	49	44	0	5	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#CD117
+CD11C	single_protein	allow	CD11C	85	85	0	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#CD11c
+CD123	single_protein	allow	CD123	31	31	0	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#CD123
+CD127	single_protein	allow	CD127	58	53	0	5	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#CD127
+CD138	single_protein	allow	CD138	52	52	0	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#CD138
+CD14	single_protein	allow	CD14	108	108	0	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#CD14
+CD141	single_protein	allow	CD141	1	1	0	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#CD141
+CD15	unresolved	withhold	CD15	15	0	0	15	Conservative hold: registry protein label or reagent context does not explicitly establish whole-marker identity; review required.	marker_mappings/marker_protein_gene.csv#CD15
+CD16	unresolved	withhold	CD16	29	0	0	29	Conservative hold: registry protein label or reagent context does not explicitly establish whole-marker identity; review required.	marker_mappings/marker_protein_gene.csv#CD16
+CD161	single_protein	allow	CD161	19	2	0	17	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#CD161
+CD172A	single_protein	allow	CD172A	6	6	0	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#CD172a
+CD183	single_protein	allow	CD183	8	8	0	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#CD183
+CD185	single_protein	allow	CD185	2	2	0	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#CD185
+CD19	single_protein	allow	CD19	335	335	0	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#CD19
+CD193	single_protein	allow	CD193	16	16	0	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#CD193
+CD194	single_protein	allow	CCR4	4	4	0	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#CD194
+CD196	single_protein	allow	CCR6	8	8	0	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#CD196
+CD198	single_protein	allow	CD198	0	0	0	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#CD198
+CD1C	single_protein	allow	CD1C	1	1	0	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#CD1c
+CD1D-A-GALCER	reagent_gate	withhold	CD1D-A-GALCER	0	0	0	0	Registry notes describe a reagent, lipid antigen, or carbohydrate epitope rather than a single protein.	marker_mappings/marker_protein_gene.csv#CD1d-a-GalCer
+CD20	single_protein	allow	CD20	284	284	0	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#CD20
+CD21	single_protein	allow	CD21	11	11	0	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#CD21
+CD24	single_protein	allow	CD24	38	38	0	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#CD24
+CD25	single_protein	allow	CD25	41	40	0	1	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#CD25
+CD27	single_protein	allow	CD27	49	49	0	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#CD27
+CD294	single_protein	allow	CD294	1	1	0	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#CD294
+CD3	unresolved	withhold	CD3	330	0	0	330	Conservative hold: registry protein label or reagent context does not explicitly establish whole-marker identity; review required.	marker_mappings/marker_protein_gene.csv#CD3
+CD303	single_protein	allow	CD303	3	3	0	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#CD303
+CD33	single_protein	allow	CD33	15	13	0	2	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#CD33
+CD34	single_protein	allow	CD34	135	130	0	5	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#CD34
+CD38	single_protein	allow	CD38	59	59	0	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#CD38
+CD4	single_protein	allow	CD4	196	196	0	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#CD4
+CD45	single_protein	allow	CD45	92	92	0	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#CD45
+CD56	single_protein	allow	CD56	181	177	0	4	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#CD56
+CD57	reagent_gate	withhold	CD57	0	0	0	0	Registry notes describe a reagent, lipid antigen, or carbohydrate epitope rather than a single protein.	marker_mappings/marker_protein_gene.csv#CD57
+CD64	single_protein	allow	CD64	1	1	0	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#CD64
+CD66B	single_protein	allow	CD66B	21	21	0	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#CD66b
+CD8	unresolved	withhold	CD8	318	0	0	318	Conservative hold: registry protein label or reagent context does not explicitly establish whole-marker identity; review required.	marker_mappings/marker_protein_gene.csv#CD8
+CXCR3	single_protein	allow	CD183	0	8	8	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#CXCR3
+CXCR5	single_protein	allow	CD185	0	2	2	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#CXCR5
+DELTA	unresolved	withhold	DELTA	0	0	0	0	No PRO identity recorded; possible source artifact or unresolved marker requires clarification.	marker_mappings/marker_protein_gene.csv#delta
+DELTA1	unresolved	withhold	DELTA1	0	0	0	0	No PRO identity recorded; possible source artifact or unresolved marker requires clarification.	marker_mappings/marker_protein_gene.csv#delta1
+FCER1A	single_protein	allow	FCER1A	0	16	16	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#FceR1a
+GAMMA	unresolved	withhold	GAMMA	0	0	0	0	No PRO identity recorded; possible source artifact or unresolved marker requires clarification.	marker_mappings/marker_protein_gene.csv#gamma
+HLA-DR	complex	withhold	HLA-DR	0	0	0	0	Registry notes describe an assembled or multi-gene marker; component PRO identity cannot establish whole-marker equivalence.	marker_mappings/marker_protein_gene.csv#HLA-DR
+IFNG	single_protein	allow	IFNG	0	0	0	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#IFNg
+IGA	protein_family	withhold	IGA	0	0	0	0	Registry notes document a non-single-protein or pan-marker representation.	marker_mappings/marker_protein_gene.csv#IgA
+IGD	protein_family	withhold	IGD	0	0	0	0	Registry notes document a non-single-protein or pan-marker representation.	marker_mappings/marker_protein_gene.csv#IgD
+IGE	protein_family	withhold	IGE	0	0	0	0	Registry notes document a non-single-protein or pan-marker representation.	marker_mappings/marker_protein_gene.csv#IgE
+IGG	protein_family	withhold	IGG	0	0	0	0	Registry notes document a non-single-protein or pan-marker representation.	marker_mappings/marker_protein_gene.csv#IgG
+IGM	protein_family	withhold	IGM	0	0	0	0	Registry notes document a non-single-protein or pan-marker representation.	marker_mappings/marker_protein_gene.csv#IgM
+IL-13	single_protein	allow	IL-13	0	0	0	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#IL-13
+IL-17A	single_protein	allow	IL-17A	0	0	0	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#IL-17a
+IL-4	single_protein	allow	IL-4	0	0	0	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#IL-4
+IL-5	single_protein	allow	IL-5	0	0	0	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#IL-5
+IL-9	single_protein	allow	IL-9	0	0	0	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#IL-9
+MR1	unresolved	withhold	MR1	0	0	0	0	Conservative hold: registry protein label or reagent context does not explicitly establish whole-marker identity; review required.	marker_mappings/marker_protein_gene.csv#MR1
+TCR	protein_family	withhold	TCR	0	0	0	0	Registry notes document a non-single-protein or pan-marker representation.	marker_mappings/marker_protein_gene.csv#TCR
+TCRAB	complex	withhold	TCRAB	0	0	0	0	Registry notes describe an assembled or multi-gene marker; component PRO identity cannot establish whole-marker equivalence.	marker_mappings/marker_protein_gene.csv#TCRab
+TCRGD	complex	withhold	TCRGD	0	0	0	0	Registry notes describe an assembled or multi-gene marker; component PRO identity cannot establish whole-marker equivalence.	marker_mappings/marker_protein_gene.csv#TCRgd
+TCRVA24	single_protein	allow	TCRVA24	0	0	0	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#TCRVa24
+TCRVA24-JA18	complex	withhold	TCRVA24-JA18	0	0	0	0	Registry notes describe an assembled or multi-gene marker; component PRO identity cannot establish whole-marker equivalence.	marker_mappings/marker_protein_gene.csv#TCRVa24-Ja18
+TCRVA7.2	single_protein	allow	TCRVA7.2	0	1	1	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#TCRVa7.2
+TCRVB11	single_protein	allow	TCRVB11	0	0	0	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#TCRVb11
+TCRVD2	single_protein	allow	TCRVD2	0	0	0	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#TCRVd2
+TCRVG9	single_protein	allow	TCRVG9	0	0	0	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#TCRVg9
+TETRAMER	reagent_gate	withhold	TETRAMER	0	0	0	0	Registry notes describe a reagent, lipid antigen, or carbohydrate epitope rather than a single protein.	marker_mappings/marker_protein_gene.csv#Tetramer
+V	unresolved	withhold	V	0	0	0	0	No PRO identity recorded; possible source artifact or unresolved marker requires clarification.	marker_mappings/marker_protein_gene.csv#V
+VB11	single_protein	allow	TCRVB11	0	0	0	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#VB11
+VD1	single_protein	allow	VD1	0	0	0	0	Retains the registry's single PRO representation; computational identity only, not biological sign-off.	marker_mappings/marker_protein_gene.csv#Vd1

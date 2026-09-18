@@ -2,8 +2,8 @@
 
 This is a direct implementation of the EBNF in MARKER_SYNTAX.md §2, including the
 hyphen/plus lexical-disambiguation rule of §2.1. It is a recursive-descent
-parser used purely to *validate* marker strings (it does not build an AST for
-downstream use — that can come later).
+parser producing an immutable AST shared by validation, token extraction,
+and downstream matching.
 
 Public API:
     validate_expression(expr) -> str | None      # error message, or None if valid
@@ -16,6 +16,7 @@ The four marker columns of the ``Marker Combinations`` sheet are validated.
 from __future__ import annotations
 
 import re
+from dataclasses import dataclass
 from pathlib import Path
 
 import pandas as pd
@@ -93,6 +94,21 @@ def _is_qualifier(text: str) -> bool:
 # --------------------------------------------------------------------------- #
 # Parser
 # --------------------------------------------------------------------------- #
+@dataclass(frozen=True)
+class Expression:
+    """Immutable phenotype syntax tree; qualifiers retain all original levels."""
+
+    operator: str
+    children: tuple[Expression, ...] = ()
+    marker: str = ""
+    qualifier: str = ""
+
+    def markers(self) -> set[str]:
+        if self.operator == "atom":
+            return {self.marker}
+        return {m for child in self.children for m in child.markers()}
+
+
 class _Parser:
     def __init__(self, tokens: list[tuple[str, str]]):
         self.toks = tokens
@@ -110,7 +126,9 @@ class _Parser:
         return self.i >= len(self.toks)
 
     # ---- grammar ---------------------------------------------------------- #
-    def parse_expression(self) -> None:
+    def parse_expression(self) -> Expression:
+        if self._peek()[0] == "WS":
+            self._advance()
         kind, text = self._peek()
         if kind == "WORD" and text == GATE:  # optional live/ gate
             self._advance()
@@ -120,41 +138,45 @@ class _Parser:
             self._advance()
         if self._at_end():
             raise MarkerSyntaxError("empty expression")
-        self._parse_and_list_top()
+        result = self._parse_and_list_top()
         if not self._at_end():
             _, text = self._peek()
             raise MarkerSyntaxError(f"unexpected trailing {text!r}")
+        return result
 
-    def _parse_and_list_top(self) -> None:
-        self._parse_term()
+    def _parse_and_list_top(self) -> Expression:
+        children = [self._parse_term()]
         while True:
             kind, text = self._peek()
             if kind == "WS":
                 self._advance()
                 if self._at_end():  # trailing whitespace
                     break
-                self._parse_term()
+                children.append(self._parse_term())
             elif self._at_end():
                 break
             elif kind == "|":
                 raise MarkerSyntaxError("top-level '|' must be inside a group")
             else:
                 raise MarkerSyntaxError(f"missing space before {text!r}")
+        return Expression("and", tuple(children))
 
-    def _parse_term(self) -> None:
+    def _parse_term(self) -> Expression:
         kind, text = self._peek()
         if kind in ("(", "["):
-            self._parse_group()
+            return self._parse_group()
         elif kind == "WORD":
             self._advance()
-            _split_word(text)  # validates marker + qualifier
+            assert text is not None
+            marker, qualifier = _split_word(text)
+            return Expression("atom", marker=marker, qualifier=qualifier)
         else:
             raise MarkerSyntaxError(f"expected marker or group, found {text!r}")
 
-    def _parse_group(self) -> None:
+    def _parse_group(self) -> Expression:
         open_kind, _ = self._advance()
         close = ")" if open_kind == "(" else "]"
-        self._parse_inner(close)
+        inner = self._parse_inner(close)
         kind, _ = self._peek()
         if kind != close:
             raise MarkerSyntaxError(f"missing {close!r} to close {open_kind!r}")
@@ -162,18 +184,20 @@ class _Parser:
         # optional group-level qualifier: a following WORD that is wholly a
         # qualifier, e.g. [HLA-DR+ CD11chi]-
         kind, text = self._peek()
-        if kind == "WORD" and _is_qualifier(text):
+        if kind == "WORD" and text is not None and _is_qualifier(text):
             self._advance()
+            return Expression("group", (inner,), qualifier=text)
+        return inner
 
-    def _parse_inner(self, close: str) -> None:
+    def _parse_inner(self, close: str) -> Expression:
         if self._peek()[0] == "WS":
             self._advance()
-        self._parse_term()
+        children = [self._parse_term()]
         sep: str | None = None  # '|' or 'WS' — a group is or_list XOR and_list
         while True:
             kind, text = self._peek()
             if kind == close:
-                return
+                return Expression("or" if sep == "|" else "and", tuple(children))
             if kind == "|":
                 if sep == "WS":
                     raise MarkerSyntaxError("mixed '|' and space in a group")
@@ -181,15 +205,15 @@ class _Parser:
                 self._advance()
                 if self._peek()[0] == "WS":
                     self._advance()
-                self._parse_term()
+                children.append(self._parse_term())
             elif kind == "WS":
                 self._advance()
                 if self._peek()[0] == close:  # trailing whitespace
-                    return
+                    return Expression("or" if sep == "|" else "and", tuple(children))
                 if sep == "|":
                     raise MarkerSyntaxError("mixed '|' and space in a group")
                 sep = "WS"
-                self._parse_term()
+                children.append(self._parse_term())
             elif kind is None:
                 raise MarkerSyntaxError(f"missing {close!r}")
             else:
@@ -199,13 +223,18 @@ class _Parser:
 # --------------------------------------------------------------------------- #
 # Public API
 # --------------------------------------------------------------------------- #
+def parse_expression(expr: str) -> Expression:
+    """Parse a complete expression, raising on any malformed input."""
+    return _Parser(_tokenize(expr)).parse_expression()
+
+
 def validate_expression(expr: str) -> str | None:
     """Return an error message if ``expr`` is invalid, else ``None``."""
     tokens = _tokenize(expr)
     if not tokens or all(k == "WS" for k, _ in tokens):
         return "empty expression"
     try:
-        _Parser(tokens).parse_expression()
+        parse_expression(expr)
     except MarkerSyntaxError as exc:
         return str(exc)
     return None
@@ -217,7 +246,7 @@ def _scan(path: str | Path) -> tuple[list[dict], int]:
     cols = [c for c in MARKER_COLUMNS if c in df.columns]
     failures: list[dict] = []
     n_cells = 0
-    for idx, row in df.iterrows():
+    for row_num, (_, row) in enumerate(df.iterrows()):
         for col in cols:
             value = row[col]
             if pd.isna(value):
@@ -227,8 +256,10 @@ def _scan(path: str | Path) -> tuple[list[dict], int]:
             if error is not None:
                 failures.append(
                     {
-                        "row": idx + 2,  # +1 header, +1 for 1-based
-                        "subset": str(row.get("Subset name", "")).strip(),
+                        "row": row_num + 2,  # +1 header, +1 for 1-based
+                        "subset": str(
+                            row.get("Subset name", row.get("Abbreviation", ""))
+                        ).strip(),
                         "column": col,
                         "value": str(value).strip(),
                         "error": error,
@@ -295,7 +326,9 @@ def write_report(
     """Write/overwrite the Markdown validation report; return its path."""
     report_path = Path(report_path)
     report_path.parent.mkdir(parents=True, exist_ok=True)
-    report_path.write_text(render_report(failures, source_name, n_cells))
+    report_path.write_text(
+        render_report(failures, source_name, n_cells), encoding="utf-8"
+    )
     return report_path
 
 
@@ -322,6 +355,102 @@ def validate_marker_csv(
         print(f"Marker syntax: all {n_cells} cells valid.")
     print(f"  report -> {out}")
     return failures
+
+
+# --------------------------------------------------------------------------- #
+# Token extraction
+# --------------------------------------------------------------------------- #
+def extract_markers(expr: str) -> set[str]:
+    """Return the distinct marker names in a marker expression.
+
+    Strips qualifiers (e.g. ``CD4+`` → ``CD4``) and grouping symbols.
+    Skips the live-gate prefix and group-level qualifiers. Returns an empty
+    set for empty or invalid expressions — never raises.
+    """
+    try:
+        return parse_expression(expr).markers()
+    except MarkerSyntaxError:
+        return set()
+
+
+def extract_markers_from_csv(path: str | Path) -> list[dict]:
+    """Extract all distinct marker tokens from a Marker Combinations CSV.
+
+    Returns one record per distinct marker token, sorted alphabetically:
+    ``{"marker_token", "source_columns", "cell_types"}`` where the latter
+    two are ``|``-separated strings listing which marker columns and which
+    subset names contain that token.
+    """
+    df = pd.read_csv(path)
+    cols = [c for c in MARKER_COLUMNS if c in df.columns]
+    subset_column = "Subset name" if "Subset name" in df.columns else "Abbreviation"
+
+    token_info: dict[str, dict[str, set]] = {}
+    for _, row in df.iterrows():
+        subset = str(row.get(subset_column, "")).strip()
+        for col in cols:
+            value = row[col]
+            if pd.isna(value):
+                continue
+            for marker in extract_markers(str(value)):
+                if marker not in token_info:
+                    token_info[marker] = {"columns": set(), "cell_types": set()}
+                token_info[marker]["columns"].add(col)
+                if subset:
+                    token_info[marker]["cell_types"].add(subset)
+
+    return [
+        {
+            "marker_token": token,
+            "source_columns": "|".join(sorted(info["columns"])),
+            "cell_types": "|".join(sorted(info["cell_types"])),
+        }
+        for token, info in sorted(token_info.items())
+    ]
+
+
+def tokens_main(argv: list[str] | None = None) -> int:
+    """CLI: extract distinct marker tokens from the Marker Combinations CSV."""
+    import argparse
+
+    repo_root = Path(__file__).resolve().parents[2]
+    default_csv = repo_root / "data" / "marker_combinations.csv"
+    default_out = repo_root / "marker_mappings" / "marker_tokens.csv"
+
+    parser = argparse.ArgumentParser(
+        prog="soulcap-tokens",
+        description="Extract distinct marker tokens from the Marker Combinations CSV.",
+    )
+    parser.add_argument(
+        "csv",
+        nargs="?",
+        type=Path,
+        default=default_csv,
+        help="Path to marker_combinations.csv (default: data/).",
+    )
+    parser.add_argument(
+        "--out",
+        type=Path,
+        default=default_out,
+        help="Output CSV (default: marker_mappings/marker_tokens.csv).",
+    )
+    args = parser.parse_args(argv)
+
+    if not args.csv.exists():
+        print(f"error: {args.csv} not found — run `soulcap-sync` first.")
+        return 2
+
+    failures = validate_csv(args.csv)
+    if failures:
+        print(
+            f"error: {len(failures)} invalid marker cell(s); fix source expressions before regenerating tokens."
+        )
+        return 1
+    records = extract_markers_from_csv(args.csv)
+    args.out.parent.mkdir(parents=True, exist_ok=True)
+    pd.DataFrame(records).to_csv(args.out, index=False)
+    print(f"Extracted {len(records)} distinct marker token(s) -> {args.out}")
+    return 0
 
 
 def main(argv: list[str] | None = None) -> int:

@@ -86,7 +86,9 @@ def main() -> int:
     try:
         from soulcap_cl_mapping import report_validator
     except Exception as exc:  # pragma: no cover - defensive
-        print(f"validate_report_quotes: import failed ({exc}); allowing", file=sys.stderr)
+        print(
+            f"validate_report_quotes: import failed ({exc}); allowing", file=sys.stderr
+        )
         return 0
 
     run_id = path.parent.name
@@ -104,7 +106,10 @@ def main() -> int:
 
         evidence = snippet_cache.load_snippet_texts(run_id, qid, None)
     except Exception as exc:  # pragma: no cover - defensive
-        print(f"validate_report_quotes: cache read failed ({exc}); allowing", file=sys.stderr)
+        print(
+            f"validate_report_quotes: cache read failed ({exc}); allowing",
+            file=sys.stderr,
+        )
         return 0
 
     if not evidence:

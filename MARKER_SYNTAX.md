@@ -198,3 +198,22 @@ sheet contains entries that violate it and should be corrected at source (the
   without a trailing `-`; confirm which cell types intend the negation.
 
 A parser built from §2 can be used to lint the sheet for these.
+
+## 4. Implementation semantics
+
+`marker_syntax.parse_expression` returns the shared immutable AST used by
+validation, token extraction, and matching. Malformed expressions are never
+partially scored. Unqualified markers remain unknown rather than acquiring
+an assumed sign.
+
+The matcher retains low, intermediate, and high levels. `positive` CL evidence
+does not establish a specific expression level. The documented special `+/-`
+qualifier means low or undetectable; other slash qualifiers retain each listed
+alternative. Group `-` negates the entire Boolean condition, so "not high"
+does not imply "negative". Unknown evidence stays unknown under negation.
+
+The grammar permits group-level `hi/lo/int` and slash qualifiers but does not
+define their biological meaning on compound groups. Such expressions are
+retained in the AST and flagged as needing clarification before scoring.
+Boolean expansion is capped at 256 clauses to reject excessively complex
+expressions explicitly.

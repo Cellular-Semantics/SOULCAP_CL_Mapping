@@ -9,7 +9,9 @@ import pytest
 from soulcap_cl_mapping import snippet_cache as sc
 
 
-def _data_item(corpus_id, text, *, start=0, end=100, refs=None, sentences=None, title="T"):
+def _data_item(
+    corpus_id, text, *, start=0, end=100, refs=None, sentences=None, title="T"
+):
     """Build one ASTA ``result.data`` item."""
     return {
         "score": 0.9,
@@ -92,8 +94,13 @@ def test_open_access_closed_is_false():
     item = _data_item("1", "t")
     item["paper"]["openAccessInfo"] = {"status": "CLOSED"}
     rec = sc._record_from_data_item(
-        item, run_id="r", qid="q", round=1, query="q",
-        source_seed=None, followed_corpus_ids=None,
+        item,
+        run_id="r",
+        qid="q",
+        round=1,
+        query="q",
+        source_seed=None,
+        followed_corpus_ids=None,
     )
     assert rec["open_access"] is False
 
@@ -120,7 +127,9 @@ def test_load_questions_missing_returns_empty(tmp_path):
 # append / load
 # --------------------------------------------------------------------------- #
 def test_append_creates_jsonl_and_counts(tmp_path):
-    result = _result(_data_item("1", "alpha"), _data_item("2", "beta", start=200, end=300))
+    result = _result(
+        _data_item("1", "alpha"), _data_item("2", "beta", start=200, end=300)
+    )
     n = sc.append_snippets("run", "q1", 1, "query", result, root=tmp_path)
     assert n == 2
     assert sc.question_file("run", "q1", tmp_path).exists()
@@ -128,13 +137,17 @@ def test_append_creates_jsonl_and_counts(tmp_path):
 
 
 def test_append_empty_data_returns_zero(tmp_path):
-    n = sc.append_snippets("run", "q1", 1, "query", {"result": {"data": []}}, root=tmp_path)
+    n = sc.append_snippets(
+        "run", "q1", 1, "query", {"result": {"data": []}}, root=tmp_path
+    )
     assert n == 0
     assert sc.load_records("run", "q1", tmp_path) == []
 
 
 def test_append_accepts_bare_data_shape(tmp_path):
-    n = sc.append_snippets("run", "q1", 1, "q", {"data": [_data_item("1", "x")]}, root=tmp_path)
+    n = sc.append_snippets(
+        "run", "q1", 1, "q", {"data": [_data_item("1", "x")]}, root=tmp_path
+    )
     assert n == 1
 
 
@@ -148,26 +161,44 @@ def test_append_dedup_same_offset(tmp_path):
 
 
 def test_multi_round_appends_distinct(tmp_path):
-    sc.append_snippets("run", "q1", 1, "q", _result(_data_item("1", "a")), root=tmp_path)
     sc.append_snippets(
-        "run", "q1", 2, "q", _result(_data_item("2", "b", start=5, end=9)), root=tmp_path
+        "run", "q1", 1, "q", _result(_data_item("1", "a")), root=tmp_path
+    )
+    sc.append_snippets(
+        "run",
+        "q1",
+        2,
+        "q",
+        _result(_data_item("2", "b", start=5, end=9)),
+        root=tmp_path,
     )
     records = sc.load_records("run", "q1", tmp_path)
     assert [r["round"] for r in records] == [1, 2]
 
 
 def test_multi_question_isolation(tmp_path):
-    sc.append_snippets("run", "q1", 1, "q", _result(_data_item("1", "a")), root=tmp_path)
-    sc.append_snippets("run", "q2", 1, "q", _result(_data_item("2", "b")), root=tmp_path)
+    sc.append_snippets(
+        "run", "q1", 1, "q", _result(_data_item("1", "a")), root=tmp_path
+    )
+    sc.append_snippets(
+        "run", "q2", 1, "q", _result(_data_item("2", "b")), root=tmp_path
+    )
     assert sc.load_snippet_texts("run", "q1", tmp_path) == ["a"]
     assert sc.load_snippet_texts("run", "q2", tmp_path) == ["b"]
 
 
 def test_followed_corpus_ids_recorded(tmp_path):
-    item = _data_item("100", "txt", refs=[{"start": 1, "end": 2, "matchedPaperCorpusId": "200"}])
+    item = _data_item(
+        "100", "txt", refs=[{"start": 1, "end": 2, "matchedPaperCorpusId": "200"}]
+    )
     sc.append_snippets(
-        "run", "q1", 1, "q", _result(item),
-        followed_corpus_ids={"100": ["200"]}, root=tmp_path,
+        "run",
+        "q1",
+        1,
+        "q",
+        _result(item),
+        followed_corpus_ids={"100": ["200"]},
+        root=tmp_path,
     )
     rec = sc.load_records("run", "q1", tmp_path)[0]
     assert rec["followed_corpus_ids"] == ["200"]
@@ -207,7 +238,9 @@ def test_default_root_falls_back_to_repo(monkeypatch):
 def test_main_init(tmp_path, capsys):
     qfile = tmp_path / "questions.json"
     qfile.write_text(json.dumps([{"qid": "q1", "text": "?", "seeds": []}]))
-    rc = sc.main(["--root", str(tmp_path), "init", "--run", "r", "--questions", str(qfile)])
+    rc = sc.main(
+        ["--root", str(tmp_path), "init", "--run", "r", "--questions", str(qfile)]
+    )
     assert rc == 0
     assert "initialised" in capsys.readouterr().out
     assert (tmp_path / "r" / "questions.json").exists()
@@ -220,8 +253,19 @@ def test_main_append_from_stdin(tmp_path, capsys, monkeypatch):
     monkeypatch.setattr("sys.stdin", io.StringIO(payload))
     rc = sc.main(
         [
-            "--root", str(tmp_path), "append", "--run", "r", "--qid", "q1",
-            "--round", "1", "--query", "q", "--result", "-",
+            "--root",
+            str(tmp_path),
+            "append",
+            "--run",
+            "r",
+            "--qid",
+            "q1",
+            "--round",
+            "1",
+            "--query",
+            "q",
+            "--result",
+            "-",
         ]
     )
     assert rc == 0
@@ -234,9 +278,23 @@ def test_main_append_from_file(tmp_path):
     rfile.write_text(json.dumps(_result(_data_item("1", "x"))))
     rc = sc.main(
         [
-            "--root", str(tmp_path), "append", "--run", "r", "--qid", "q1",
-            "--round", "1", "--query", "q", "--result", str(rfile),
-            "--source-seed", "DOI:10.1/x", "--followed", "1=2",
+            "--root",
+            str(tmp_path),
+            "append",
+            "--run",
+            "r",
+            "--qid",
+            "q1",
+            "--round",
+            "1",
+            "--query",
+            "q",
+            "--result",
+            str(rfile),
+            "--source-seed",
+            "DOI:10.1/x",
+            "--followed",
+            "1=2",
         ]
     )
     assert rc == 0
@@ -244,7 +302,14 @@ def test_main_append_from_file(tmp_path):
 
 
 def test_main_show(tmp_path, capsys):
-    sc.append_snippets("r", "q1", 1, "q", _result(_data_item("1", "x", title="My Paper")), root=tmp_path)
+    sc.append_snippets(
+        "r",
+        "q1",
+        1,
+        "q",
+        _result(_data_item("1", "x", title="My Paper")),
+        root=tmp_path,
+    )
     rc = sc.main(["--root", str(tmp_path), "show", "--run", "r", "--qid", "q1"])
     assert rc == 0
     out = capsys.readouterr().out
