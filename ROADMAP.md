@@ -34,6 +34,10 @@ Planned work for the SOULCAP ↔ Cell Ontology mapping project. See
 The Google Sheet is the source of truth; pull with `uv run soulcap-sync` before
 working on any task.
 
+For the Oct–Dec 2026 execution plan against these milestones — broken into
+sprint-level sub-tasks, acceptance criteria, and who each item is blocked
+on — see [reports/fall_2026_sprint_backlog.md](reports/fall_2026_sprint_backlog.md).
+
 Status legend: ⬜ not started · 🟡 in progress · ✅ done · ⛔ blocked.
 
 ---

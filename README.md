@@ -30,6 +30,13 @@ controlled vocabulary of cell types. It is widely used for annotating
 single-cell datasets and is a standard reference for cell type identity across
 the life sciences.
 
+## Planning
+
+Milestones and their status live in [ROADMAP.md](ROADMAP.md). The current
+semester's sprint-level breakdown (sub-tasks, acceptance criteria, and what's
+blocked on someone outside the repo) is
+[reports/fall_2026_sprint_backlog.md](reports/fall_2026_sprint_backlog.md).
+
 ## Setup
 
 ### 1. Clone this repo
