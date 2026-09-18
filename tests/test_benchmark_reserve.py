@@ -43,6 +43,12 @@ def test_reserve_is_reproducible_and_separate_from_development():
     reserved = {sid for group in reserve["groups"] for sid in group["subject_ids"]}
     assert not reserved & (development | benchmark)
     for path, expected in reserve["source_hashes"].items():
-        assert hashlib.sha256((ROOT / path).read_bytes()).hexdigest() == expected, (
+        full = ROOT / path
+        if not full.exists():
+            # data/ is a gitignored sync cache (see CLAUDE.md) and is never
+            # present in CI; this hash is only verifiable where it's synced.
+            assert path.startswith("data/"), f"Missing tracked reserve input: {path}"
+            continue
+        assert hashlib.sha256(full.read_bytes()).hexdigest() == expected, (
             "Reserve inputs changed: review and explicitly re-freeze the partition"
         )
