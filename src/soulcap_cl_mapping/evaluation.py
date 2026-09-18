@@ -12,7 +12,7 @@ from datetime import datetime, timezone
 from importlib.metadata import version
 from pathlib import Path
 
-from soulcap_cl_mapping import candidate_index, cl_match
+from soulcap_cl_mapping import candidate_index, cl_match, marker_resolution
 
 FIELDS = [
     "subject_id",
@@ -35,6 +35,7 @@ MODULES = (
     "evaluation.py",
     "audit.py",
     "candidate_index.py",
+    "marker_resolution.py",
 )
 CONFIG = {
     "ks": [1, 3, 5],
@@ -299,6 +300,8 @@ def evaluate(
     ]
     inputs = {path: digest(root / path) for path in INPUTS.values()}
     inputs["benchmark"] = digest(benchmark)
+    if marker_map:
+        inputs["marker_policy"] = digest(marker_resolution.policy_path(marker_map))
     for input_name, path in (("marker_map", marker_map), ("term_cache", term_cache)):
         if path:
             inputs[input_name] = digest(path)
@@ -317,6 +320,7 @@ def evaluate(
         config={
             **CONFIG,
             "marker_resolution": bool(marker_map),
+            "resolution_policy": "explicit_v1" if marker_map else "legacy",
             "local_lexical": bool(term_cache),
             "lexical_limit": 20,
             "lexical_min_jaccard": 0.5,
@@ -391,6 +395,7 @@ def dashboard_evaluation(root: Path) -> dict:
                 changed.append(name)
         for key, local in (
             ("marker_map", "marker_mappings/marker_protein_gene.csv"),
+            ("marker_policy", "marker_mappings/marker_resolution.tsv"),
             ("term_cache", "reports/cl_lexical_cache.json"),
         ):
             if key in data["inputs"] and (
@@ -436,6 +441,8 @@ def main(argv: list[str] | None = None) -> int:
             [args.baseline] if args.baseline else []
         )
         protected += [p for p in (args.marker_map, args.term_cache) if p is not None]
+        if args.marker_map:
+            protected.append(marker_resolution.policy_path(args.marker_map))
         if any(p.resolve() == q.resolve() for p in outputs for q in protected):
             raise ValueError(
                 "Output would overwrite benchmark or baseline; choose another --out-dir"

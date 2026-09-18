@@ -1,7 +1,7 @@
 # SOULCAP mapping audit
 
-Generated: 2026-09-11T04:13:51.094265+00:00
-Mapping evidence resolution: legacy
+Generated: 2026-09-11T04:13:52.853363+00:00
+Mapping evidence resolution: explicit_marker_policy
 
 [Open dashboard](audit_dashboard.html) · [Audit data](audit_data.json)
 
@@ -31,7 +31,7 @@ Mapping evidence resolution: legacy
   "ontology_snapshot_date": "2026-06-29",
   "ontology_age_days": 74,
   "export_decisions": "match",
-  "export_evidence": "match"
+  "export_evidence": "different_resolution_mode"
 }
 ```
 

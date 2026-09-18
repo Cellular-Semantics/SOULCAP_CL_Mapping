@@ -1,10 +1,16 @@
 import csv
 import json
 import sqlite3
+from collections import defaultdict
 
 import pytest
 
-from soulcap_cl_mapping import candidate_index as ci, cl_match, evaluation
+from soulcap_cl_mapping import (
+    candidate_index as ci,
+    cl_match,
+    evaluation,
+    marker_resolution,
+)
 from tests.test_audit import snapshot as snapshot
 from tests.test_evaluation import benchmark
 
@@ -17,6 +23,33 @@ def marker_file(tmp_path, rows):
         )
         writer.writeheader()
         writer.writerows(rows)
+    groups = defaultdict(list)
+    for row in rows:
+        groups[row["marker_token"].upper()].append(row)
+    with marker_resolution.policy_path(path).open(
+        "w", encoding="utf-8", newline=""
+    ) as fh:
+        writer = csv.DictWriter(
+            fh, fieldnames=marker_resolution.POLICY_FIELDS, delimiter="\t"
+        )
+        writer.writeheader()
+        for token, records in groups.items():
+            ids = {r["pro_id"] for r in records}
+            allowed = token != "HLA-DR" and len(ids) == 1 and "" not in ids
+            writer.writerow(
+                dict(
+                    marker_token=token,
+                    representation="single_protein"
+                    if allowed
+                    else "complex"
+                    if token == "HLA-DR"
+                    else "unresolved",
+                    protein_resolution="allow" if allowed else "withhold",
+                    rationale="Explicit test policy",
+                    source_ref="fixture",
+                    registry_sha256=marker_resolution.signature(records),
+                )
+            )
     return path
 
 
@@ -100,8 +133,7 @@ def test_ambiguous_complex_and_nonprotein(tmp_path):
     assert "PR:4" not in resolver["proteins"]
     assert {x["reason"] for x in resolver["issues"]} == {
         "ambiguous_alias",
-        "complex_or_reagent",
-        "multiple_or_missing_protein",
+        "policy_withheld",
     }
     assert ci.expand_axiom({"cd_synonym": "CD194 (exact)"}, resolver)[0] == set()
     assert (

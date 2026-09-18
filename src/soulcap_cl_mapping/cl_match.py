@@ -103,7 +103,11 @@ def _parse_cd_synonyms(synonym_str: str) -> set[str]:
 
 
 def build_cl_index(
-    rows: list[dict], marker_map: Path | None = None, term_cache: Path | None = None
+    rows: list[dict],
+    marker_map: Path | None = None,
+    term_cache: Path | None = None,
+    *,
+    resolver: dict | None = None,
 ) -> dict[str, dict]:
     """Return ``{cl_id: {label, positive, negative, high, low}}`` from TSV rows.
 
@@ -114,7 +118,13 @@ def build_cl_index(
     """
     from soulcap_cl_mapping import candidate_index
 
-    resolver = candidate_index.marker_resolver(marker_map) if marker_map else None
+    resolver = (
+        resolver
+        if resolver is not None
+        else candidate_index.marker_resolver(marker_map)
+        if marker_map
+        else None
+    )
     index: dict[str, dict] = {}
     for row in rows:
         cl_id = row["cell"]
@@ -130,11 +140,13 @@ def build_cl_index(
         sense = row.get("sense", "")
         cd_tokens = _parse_cd_synonyms(row.get("cd_synonym", ""))
         if resolver is not None:
+            index[cl_id]["resolver"] = resolver
             cd_tokens, evidence = candidate_index.expand_axiom(row, resolver)
             index[cl_id].setdefault("resolution_evidence", []).append(
                 {
                     "sense": sense,
                     "pr": row.get("pr", ""),
+                    "relation": row.get("relation", ""),
                     "asserted": row.get("asserted", ""),
                     "paths": evidence,
                 }
@@ -153,6 +165,8 @@ def build_cl_index(
                 },
             )
             entry["lexical_names"] = [term["label"], *term["exact_synonyms"]]
+            if resolver is not None:
+                entry["resolver"] = resolver
     return index
 
 
@@ -255,6 +269,15 @@ def score_cl_terms(
     the score, breaking ties toward biologically named matches.
     """
     hints = name_hints or set()
+    resolver = next(
+        (entry["resolver"] for entry in cl_index.values() if "resolver" in entry), None
+    )
+    if resolver is not None:
+        from soulcap_cl_mapping.marker_resolution import deduplicate
+
+        seen: set = set()
+        required = deduplicate(required, resolver, seen)
+        ideal = deduplicate(ideal, resolver, seen)
     results = []
     for cl_id, entry in cl_index.items():
         pos = entry["positive"]

@@ -12,6 +12,42 @@ from soulcap_cl_mapping import audit, registry
 NOW = datetime(2026, 9, 10, tzinfo=timezone.utc)
 
 
+@pytest.mark.parametrize(
+    "notes,proteins,genes,expected",
+    [
+        (
+            "generic reagent; not a specific protein",
+            [],
+            [],
+            "documented_nonprotein_or_reagent",
+        ),
+        ("recognises assembled heterodimer", [], [], "documented_complex_or_family"),
+        ("two-gene marker", ["PR:1"], ["A"], "documented_complex_or_family"),
+        ("likely parsing artifact", [], [], "source_artifact_needs_review"),
+        ("", [], [], "no_pro_mapping"),
+        ("", ["PR:1"], [], "no_gene_mapping"),
+        ("", ["PR:1", "PR:2"], ["A"], "multiple_proteins_needs_review"),
+        ("", ["PR:1"], ["A"], "mapped"),
+    ],
+)
+def test_marker_status_representation(notes, proteins, genes, expected):
+    item = {"records": [{"notes": notes}], "pro_ids": proteins, "gene_symbols": genes}
+    assert audit.marker_status(item, True)[0] == expected
+    assert audit.marker_status(item, False)[0] == "unavailable"
+
+
+@pytest.mark.parametrize(
+    "notes",
+    [
+        "lipid antigen; not a protein marker",
+        "HNK-1 carbohydrate epitope synthesised by B3GAT1",
+    ],
+)
+def test_nonprotein_notes_are_not_unresolved(notes):
+    item = {"records": [{"notes": notes}], "pro_ids": [], "gene_symbols": []}
+    assert audit.marker_status(item, True)[0] == "documented_nonprotein_or_reagent"
+
+
 def table(root, name, rows, fields=None):
     path = root / audit.INPUTS[name]
     path.parent.mkdir(parents=True, exist_ok=True)

@@ -6,7 +6,13 @@ from soulcap_cl_mapping import cl_match, phenotype, registry
 from soulcap_cl_mapping.marker_syntax import MARKER_COLUMNS, MarkerSyntaxError
 
 
-def assess(entry: dict, profile: dict | None, axiom_rows: list[dict]) -> dict:
+def assess(
+    entry: dict,
+    profile: dict | None,
+    axiom_rows: list[dict],
+    *,
+    resolver: dict | None = None,
+) -> dict:
     result: dict = {
         "status": "missing_profile",
         "matched": [],
@@ -20,6 +26,8 @@ def assess(entry: dict, profile: dict | None, axiom_rows: list[dict]) -> dict:
         "curator_evidence": entry.get("curator_evidence", ""),
         "review_status": entry.get("review_status", "needs_review"),
     }
+    if resolver is not None:
+        result["resolution_mode"] = "explicit_marker_policy"
     if profile is None:
         return result
     result["profile_sha256"] = registry.profile_signature(profile)
@@ -34,12 +42,14 @@ def assess(entry: dict, profile: dict | None, axiom_rows: list[dict]) -> dict:
     )
     result["sheet_notes"] = str(profile.get("CL Mapping Notes", ""))
     selected = [r for r in axiom_rows if r.get("cell") == entry["cl_id"]]
-    full = cl_match.build_cl_index(selected).get(entry["cl_id"], {})
+    full = cl_match.build_cl_index(selected, resolver=resolver).get(entry["cl_id"], {})
     asserted = cl_match.build_cl_index(
-        [r for r in selected if r.get("asserted", "").lower() == "true"]
+        [r for r in selected if r.get("asserted", "").lower() == "true"],
+        resolver=resolver,
     ).get(entry["cl_id"], {})
     row_indexes = [
-        (r, cl_match.build_cl_index([r]).get(entry["cl_id"], {})) for r in selected
+        (r, cl_match.build_cl_index([r], resolver=resolver).get(entry["cl_id"], {}))
+        for r in selected
     ]
     parsed: dict = {}
     for column in MARKER_COLUMNS:
@@ -50,6 +60,13 @@ def assess(entry: dict, profile: dict | None, axiom_rows: list[dict]) -> dict:
     if result["errors"]:
         result["status"] = "invalid_profile"
         return result
+    if resolver is not None:
+        from soulcap_cl_mapping.marker_resolution import deduplicate
+
+        seen: set = set()
+        for column in sorted(parsed, key=lambda c: not c.startswith("Required")):
+            parsed[column] = deduplicate(parsed[column], resolver, seen)
+        result["resolution_evidence"] = full.get("resolution_evidence", [])
     tested: set[str] = set()
     required_count = 0
     for column, clauses in parsed.items():
@@ -88,9 +105,12 @@ def assess(entry: dict, profile: dict | None, axiom_rows: list[dict]) -> dict:
                 )
             else:
                 result["gaps"].append(record)
+    if resolver is not None:
+        canonical = resolver["canonical"]
+        tested = {canonical.get(m, m) for m in tested}
     result["untested_cl_markers"] = sorted(
         {
-            m
+            resolver["canonical"].get(m, m) if resolver is not None else m
             for sense in ("positive", "negative", "high", "low", "intermediate")
             for m in full.get(sense, set())
         }

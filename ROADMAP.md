@@ -12,7 +12,7 @@
   Numeric confidence is omitted pending calibration. These implementation
   changes do not complete biological review or certify exact matches.
 
-## Current local status — 2026-09-10
+## Current local status — 2026-09-11
 
 - 127 registered SOULCAP entities; **80 proposals covering 80 entities** and
   **47 entities without proposals**. All 80 proposals still need review; these
@@ -21,6 +21,11 @@
   resolution plus offline lexical candidate coverage are implemented.
 - No reviewed benchmark cases yet; evaluation measures provisional agreement,
   not validated biological accuracy.
+- Shared opt-in marker resolution now uses explicit fingerprinted policies across
+  matching, mapping evidence, audit, and SSSOM. Compatible alias owners merge and
+  duplicate semantic clauses are counted once. See the
+  [before/after resolution audit](reports/marker_resolution_audit.md); representation
+  policies and improved software checks do not certify biological equivalence.
 - Counts below describe local artifacts. Older dated literature, sheet-schema,
   and upstream issue statuses have not been reverified by this update.
 
@@ -52,13 +57,19 @@ identifiers.
 **Deliverable:** `marker_mappings/marker_protein_gene.csv` (a **tracked**,
 curated artifact — *not* part of the gitignored `data/` cache).
 
-**Local status (2026-09-10):** all 75 registry marker tokens have a row; 56/75
+**Local status (2026-09-11):** all 75 registry marker tokens have a row; 56/75
 have a gene symbol. The other 19 are **not uniformly resolved exceptions**:
 they include documented complex/family or reagent representations, possible
 source parsing artifacts, and identifiers still needing review. The dashboard
 classifies these separately from the registry notes and retains identifier
 completeness in each row's details. A missing gene/PRO ID alone is not an error,
 and a documented representation exception is not a biological sign-off.
+
+Dashboard categories: 55 with recorded PRO/gene mappings, 10 documented
+complex/family representations, 3 documented non-protein/reagent markers,
+4 possible source artifacts, and 3 unresolved gene mappings. One complex/multi-gene
+representation has a recorded gene symbol, explaining why the gene-populated
+count is 56 while the general `mapped` category contains 55.
 
 ### Mapping table schema
 
@@ -165,7 +176,7 @@ supporting evidence.
 type, proposed CL term + ID, match type (broad/exact), rationale, and the marker
 + literature evidence supporting it.
 
-**Local status (2026-09-10):** `mappings/curated_mappings.tsv` contains 80
+**Local status (2026-09-11):** `mappings/curated_mappings.tsv` contains 80
 proposal records covering 80 of 127 registered entities; 47 entities have no
 proposal. The SSSOM export is generated from this registry. All proposals are
 `needs_review`, not confirmed equivalences. The gap log includes family-level

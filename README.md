@@ -147,8 +147,9 @@ Missing or malformed required inputs fail before reports are written.
 ## Alias/protein-aware matching and local candidate coverage
 
 The enhanced modes are explicit opt-ins; omitting the flags preserves the legacy
-marker scorer. They do not change curated mapping decisions or the separate
-mapping-evidence/SSSOM export engine.
+marker scorer. They do not change curated mapping decisions. Candidate scoring,
+mapping evidence, SSSOM export, and the audit now share the same resolver when
+`--marker-map` is explicitly enabled for each command; defaults remain legacy.
 
 ```bash
 uv run soulcap-match --batch --marker-map marker_mappings/marker_protein_gene.csv --term-cache reports/cl_lexical_cache.json --batch-out reports/candidate_cl_mappings_enhanced.tsv
@@ -157,12 +158,50 @@ uv run soulcap-audit
 ```
 
 Marker resolution uses explicit registry aliases and exact PRO identity, preserving
-positive/negative and expression-level distinctions. Ambiguous aliases, multiple
-PRO targets, and records describing complexes, subunits, or reagents are withheld
-from automatic protein equivalence. Related/broad ontology synonyms do not imply
-identity. No gene-symbol, cross-species, or protein-hierarchy equivalence is inferred.
+positive/negative and expression-level distinctions. Its sibling policy file,
+[marker_resolution.tsv](marker_mappings/marker_resolution.tsv), must classify
+every normalized registry marker as `single_protein`, `protein_family`, `complex`,
+`reagent_gate`, or `unresolved`, with an explicit `allow`/`withhold` protein policy,
+rationale, source reference, and SHA-256 of the original registry rows. Runtime
+resolution does not interpret free-text notes to decide protein identity. Only
+single-protein policies with exactly one PRO ID can allow protein expansion.
+Missing, conflicting, or stale policies fail rather than silently guessing.
+
+Initial policies preserve existing single-PRO representations as computational
+assumptions, not biological sign-offs. CD3, CD8, CD15, CD16, and MR1 have conservative
+holds because the registry's component/family/reagent representation needs review;
+no source identifiers have been changed. Complex, family, and reagent policies
+cannot inherit a component-protein assertion through an alias. An explicit
+same-marker assertion without a component PRO remains distinguishable evidence.
+Related/broad ontology synonyms do not imply identity. No gene-symbol,
+cross-species, or protein-hierarchy equivalence is inferred.
+
+Compatible duplicate aliases with the same allowed PRO identity are merged;
+conflicting owners remain unresolved. Identical semantic clauses count once across
+required/ideal columns (required takes precedence), while contradictory signs,
+different levels, and distinct OR constraints remain separate. Original source
+spelling is retained for evidence display. After a registry edit, review and update
+the affected policy and its fingerprint; do not simply refresh hashes to bypass review.
 Resolution paths are recorded in candidate evidence; withheld cases are listed in
 evaluation JSON under `marker_resolution_issues`.
+
+Isolate resolver changes from lexical coverage and inspect detailed differences:
+
+```bash
+uv run soulcap-resolution-audit
+uv run soulcap-evaluate --out-dir reports/resolver-refinement/legacy
+uv run soulcap-evaluate --marker-map marker_mappings/marker_protein_gene.csv --out-dir reports/resolver-refinement/enhanced --baseline reports/resolver-refinement/legacy/matcher_evaluation.json
+uv run soulcap-sssom --marker-map marker_mappings/marker_protein_gene.csv --out reports/resolver-refinement/enhanced.sssom.tsv
+uv run soulcap-audit --marker-map marker_mappings/marker_protein_gene.csv --out-dir reports/resolver-refinement/audit
+```
+
+The [resolution audit](reports/marker_resolution_audit.md) includes per-marker
+gains/losses and JSON with per-mapping before/after evidence. Case-normalized
+resolution covers 73 marker groups from 75 registry rows. Comparison runs use
+identical source/axiom snapshots and no lexical expansion; modes intentionally
+differ, so the general evaluation comparison flags them as non-equivalent runs.
+Enhanced SSSOM export requires a separate output path to protect the default export.
+The audit explicitly distinguishes export/audit mode differences from evidence drift.
 
 The local lexical cache contains active CL labels and exact synonyms from a local
 OAK SQLite snapshot, with a source-database hash. To rebuild from your own snapshot:
@@ -186,6 +225,26 @@ The original baseline is preserved in `reports/matcher_evaluation_baseline.json`
 controlled runs are in `reports/evaluation-legacy/` and `reports/evaluation-alias/`.
 Mode/input changes make comparisons descriptive rather than equivalent-condition
 regression tests. Broader coverage alone does not establish better ranking.
+
+## Offline regression triage
+
+```bash
+uv run python -m soulcap_cl_mapping.regression_triage
+```
+
+Writes [regression_triage.md](reports/regression-triage/regression_triage.md),
+JSON evidence, and a per-case TSV under `reports/regression-triage/`. Optional
+`--root` and `--out-dir` select another snapshot or report location. This is a
+diagnostic tool, not a production matcher mode: it does not change policies,
+mapping decisions, scoring weights, or existing audit/evaluation reports.
+
+All eight combinations separate enhanced token-evidence additions, legacy
+token-evidence removals, and semantic-clause deduplication. Candidates, their order,
+source profiles, and scoring weights remain fixed; no lexical search is run.
+Both endpoints must reproduce the production matchers. The report includes ties,
+changed expected-target and competitor evidence, policy references, pairwise
+factor effects, and input/code hashes. These computational findings do not validate
+the provisional targets or establish biological correctness of a policy.
 
 ## Input data
 
@@ -328,6 +387,20 @@ cell-type definitions are equivalent.
 Use `--source`, `--mappings`, `--tsv`, `--out`, and `--review-out` to
 select inputs and output locations. Existing abbreviation-based subject IDs
 are retained in the registry's `legacy_subject_id` column.
+
+## Evidence-reviewed regression follow-up
+
+The [steps 3–6 follow-up](reports/regression-followup/README.md) reviews the
+three lost top-five targets, retains a narrowly scoped whole-CD8 surface
+assertion in opt-in policy mode, and records controlled before/after results.
+Top-five provisional agreement remains 16/80; this is not a validated ranking
+improvement. Two proposed mapping relations lack sufficient support.
+
+[Resolver constraint examples](mappings/marker_assertion_benchmark.json) run
+as regression tests. A [five-entity prospective reserve](mappings/benchmark_reserve.json)
+is kept separate from development proposals and identical profiles. It still
+needs independent annotation; no gold-standard mappings or held-out accuracy
+are claimed. The report explains the remaining curator decisions.
 
 ## ROBOT ontology QC
 

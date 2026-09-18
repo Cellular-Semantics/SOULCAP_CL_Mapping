@@ -13,7 +13,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import quote, urlsplit
 
-from soulcap_cl_mapping import mapping_evidence, phenotype, registry
+from soulcap_cl_mapping import mapping_evidence, marker_resolution, phenotype, registry
 from soulcap_cl_mapping.marker_syntax import (
     MARKER_COLUMNS,
     MarkerSyntaxError,
@@ -77,7 +77,8 @@ def marker_status(item: dict, available: bool) -> tuple[str, str]:
             "Registry notes describe a complex, multi-gene, or non-single-protein marker; inspect the recorded representation.",
         )
     if re.search(
-        r"not a specific protein|non-protein|viability gate|generic reagent", notes
+        r"not a specific protein|not a protein marker|non-protein|carbohydrate epitope|viability gate|generic reagent",
+        notes,
     ):
         return (
             "documented_nonprotein_or_reagent",
@@ -104,10 +105,13 @@ def marker_status(item: dict, available: bool) -> tuple[str, str]:
     )
 
 
-def build_audit(root: Path, now: datetime | None = None) -> dict:
+def build_audit(
+    root: Path, now: datetime | None = None, *, marker_map: Path | None = None
+) -> dict:
     """Collect all findings, including damaged inputs, without modifying sources."""
     now = now or datetime.now(timezone.utc)
     root = root.resolve()
+    resolver = marker_resolution.load(marker_map) if marker_map else None
     findings: list[dict] = []
 
     def issue(severity: str, code: str, subject: str, message: str) -> None:
@@ -311,7 +315,9 @@ def build_audit(root: Path, now: datetime | None = None) -> dict:
             )
         rows = source_ids.get(sid, [])
         profile = rows[0]["profile"] if len(rows) == 1 else None
-        evidence = mapping_evidence.assess(entry, profile, tables.get("axioms", []))
+        evidence = mapping_evidence.assess(
+            entry, profile, tables.get("axioms", []), resolver=resolver
+        )
         if "axioms" not in tables and profile is not None:
             evidence["status"] = "unavailable_axioms"
         if not rows:
@@ -419,6 +425,8 @@ def build_audit(root: Path, now: datetime | None = None) -> dict:
             else "mapped"
         )
         item["status"], item["status_reason"] = marker_status(item, "markers" in tables)
+        if resolver is not None:
+            item["resolution_policy"] = resolver["policies"].get(token.upper())
         item["classification_basis"] = (
             "Local registry identifiers and notes; not externally verified."
         )
@@ -511,6 +519,7 @@ def build_audit(root: Path, now: datetime | None = None) -> dict:
         if {"source", "entities", "axioms"} <= tables.keys():
             evidence_by_pair = {(m["subject_id"], m["cl_id"]): m for m in mappings}
             stale = False
+            different_mode = False
             for row in tables["export"]:
                 try:
                     stored = json.loads(row["comment"])
@@ -520,6 +529,11 @@ def build_audit(root: Path, now: datetime | None = None) -> dict:
                     if isinstance(stored, dict) and isinstance(
                         stored.get("marker_evidence"), dict
                     ):
+                        if bool(
+                            stored["marker_evidence"].get("resolution_mode")
+                        ) != bool(resolver):
+                            different_mode = True
+                            continue
                         for field in (
                             "lexical_evidence",
                             "literature_evidence",
@@ -537,7 +551,11 @@ def build_audit(root: Path, now: datetime | None = None) -> dict:
                 except ValueError:
                     stale = True
             provenance["export_evidence"] = (
-                "changed" if stale or expected != exported else "match"
+                "changed"
+                if stale or expected != exported
+                else "different_resolution_mode"
+                if different_mode
+                else "match"
             )
             if stale:
                 issue(
@@ -622,6 +640,13 @@ def build_audit(root: Path, now: datetime | None = None) -> dict:
     }
     return dict(
         schema_version=1,
+        resolution_mode="explicit_marker_policy" if resolver is not None else "legacy",
+        resolution_inputs={
+            str(p): hashlib.sha256(p.read_bytes()).hexdigest()
+            for p in [marker_map, marker_resolution.policy_path(marker_map)]
+        }
+        if marker_map
+        else {},
         generated_utc=now.isoformat(),
         summary=summary,
         sources=sources,
@@ -692,6 +717,7 @@ def render_summary(data: dict) -> str:
         "# SOULCAP mapping audit",
         "",
         "Generated: " + data["generated_utc"],
+        "Mapping evidence resolution: " + data.get("resolution_mode", "legacy"),
         "",
         "[Open dashboard](audit_dashboard.html) · [Audit data](audit_data.json)",
         "",
@@ -727,6 +753,11 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument("--out-dir", type=Path, help="Default: reports/ under --root")
     parser.add_argument(
+        "--marker-map",
+        type=Path,
+        help="Opt-in shared marker policy resolution for mapping evidence",
+    )
+    parser.add_argument(
         "--strict",
         action="store_true",
         help="Exit 1 after generating reports if any error findings exist",
@@ -734,7 +765,10 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     root = args.root.resolve()
     out = (args.out_dir or root / "reports").resolve()
-    data = build_audit(root)
+    try:
+        data = build_audit(root, marker_map=args.marker_map)
+    except (OSError, ValueError) as exc:
+        parser.exit(1, f"Audit failed: {exc}\n")
     from soulcap_cl_mapping.evaluation import dashboard_evaluation
 
     data["evaluation"] = dashboard_evaluation(root)

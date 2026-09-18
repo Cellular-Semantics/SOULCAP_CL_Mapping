@@ -3,12 +3,10 @@
 from __future__ import annotations
 
 import argparse
-import csv
 import hashlib
 import json
 import re
 import sqlite3
-from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -18,89 +16,15 @@ def normalize(value: str) -> str:
 
 
 def marker_resolver(path: Path) -> dict:
-    with path.open(encoding="utf-8-sig", newline="") as fh:
-        reader = csv.DictReader(fh)
-        if not {"marker_token", "marker_synonyms", "pro_id", "notes"} <= set(
-            reader.fieldnames or []
-        ):
-            raise ValueError("Marker registry missing required columns")
-        rows = list(reader)
-    groups: dict[str, list] = defaultdict(list)
-    owners: dict[str, set] = defaultdict(set)
-    for row in rows:
-        if None in row or any(v is None for v in row.values()):
-            raise ValueError("Malformed marker registry row")
-        token = row["marker_token"].strip().upper()
-        if not token:
-            raise ValueError("Empty marker token")
-        groups[token].append(row)
-        for alias in [token, *row["marker_synonyms"].split("|")]:
-            if alias.strip():
-                owners[alias.strip().upper()].add(token)
-    aliases, proteins, issues = {}, defaultdict(set), []
-    for token, records in groups.items():
-        names = {a for a, o in owners.items() if o == {token}}
-        aliases[token] = names
-        ids = {r["pro_id"].strip() for r in records if r["pro_id"].strip()}
-        notes = " ".join(r["notes"] for r in records).lower()
-        blocked = bool(
-            re.search(
-                r"complex|heterodimer|tetramer|primary chain|subunit|reagent|artifact",
-                notes,
-            )
-        )
-        if len(ids) == 1 and not blocked and all(r["pro_id"].strip() for r in records):
-            pro = next(iter(ids))
-            if not re.fullmatch(r"PR:[A-Za-z0-9]+", pro):
-                raise ValueError(f"Invalid PRO identifier: {pro}")
-            proteins[pro].update(names)
-        else:
-            issues.append(
-                {
-                    "marker": token,
-                    "reason": "complex_or_reagent"
-                    if blocked
-                    else "multiple_or_missing_protein",
-                    "pro_ids": sorted(ids),
-                }
-            )
-    for name, o in owners.items():
-        if len(o) > 1:
-            issues.append(
-                {"marker": name, "reason": "ambiguous_alias", "owners": sorted(o)}
-            )
-    return {
-        "aliases": aliases,
-        "owners": owners,
-        "proteins": proteins,
-        "issues": issues,
-    }
+    from soulcap_cl_mapping.marker_resolution import load
+
+    return load(path)
 
 
 def expand_axiom(row: dict, resolver: dict) -> tuple[set[str], list[dict]]:
-    """Related/broad synonyms never imply identity; ambiguous aliases stay unknown."""
-    tokens: set[str] = set()
-    evidence = []
-    for raw in row.get("cd_synonym", "").split(";"):
-        match = re.fullmatch(r"\s*([^()]+?)(?:\s*\(([^()]+)\))?\s*", raw)
-        if not match or (match[2] and match[2].lower() not in ("label", "exact")):
-            continue
-        name = match[1].strip().upper()
-        owners = resolver["owners"].get(name, set())
-        if len(owners) > 1:
-            continue
-        expanded = resolver["aliases"][next(iter(owners))] if owners else {name}
-        tokens.update(expanded)
-        evidence.append(
-            {"via": "exact_alias", "source_token": name, "tokens": sorted(expanded)}
-        )
-    protein_tokens = resolver["proteins"].get(row.get("pr", ""), set())
-    tokens.update(protein_tokens)
-    if protein_tokens:
-        evidence.append(
-            {"via": "pro_id", "pr": row["pr"], "tokens": sorted(protein_tokens)}
-        )
-    return tokens, evidence
+    from soulcap_cl_mapping.marker_resolution import expand_axiom as expand
+
+    return expand(row, resolver)
 
 
 def load_terms(path: Path) -> dict:

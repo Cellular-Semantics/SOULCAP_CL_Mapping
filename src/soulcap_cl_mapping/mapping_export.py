@@ -19,7 +19,7 @@ from curies import Converter
 from sssom.util import MappingSetDataFrame
 from sssom.writers import write_table
 
-from soulcap_cl_mapping import cl_match, mapping_evidence, registry
+from soulcap_cl_mapping import cl_match, mapping_evidence, marker_resolution, registry
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_TSV = REPO_ROOT / "reports" / "cl_pro_relationships.tsv"
@@ -67,6 +67,7 @@ def build_mapping_rows(
     *,
     profiles: dict[str, dict] | None = None,
     axiom_rows: list[dict] | None = None,
+    resolver: dict | None = None,
 ) -> list[dict]:
     """Build proposed mappings. A term-wide assertion flag cannot confer support."""
     objects: dict[str, set[str]] = {}
@@ -79,7 +80,7 @@ def build_mapping_rows(
     for entry in curated:
         sid = entry["subject_id"]
         evidence = mapping_evidence.assess(
-            entry, (profiles or {}).get(sid), axiom_rows or []
+            entry, (profiles or {}).get(sid), axiom_rows or [], resolver=resolver
         )
         comment = json.dumps(
             {
@@ -231,13 +232,26 @@ def main(argv: list[str] | None = None) -> int:
         "--source", type=Path, default=cl_match.DEFAULT_MARKER_COMBINATIONS
     )
     parser.add_argument("--review-out", type=Path)
+    parser.add_argument(
+        "--marker-map",
+        type=Path,
+        help="Opt-in shared resolver; requires sibling marker_resolution.tsv and a non-default --out",
+    )
     args = parser.parse_args(argv)
     try:
+        if args.marker_map and args.out == DEFAULT_OUT:
+            raise ValueError(
+                "Enhanced export requires a separate --out; preserve the default legacy export until reviewed"
+            )
+        resolver = marker_resolution.load(args.marker_map) if args.marker_map else None
         curated = registry.load_mappings(args.mappings)
         with args.source.open(encoding="utf-8-sig", newline="") as fh:
             profiles = mapping_evidence.profile_index(list(csv.DictReader(fh)))
         rows = build_mapping_rows(
-            curated, profiles=profiles, axiom_rows=registry.read_table(args.tsv)
+            curated,
+            profiles=profiles,
+            axiom_rows=registry.read_table(args.tsv),
+            resolver=resolver,
         )
         write_sssom(args.out, rows)
         review = args.review_out or args.out.with_suffix(".md")
@@ -248,7 +262,12 @@ def main(argv: list[str] | None = None) -> int:
             str(
                 p.relative_to(REPO_ROOT) if p.is_relative_to(REPO_ROOT) else p
             ): hashlib.sha256(p.read_bytes()).hexdigest()
-            for p in (args.source, args.tsv, args.mappings, registry.DEFAULT_IDENTITIES)
+            for p in [args.source, args.tsv, args.mappings, registry.DEFAULT_IDENTITIES]
+            + (
+                [args.marker_map, marker_resolution.policy_path(args.marker_map)]
+                if args.marker_map
+                else []
+            )
         }
         args.out.with_suffix(".provenance.json").write_text(
             json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8"

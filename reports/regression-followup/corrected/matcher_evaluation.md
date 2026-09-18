@@ -26,7 +26,7 @@ Primary ranks retain production tie ordering and disqualified candidates. Bounds
   },
   "provisional": {
     "cases": 80,
-    "mrr": 0.10812960188222673,
+    "mrr": 0.10839155618111955,
     "statuses": {
       "below_top_5": 45,
       "hit_at_5": 16,
@@ -118,7 +118,7 @@ Primary ranks retain production tie ordering and disqualified candidates. Bounds
   },
   "provisional/Exact": {
     "cases": 50,
-    "mrr": 0.11785498910845602,
+    "mrr": 0.11803153054475977,
     "statuses": {
       "below_top_5": 28,
       "hit_at_5": 10,
@@ -139,7 +139,7 @@ Primary ranks retain production tie ordering and disqualified candidates. Bounds
   },
   "provisional/Broad": {
     "cases": 30,
-    "mrr": 0.09192062317184475,
+    "mrr": 0.09232493224171927,
     "statuses": {
       "hit_at_5": 6,
       "below_top_5": 17,
@@ -198,12 +198,9 @@ Input/config changes make comparisons non-equivalent.
 
 ```json
 {
-  "comparable": false,
-  "differences": [
-    "inputs",
-    "config"
-  ],
-  "matcher_changed": false,
+  "comparable": true,
+  "differences": [],
+  "matcher_changed": true,
   "changes": [
     {
       "case_id": "provisional/SOULCAP:SC000001/Exact",
@@ -223,24 +220,24 @@ Input/config changes make comparisons non-equivalent.
     },
     {
       "case_id": "provisional/SOULCAP:SC000003/Exact",
-      "change": "regressed",
-      "before_rank": 1,
+      "change": "unchanged",
+      "before_rank": 3,
       "after_rank": 3,
       "before_status": "hit_at_5",
       "after_status": "hit_at_5"
     },
     {
       "case_id": "provisional/SOULCAP:SC000004/Broad",
-      "change": "regressed",
-      "before_rank": 1,
+      "change": "unchanged",
+      "before_rank": 3,
       "after_rank": 3,
       "before_status": "hit_at_5",
       "after_status": "hit_at_5"
     },
     {
       "case_id": "provisional/SOULCAP:SC000005/Broad",
-      "change": "regressed",
-      "before_rank": 1,
+      "change": "unchanged",
+      "before_rank": 3,
       "after_rank": 3,
       "before_status": "hit_at_5",
       "after_status": "hit_at_5"
@@ -255,24 +252,24 @@ Input/config changes make comparisons non-equivalent.
     },
     {
       "case_id": "provisional/SOULCAP:SC000007/Exact",
-      "change": "regressed",
-      "before_rank": 155,
+      "change": "unchanged",
+      "before_rank": 162,
       "after_rank": 162,
       "before_status": "below_top_5",
       "after_status": "below_top_5"
     },
     {
       "case_id": "provisional/SOULCAP:SC000008/Exact",
-      "change": "regressed",
-      "before_rank": 161,
+      "change": "unchanged",
+      "before_rank": 171,
       "after_rank": 171,
       "before_status": "below_top_5",
       "after_status": "below_top_5"
     },
     {
       "case_id": "provisional/SOULCAP:SC000009/Exact",
-      "change": "improved",
-      "before_rank": 26,
+      "change": "unchanged",
+      "before_rank": 25,
       "after_rank": 25,
       "before_status": "below_top_5",
       "after_status": "below_top_5"
@@ -287,8 +284,8 @@ Input/config changes make comparisons non-equivalent.
     },
     {
       "case_id": "provisional/SOULCAP:SC000011/Exact",
-      "change": "regressed",
-      "before_rank": 18,
+      "change": "unchanged",
+      "before_rank": 20,
       "after_rank": 20,
       "before_status": "below_top_5",
       "after_status": "below_top_5"
@@ -311,16 +308,16 @@ Input/config changes make comparisons non-equivalent.
     },
     {
       "case_id": "provisional/SOULCAP:SC000014/Exact",
-      "change": "regressed",
-      "before_rank": 34,
+      "change": "unchanged",
+      "before_rank": 36,
       "after_rank": 36,
       "before_status": "below_top_5",
       "after_status": "below_top_5"
     },
     {
       "case_id": "provisional/SOULCAP:SC000015/Exact",
-      "change": "improved",
-      "before_rank": 3,
+      "change": "unchanged",
+      "before_rank": 2,
       "after_rank": 2,
       "before_status": "hit_at_5",
       "after_status": "hit_at_5"
@@ -367,8 +364,8 @@ Input/config changes make comparisons non-equivalent.
     },
     {
       "case_id": "provisional/SOULCAP:SC000021/Exact",
-      "change": "regressed",
-      "before_rank": 9,
+      "change": "unchanged",
+      "before_rank": 10,
       "after_rank": 10,
       "before_status": "below_top_5",
       "after_status": "below_top_5"
@@ -407,8 +404,8 @@ Input/config changes make comparisons non-equivalent.
     },
     {
       "case_id": "provisional/SOULCAP:SC000026/Exact",
-      "change": "improved",
-      "before_rank": 31,
+      "change": "unchanged",
+      "before_rank": 6,
       "after_rank": 6,
       "before_status": "below_top_5",
       "after_status": "below_top_5"
@@ -423,8 +420,8 @@ Input/config changes make comparisons non-equivalent.
     },
     {
       "case_id": "provisional/SOULCAP:SC000029/Exact",
-      "change": "regressed",
-      "before_rank": 43,
+      "change": "unchanged",
+      "before_rank": 48,
       "after_rank": 48,
       "before_status": "below_top_5",
       "after_status": "below_top_5"
@@ -551,8 +548,8 @@ Input/config changes make comparisons non-equivalent.
     },
     {
       "case_id": "provisional/SOULCAP:SC000046/Broad",
-      "change": "regressed",
-      "before_rank": 34,
+      "change": "unchanged",
+      "before_rank": 87,
       "after_rank": 87,
       "before_status": "below_top_5",
       "after_status": "below_top_5"
@@ -560,31 +557,31 @@ Input/config changes make comparisons non-equivalent.
     {
       "case_id": "provisional/SOULCAP:SC000047/Broad",
       "change": "regressed",
-      "before_rank": 42,
-      "after_rank": 127,
+      "before_rank": 127,
+      "after_rank": 132,
       "before_status": "below_top_5",
       "after_status": "below_top_5"
     },
     {
       "case_id": "provisional/SOULCAP:SC000048/Broad",
       "change": "regressed",
-      "before_rank": 63,
-      "after_rank": 119,
+      "before_rank": 119,
+      "after_rank": 121,
       "before_status": "below_top_5",
       "after_status": "below_top_5"
     },
     {
       "case_id": "provisional/SOULCAP:SC000049/Broad",
-      "change": "regressed",
-      "before_rank": 34,
+      "change": "unchanged",
+      "before_rank": 87,
       "after_rank": 87,
       "before_status": "below_top_5",
       "after_status": "below_top_5"
     },
     {
       "case_id": "provisional/SOULCAP:SC000050/Broad",
-      "change": "regressed",
-      "before_rank": 70,
+      "change": "unchanged",
+      "before_rank": 120,
       "after_rank": 120,
       "before_status": "below_top_5",
       "after_status": "below_top_5"
@@ -592,39 +589,39 @@ Input/config changes make comparisons non-equivalent.
     {
       "case_id": "provisional/SOULCAP:SC000051/Broad",
       "change": "regressed",
-      "before_rank": 63,
-      "after_rank": 114,
+      "before_rank": 114,
+      "after_rank": 120,
       "before_status": "below_top_5",
       "after_status": "below_top_5"
     },
     {
       "case_id": "provisional/SOULCAP:SC000052/Broad",
       "change": "regressed",
-      "before_rank": 42,
-      "after_rank": 120,
+      "before_rank": 120,
+      "after_rank": 126,
       "before_status": "below_top_5",
       "after_status": "below_top_5"
     },
     {
       "case_id": "provisional/SOULCAP:SC000053/Broad",
-      "change": "regressed",
-      "before_rank": 54,
-      "after_rank": 115,
+      "change": "improved",
+      "before_rank": 115,
+      "after_rank": 88,
       "before_status": "below_top_5",
       "after_status": "below_top_5"
     },
     {
       "case_id": "provisional/SOULCAP:SC000054/Broad",
-      "change": "regressed",
-      "before_rank": 34,
+      "change": "unchanged",
+      "before_rank": 87,
       "after_rank": 87,
       "before_status": "below_top_5",
       "after_status": "below_top_5"
     },
     {
       "case_id": "provisional/SOULCAP:SC000055/Broad",
-      "change": "regressed",
-      "before_rank": 70,
+      "change": "unchanged",
+      "before_rank": 120,
       "after_rank": 120,
       "before_status": "below_top_5",
       "after_status": "below_top_5"
@@ -632,24 +629,24 @@ Input/config changes make comparisons non-equivalent.
     {
       "case_id": "provisional/SOULCAP:SC000056/Broad",
       "change": "regressed",
-      "before_rank": 63,
-      "after_rank": 114,
+      "before_rank": 114,
+      "after_rank": 120,
       "before_status": "below_top_5",
       "after_status": "below_top_5"
     },
     {
       "case_id": "provisional/SOULCAP:SC000057/Broad",
       "change": "regressed",
-      "before_rank": 42,
-      "after_rank": 120,
+      "before_rank": 120,
+      "after_rank": 126,
       "before_status": "below_top_5",
       "after_status": "below_top_5"
     },
     {
       "case_id": "provisional/SOULCAP:SC000058/Broad",
-      "change": "regressed",
-      "before_rank": 54,
-      "after_rank": 120,
+      "change": "improved",
+      "before_rank": 120,
+      "after_rank": 89,
       "before_status": "below_top_5",
       "after_status": "below_top_5"
     },
@@ -679,18 +676,18 @@ Input/config changes make comparisons non-equivalent.
     },
     {
       "case_id": "provisional/SOULCAP:SC000062/Broad",
-      "change": "regressed",
-      "before_rank": 9,
+      "change": "unchanged",
+      "before_rank": 70,
       "after_rank": 70,
       "before_status": "below_top_5",
       "after_status": "below_top_5"
     },
     {
       "case_id": "provisional/SOULCAP:SC000063/Broad",
-      "change": "regressed",
-      "before_rank": 4,
-      "after_rank": 125,
-      "before_status": "hit_at_5",
+      "change": "improved",
+      "before_rank": 125,
+      "after_rank": 60,
+      "before_status": "below_top_5",
       "after_status": "below_top_5"
     },
     {
@@ -711,18 +708,18 @@ Input/config changes make comparisons non-equivalent.
     },
     {
       "case_id": "provisional/SOULCAP:SC000066/Exact",
-      "change": "regressed",
-      "before_rank": 9,
+      "change": "unchanged",
+      "before_rank": 69,
       "after_rank": 69,
       "before_status": "below_top_5",
       "after_status": "below_top_5"
     },
     {
       "case_id": "provisional/SOULCAP:SC000067/Exact",
-      "change": "regressed",
-      "before_rank": 4,
-      "after_rank": 124,
-      "before_status": "hit_at_5",
+      "change": "improved",
+      "before_rank": 124,
+      "after_rank": 60,
+      "before_status": "below_top_5",
       "after_status": "below_top_5"
     },
     {
@@ -767,10 +764,10 @@ Input/config changes make comparisons non-equivalent.
     },
     {
       "case_id": "provisional/SOULCAP:SC000073/Exact",
-      "change": "regressed",
-      "before_rank": 1,
-      "after_rank": 117,
-      "before_status": "hit_at_5",
+      "change": "improved",
+      "before_rank": 117,
+      "after_rank": 114,
+      "before_status": "below_top_5",
       "after_status": "below_top_5"
     },
     {
@@ -783,56 +780,56 @@ Input/config changes make comparisons non-equivalent.
     },
     {
       "case_id": "provisional/SOULCAP:SC000082/Exact",
-      "change": "regressed",
-      "before_rank": 238,
+      "change": "unchanged",
+      "before_rank": 246,
       "after_rank": 246,
       "before_status": "below_top_5",
       "after_status": "below_top_5"
     },
     {
       "case_id": "provisional/SOULCAP:SC000085/Exact",
-      "change": "regressed",
-      "before_rank": 239,
+      "change": "unchanged",
+      "before_rank": 247,
       "after_rank": 247,
       "before_status": "below_top_5",
       "after_status": "below_top_5"
     },
     {
       "case_id": "provisional/SOULCAP:SC000087/Exact",
-      "change": "improved",
-      "before_rank": 252,
+      "change": "unchanged",
+      "before_rank": 249,
       "after_rank": 249,
       "before_status": "below_top_5",
       "after_status": "below_top_5"
     },
     {
       "case_id": "provisional/SOULCAP:SC000089/Exact",
-      "change": "regressed",
-      "before_rank": 238,
+      "change": "unchanged",
+      "before_rank": 246,
       "after_rank": 246,
       "before_status": "below_top_5",
       "after_status": "below_top_5"
     },
     {
       "case_id": "provisional/SOULCAP:SC000092/Exact",
-      "change": "improved",
-      "before_rank": 253,
+      "change": "unchanged",
+      "before_rank": 250,
       "after_rank": 250,
       "before_status": "below_top_5",
       "after_status": "below_top_5"
     },
     {
       "case_id": "provisional/SOULCAP:SC000096/Exact",
-      "change": "regressed",
-      "before_rank": 238,
+      "change": "unchanged",
+      "before_rank": 246,
       "after_rank": 246,
       "before_status": "below_top_5",
       "after_status": "below_top_5"
     },
     {
       "case_id": "provisional/SOULCAP:SC000099/Exact",
-      "change": "regressed",
-      "before_rank": 239,
+      "change": "unchanged",
+      "before_rank": 247,
       "after_rank": 247,
       "before_status": "below_top_5",
       "after_status": "below_top_5"

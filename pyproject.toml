@@ -25,6 +25,7 @@ dependencies = [
 soulcap-audit = "soulcap_cl_mapping.audit:main"
 soulcap-evaluate = "soulcap_cl_mapping.evaluation:main"
 soulcap-cache-terms = "soulcap_cl_mapping.candidate_index:cache_main"
+soulcap-resolution-audit = "soulcap_cl_mapping.resolution_audit:main"
 soulcap-sync = "soulcap_cl_mapping.sync_sheets:main"
 soulcap-validate = "soulcap_cl_mapping.marker_syntax:main"
 soulcap-cache = "soulcap_cl_mapping.snippet_cache:main"
