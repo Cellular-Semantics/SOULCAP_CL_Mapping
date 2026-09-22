@@ -12,9 +12,7 @@ import pytest
 
 from soulcap_cl_mapping import sync_sheets as ss
 
-XLSX_CONTENT_TYPE = (
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-)
+XLSX_CONTENT_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 
 
 # --------------------------------------------------------------------------- #
@@ -32,9 +30,9 @@ def _make_workbook(path: Path) -> None:
             }
         ).to_excel(xw, sheet_name="Marker Combinations", index=False)
         # Layout sheet (no real header): fully-empty col should be dropped.
-        pd.DataFrame(
-            [["Species", "Human", None], [None, None, None]]
-        ).to_excel(xw, sheet_name="Global", index=False, header=False)
+        pd.DataFrame([["Species", "Human", None], [None, None, None]]).to_excel(
+            xw, sheet_name="Global", index=False, header=False
+        )
         # Empty sheet: should be skipped.
         pd.DataFrame().to_excel(xw, sheet_name="Empty", index=False, header=False)
 
@@ -204,9 +202,9 @@ def test_main_success(tmp_path, monkeypatch):
 def test_main_uses_sheet_id_env(monkeypatch, tmp_path):
     captured = {}
     monkeypatch.setattr(
-        ss, "sync", lambda sheet_id, data_dir, write_csv: captured.update(
-            sheet_id=sheet_id
-        )
+        ss,
+        "sync",
+        lambda sheet_id, data_dir, write_csv: captured.update(sheet_id=sheet_id),
     )
     monkeypatch.setenv("SOULCAP_SHEET_ID", "FROM_ENV")
     assert ss.main(["--data-dir", str(tmp_path)]) == 0
@@ -216,9 +214,9 @@ def test_main_uses_sheet_id_env(monkeypatch, tmp_path):
 def test_main_flag_overrides_env(monkeypatch, tmp_path):
     captured = {}
     monkeypatch.setattr(
-        ss, "sync", lambda sheet_id, data_dir, write_csv: captured.update(
-            sheet_id=sheet_id
-        )
+        ss,
+        "sync",
+        lambda sheet_id, data_dir, write_csv: captured.update(sheet_id=sheet_id),
     )
     monkeypatch.setenv("SOULCAP_SHEET_ID", "FROM_ENV")
     ss.main(["--sheet-id", "FROM_FLAG", "--data-dir", str(tmp_path)])

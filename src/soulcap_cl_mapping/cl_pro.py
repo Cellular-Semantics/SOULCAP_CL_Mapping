@@ -34,7 +34,7 @@ import sys
 from collections import defaultdict
 from datetime import date
 from pathlib import Path
-from typing import Callable
+from typing import Any, Callable
 
 import certifi
 from SPARQLWrapper import JSON, SPARQLWrapper
@@ -108,7 +108,7 @@ def run_sparql(
     wrapper.setTimeout(timeout)
     wrapper.setMethod("POST")
     wrapper.setQuery(query)
-    result = wrapper.query().convert()
+    result: dict[str, Any] = wrapper.query().convert()  # type: ignore[assignment]
     rows: list[dict[str, str]] = []
     for binding in result["results"]["bindings"]:
         rows.append({var: cell["value"] for var, cell in binding.items()})
@@ -392,7 +392,7 @@ def fetch_pr_metadata(query_fn: QueryFn = run_sparql) -> dict[str, dict]:
     meta: dict[str, dict] = {}
     for row in query_fn(PR_METADATA_QUERY):
         xrefs = _split(row.get("xrefs", ""))
-        entry = {
+        entry: dict[str, Any] = {
             "label": (row.get("label", "") or "").split("|")[0],
             "taxa": [TAXA[t] for t in _split(row.get("taxon", "")) if t in TAXA],
             "exact": _split(row.get("exact_syn", "")),

@@ -19,12 +19,16 @@ soulcap-validate = "soulcap_cl_mapping.marker_syntax:main"
 soulcap-cache = "soulcap_cl_mapping.snippet_cache:main"
 soulcap-validate-report = "soulcap_cl_mapping.report_validator:main"
 soulcap-cl-pro = "soulcap_cl_mapping.cl_pro:main"
+soulcap-lookup = "soulcap_cl_mapping.ols4_lookup:main"
+soulcap-tokens = "soulcap_cl_mapping.marker_syntax:tokens_main"
 
 [project.optional-dependencies]
 dev = [
     "pytest>=8.0",
     "pytest-cov>=5.0",
     "ruff>=0.6",
+    "mypy>=1.10",
+    "pandas-stubs>=2.2",
 ]
 
 [build-system]
@@ -41,3 +45,9 @@ addopts = "--cov=soulcap_cl_mapping --cov-report=term-missing --cov-fail-under=8
 [tool.coverage.run]
 branch = true
 source = ["soulcap_cl_mapping"]
+
+[tool.mypy]
+python_version = "3.12"
+disallow_untyped_defs = true
+warn_return_any = true
+warn_unused_ignores = true

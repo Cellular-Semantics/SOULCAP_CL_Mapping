@@ -147,6 +147,7 @@ class _Parser:
             self._parse_group()
         elif kind == "WORD":
             self._advance()
+            assert text is not None
             _split_word(text)  # validates marker + qualifier
         else:
             raise MarkerSyntaxError(f"expected marker or group, found {text!r}")
@@ -162,7 +163,7 @@ class _Parser:
         # optional group-level qualifier: a following WORD that is wholly a
         # qualifier, e.g. [HLA-DR+ CD11chi]-
         kind, text = self._peek()
-        if kind == "WORD" and _is_qualifier(text):
+        if kind == "WORD" and text is not None and _is_qualifier(text):
             self._advance()
 
     def _parse_inner(self, close: str) -> None:
@@ -217,7 +218,7 @@ def _scan(path: str | Path) -> tuple[list[dict], int]:
     cols = [c for c in MARKER_COLUMNS if c in df.columns]
     failures: list[dict] = []
     n_cells = 0
-    for idx, row in df.iterrows():
+    for row_num, (_, row) in enumerate(df.iterrows()):
         for col in cols:
             value = row[col]
             if pd.isna(value):
@@ -227,7 +228,7 @@ def _scan(path: str | Path) -> tuple[list[dict], int]:
             if error is not None:
                 failures.append(
                     {
-                        "row": idx + 2,  # +1 header, +1 for 1-based
+                        "row": row_num + 2,  # +1 header, +1 for 1-based
                         "subset": str(row.get("Subset name", "")).strip(),
                         "column": col,
                         "value": str(value).strip(),
@@ -295,7 +296,9 @@ def write_report(
     """Write/overwrite the Markdown validation report; return its path."""
     report_path = Path(report_path)
     report_path.parent.mkdir(parents=True, exist_ok=True)
-    report_path.write_text(render_report(failures, source_name, n_cells))
+    report_path.write_text(
+        render_report(failures, source_name, n_cells), encoding="utf-8"
+    )
     return report_path
 
 
@@ -322,6 +325,108 @@ def validate_marker_csv(
         print(f"Marker syntax: all {n_cells} cells valid.")
     print(f"  report -> {out}")
     return failures
+
+
+# --------------------------------------------------------------------------- #
+# Token extraction
+# --------------------------------------------------------------------------- #
+def extract_markers(expr: str) -> set[str]:
+    """Return the distinct marker names in a marker expression.
+
+    Strips qualifiers (e.g. ``CD4+`` → ``CD4``) and grouping symbols.
+    Skips the live-gate prefix and group-level qualifiers. Returns an empty
+    set for empty or invalid expressions — never raises.
+    """
+    try:
+        tokens = _tokenize(expr)
+    except Exception:  # noqa: BLE001
+        return set()
+    markers: set[str] = set()
+    for kind, text in tokens:
+        if kind != "WORD":
+            continue
+        if text == GATE or _is_qualifier(text):
+            continue
+        try:
+            marker, _ = _split_word(text)
+            markers.add(marker)
+        except MarkerSyntaxError:
+            continue
+    return markers
+
+
+def extract_markers_from_csv(path: str | Path) -> list[dict]:
+    """Extract all distinct marker tokens from a Marker Combinations CSV.
+
+    Returns one record per distinct marker token, sorted alphabetically:
+    ``{"marker_token", "source_columns", "cell_types"}`` where the latter
+    two are ``|``-separated strings listing which marker columns and which
+    subset names contain that token.
+    """
+    df = pd.read_csv(path)
+    cols = [c for c in MARKER_COLUMNS if c in df.columns]
+    has_subset = "Subset name" in df.columns
+
+    token_info: dict[str, dict[str, set]] = {}
+    for _, row in df.iterrows():
+        subset = str(row["Subset name"]).strip() if has_subset else ""
+        for col in cols:
+            value = row[col]
+            if pd.isna(value):
+                continue
+            for marker in extract_markers(str(value)):
+                if marker not in token_info:
+                    token_info[marker] = {"columns": set(), "cell_types": set()}
+                token_info[marker]["columns"].add(col)
+                if subset:
+                    token_info[marker]["cell_types"].add(subset)
+
+    return [
+        {
+            "marker_token": token,
+            "source_columns": "|".join(sorted(info["columns"])),
+            "cell_types": "|".join(sorted(info["cell_types"])),
+        }
+        for token, info in sorted(token_info.items())
+    ]
+
+
+def tokens_main(argv: list[str] | None = None) -> int:
+    """CLI: extract distinct marker tokens from the Marker Combinations CSV."""
+    import argparse
+
+    repo_root = Path(__file__).resolve().parents[2]
+    default_csv = repo_root / "data" / "marker_combinations.csv"
+    default_out = repo_root / "marker_mappings" / "marker_tokens.csv"
+
+    parser = argparse.ArgumentParser(
+        prog="soulcap-tokens",
+        description="Extract distinct marker tokens from the Marker Combinations CSV.",
+    )
+    parser.add_argument(
+        "csv",
+        nargs="?",
+        type=Path,
+        default=default_csv,
+        help="Path to marker_combinations.csv (default: data/).",
+    )
+    parser.add_argument(
+        "--out",
+        type=Path,
+        default=default_out,
+        help="Output CSV (default: marker_mappings/marker_tokens.csv).",
+    )
+    args = parser.parse_args(argv)
+
+    if not args.csv.exists():
+        print(f"error: {args.csv} not found — run `soulcap-sync` first.")
+        return 2
+
+    records = extract_markers_from_csv(args.csv)
+    args.out.parent.mkdir(parents=True, exist_ok=True)
+    pd.DataFrame(records).to_csv(args.out, index=False)
+    print(f"Extracted {len(records)} distinct marker token(s) -> {args.out}")
+    return 0
 
 
 def main(argv: list[str] | None = None) -> int:
