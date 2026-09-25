@@ -442,6 +442,19 @@ own candidate mappings — those stay as SSSOM, a proposal for human review,
 not something this repo should unilaterally convert into OWL axioms and merge
 into CL as if already accepted.
 
+## Cell-type reviews
+
+[`cell_type_reviews/`](cell_type_reviews/README.md) holds one review file per
+SOULCAP cell type. Each file gathers the marker definition, marker → protein/gene
+mappings, verbatim literature support, a comparison against Cell Ontology terms
+and their marker axioms, and a proposed CL mapping. Reviews that meet an
+uncertainty trigger (weak literature, a conflict with CL axioms, no exact CL term,
+etc.) are sent for expert review; confident mappings go straight into the Google
+Sheet. See the folder README for the workflow, statuses, and template. Scaffolded
+2026-09-23 — no reviews written yet, and how it relates to the existing
+`reports/literature/` Milestone 2 reports is still being confirmed with Dr. Diehl
+(see [ROADMAP.md](ROADMAP.md)).
+
 ## Skills & literature workflows
 
 This repo ships Claude Code skills under `.claude/skills/`:
