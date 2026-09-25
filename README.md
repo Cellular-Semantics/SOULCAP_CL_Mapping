@@ -37,6 +37,13 @@ semester's sprint-level breakdown (sub-tasks, acceptance criteria, and what's
 blocked on someone outside the repo) is
 [reports/fall_2026_sprint_backlog.md](reports/fall_2026_sprint_backlog.md).
 
+The September 21 discussion draft for Dr. Diehl expands this into a
+plain-language October–December plan, recent-work summary, weekly schedule,
+and agent task instructions: [PDF](reports/fall_2026_semester_plan.pdf),
+[editable Markdown](reports/fall_2026_semester_plan.md), or
+[browser version](reports/fall_2026_semester_plan.html).
+Its workload and review targets are proposed for approval, not confirmed commitments.
+
 ## Setup
 
 ### 1. Clone this repo
@@ -83,6 +90,21 @@ startup and expands `${ASTA_API_KEY}` into the `x-api-key` header in
 `.claude/settings.local.json` is gitignored and must **never** be committed —
 it is the only place the secret lives. Restart Claude Code after editing it so
 the key is picked up.
+
+### Optional: PubMed (NCBI E-utilities)
+
+`soulcap-pubmed` (`src/soulcap_cl_mapping/pubmed_search.py`) works keyless,
+same as `soulcap-europepmc`. An NCBI API key just raises the rate limit from
+3 to 10 requests/second. If you want one, generate it from your
+[NCBI account settings](https://www.ncbi.nlm.nih.gov/account/settings/) under
+**API Key Management**, then add it to the **local, gitignored** `.env`:
+
+```
+PUBMED_API_KEY={token}
+```
+
+Unlike `ASTA_API_KEY`, this is read directly by Python (via `python-dotenv`),
+not through Claude Code's MCP `env` substitution — it isn't an MCP server key.
 
 ## Unified audit dashboard
 
