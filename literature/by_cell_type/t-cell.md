@@ -27,6 +27,10 @@ Do not edit by hand.
 
 — Gholizadeh F et al. 2026 (PMID:41928597; DOI:10.1002/eji.70177; PMCID:PMC13047356) · `EV00264` · verified: yes
 
+> "Gating strategy identifying Tcm (Q1: CD4+ CD45RA− CCR7+) and Tem (Q4: CD4+ CD45RA− CCR7−)"
+
+— Gholizadeh F et al. 2026 (PMID:41928597; DOI:10.1002/eji.70177; PMCID:PMC13047356) · `EV00265` · verified: yes
+
 ## CD127
 
 **Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000109 (ConT Treg-like), SOULCAP:SC000110 (ConT Tfh-like), SOULCAP:SC000111 (Th1-like), SOULCAP:SC000112 (Th2-like), SOULCAP:SC000113 (Th9-like), SOULCAP:SC000114 (Th17-like), SOULCAP:SC000121 (CD4 PanT Treg)
