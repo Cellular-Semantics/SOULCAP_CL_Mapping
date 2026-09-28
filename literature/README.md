@@ -29,8 +29,11 @@ covers),
 `marker_token`, `level` (blank until curated), `supports_or_contradicts`
 (`supports`, or `qualifies` for quotes under a discrepancy note), `quote`,
 `pmid`, `doi`, `pmcid`, `first_author_year`, `species`, `tissue`,
-`source_type` (`sorting_paper`, `panel_or_method` for OMIP panels and
-standardization papers, `review`, `atlas`, `other`),
+`source_type`: `sorting_paper` (the paper's main contribution is a gating or
+sorting strategy for the population), `panel_or_method` (OMIP panels and
+standardization papers), `application_study` (primary research that uses flow
+phenotyping in a disease or functional context), `review`, or `atlas`
+(single-cell or high-dimensional surveys),
 `source_type_basis` (`pubmed_publication_type: …` when PubMed tags the paper
 as a Review, otherwise `proposed; …` with PubMed's types for reference;
 proposed types still need a curator's check), `source_file`, `source_line`, `section`, `notes`

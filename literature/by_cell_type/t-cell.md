@@ -23,9 +23,9 @@ Do not edit by hand.
 
 — Starshinova A et al. 2025 (PMID:41376646; DOI:10.3389/fimmu.2025.1614461; PMCID:PMC12685880) · `EV00250` · verified: yes
 
-> "CD4+ CD45RA− CCR7+ cells for Tcm and CD3+ CD4+ CD45RO+ CCR7− cells for Tem"
+> "Gating was applied to CD3+ CD4+ CD45RO+ CCR7+ cells for Tcm and CD3+ CD4+ CD45RO+ CCR7− cells for Tem."
 
-— Gholizadeh F et al. 2026 (PMID:41928597; DOI:10.1002/eji.70177; PMCID:PMC13047356) · `EV00252` · verified: no
+— Gholizadeh F et al. 2026 (PMID:41928597; DOI:10.1002/eji.70177; PMCID:PMC13047356) · `EV00264` · verified: yes
 
 ## CD127
 
@@ -251,9 +251,9 @@ Do not edit by hand.
 
 — Starshinova A et al. 2025 (PMID:41376646; DOI:10.3389/fimmu.2025.1614461; PMCID:PMC12685880) · `EV00249` · verified: yes
 
-> "CD4+ CD45RA− CCR7+ cells for Tcm and CD3+ CD4+ CD45RO+ CCR7− cells for Tem"
+> "Gating strategy identifying Tcm (Q1: CD4+ CD45RA− CCR7+) and Tem (Q4: CD4+ CD45RA− CCR7−)"
 
-— Gholizadeh F et al. 2026 (PMID:41928597; DOI:10.1002/eji.70177; PMCID:PMC13047356) · `EV00251` · verified: no
+— Gholizadeh F et al. 2026 (PMID:41928597; DOI:10.1002/eji.70177; PMCID:PMC13047356) · `EV00263` · verified: yes
 
 ## CD8
 

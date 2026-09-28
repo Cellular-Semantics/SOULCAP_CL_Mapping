@@ -72,20 +72,21 @@ In [reports/cl_term_issues.md](../../reports/cl_term_issues.md#candidates-for-re
 ## 7. Literature evidence
 
 [literature/evidence.tsv](../../literature/evidence.tsv): 253 active rows
-(187 quotes, 51 markers, 35 papers), one per cell type, marker and quote.
+(188 quotes, 51 markers, 35 papers), one per cell type, marker and quote.
 
-- Checked against Europe PMC full text: **168 exact**, 6 exact apart from
-  final punctuation, 33 not found exactly, 46 with no open-access text.
-- Quotes from the two WebFetch-extracted files: 7 replaced by exact sentences
-  from the papers (old rows kept, marked superseded), 2 removed because the
-  extraction added text that isn't in the paper (logged in
-  `removed_evidence.tsv`), 4 still unverified and under review.
+- Checked against Europe PMC full text: **170 exact**, 6 exact apart from
+  final punctuation, 31 not found exactly, 46 with no open-access text.
+- The 13 unverified quotes from the two WebFetch-extracted files: 7 superseded
+  by exact sentences from the papers (old rows kept); 2 that spliced two
+  definitions removed and replaced by 2 exact rows; 2 removed with no
+  replacement because the extraction added text; 2 left unverified (EV00127,
+  EV00144). Removals are logged in `removed_evidence.tsv`.
 - Each row lists unreviewed candidate SOULCAP cell types (220 of 253 rows);
   `subject_id` stays blank until reviewed. 15 quotes couldn't be placed.
-- Source types: 10 reviews (8 tagged by PubMed), 5 sorting papers, 2 panel or
-  method papers (OMIP-046, Finak 2016), 3 atlases; 15 still to classify.
-  Review papers go in [literature/reviews/](../../literature/reviews/README.md),
-  NK cells first.
+- Evidence by source type, rows (papers): application_study 91 (15),
+  review 74 (10), atlas 32 (3), sorting_paper 31 (5), panel_or_method 25 (2).
+  Review coverage is thin (10 papers); NK cell reviews are being added next
+  in [literature/reviews/](../../literature/reviews/README.md).
 
 ## On hold until after this meeting
 
