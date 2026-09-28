@@ -74,3 +74,12 @@ def test_relative_links_resolve(doc: Path) -> None:
         if not target.exists():
             missing.append(link)
     assert not missing, f"Broken links in {doc.relative_to(ROOT)}: {missing}"
+
+
+def test_reports_readme_lists_every_report() -> None:
+    readme = (ROOT / "reports/README.md").read_text(encoding="utf-8")
+    listed = set(relative_links(readme))
+    files = {p.name for p in (ROOT / "reports").iterdir() if p.is_file()} - {
+        "README.md"
+    }
+    assert not files - listed, f"Add to reports/README.md: {sorted(files - listed)}"

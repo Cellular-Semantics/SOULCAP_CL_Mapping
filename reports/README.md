@@ -26,8 +26,8 @@ literature evidence in [literature/](../literature/), and planning documents in
 | [audit_dashboard.html](audit_dashboard.html) | Offline, filterable dashboard of entities, proposals, findings, marker coverage, gaps and provenance | `uv run soulcap-audit` | Generated |
 | [audit_summary.md](audit_summary.md) | Text summary of the same audit | `uv run soulcap-audit` | Generated |
 | [audit_data.json](audit_data.json) | Data behind the dashboard | `uv run soulcap-audit` | Generated |
-| [matcher_evaluation.md](matcher_evaluation.md) / `.tsv` / `.json` | How well the matcher retrieves the proposed CL targets (provisional agreement, not accuracy) | `uv run soulcap-evaluate` | Generated |
-| [marker_resolution_audit.md](marker_resolution_audit.md) / `.tsv` / `.json` | Effect of the per-token resolution policies in [marker_mappings/marker_resolution.tsv](../marker_mappings/marker_resolution.tsv) on axiom links and mapping evidence | `uv run soulcap-resolution-audit` | Generated |
+| [matcher_evaluation.md](matcher_evaluation.md), [matcher_evaluation.tsv](matcher_evaluation.tsv), [matcher_evaluation.json](matcher_evaluation.json) | How well the matcher retrieves the proposed CL targets (provisional agreement, not accuracy) | `uv run soulcap-evaluate` | Generated |
+| [marker_resolution_audit.md](marker_resolution_audit.md), [marker_resolution_audit.tsv](marker_resolution_audit.tsv), [marker_resolution_audit.json](marker_resolution_audit.json) | Effect of the per-token resolution policies in [marker_mappings/marker_resolution.tsv](../marker_mappings/marker_resolution.tsv) on axiom links and mapping evidence | `uv run soulcap-resolution-audit` | Generated |
 
 `uv run python -m soulcap_cl_mapping.regression_triage` writes to
 `reports/regression-triage/` by default. No current run is committed; the
