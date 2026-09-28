@@ -85,3 +85,39 @@ The original baseline and the controlled legacy/alias runs are archived in
 [archive/2026-09_resolver_experiments/](../archive/2026-09_resolver_experiments/README.md) (summaries only; JSON recoverable from git history).
 Mode/input changes make comparisons descriptive rather than equivalent-condition
 regression tests. Broader coverage alone does not establish better ranking.
+
+## Fully resolved cell types (`soulcap-resolved`)
+
+A SOULCAP cell type is **fully resolved** when every marker token in scope maps
+to exactly one PRO term: the token's policy in `marker_resolution.tsv` is
+`single_protein` / `allow`, and the token is not an ambiguous alias. These are
+the cell types whose marker definitions could be written as PRO axioms.
+
+| Rule | Columns in scope |
+|---|---|
+| **Strict** | All four: Required exclusion, Ideal exclusion, Required phenotypic, Ideal phenotypic |
+| **Lenient** | The two Required columns only |
+
+In both rules:
+
+- The `live/` gate is not a marker and is never counted.
+- A column in scope with a syntax error blocks resolution (its tokens can't be
+  read reliably).
+- A profile with **no** token in *Required phenotypic markers* is never
+  resolved. About 30 sheet rows (mostly T-cell memory/naive subsets) leave that
+  column empty and are defined only by their parent gate. Without this guard,
+  their generic exclusion panel (CD14/CD33/CD64/CD19/CD20/CD123) would make
+  them count as "resolved" even though none of their defining markers are in
+  the sheet.
+
+```bash
+uv run soulcap-resolved
+```
+
+This writes `reports/fully_resolved_cell_types.tsv` (one row per resolved cell
+type, with its PRO IDs, proposed CL mapping and marker evidence under the same
+policies), `reports/fully_resolved_cl_terms.tsv` (the unique CL terms reached)
+and `reports/fully_resolved_summary.md` (counts by match type, contradictions
+and whether the CL term has marker axioms, plus which tokens block the most cell
+types). It is descriptive only: it never labels a mapping confident and never
+changes a decision.

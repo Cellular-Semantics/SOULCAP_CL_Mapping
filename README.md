@@ -78,6 +78,7 @@ Same inputs, same outputs; covered by unit tests at ≥80%.
 | `soulcap-oak-match`, `soulcap-lookup`, `soulcap-cache-terms` | Name/synonym search in CL (local OAK database, OLS4, or cached labels) |
 | `soulcap-sssom` | Turn `curated_mappings.tsv` into SSSOM + a readable review, with per-mapping marker evidence |
 | `soulcap-audit`, `soulcap-evaluate`, `soulcap-resolution-audit` | Dashboard, matcher retrieval metrics, effect of marker policies |
+| `soulcap-resolved` | List cell types whose markers all resolve to single PRO terms, and the CL terms they reach |
 | `soulcap-europepmc`, `soulcap-pubmed`, `soulcap-cache`, `soulcap-validate-report` | Literature search and snippet caching; quote verification |
 
 **Agent skills** (`.claude/skills/`, run by Claude Code). These do judgement

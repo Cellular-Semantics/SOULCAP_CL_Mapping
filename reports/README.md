@@ -27,6 +27,7 @@ literature evidence in [literature/](../literature/), and planning documents in
 | [audit_summary.md](audit_summary.md) | Text summary of the same audit | `uv run soulcap-audit` | Generated |
 | [audit_data.json](audit_data.json) | Data behind the dashboard | `uv run soulcap-audit` | Generated |
 | [matcher_evaluation.md](matcher_evaluation.md), [matcher_evaluation.tsv](matcher_evaluation.tsv), [matcher_evaluation.json](matcher_evaluation.json) | How well the matcher retrieves the proposed CL targets (provisional agreement, not accuracy) | `uv run soulcap-evaluate` | Generated |
+| [fully_resolved_summary.md](fully_resolved_summary.md), [fully_resolved_cell_types.tsv](fully_resolved_cell_types.tsv), [fully_resolved_cl_terms.tsv](fully_resolved_cl_terms.tsv) | Cell types whose markers all resolve to a single PRO term (strict and lenient rules), the CL terms they reach, and which tokens block the rest. See [docs/marker_resolution.md](../docs/marker_resolution.md#fully-resolved-cell-types-soulcap-resolved) | `uv run soulcap-resolved` | Generated |
 | [marker_resolution_audit.md](marker_resolution_audit.md), [marker_resolution_audit.tsv](marker_resolution_audit.tsv), [marker_resolution_audit.json](marker_resolution_audit.json) | Effect of the per-token resolution policies in [marker_mappings/marker_resolution.tsv](../marker_mappings/marker_resolution.tsv) on axiom links and mapping evidence | `uv run soulcap-resolution-audit` | Generated |
 
 `uv run python -m soulcap_cl_mapping.regression_triage` writes to

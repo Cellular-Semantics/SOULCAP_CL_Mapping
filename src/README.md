@@ -25,6 +25,7 @@ and must keep coverage at or above 80%.
 | Audit and evaluation | `audit.py` + `audit_dashboard.html` (template) | `soulcap-audit` |
 | | `evaluation.py` | `soulcap-evaluate` |
 | | `resolution_audit.py` | `soulcap-resolution-audit` |
+| | `resolved_types.py` (cell types whose markers all resolve to PRO) | `soulcap-resolved` |
 | | `regression_triage.py` | `uv run python -m soulcap_cl_mapping.regression_triage` |
 | Literature | `europepmc_search.py`, `pubmed_search.py` | `soulcap-europepmc`, `soulcap-pubmed` |
 | | `snippet_cache.py`, `report_validator.py` (citation-traversal support) | `soulcap-cache`, `soulcap-validate-report` |
