@@ -30,5 +30,6 @@ and must keep coverage at or above 80%.
 | Literature | `europepmc_search.py`, `pubmed_search.py` | `soulcap-europepmc`, `soulcap-pubmed` |
 | | `snippet_cache.py`, `report_validator.py` (citation-traversal support) | `soulcap-cache`, `soulcap-validate-report` |
 | | `pro_species_support.py` (used by the `pro-marker-species-support` skill) | library |
+| | `literature_evidence.py` (evidence table: migrate, verify against Europe PMC, views) | `soulcap-evidence` |
 
 See [docs/pipeline.md](../docs/pipeline.md) for how the stages connect.

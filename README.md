@@ -57,7 +57,7 @@ Stage-by-stage commands and options: [docs/pipeline.md](docs/pipeline.md).
 | Proposed CL mappings (to read) | [reports/candidate_cl_mappings.md](reports/candidate_cl_mappings.md) and the SSSOM export [reports/candidate_cl_mappings.sssom.tsv](reports/candidate_cl_mappings.sssom.tsv) |
 | CL's own marker axioms | [reports/cl_pro_relationships.md](reports/cl_pro_relationships.md) |
 | Gaps in CL or SOULCAP | [reports/gaps.tsv](reports/gaps.tsv), [reports/cl_term_issues.md](reports/cl_term_issues.md) |
-| Literature evidence | [literature/](literature/) |
+| Literature evidence | [literature/evidence.tsv](literature/evidence.tsv), one row per cell type, marker and quote, with views in [literature/](literature/README.md) |
 | Audit dashboard | [reports/audit_dashboard.html](reports/audit_dashboard.html) (download and open in a browser) |
 
 ## Mapping machinery
@@ -80,6 +80,7 @@ Same inputs, same outputs; covered by unit tests at ≥80%.
 | `soulcap-audit`, `soulcap-evaluate`, `soulcap-resolution-audit` | Dashboard, matcher retrieval metrics, effect of marker policies |
 | `soulcap-resolved` | List cell types whose markers all resolve to single PRO terms, and the CL terms they reach |
 | `soulcap-europepmc`, `soulcap-pubmed`, `soulcap-cache`, `soulcap-validate-report` | Literature search and snippet caching; quote verification |
+| `soulcap-evidence` | Literature evidence table: migrate narratives, verify quotes against Europe PMC full text, build views |
 
 **Agent skills** (`.claude/skills/`, run by Claude Code). These do judgement
 work: choosing between candidates, reading papers, writing rationale. They call

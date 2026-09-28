@@ -44,15 +44,21 @@ these from `marker_mappings/marker_protein_gene.csv`.
 
 ## 3. Literature support
 
-Every quote must be **verbatim** from a cached snippet or retrieved full text,
-with its source and citation-traversal run ID. Never paraphrase something into a
-quote. Record "no evidence found" explicitly rather than leaving it blank.
+Quotes live in [`literature/evidence.tsv`](../literature/evidence.tsv), one row
+per (cell type, marker, quote). **Don't copy quote text into this file**; list
+the evidence IDs instead, and read them in the generated views
+(`literature/by_cell_type/`, `literature/by_marker/`). To add new evidence, add
+rows to `evidence.tsv` (verbatim quote, PMID/DOI, `verified`), then run
+`uv run soulcap-evidence verify` and `uv run soulcap-evidence views`.
 
 Seed papers (from `Citation Mgr`): 
 
-| Marker / combination | Verdict | Quote | Source | Run |
-|----------------------|---------|-------|--------|-----|
-| | supported / contradicted / no evidence found | "…" | DOI / PMID | `reports/citation_traversal/<run_id>` |
+| Marker / combination | Verdict | Evidence IDs | Verified? |
+|----------------------|---------|--------------|-----------|
+| | supported / contradicted / no evidence found | `EV00001`, `EV00002` | yes / no / not_checked |
+
+Record "no evidence found" explicitly rather than leaving a row blank. Only rows
+with `verified = yes` count as checked against the source text.
 
 ## 4. Cell Ontology comparison
 
