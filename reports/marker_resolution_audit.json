@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
-  "generated_utc": "2026-09-28T17:00:54.153030+00:00",
+  "generated_utc": "2026-09-28T17:17:14.728099+00:00",
   "inputs": {
     "C:\\Users\\s28al\\SOULCAP_CL_Mapping\\data\\marker_combinations.csv": "29b476e499ac402094b3dbccc410d052010a9b804ca9865e2624dda3ba9bfc44",
     "C:\\Users\\s28al\\SOULCAP_CL_Mapping\\mappings\\soulcap_entities.tsv": "b7d312081b5279669599ead19d3d201a1003ff4978eb814302f16c9783b659a8",
     "C:\\Users\\s28al\\SOULCAP_CL_Mapping\\mappings\\curated_mappings.tsv": "2ce1d078ed3d374b0c96d04184bb3520d37a1970415ad08584e33bc26e31434e",
     "C:\\Users\\s28al\\SOULCAP_CL_Mapping\\reports\\cl_pro_relationships.tsv": "293edb6a7dc435caf9d85a758425be9305eb4eb00c877074fdec4593ef0d1b3c",
     "C:\\Users\\s28al\\SOULCAP_CL_Mapping\\marker_mappings\\marker_protein_gene.csv": "4d1982db77c57a9a9e43b1fc883c5b0b32f0d69184e081764880baacb37992b7",
-    "C:\\Users\\s28al\\SOULCAP_CL_Mapping\\marker_mappings\\marker_resolution.tsv": "2e5ad5387ffc0576eba2485173b14efd5ae22531170a01072efff7aa8eda39ce"
+    "C:\\Users\\s28al\\SOULCAP_CL_Mapping\\marker_mappings\\marker_resolution.tsv": "46b51c55cd4cd682d071761a79ff5293e36ef9be6c99235bd67a45c45ad49405"
   },
   "note": "Same source and axiom snapshots; no lexical expansion. Counts describe computational evidence, not biological accuracy. Source usage comes from valid cells only.",
   "summary": {
@@ -806,9 +806,9 @@
       "rationale": "Conservative hold: registry protein label or reagent context does not explicitly establish whole-marker identity; review required.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CD16",
       "failure_category": "multi_gene_product",
-      "specific_rationale": "Human CD16 is two genes: FCGR3A (CD16a, PR:000001484) and FCGR3B (CD16b, PR:000001485). The registry and CL use PR:000001483, which PRO defines as the product of the mouse Fcgr3 gene or a 1:1 ortholog, so it does not clearly cover either human gene. OMIP-069 uses clone 3G8; its CD16a/CD16b specificity is not yet verified here.",
+      "specific_rationale": "Human CD16 is two genes: FCGR3A (CD16a, PR:000001484) and FCGR3B (CD16b, PR:000001485). The registry and CL use PR:000001483, which PRO defines as the product of the mouse Fcgr3 gene or a 1:1 ortholog, so it does not clearly cover either human gene. OMIP-069 uses clone 3G8, which binds both CD16a and CD16b (PMC12606087). CD16 is mostly used in the shared exclusion panel (CD15-|CD66b-) CD16-, which mirrors SOULCAP's CD16hi neutrophil definition; neutrophils carry CD16b, so CD16a alone would misrepresent exclusion gates.",
       "evidence_level": "ontology_checked",
-      "next_action": "ask David (CD16a vs CD16a+CD16b); propose CL issue on PR:000001483 for human cell types",
+      "next_action": "ask David (likely lacks CD16a and lacks CD16b for exclusion); propose CL issue on PR:000001483 for human cell types",
       "registry_tokens": [
         "CD16"
       ],

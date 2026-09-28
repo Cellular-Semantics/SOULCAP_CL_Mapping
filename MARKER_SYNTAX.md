@@ -208,6 +208,15 @@ sheet contains entries that violate it and should be corrected at source (the
   same marker, sometimes within one expression. Pick one canonical spelling.
 - **Inconsistent group negation** — `[CD15hi|CD66b+]` appears both with and
   without a trailing `-`; confirm which cell types intend the negation.
+- **Marker names must not contain spaces.** A space always means AND, so a
+  name with spaces is read as several separate markers. `TCR V delta1-`
+  becomes `TCR`, `V` and `delta1-`, and `MR1 Tetramer+` becomes `MR1` and
+  `Tetramer+`. Some of these strings (e.g. `TCR V delta1-`) even pass the
+  grammar, so the validator cannot catch them; they surface only as nonsense
+  tokens. Write each marker as a single token: `TCRVd1-`, `TCRVd2+`,
+  `TCRVg9+`, `TCRVb11+`, `MR1Tetramer+`, `CD1d-a-GalCer-Tetramer+` (the
+  spellings used in `reports/proposed_marker_fixes.xlsx`). Affected rows are
+  listed in [reports/soulcap_feedback.tsv](reports/soulcap_feedback.tsv).
 
 A parser built from §2 can be used to lint the sheet for these.
 

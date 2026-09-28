@@ -147,9 +147,16 @@ last table of [marker_resolution_audit.md](../reports/marker_resolution_audit.md
   lineage cocktail with `CD3-FITC (SK7)` (Bento et al. 2025), but that file's
   quotes have not been checked against the paper. OMIP-060, -055, -020 and -084
   are not open access in Europe PMC, so their clones were not checked.
-- **Clone epitopes are not verified.** Which chain each clone binds (e.g.
-  whether SK7 binds CD3ε, SK1 binds CD8α, 3G8 binds CD16a and CD16b) should be
-  confirmed from vendor datasheets or HCDM records before deciding.
+- **Clone targets**, checked on 2026-09-28 against the sources below (quotes
+  are exact; vendor pages were read as retrieved on that date):
+
+  | Clone | Verified target | Source and exact wording |
+  |---|---|---|
+  | SK7 (CD3) | CD3ε | Fisher Scientific listing for BD 557832: "The SK7 (Leu-4) monoclonal antibody specifically binds to the epsilon chain of the CD3 antigen/T-cell antigen receptor (TCR) complex." <https://www.fishersci.com/shop/products/cd3-mouse-anti-human-apc-cy7-clone-sk7-bd/BDB557832> |
+  | SK1 (CD8) | CD8α (both CD8αα and CD8αβ carry it) | Fisher Scientific listing for BD 340584: "The CD8 antibody recognizes the 32-kilodalton (kDa) α-subunit of a disulfide-linked bimolecular complex." <https://www.fishersci.com/shop/products/anti-cd8-apc-clone-sk1-bd/BDB340584> |
+  | 3G8 (CD16) | CD16a and CD16b | PMC12606087 (PMID 41219228): "For clarification, 3G8 is a known anti-CD16a/b mAb commercially available and with an epitope in the Fc recognition region". The original 3G8 paper (Fleit et al. 1982, PMID 6808506, DOI 10.1073/pnas.79.10.3275) was raised against the neutrophil receptor: "The number of sites for 3G8 Fab was 135,000 per neutrophil". |
+  | L243 (HLA-DR) | HLA-DR (not DQ or DP); **which chain, or whether the epitope needs the αβ dimer, is not verified** | Fisher Scientific listing for BD 335796: "reacts with a nonpolymorphic HLA-DR epitope and does not cross-react with HLA-DQ or HLA-DP molecules." <https://www.fishersci.com/shop/products/anti-hla-dr-apc-cy-7-clone-l243-g46-6-bd/BDB335796>. BioLegend's datasheet reportedly describes a conformational epitope on HLA-DRα; its pages could not be retrieved to check. |
+  | B1.1 (TCRγδ), HNK-1 (CD57) | Not checked | — |
 
 ### CD3
 
@@ -176,8 +183,10 @@ already does). For inclusion gates, A or C. With A alone, the
 ### CD8
 
 Used in 28 valid sheet rows: 12 as CD8+, 16 as CD8−. CD8 exists on cells as a
-CD8αα homodimer (e.g. many γδ T cells, NK cells) or a CD8αβ heterodimer
-(conventional αβ T cells).
+CD8αα homodimer or a CD8αβ heterodimer. The SK1 listing above states: "The
+majority of peripheral blood CD8 + T lymphocytes express an α/β heterodimer
+(Mr 32, 30 kDa), while CD8 + CD16 + natural killer (NK) lymphocytes and CD8 +
+T-cell receptor (TCR)-γ/δ + T lymphocytes express an α/α homodimer (Mr 30 kDa)."
 
 | Option | Term | For CD8− | For CD8+ |
 |---|---|---|---|
@@ -199,6 +208,21 @@ intraepithelial branch.
 - **CD16:** use CD16a (PR:000001484) only, or both CD16a and CD16b
   (PR:000001485)? The PRO term that CL and the registry use, PR:000001483, is
   defined as the mouse Fcgr3 product or a 1:1 ortholog.
+  - The SOULCAP clone, 3G8, binds **both** CD16a and CD16b (see the clone
+    table above).
+  - CD16 appears mostly in the shared Ideal exclusion panel
+    `(CD15-|CD66b-) CD16-` (83 rows). That panel mirrors SOULCAP's own
+    Neutrophil definition (sheet row 22: `(CD15hi|CD66b+) CD193- CD16hi`),
+    and neutrophils carry CD16b: STEMCELL's 3G8 page describes "CD16b, an
+    ~48 kDa glycosylphosphatidylinositol (GPI)-anchored form expressed on
+    neutrophils, basophils and eosinophils"
+    (<https://www.stemcell.com/products/anti-human-cd16-antibody-clone-3g8.html>).
+  - So **"CD16a only" is likely wrong for exclusion gates**: a CD16− gate
+    measured with 3G8 excludes CD16b+ cells too. A faithful encoding would
+    be "lacks CD16a and lacks CD16b".
+  - Side note: SOULCAP defines Eosinophil (row 23) as `CD16-`, while the
+    STEMCELL text lists CD16b on eosinophils. Possibly a level difference;
+    worth asking SOULCAP.
 - **HLA-DR:** DR α chain (PR:000002015, used in 6 CL axioms), or the generic
   GO:0042613 MHC class II protein complex (used in 23 CL axioms, not
   DR-specific)?
@@ -209,6 +233,47 @@ intraepithelial branch.
   "CD15" as a synonym of the FUT4 enzyme, and CL uses FUT4 for CD15 in 8
   axioms. Should this go upstream as a CL/PRO issue, together with the
   mouse-defined CD16 term?
+
+### Hypothetical: accepting GO complex terms
+
+Computed 2026-09-28 on scratch copies only; no policy or code was changed.
+Starting from CD3 → CD3ε and CD8 → CD8α (both allowed), TCRαβ/TCRγδ were
+mapped to GO:0042105 / GO:0042106 and the Ig classes to the GO immunoglobulin
+complex terms (IgA GO:0071745, IgD GO:0071738, IgE GO:0071742, IgG
+GO:0071735, IgM GO:0071753; IDs from OLS4). Lenient rule:
+
+| Scenario | Fully resolved | With a proposal | Unique CL terms |
+|---|---:|---:|---:|
+| CD3ε + CD8α | 28 | 22 | 19 |
+| + TCRαβ/γδ as GO complexes | 49 | 42 | 21 |
+| + Ig classes as GO complexes | 42 | 35 | 28 |
+| + both | 63 | 55 | 30 |
+
+In the last row the 55 proposals are 27 Exact and 28 Broad; 43 of them map to
+a CL term that has marker axioms. **Caveat:** the CL axiom snapshot has no GO complex
+axioms, so GO-mapped tokens are always "unknown" in the evidence; "no
+contradictions" says nothing about them. After this, the remaining blockers
+are syntax errors (23 rows), CD16 (12), HLA-DR (4), CD57 (3) and CD15 (3).
+Strict stays at 1 (ILCp) in every scenario because of the shared Ideal
+exclusion panel.
+
+**Code change needed to accept GO complex IDs** (not made):
+
+1. `cl_pro.py`: the SPARQL queries only select objects with
+   `rdfs:isDefinedBy obo:pr.owl`. Add GO complex terms (e.g. a `UNION` over
+   `obo:go.owl` restricted to `GO:0032991` protein-containing complex
+   descendants), so `cl_pro_relationships.tsv` gains CL → GO axioms such as
+   CL:0000789 `has plasma membrane part` GO:0042105. Without this, GO-mapped
+   markers can never match or contradict anything.
+2. `marker_resolution.load()`: the registry ID must match `PR:[A-Za-z0-9]+`,
+   and only `single_protein` rows may be `allow`. Add a representation such as
+   `protein_complex_term` that may be `allow` with exactly one `GO:` ID (or add
+   a separate `complex_id` column to the registry, keeping `pro_id` PRO-only).
+3. `expand_axiom()` and the CL index key on the axiom's `pr` column. They need
+   no logic change once the TSV holds GO rows, but the column name and the
+   identity keys (`"protein:" + id`) should become ontology-neutral.
+4. Tests for each, plus a registry/policy review of every token switched to
+   a GO ID (the fingerprint rule applies).
 
 ### Open question: inheriting parent-gate markers
 

@@ -119,8 +119,15 @@ new scientific approvals or collaborator commitments without agreement.
   mappings. It never merges our own candidate mappings into CL or reasons
   over them as if accepted — those stay as SSSOM (`soulcap-sssom`), a
   proposal for human review, not something this repo asserts unilaterally.
-- Use **UV** for environment and dependency management (`uv sync`,
-  `uv run ...`). Don't invoke `pip` directly.
+- Use **UV** for environment and dependency management (`uv sync --extra dev`,
+  `uv run ...`). Plain `uv sync` removes the dev tools (pytest, ruff, mypy).
+  Don't invoke `pip` directly.
+- **Never write an identifier from memory.** This covers DOIs, PMIDs, PMCIDs
+  and PRO, CL, GO, CHEBI and UniProt IDs. Look each one up (OLS4, Europe PMC,
+  the source paper or datasheet, or a file in this repo) and cite where it
+  came from. The same applies to facts about an identifier, such as a term's
+  definition, parent or components, or which chain an antibody clone binds:
+  if you can't verify it, say so rather than state it.
 - The marker expression language is precisely defined in
   [MARKER_SYNTAX.md](MARKER_SYNTAX.md) — any parser/validator must conform to
   its EBNF (including the hyphen-disambiguation lexer rule).
