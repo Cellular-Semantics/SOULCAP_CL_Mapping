@@ -5,6 +5,8 @@ Do not edit by hand.
 
 ## CD117
 
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000006 (Innate Lymphoid Cell Progenitor), SOULCAP:SC000008 (Innate Lymphoid Cell 1), SOULCAP:SC000009 (Innate Lymphoid Cell 2), SOULCAP:SC000010 (Innate Lymphoid Cell 3)
+
 > "could be subdivided into CD117−NKp44− ILC1s and CD117‐expressing NKp44− ILC3s and NKp44+ ILC3s."
 
 — Krabbendam et al 2021 (PMID:33300130; DOI:10.1002/eji.202048696; PMCID:PMC8248192) · `EV00138` · verified: yes
@@ -27,11 +29,15 @@ Do not edit by hand.
 
 ## CD123
 
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000007 (Innate Lymphoid Cell  ), SOULCAP:SC000008 (Innate Lymphoid Cell 1), SOULCAP:SC000009 (Innate Lymphoid Cell 2), SOULCAP:SC000010 (Innate Lymphoid Cell 3)
+
 > "Subsequently we gated out non‐relevant lineages using antibodies against CD3, CD4, TCRαβ, and TCRγδ (T cells), CD19 (B cells) CD14 (monocytes) FcRεR1a (mast cells), BDCA2 (pDCs), CD123 (pDCs, basophils), and CD34 (hematopoietic progenitors)."
 
 — Krabbendam et al 2021 (PMID:33300130; DOI:10.1002/eji.202048696; PMCID:PMC8248192) · `EV00149` · verified: yes
 
 ## CD127
+
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000006 (Innate Lymphoid Cell Progenitor), SOULCAP:SC000007 (Innate Lymphoid Cell  ), SOULCAP:SC000008 (Innate Lymphoid Cell 1), SOULCAP:SC000009 (Innate Lymphoid Cell 2), SOULCAP:SC000010 (Innate Lymphoid Cell 3)
 
 > "total ILCs being defined as LIN− CD45+ CD127+"
 
@@ -51,9 +57,11 @@ Do not edit by hand.
 
 > "The population positive for CD7, CD45, CD127 and CD161 and negative for LIN2 was separated and divided into CRTH2 positive/NKp46 negative and CRTH2 negative/NKp46 positive."
 
-— Bento et al 2025 (DOI:10.3389/fimmu.2025.1568875; PMCID:PMC12187685) · `EV00125` · verified: no
+— Bento et al 2025 (DOI:10.3389/fimmu.2025.1568875; PMCID:PMC12187685) · `EV00125` · verified: exact_except_trailing_punctuation
 
 ## CD14
+
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000007 (Innate Lymphoid Cell  ), SOULCAP:SC000008 (Innate Lymphoid Cell 1), SOULCAP:SC000009 (Innate Lymphoid Cell 2), SOULCAP:SC000010 (Innate Lymphoid Cell 3)
 
 > "Subsequently we gated out non‐relevant lineages using antibodies against CD3, CD4, TCRαβ, and TCRγδ (T cells), CD19 (B cells) CD14 (monocytes) FcRεR1a (mast cells), BDCA2 (pDCs), CD123 (pDCs, basophils), and CD34 (hematopoietic progenitors)."
 
@@ -65,11 +73,15 @@ Do not edit by hand.
 
 ## CD15
 
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000007 (Innate Lymphoid Cell  ), SOULCAP:SC000008 (Innate Lymphoid Cell 1), SOULCAP:SC000009 (Innate Lymphoid Cell 2), SOULCAP:SC000010 (Innate Lymphoid Cell 3)
+
 > "lineage cocktail (TCRα/β, TCRγ/δ, CD19, CD16, CD15, CD14, CD94, CD11c, BDCA-2, FcεRIα, glycophorin A, CD41, CD1a, and CD34)"
 
 — Alkon et al 2022 (PMID:34363841; DOI:10.1016/j.jaci.2021.07.025; PMCID:PMC9130781) · `EV00153` · verified: yes
 
 ## CD161
+
+**Candidate SOULCAP cell types (unreviewed):** none found
 
 > "CD45+Lin–CD127+CD161+ cells (ie, bona fide ILCs)"
 
@@ -89,6 +101,8 @@ Do not edit by hand.
 
 ## CD19
 
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000007 (Innate Lymphoid Cell  ), SOULCAP:SC000008 (Innate Lymphoid Cell 1), SOULCAP:SC000009 (Innate Lymphoid Cell 2), SOULCAP:SC000010 (Innate Lymphoid Cell 3)
+
 > "Subsequently we gated out non‐relevant lineages using antibodies against CD3, CD4, TCRαβ, and TCRγδ (T cells), CD19 (B cells) CD14 (monocytes) FcRεR1a (mast cells), BDCA2 (pDCs), CD123 (pDCs, basophils), and CD34 (hematopoietic progenitors)."
 
 — Krabbendam et al 2021 (PMID:33300130; DOI:10.1002/eji.202048696; PMCID:PMC8248192) · `EV00148` · verified: yes
@@ -98,6 +112,8 @@ Do not edit by hand.
 — Alkon et al 2022 (PMID:34363841; DOI:10.1016/j.jaci.2021.07.025; PMCID:PMC9130781) · `EV00152` · verified: yes
 
 ## CD294
+
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000006 (Innate Lymphoid Cell Progenitor), SOULCAP:SC000008 (Innate Lymphoid Cell 1), SOULCAP:SC000009 (Innate Lymphoid Cell 2), SOULCAP:SC000010 (Innate Lymphoid Cell 3)
 
 > "group 2 ILCs (ILC2s) (CRTH2+), and group 3 ILCs (ILC3s) (CD117+CRTH2–)"
 
@@ -121,6 +137,8 @@ Do not edit by hand.
 
 ## CD3
 
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000006 (Innate Lymphoid Cell Progenitor), SOULCAP:SC000007 (Innate Lymphoid Cell  ), SOULCAP:SC000008 (Innate Lymphoid Cell 1), SOULCAP:SC000009 (Innate Lymphoid Cell 2), SOULCAP:SC000010 (Innate Lymphoid Cell 3)
+
 > "We gated for lymphocytes, excluded doublets and dead cells and selected CD45+CD3− cells"
 
 — Krabbendam et al 2021 (PMID:33300130; DOI:10.1002/eji.202048696; PMCID:PMC8248192) · `EV00126` · verified: yes
@@ -135,6 +153,8 @@ Do not edit by hand.
 
 ## CD34
 
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000007 (Innate Lymphoid Cell  ), SOULCAP:SC000008 (Innate Lymphoid Cell 1), SOULCAP:SC000009 (Innate Lymphoid Cell 2), SOULCAP:SC000010 (Innate Lymphoid Cell 3)
+
 > "Subsequently we gated out non‐relevant lineages using antibodies against CD3, CD4, TCRαβ, and TCRγδ (T cells), CD19 (B cells) CD14 (monocytes) FcRεR1a (mast cells), BDCA2 (pDCs), CD123 (pDCs, basophils), and CD34 (hematopoietic progenitors)."
 
 — Krabbendam et al 2021 (PMID:33300130; DOI:10.1002/eji.202048696; PMCID:PMC8248192) · `EV00147` · verified: yes
@@ -144,6 +164,8 @@ Do not edit by hand.
 — Alkon et al 2022 (PMID:34363841; DOI:10.1016/j.jaci.2021.07.025; PMCID:PMC9130781) · `EV00151` · verified: yes
 
 ## CD56
+
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000006 (Innate Lymphoid Cell Progenitor), SOULCAP:SC000008 (Innate Lymphoid Cell 1), SOULCAP:SC000009 (Innate Lymphoid Cell 2), SOULCAP:SC000010 (Innate Lymphoid Cell 3)
 
 > "(*) LIN2 is cocktail of the following antibodies: CD3-FITC (SK7), CD14-FITC (SJ25C1), CD19-FITC (L27), CD20-FITC (MφP9), and CD56-FITC (NCAM16.2)."
 

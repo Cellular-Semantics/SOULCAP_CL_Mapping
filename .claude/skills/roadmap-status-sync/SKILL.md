@@ -37,7 +37,7 @@ disk, every time:
 | Milestone | Evidence to check | How to read it |
 |---|---|---|
 | M1 — marker → protein → gene | `marker_mappings/marker_protein_gene.csv` exists and has rows | Empty/missing → ⬜. Has rows but visibly incomplete (spot-check a few marker tokens from `data/marker_combinations.csv` against it) → 🟡. Covers essentially all distinct tokens → ✅. |
-| M2 — literature support | Count `literature/*.md` files against the distinct `Category` values in `data/citation_mgr.csv` (re-sync first if `data/` looks stale) | 0 files → ⬜. Some but not all categories covered → 🟡 (state the fraction, e.g. "8/14"). All categories covered → ✅. |
+| M2 — literature support | Count distinct `cell_type_label` families in `literature/evidence.tsv` against the distinct `Category` values in `data/citation_mgr.csv` (re-sync first if `data/` looks stale); also report how many rows are `verified = yes` | 0 files → ⬜. Some but not all categories covered → 🟡 (state the fraction, e.g. "8/14"). All categories covered → ✅. |
 | M3 — audit curated mappings | Whether the Google Sheet now has dedicated broad/exact-match and comment columns beyond today's `Type of Match` (assay-type, not CL-match-type), `OLS CL identifier`, and `CL Mapping Notes` — check the freshly-synced sheet's actual column headers, don't assume from the column *names* alone (`Type of Match` sounds relevant but is not the same field per the roadmap's own note) | Columns still absent → stays ⛔, but if the `mapping-audit` skill has since made a drift/evidence-based audit possible without those columns, say so explicitly rather than leaving it a flat "blocked with nothing happening." | 
 | M4 — candidate mappings | Row count in `reports/candidate_cl_mappings.sssom.tsv` (minus header) against total rows in `data/marker_combinations.csv` (minus header) | Partial coverage → 🟡 with the fraction. All SOULCAP rows covered (including documented "no reasonable match" cases logged in `gaps.tsv`, which count as resolved, not missing) → ✅. |
 | CL term corrections table | `gh issue view <N>` for each row's linked repo issue, and the upstream `obophenotype/cell-ontology` issue if linked | If the upstream issue is closed/merged, the table's "Status" cell is stale — update it. |
@@ -72,7 +72,7 @@ same way when an upstream issue has moved.
 - M2's category list comes from `data/citation_mgr.csv`'s `Category` column,
   which mixes true cell-type families (NK cell, B cell, monocyte, ...) with at
   least one cross-cutting method category (`immunoprofiling`) that doesn't map
-  to a single `literature/*.md` file — don't count it against M2's
+  to a single evidence family — don't count it against M2's
   denominator; use judgment on any other ambiguous category the same way.
 - A "done" `data/` count is only as fresh as the last `uv run soulcap-sync` —
   always re-sync before trusting M2/M3/M4 numbers if the last sync date is

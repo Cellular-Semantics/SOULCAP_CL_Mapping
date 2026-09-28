@@ -2,8 +2,9 @@
 
 Three steps, each a subcommand of ``soulcap-evidence``:
 
-- ``migrate``: parse the narrative Milestone 2 files (``literature/*_markers.md``)
-  into ``literature/evidence.tsv``. Quotes are copied exactly as written; any
+- ``migrate``: parse narrative Milestone 2 files (``*_markers.md``; the originals
+  are archived in ``archive/2026-09_literature_narratives/``) into
+  ``literature/evidence.tsv``. Quotes are copied exactly as written; any
   quote whose marker or citation cannot be determined mechanically goes to
   ``literature/evidence_unplaced.tsv`` instead of being guessed.
 - ``verify``: check each quote against the open-access full text in Europe PMC.
@@ -23,6 +24,7 @@ import csv
 import json
 import re
 import sys
+import time
 import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
@@ -30,6 +32,7 @@ from collections.abc import Callable
 from datetime import date
 from pathlib import Path
 
+from soulcap_cl_mapping.marker_syntax import MARKER_COLUMNS
 from soulcap_cl_mapping.report_validator import _normalise_for_match
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -53,10 +56,15 @@ PART_FAMILIES = {"Part II": "MAIT cell", "Part I": "gamma-delta T cell"}
 # Files whose quotes were extracted with an AI web-fetch tool and start as
 # unverified until checked against the full text.
 WEBFETCH_FILES = {"ilc_markers.md", "t_cell_markers.md"}
+# verified status for quotes that match exactly except a final "." (or ,;:).
+TRAILING = "exact_except_trailing_punctuation"
+VERIFIED_VALUES = {"yes", TRAILING, "no", "not_checked"}
 
 FIELDS = [
     "evidence_id",
     "subject_id",
+    "candidate_subject_ids",
+    "candidate_status",
     "cell_type_label",
     "marker_token",
     "level",
@@ -69,6 +77,7 @@ FIELDS = [
     "species",
     "tissue",
     "source_type",
+    "source_type_basis",
     "source_file",
     "source_line",
     "section",
@@ -77,6 +86,38 @@ FIELDS = [
     "verification_note",
     "added_on",
 ]
+# Candidate cell types: which SOULCAP rows belong to each family. Membership
+# follows each row's Parent chain to its root (a dangling parent name counts as
+# the root). This is a mechanical, UNREVIEWED rule; a curator confirms each
+# candidate before setting subject_id.
+FAMILY_ROOTS = {
+    "NK cell": {"NK"},
+    "innate lymphoid cell": {"ILC", "ILCp"},
+    "dendritic cell": {"cDC", "pDC", "DCM"},
+    "B cell": {"B cell", "ASC", "Transitional", "T1/T2 B", "Mature B", "Bmem"},
+    "T cell": {
+        "T cell",
+        "T Lymph",
+        "ConT TCRab",
+        "CD4 TCRab T cell",
+        "CD4 ConT",
+        "CD4/CD8 PanT",
+        "Th1-like",
+        "Th2-like",
+        "Th9-like",
+        "Th17-like",
+        "Tfh",
+        "Vg9 Vd1",
+    },
+}
+# Subfamilies of the T cell family.
+SUBFAMILY_RULES: dict[str, Callable[[dict], bool]] = {
+    "gamma-delta T cell": lambda r: "TCRgd+" in r["Required phenotypic markers"],
+    "MAIT cell": lambda r: r["Abbreviation"].strip() == "MAIT",
+    "iNKT cell": lambda r: r["Abbreviation"].strip() == "iNKT",
+}
+GREEK = str.maketrans({"α": "a", "β": "b", "γ": "g", "δ": "d"})
+
 UNPLACED_FIELDS = [
     "source_file",
     "source_line",
@@ -285,7 +326,7 @@ def emit(
                 species="",
                 tissue="",
                 source_type="not_classified",
-                source_file=f"literature/{path.name}",
+                source_file=rel(path),
                 source_line=p["line"],
                 section=section,
                 notes=p["note"],
@@ -300,6 +341,14 @@ def emit(
         )
 
 
+def rel(path: Path) -> str:
+    """Repository-relative path when possible (for the source_file column)."""
+    try:
+        return path.resolve().relative_to(ROOT).as_posix()
+    except ValueError:
+        return f"literature/{path.name}"
+
+
 def migrate(files: list[Path]) -> tuple[list[dict], list[dict]]:
     rows, unplaced = [], []
     for path in sorted(files):
@@ -309,6 +358,63 @@ def migrate(files: list[Path]) -> tuple[list[dict], list[dict]]:
     for n, row in enumerate(rows, start=1):
         row["evidence_id"] = f"EV{n:05d}"
     return rows, unplaced
+
+
+# --------------------------------------------------------------------------- #
+# Candidate cell types
+# --------------------------------------------------------------------------- #
+def root_of(row: dict, by_abbrev: dict[str, dict]) -> str:
+    seen: set[str] = set()
+    while True:
+        parent = str(row["Parent"]).strip()
+        if not parent or parent in seen:
+            return str(row["Abbreviation"].strip())
+        if parent not in by_abbrev:
+            return parent  # dangling parent name stands in for the root
+        seen.add(parent)
+        row = by_abbrev[parent]
+
+
+def families(profiles: dict[str, dict]) -> dict[str, set[str]]:
+    """Family label -> SOULCAP subject IDs, by the unreviewed root rule."""
+    by_abbrev: dict[str, dict] = {}
+    for row in profiles.values():
+        by_abbrev.setdefault(row["Abbreviation"].strip(), row)
+    result: dict[str, set[str]] = {f: set() for f in [*FAMILY_ROOTS, *SUBFAMILY_RULES]}
+    for sid, row in profiles.items():
+        root = root_of(row, by_abbrev)
+        for family, roots in FAMILY_ROOTS.items():
+            if root in roots:
+                result[family].add(sid)
+        if sid in result["T cell"]:
+            for family, rule in SUBFAMILY_RULES.items():
+                if rule(row):
+                    result[family].add(sid)
+    return result
+
+
+def uses_marker(profile: dict, marker: str) -> bool:
+    """Whether any marker column names ``marker`` (spaces and Greek normalized)."""
+    norm = lambda s: re.sub(r"\s+", "", s.translate(GREEK)).upper()  # noqa: E731
+    target = re.escape(norm(marker))
+    pattern = re.compile(
+        rf"(?<![A-Z0-9]){target}(?=(?:HI|LO|INT|BRIGHT|DIM)?(?:[^A-Z0-9]|$))"
+    )
+    return any(
+        pattern.search(norm(str(profile.get(c, "") or ""))) for c in MARKER_COLUMNS
+    )
+
+
+def add_candidates(rows: list[dict], profiles: dict[str, dict]) -> None:
+    members = families(profiles)
+    for row in rows:
+        ids = sorted(
+            sid
+            for sid in members.get(row["cell_type_label"], set())
+            if uses_marker(profiles[sid], row["marker_token"])
+        )
+        row["candidate_subject_ids"] = "|".join(ids)
+        row["candidate_status"] = "unreviewed" if ids else "none_found"
 
 
 # --------------------------------------------------------------------------- #
@@ -336,6 +442,13 @@ def check_quote(quote: str, full_text: str) -> tuple[str, str]:
     missing = [f for f in fragments(quote) if squash(f) not in exact]
     if not missing:
         return "yes", "exact match in Europe PMC full text"
+    trimmed = [squash(f).rstrip(".,;:") for f in missing]
+    if all(t and t in exact for t in trimmed):
+        return (
+            TRAILING,
+            "exact apart from trailing punctuation (the paper likely has a reference "
+            "marker or different ending there): " + " | ".join(missing),
+        )
     if all(_normalise_for_match(f) in near for f in missing):
         return (
             "no",
@@ -362,11 +475,19 @@ def matching_prefix(fragment: str, text: str) -> int:
     return low
 
 
-def http_get(url: str) -> bytes:
+def http_get(url: str, attempts: int = 3) -> bytes:
+    """GET with retries: Europe PMC occasionally drops a request."""
     request = urllib.request.Request(url, headers={"User-Agent": "soulcap-evidence"})
-    with urllib.request.urlopen(request, timeout=60) as response:
-        body: bytes = response.read()
-    return body
+    for attempt in range(attempts):
+        try:
+            with urllib.request.urlopen(request, timeout=60) as response:
+                body: bytes = response.read()
+            return body
+        except OSError:
+            if attempt == attempts - 1:
+                raise
+            time.sleep(2 * (attempt + 1))
+    raise OSError(url)  # pragma: no cover
 
 
 def resolve_pmcid(row: dict, get: Callable[[str], bytes]) -> str:
@@ -397,7 +518,7 @@ def verify(rows: list[dict], get: Callable[[str], bytes] = http_get) -> None:
     """Update ``verified`` / ``verification_note`` in place."""
     texts: dict[str, str] = {}
     for row in rows:
-        if row["verified"] == "yes":
+        if row["verified"] in ("yes", TRAILING):
             continue
         try:
             pmcid = resolve_pmcid(row, get)
@@ -412,7 +533,12 @@ def verify(rows: list[dict], get: Callable[[str], bytes] = http_get) -> None:
         if pmcid not in texts:
             texts[pmcid] = full_text(pmcid, get)
         if not texts[pmcid]:
-            row["verification_note"] = f"{pmcid}: full text not available; not checked"
+            # Keep an earlier check result rather than overwrite it after a
+            # failed or empty fetch.
+            if not row["verification_note"].startswith(("not found", "near-match")):
+                row["verification_note"] = (
+                    f"{pmcid}: full text not available; not checked"
+                )
             continue
         row["pmcid"] = pmcid
         row["verified"], row["verification_note"] = check_quote(
@@ -427,7 +553,9 @@ def slug(text: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-") or "unnamed"
 
 
-def render_view(title: str, rows: list[dict], group_by: str) -> str:
+def render_view(
+    title: str, rows: list[dict], group_by: str, labels: dict[str, str] | None = None
+) -> str:
     lines = [
         f"# {title}",
         "",
@@ -436,25 +564,43 @@ def render_view(title: str, rows: list[dict], group_by: str) -> str:
         "",
     ]
     for key in sorted({r[group_by] for r in rows}):
+        group = [r for r in rows if r[group_by] == key]
         lines += [f"## {key}", ""]
-        for r in (r for r in rows if r[group_by] == key):
-            ids = "; ".join(
+        if labels is not None:
+            ids = sorted(
+                {
+                    s
+                    for r in group
+                    for s in r.get("candidate_subject_ids", "").split("|")
+                    if s
+                }
+            )
+            named = ", ".join(f"{s} ({labels.get(s, '?')})" for s in ids)
+            lines += [
+                "**Candidate SOULCAP cell types (unreviewed):** "
+                + (named or "none found"),
+                "",
+            ]
+        for r in group:
+            cite = "; ".join(
                 f"{k.upper()}:{r[k]}" for k in ("pmid", "doi", "pmcid") if r[k]
             )
             lines += [
                 f"> {r['quote']}",
                 "",
-                f"— {r['first_author_year']} ({ids}) · `{r['evidence_id']}` · "
+                f"— {r['first_author_year']} ({cite}) · `{r['evidence_id']}` · "
                 f"verified: {r['verified']}",
                 "",
             ]
     return "\n".join(lines)
 
 
-def write_views(rows: list[dict], out: Path) -> None:
-    for kind, key, other in (
-        ("by_cell_type", "cell_type_label", "marker_token"),
-        ("by_marker", "marker_token", "cell_type_label"),
+def write_views(
+    rows: list[dict], out: Path, labels: dict[str, str] | None = None
+) -> None:
+    for kind, key, other, lab in (
+        ("by_cell_type", "cell_type_label", "marker_token", labels or {}),
+        ("by_marker", "marker_token", "cell_type_label", None),
     ):
         folder = out / kind
         folder.mkdir(parents=True, exist_ok=True)
@@ -463,8 +609,12 @@ def write_views(rows: list[dict], out: Path) -> None:
         for value in sorted({r[key] for r in rows}):
             subset = [r for r in rows if r[key] == value]
             (folder / f"{slug(value)}.md").write_text(
-                render_view(value, subset, other), encoding="utf-8"
+                render_view(value, subset, other, lab), encoding="utf-8"
             )
+
+
+def read_tsv_any(path: Path) -> list[dict]:
+    return read_tsv(path) if path.exists() else []
 
 
 def read_tsv(path: Path) -> list[dict]:
@@ -483,7 +633,13 @@ def write_tsv(path: Path, fields: list[str], rows: list[dict]) -> None:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="soulcap-evidence", description=__doc__)
-    parser.add_argument("command", choices=["migrate", "verify", "views"])
+    parser.add_argument("command", choices=["migrate", "candidates", "verify", "views"])
+    parser.add_argument(
+        "--source",
+        type=Path,
+        default=ROOT / "data" / "marker_combinations.csv",
+        help="candidates: synced sheet (needs uv run soulcap-sync)",
+    )
     parser.add_argument("--literature", type=Path, default=LITERATURE)
     parser.add_argument(
         "--force",
@@ -516,7 +672,21 @@ def main(argv: list[str] | None = None) -> int:
             counts[r["verified"]] = counts.get(r["verified"], 0) + 1
         print(json.dumps(counts, sort_keys=True))
         return 0
-    write_views(rows, args.literature)
+    if args.command == "candidates":
+        from soulcap_cl_mapping import mapping_evidence
+
+        with args.source.open(encoding="utf-8-sig", newline="") as fh:
+            profiles = mapping_evidence.profile_index(list(csv.DictReader(fh)))
+        add_candidates(rows, profiles)
+        write_tsv(evidence, FIELDS, rows)
+        found = sum(bool(r["candidate_subject_ids"]) for r in rows)
+        print(f"{found} of {len(rows)} rows have candidate cell types (unreviewed)")
+        return 0
+    labels = {
+        r["subject_id"]: r["subject_label"]
+        for r in read_tsv_any(ROOT / "mappings" / "soulcap_entities.tsv")
+    }
+    write_views(rows, args.literature, labels)
     print(f"views written under {args.literature}")
     return 0
 

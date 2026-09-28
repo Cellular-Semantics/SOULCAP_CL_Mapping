@@ -143,7 +143,7 @@ last table of [marker_resolution_audit.md](../reports/marker_resolution_audit.md
   `CD8 | BUV805 | SK1 | CD8 T, NK, and NKT‐Like cells`;
   `CD16 | BUV496 | 3G8 | …`; `HLA‐DR | PE‐Fire810 | L243 | …`;
   `TCRγδ | PerCP‐eFluor 710 | B1.1 | Pan γδ T cell`; `CD57 | FITC | HNK‐1 | …`.
-  [literature/ilc_markers.md](../literature/ilc_markers.md) also quotes a
+  [ilc_markers.md](../archive/2026-09_literature_narratives/ilc_markers.md) also quotes a
   lineage cocktail with `CD3-FITC (SK7)` (Bento et al. 2025), but that file's
   quotes have not been checked against the paper. OMIP-060, -055, -020 and -084
   are not open access in Europe PMC, so their clones were not checked.
@@ -220,9 +220,6 @@ intraepithelial branch.
   - So **"CD16a only" is likely wrong for exclusion gates**: a CD16− gate
     measured with 3G8 excludes CD16b+ cells too. A faithful encoding would
     be "lacks CD16a and lacks CD16b".
-  - Side note: SOULCAP defines Eosinophil (row 23) as `CD16-`, while the
-    STEMCELL text lists CD16b on eosinophils. Possibly a level difference;
-    worth asking SOULCAP.
 - **HLA-DR:** DR α chain (PR:000002015, used in 6 CL axioms), or the generic
   GO:0042613 MHC class II protein complex (used in 23 CL axioms, not
   DR-specific)?
@@ -247,12 +244,14 @@ GO:0071735, IgM GO:0071753; IDs from OLS4). Lenient rule:
 | CD3ε + CD8α | 28 | 22 | 19 |
 | + TCRαβ/γδ as GO complexes | 49 | 42 | 21 |
 | + Ig classes as GO complexes | 42 | 35 | 28 |
-| + both | 63 | 55 | 30 |
+| + both | **up to 63** | 55 | 30 |
 
-In the last row the 55 proposals are 27 Exact and 28 Broad; 43 of them map to
-a CL term that has marker axioms. **Caveat:** the CL axiom snapshot has no GO complex
-axioms, so GO-mapped tokens are always "unknown" in the evidence; "no
-contradictions" says nothing about them. After this, the remaining blockers
+**63 is an upper bound, not a count of usable mappings.** The CL axiom
+snapshot has no GO complex axioms, so for GO-mapped tokens (TCRαβ, TCRγδ, the
+Ig classes) the evidence is always "unknown": a contradiction with CL could
+not be detected. Some of these cell types may drop out once CL's GO axioms are
+extracted and checked. In the last row the 55 proposals are 27 Exact and 28
+Broad; 43 of them map to a CL term that has marker axioms. After this, the remaining blockers
 are syntax errors (23 rows), CD16 (12), HLA-DR (4), CD57 (3) and CD15 (3).
 Strict stays at 1 (ILCp) in every scenario because of the shared Ideal
 exclusion panel.

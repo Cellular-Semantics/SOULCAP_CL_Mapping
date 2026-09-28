@@ -7,7 +7,7 @@ Do not edit by hand.
 
 > "The most specific method of identifying MAIT cells is by using MR1-5-OP-RU tetramers in flow cytometry."
 
-— Azad et al. 2025 (PMID:41511352; DOI:10.3390/cells15010069; PMCID:PMC12785784) · `EV00117` · verified: no
+— Azad et al. 2025 (PMID:41511352; DOI:10.3390/cells15010069; PMCID:PMC12785784) · `EV00117` · verified: exact_except_trailing_punctuation
 
 > "MAIT cells were isolated from PBMCs using a 5-OP-RU-loaded PE-conjugated MR1 tetramer"
 

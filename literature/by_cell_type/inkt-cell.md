@@ -5,11 +5,15 @@ Do not edit by hand.
 
 ## CD14
 
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000059 (Invariant Natural Killer T cell)
+
 > "gating should include time, singlets, and scatter profile, followed by dead cell exclusion, CD14/CD19 dumping, and CD3 positivity"
 
 — Lal et al. 2018 (PMID:29533501; DOI:10.1002/cyto.a.23357) · `EV00173` · verified: not_checked
 
 ## CD1d-α-GalCer Tetramer
+
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000059 (Invariant Natural Killer T cell)
 
 > "the vast majority of α-GalCer loaded CD1d pentamer+ cells fall within the Vα24+Vβ11+ gate (median=99%), and the Vα24+Vβ11+ gate encompasses the majority of CD1d pentamer+ cells (median=99%)"
 
@@ -24,6 +28,8 @@ Do not edit by hand.
 — Zhou et al. 2022 (PMID:35720369; DOI:10.3389/fimmu.2022.898473; PMCID:PMC9202826) · `EV00171` · verified: no
 
 ## CD3
+
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000059 (Invariant Natural Killer T cell)
 
 > "both identified as CD3+ and defined by their TCR specificities"
 
@@ -43,11 +49,15 @@ Do not edit by hand.
 
 ## CD56
 
+**Candidate SOULCAP cell types (unreviewed):** none found
+
 > "T2NKT cells were identified as CD3+ CD56+ CD161+ TCR-γδ- TCRVα7.2- and TCRVα24- cells."
 
 — Zhou et al. 2022 (PMID:35720369; DOI:10.3389/fimmu.2022.898473; PMCID:PMC9202826) · `EV00172` · verified: no
 
 ## TCR Vβ11
+
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000059 (Invariant Natural Killer T cell)
 
 > "iNKT cells possess an invariant TCR Vα24-Jα18α chain paired with TCR Vβ11, which mainly responds to α-galactosylceramide glycopeptide (αGalCer)."
 
@@ -71,6 +81,8 @@ Do not edit by hand.
 
 ## TCRVα24-Jα18
 
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000059 (Invariant Natural Killer T cell)
+
 > "iNKT cells possess an invariant TCR Vα24-Jα18α chain paired with TCR Vβ11, which mainly responds to α-galactosylceramide glycopeptide (αGalCer)."
 
 — Zhou et al. 2022 (PMID:35720369; DOI:10.3389/fimmu.2022.898473; PMCID:PMC9202826) · `EV00161` · verified: yes
@@ -84,6 +96,8 @@ Do not edit by hand.
 — Lal et al. 2018 (PMID:29533501; DOI:10.1002/cyto.a.23357) · `EV00163` · verified: not_checked
 
 ## TCRαβ
+
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000059 (Invariant Natural Killer T cell)
 
 > "Expression of T Cell Receptor (TCR)-αβ enables NKT cells to recognize antigenic lipids presented by CD1d"
 

@@ -5,6 +5,8 @@ Do not edit by hand.
 
 ## CD10
 
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000028 (Transitonal B cell 1 and 2), SOULCAP:SC000030 (Transitional B cell 3), SOULCAP:SC000031 (Naive B cell), SOULCAP:SC000032 (Double Negative B cells), SOULCAP:SC000033 (Double Negative B cell 1), SOULCAP:SC000034 (Double Negative B cell 2), SOULCAP:SC000035 (Double Negative B cell 3), SOULCAP:SC000036 (Double Negative B cell 4)
+
 > "These cells express IgD and CD10 alongside the IgM BCR so can be identified as IgD+ CD27−CD10hi/+"
 
 — Martin et al. 2016 (PMID:27994589; DOI:10.3389/fimmu.2016.00546; PMCID:PMC5133252) · `EV00014` · verified: yes
@@ -22,6 +24,8 @@ Do not edit by hand.
 — Woodruff et al. 2020 (PMID:33028979; DOI:10.1038/s41590-020-00814-z) · `EV00017` · verified: not_checked
 
 ## CD11c
+
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000023 (B cell), SOULCAP:SC000024 (Antibody Secreting Cell), SOULCAP:SC000025 (Plasmablast), SOULCAP:SC000026 (Plasma Cell), SOULCAP:SC000028 (Transitonal B cell 1 and 2), SOULCAP:SC000029 (Mature B cell), SOULCAP:SC000030 (Transitional B cell 3), SOULCAP:SC000031 (Naive B cell), SOULCAP:SC000032 (Double Negative B cells), SOULCAP:SC000033 (Double Negative B cell 1), SOULCAP:SC000034 (Double Negative B cell 2), SOULCAP:SC000035 (Double Negative B cell 3), SOULCAP:SC000036 (Double Negative B cell 4), SOULCAP:SC000037 (Memory B cell), SOULCAP:SC000038 (IgD only Memory B cell), SOULCAP:SC000039 (Unswitched Memory B cell), SOULCAP:SC000040 (IgM-only Memory B cell), SOULCAP:SC000041 (Switched Memory B cell), SOULCAP:SC000042 (IgA-Class Switched B cell), SOULCAP:SC000043 (IgG-Class Switched B cell), SOULCAP:SC000044 (IgE-Class Switched B cell)
 
 > "DN2 B cells are a unique double-negative population (IgD−CD27−) that displays extrafollicular characteristics, such as the lack of CXCR5 and CD62L expression."
 
@@ -41,6 +45,8 @@ Do not edit by hand.
 
 ## CD138
 
+**Candidate SOULCAP cell types (unreviewed):** none found
+
 > "as B cells differentiate to become plasmablasts and plasma cells, CD20 is lost but CD19 remains, as CD38/CD138 is acquired"
 
 — Griffin & Rothstein 2012 (PMID:22654880; DOI:10.3389/fimmu.2012.00122; PMCID:PMC3360193) · `EV00036` · verified: yes
@@ -55,6 +61,8 @@ Do not edit by hand.
 
 ## CD14
 
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000023 (B cell), SOULCAP:SC000024 (Antibody Secreting Cell), SOULCAP:SC000025 (Plasmablast), SOULCAP:SC000026 (Plasma Cell), SOULCAP:SC000028 (Transitonal B cell 1 and 2), SOULCAP:SC000029 (Mature B cell), SOULCAP:SC000030 (Transitional B cell 3), SOULCAP:SC000031 (Naive B cell), SOULCAP:SC000032 (Double Negative B cells), SOULCAP:SC000033 (Double Negative B cell 1), SOULCAP:SC000034 (Double Negative B cell 2), SOULCAP:SC000035 (Double Negative B cell 3), SOULCAP:SC000036 (Double Negative B cell 4), SOULCAP:SC000037 (Memory B cell), SOULCAP:SC000038 (IgD only Memory B cell), SOULCAP:SC000039 (Unswitched Memory B cell), SOULCAP:SC000040 (IgM-only Memory B cell), SOULCAP:SC000041 (Switched Memory B cell), SOULCAP:SC000042 (IgA-Class Switched B cell), SOULCAP:SC000043 (IgG-Class Switched B cell), SOULCAP:SC000044 (IgE-Class Switched B cell)
+
 > "B cells were enriched using negative selection of CD2, CD3, CD14, CD16, CD36, CD42b, CD56, CD66b and CD123."
 
 — Woodruff et al. 2020 (PMID:33028979; DOI:10.1038/s41590-020-00814-z) · `EV00051` · verified: not_checked
@@ -68,6 +76,8 @@ Do not edit by hand.
 — Martin et al. 2016 (PMID:27994589; DOI:10.3389/fimmu.2016.00546; PMCID:PMC5133252) · `EV00056` · verified: yes
 
 ## CD185
+
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000033 (Double Negative B cell 1), SOULCAP:SC000034 (Double Negative B cell 2), SOULCAP:SC000035 (Double Negative B cell 3), SOULCAP:SC000036 (Double Negative B cell 4)
 
 > "The CXCR5+ subgroup, now known as DN1, is the DN sub-population that expands in elderly healthy individuals, while the CXCR5- subgroup constitutes the extrafollicular DN2 subset."
 
@@ -91,6 +101,8 @@ Do not edit by hand.
 
 ## CD19
 
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000023 (B cell), SOULCAP:SC000024 (Antibody Secreting Cell), SOULCAP:SC000025 (Plasmablast), SOULCAP:SC000026 (Plasma Cell), SOULCAP:SC000028 (Transitonal B cell 1 and 2), SOULCAP:SC000029 (Mature B cell), SOULCAP:SC000030 (Transitional B cell 3), SOULCAP:SC000031 (Naive B cell), SOULCAP:SC000032 (Double Negative B cells), SOULCAP:SC000033 (Double Negative B cell 1), SOULCAP:SC000034 (Double Negative B cell 2), SOULCAP:SC000035 (Double Negative B cell 3), SOULCAP:SC000036 (Double Negative B cell 4), SOULCAP:SC000037 (Memory B cell), SOULCAP:SC000038 (IgD only Memory B cell), SOULCAP:SC000039 (Unswitched Memory B cell), SOULCAP:SC000040 (IgM-only Memory B cell), SOULCAP:SC000041 (Switched Memory B cell), SOULCAP:SC000042 (IgA-Class Switched B cell), SOULCAP:SC000043 (IgG-Class Switched B cell), SOULCAP:SC000044 (IgE-Class Switched B cell)
+
 > "Mature B cells typically express both CD19 and CD20."
 
 — Griffin & Rothstein 2012 (PMID:22654880; DOI:10.3389/fimmu.2012.00122; PMCID:PMC3360193) · `EV00001` · verified: yes
@@ -109,6 +121,8 @@ Do not edit by hand.
 
 ## CD20
 
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000023 (B cell), SOULCAP:SC000024 (Antibody Secreting Cell), SOULCAP:SC000025 (Plasmablast), SOULCAP:SC000026 (Plasma Cell), SOULCAP:SC000028 (Transitonal B cell 1 and 2), SOULCAP:SC000029 (Mature B cell), SOULCAP:SC000030 (Transitional B cell 3), SOULCAP:SC000031 (Naive B cell), SOULCAP:SC000032 (Double Negative B cells), SOULCAP:SC000033 (Double Negative B cell 1), SOULCAP:SC000034 (Double Negative B cell 2), SOULCAP:SC000035 (Double Negative B cell 3), SOULCAP:SC000036 (Double Negative B cell 4), SOULCAP:SC000037 (Memory B cell), SOULCAP:SC000038 (IgD only Memory B cell), SOULCAP:SC000039 (Unswitched Memory B cell), SOULCAP:SC000040 (IgM-only Memory B cell), SOULCAP:SC000041 (Switched Memory B cell), SOULCAP:SC000042 (IgA-Class Switched B cell), SOULCAP:SC000043 (IgG-Class Switched B cell), SOULCAP:SC000044 (IgE-Class Switched B cell)
+
 > "Mature B cells typically express both CD19 and CD20."
 
 — Griffin & Rothstein 2012 (PMID:22654880; DOI:10.3389/fimmu.2012.00122; PMCID:PMC3360193) · `EV00002` · verified: yes
@@ -122,6 +136,8 @@ Do not edit by hand.
 — Martin et al. 2016 (PMID:27994589; DOI:10.3389/fimmu.2016.00546; PMCID:PMC5133252) · `EV00007` · verified: no
 
 ## CD21
+
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000033 (Double Negative B cell 1), SOULCAP:SC000034 (Double Negative B cell 2), SOULCAP:SC000035 (Double Negative B cell 3), SOULCAP:SC000036 (Double Negative B cell 4)
 
 > "DN1: CD11c− CD21+" / "DN2: CD11c+ CD21−" / "DN3: CD11c− CD21−"
 
@@ -137,6 +153,8 @@ Do not edit by hand.
 
 ## CD24
 
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000028 (Transitonal B cell 1 and 2), SOULCAP:SC000030 (Transitional B cell 3), SOULCAP:SC000031 (Naive B cell), SOULCAP:SC000032 (Double Negative B cells), SOULCAP:SC000033 (Double Negative B cell 1), SOULCAP:SC000034 (Double Negative B cell 2), SOULCAP:SC000035 (Double Negative B cell 3), SOULCAP:SC000036 (Double Negative B cell 4)
+
 > "Co-expression of high levels of CD24 and CD38 have also frequently been used to identify them, and it is important that CD27 be included if this is the case"
 
 — Martin et al. 2016 (PMID:27994589; DOI:10.3389/fimmu.2016.00546; PMCID:PMC5133252) · `EV00018` · verified: yes
@@ -146,6 +164,8 @@ Do not edit by hand.
 — Woodruff et al. 2020 (PMID:33028979; DOI:10.1038/s41590-020-00814-z) · `EV00019` · verified: not_checked
 
 ## CD27
+
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000024 (Antibody Secreting Cell), SOULCAP:SC000025 (Plasmablast), SOULCAP:SC000026 (Plasma Cell), SOULCAP:SC000028 (Transitonal B cell 1 and 2), SOULCAP:SC000029 (Mature B cell), SOULCAP:SC000030 (Transitional B cell 3), SOULCAP:SC000031 (Naive B cell), SOULCAP:SC000032 (Double Negative B cells), SOULCAP:SC000033 (Double Negative B cell 1), SOULCAP:SC000034 (Double Negative B cell 2), SOULCAP:SC000035 (Double Negative B cell 3), SOULCAP:SC000036 (Double Negative B cell 4), SOULCAP:SC000037 (Memory B cell), SOULCAP:SC000038 (IgD only Memory B cell), SOULCAP:SC000039 (Unswitched Memory B cell), SOULCAP:SC000040 (IgM-only Memory B cell), SOULCAP:SC000041 (Switched Memory B cell), SOULCAP:SC000042 (IgA-Class Switched B cell), SOULCAP:SC000043 (IgG-Class Switched B cell), SOULCAP:SC000044 (IgE-Class Switched B cell)
 
 > "transitional (IgD+CD27−CD10+), and naïve (IgD+CD27−CD10−)"
 
@@ -161,6 +181,8 @@ Do not edit by hand.
 
 ## CD3
 
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000023 (B cell), SOULCAP:SC000024 (Antibody Secreting Cell), SOULCAP:SC000025 (Plasmablast), SOULCAP:SC000026 (Plasma Cell), SOULCAP:SC000028 (Transitonal B cell 1 and 2), SOULCAP:SC000029 (Mature B cell), SOULCAP:SC000030 (Transitional B cell 3), SOULCAP:SC000031 (Naive B cell), SOULCAP:SC000032 (Double Negative B cells), SOULCAP:SC000033 (Double Negative B cell 1), SOULCAP:SC000034 (Double Negative B cell 2), SOULCAP:SC000035 (Double Negative B cell 3), SOULCAP:SC000036 (Double Negative B cell 4), SOULCAP:SC000037 (Memory B cell), SOULCAP:SC000038 (IgD only Memory B cell), SOULCAP:SC000039 (Unswitched Memory B cell), SOULCAP:SC000040 (IgM-only Memory B cell), SOULCAP:SC000041 (Switched Memory B cell), SOULCAP:SC000042 (IgA-Class Switched B cell), SOULCAP:SC000043 (IgG-Class Switched B cell), SOULCAP:SC000044 (IgE-Class Switched B cell)
+
 > "B cells were enriched using negative selection of CD2, CD3, CD14, CD16, CD36, CD42b, CD56, CD66b and CD123."
 
 — Woodruff et al. 2020 (PMID:33028979; DOI:10.1038/s41590-020-00814-z) · `EV00052` · verified: not_checked
@@ -174,6 +196,8 @@ Do not edit by hand.
 — Martin et al. 2016 (PMID:27994589; DOI:10.3389/fimmu.2016.00546; PMCID:PMC5133252) · `EV00057` · verified: yes
 
 ## CD38
+
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000028 (Transitonal B cell 1 and 2), SOULCAP:SC000029 (Mature B cell), SOULCAP:SC000030 (Transitional B cell 3), SOULCAP:SC000031 (Naive B cell), SOULCAP:SC000032 (Double Negative B cells), SOULCAP:SC000033 (Double Negative B cell 1), SOULCAP:SC000034 (Double Negative B cell 2), SOULCAP:SC000035 (Double Negative B cell 3), SOULCAP:SC000036 (Double Negative B cell 4), SOULCAP:SC000037 (Memory B cell), SOULCAP:SC000038 (IgD only Memory B cell), SOULCAP:SC000039 (Unswitched Memory B cell), SOULCAP:SC000040 (IgM-only Memory B cell), SOULCAP:SC000041 (Switched Memory B cell), SOULCAP:SC000042 (IgA-Class Switched B cell), SOULCAP:SC000043 (IgG-Class Switched B cell), SOULCAP:SC000044 (IgE-Class Switched B cell)
 
 > "T1 (CD38+++CD24hiCD10++IgDlo/−), T2 (CD38++CD24hiCD10+IgD+), and T3 (CD38+CD24+IgD+ABCB1−)"
 
@@ -189,11 +213,15 @@ Do not edit by hand.
 
 ## CD56
 
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000023 (B cell), SOULCAP:SC000024 (Antibody Secreting Cell), SOULCAP:SC000025 (Plasmablast), SOULCAP:SC000026 (Plasma Cell), SOULCAP:SC000028 (Transitonal B cell 1 and 2), SOULCAP:SC000029 (Mature B cell), SOULCAP:SC000030 (Transitional B cell 3), SOULCAP:SC000031 (Naive B cell), SOULCAP:SC000032 (Double Negative B cells), SOULCAP:SC000033 (Double Negative B cell 1), SOULCAP:SC000034 (Double Negative B cell 2), SOULCAP:SC000035 (Double Negative B cell 3), SOULCAP:SC000036 (Double Negative B cell 4), SOULCAP:SC000037 (Memory B cell), SOULCAP:SC000038 (IgD only Memory B cell), SOULCAP:SC000039 (Unswitched Memory B cell), SOULCAP:SC000040 (IgM-only Memory B cell), SOULCAP:SC000041 (Switched Memory B cell), SOULCAP:SC000042 (IgA-Class Switched B cell), SOULCAP:SC000043 (IgG-Class Switched B cell), SOULCAP:SC000044 (IgE-Class Switched B cell)
+
 > "B cells were enriched using negative selection of CD2, CD3, CD14, CD16, CD36, CD42b, CD56, CD66b and CD123."
 
 — Woodruff et al. 2020 (PMID:33028979; DOI:10.1038/s41590-020-00814-z) · `EV00053` · verified: not_checked
 
 ## IgA
+
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000042 (IgA-Class Switched B cell), SOULCAP:SC000043 (IgG-Class Switched B cell), SOULCAP:SC000044 (IgE-Class Switched B cell)
 
 > "naïve B cells express immunoglobulin (Ig)D and IgM and undergo isotype switching to produce IgM, IgA, IgG, or IgE exclusively"
 
@@ -212,6 +240,8 @@ Do not edit by hand.
 — Woodruff et al. 2020 (PMID:33028979; DOI:10.1038/s41590-020-00814-z) · `EV00035` · verified: not_checked
 
 ## IgD
+
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000030 (Transitional B cell 3), SOULCAP:SC000031 (Naive B cell), SOULCAP:SC000032 (Double Negative B cells), SOULCAP:SC000033 (Double Negative B cell 1), SOULCAP:SC000034 (Double Negative B cell 2), SOULCAP:SC000035 (Double Negative B cell 3), SOULCAP:SC000036 (Double Negative B cell 4), SOULCAP:SC000038 (IgD only Memory B cell), SOULCAP:SC000039 (Unswitched Memory B cell), SOULCAP:SC000040 (IgM-only Memory B cell), SOULCAP:SC000041 (Switched Memory B cell), SOULCAP:SC000042 (IgA-Class Switched B cell), SOULCAP:SC000043 (IgG-Class Switched B cell), SOULCAP:SC000044 (IgE-Class Switched B cell)
 
 > "naïve B cells express immunoglobulin (Ig)D and IgM and undergo isotype switching to produce IgM, IgA, IgG, or IgE exclusively"
 
@@ -235,11 +265,15 @@ Do not edit by hand.
 
 ## IgE
 
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000033 (Double Negative B cell 1), SOULCAP:SC000036 (Double Negative B cell 4), SOULCAP:SC000042 (IgA-Class Switched B cell), SOULCAP:SC000043 (IgG-Class Switched B cell), SOULCAP:SC000044 (IgE-Class Switched B cell)
+
 > "naïve B cells express immunoglobulin (Ig)D and IgM and undergo isotype switching to produce IgM, IgA, IgG, or IgE exclusively"
 
 — McGrath, Li & Wilson 2022 (PMID:35393268; DOI:10.1016/j.it.2022.03.005; PMCID:PMC8977948) · `EV00028` · verified: yes
 
 ## IgG
+
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000042 (IgA-Class Switched B cell), SOULCAP:SC000043 (IgG-Class Switched B cell), SOULCAP:SC000044 (IgE-Class Switched B cell)
 
 > "naïve B cells express immunoglobulin (Ig)D and IgM and undergo isotype switching to produce IgM, IgA, IgG, or IgE exclusively"
 
@@ -254,6 +288,8 @@ Do not edit by hand.
 — Woodruff et al. 2020 (PMID:33028979; DOI:10.1038/s41590-020-00814-z) · `EV00034` · verified: not_checked
 
 ## IgM
+
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000038 (IgD only Memory B cell), SOULCAP:SC000039 (Unswitched Memory B cell), SOULCAP:SC000040 (IgM-only Memory B cell), SOULCAP:SC000041 (Switched Memory B cell), SOULCAP:SC000042 (IgA-Class Switched B cell), SOULCAP:SC000043 (IgG-Class Switched B cell), SOULCAP:SC000044 (IgE-Class Switched B cell)
 
 > "naïve B cells express immunoglobulin (Ig)D and IgM and undergo isotype switching to produce IgM, IgA, IgG, or IgE exclusively"
 

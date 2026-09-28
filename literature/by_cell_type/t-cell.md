@@ -5,6 +5,8 @@ Do not edit by hand.
 
 ## CCR7
 
+**Candidate SOULCAP cell types (unreviewed):** none found
+
 > "CD3+/CD8−/CD4+/CCR7+/CD45RA+"
 
 — Finak G et al. 2016 (PMID:26861911; DOI:10.1038/srep20686; PMCID:PMC4748244) · `EV00244` · verified: yes
@@ -27,6 +29,8 @@ Do not edit by hand.
 
 ## CD127
 
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000109 (ConT Treg-like), SOULCAP:SC000110 (ConT Tfh-like), SOULCAP:SC000111 (Th1-like), SOULCAP:SC000112 (Th2-like), SOULCAP:SC000113 (Th9-like), SOULCAP:SC000114 (Th17-like), SOULCAP:SC000121 (CD4 PanT Treg)
+
 > "Tregs are typically identified by the expression of the transcription factor FoxP3 or the IL-2 receptor α-chain (CD25)...the absence or low expression of the IL-7 receptor α-chain (CD127) has been proposed as a distinguishing marker for Tregs"
 
 — Kamran M et al. 2025 (PMID:41394832; DOI:10.3389/fimmu.2025.1676937; PMCID:PMC12695756) · `EV00234` · verified: no
@@ -48,6 +52,8 @@ Do not edit by hand.
 — Nalubega M et al. 2026 (PMID:41757944; DOI:10.1093/infdis/jiag115; PMCID:PMC13127770) · `EV00242` · verified: yes
 
 ## CD183
+
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000107 (T helper), SOULCAP:SC000111 (Th1-like), SOULCAP:SC000112 (Th2-like), SOULCAP:SC000113 (Th9-like), SOULCAP:SC000114 (Th17-like), SOULCAP:SC000115 (CD4 PanT helper), SOULCAP:SC000116 (Th1-like), SOULCAP:SC000117 (Th2-like), SOULCAP:SC000118 (Th9-like), SOULCAP:SC000119 (Th17-like)
 
 > "Th1, CXCR3+CCR6–; Th17, CXCR3–CCR6+; Th1–17, CXCR3+CCR6+"
 
@@ -75,6 +81,8 @@ Do not edit by hand.
 
 ## CD185
 
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000107 (T helper), SOULCAP:SC000110 (ConT Tfh-like), SOULCAP:SC000111 (Th1-like), SOULCAP:SC000112 (Th2-like), SOULCAP:SC000113 (Th9-like), SOULCAP:SC000114 (Th17-like), SOULCAP:SC000115 (CD4 PanT helper), SOULCAP:SC000116 (Th1-like), SOULCAP:SC000117 (Th2-like), SOULCAP:SC000118 (Th9-like), SOULCAP:SC000119 (Th17-like)
+
 > "CXCR5+ Tfh vs. CXCR5− non‐Tfh"
 
 — Gholizadeh F et al. 2026 (PMID:41928597; DOI:10.1002/eji.70177; PMCID:PMC13047356) · `EV00214` · verified: yes
@@ -101,6 +109,8 @@ Do not edit by hand.
 
 ## CD194
 
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000107 (T helper), SOULCAP:SC000111 (Th1-like), SOULCAP:SC000112 (Th2-like), SOULCAP:SC000113 (Th9-like), SOULCAP:SC000114 (Th17-like), SOULCAP:SC000115 (CD4 PanT helper), SOULCAP:SC000116 (Th1-like), SOULCAP:SC000117 (Th2-like), SOULCAP:SC000118 (Th9-like), SOULCAP:SC000119 (Th17-like)
+
 > "Th2 (CXCR3–CCR6–CCR4+), Th17 (CXCR3–CCR6+CCR4+)"
 
 — Nalubega M et al. 2026 (PMID:41757944; DOI:10.1093/infdis/jiag115; PMCID:PMC13127770) · `EV00220` · verified: yes
@@ -119,13 +129,15 @@ Do not edit by hand.
 
 > "We detected predominantly the marker combination described for Th2 cells (Figure 2D, CXCR3−CCR6−CCR10−CCR4+) and Th17 cells (Figure 2E, CXCR3−CCR6+CCR4+CCR10−) on SplB-specific T cells."
 
-— Pospich R et al. 2026 (PMID:42327791; DOI:10.3389/fimmu.2026.1798583; PMCID:PMC13275367) · `EV00224` · verified: no
+— Pospich R et al. 2026 (PMID:42327791; DOI:10.3389/fimmu.2026.1798583; PMCID:PMC13275367) · `EV00224` · verified: exact_except_trailing_punctuation
 
 > "human Th9 cells express CD183 (CXCR3), CD193 (CCR3), and CD196 (CCR6), but not CD194+(CCR4+) or D294 (CRTH2), which are expressed on the surface of Th2 cells"
 
 — Frontiers Immunology 2020 (DOI:10.3389/fimmu.2020.01026; PMCID:PMC7251969) · `EV00225` · verified: yes
 
 ## CD196
+
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000107 (T helper), SOULCAP:SC000111 (Th1-like), SOULCAP:SC000112 (Th2-like), SOULCAP:SC000113 (Th9-like), SOULCAP:SC000114 (Th17-like), SOULCAP:SC000115 (CD4 PanT helper), SOULCAP:SC000116 (Th1-like), SOULCAP:SC000117 (Th2-like), SOULCAP:SC000118 (Th9-like), SOULCAP:SC000119 (Th17-like)
 
 > "Th17 (CXCR3–CCR6+CCR4+)"
 
@@ -153,6 +165,8 @@ Do not edit by hand.
 
 ## CD25
 
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000109 (ConT Treg-like), SOULCAP:SC000110 (ConT Tfh-like), SOULCAP:SC000111 (Th1-like), SOULCAP:SC000112 (Th2-like), SOULCAP:SC000113 (Th9-like), SOULCAP:SC000114 (Th17-like), SOULCAP:SC000121 (CD4 PanT Treg)
+
 > "Tregs are typically identified by the expression of the transcription factor FoxP3 or the IL-2 receptor α-chain (CD25)...the absence or low expression of the IL-7 receptor α-chain (CD127) has been proposed as a distinguishing marker for Tregs"
 
 — Kamran M et al. 2025 (PMID:41394832; DOI:10.3389/fimmu.2025.1676937; PMCID:PMC12695756) · `EV00233` · verified: no
@@ -175,6 +189,8 @@ Do not edit by hand.
 
 ## CD27
 
+**Candidate SOULCAP cell types (unreviewed):** none found
+
 > "For all analyses, cells were gated on singlets and live cells defined based on scatter properties, followed by CD3+ lymphocytes and subsequent αβ/γδ and memory−subset gates" with markers including "CD27, CD28, CD45RA, CCR7" used to distinguish naïve, central memory (CM), and effector memory (EM) subsets.
 
 — Kelm M et al. 2026 (PMID:41727470; DOI:10.3389/fimmu.2026.1739493; PMCID:PMC12920462) · `EV00253` · verified: no
@@ -185,17 +201,23 @@ Do not edit by hand.
 
 ## CD28
 
+**Candidate SOULCAP cell types (unreviewed):** none found
+
 > "For all analyses, cells were gated on singlets and live cells defined based on scatter properties, followed by CD3+ lymphocytes and subsequent αβ/γδ and memory−subset gates" with markers including "CD27, CD28, CD45RA, CCR7" used to distinguish naïve, central memory (CM), and effector memory (EM) subsets.
 
 — Kelm M et al. 2026 (PMID:41727470; DOI:10.3389/fimmu.2026.1739493; PMCID:PMC12920462) · `EV00254` · verified: no
 
 ## CD294
 
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000112 (Th2-like), SOULCAP:SC000117 (Th2-like)
+
 > "human Th9 cells express CD183 (CXCR3), CD193 (CCR3), and CD196 (CCR6), but not CD194+(CCR4+) or D294 (CRTH2), which are expressed on the surface of Th2 cells"
 
 — Frontiers Immunology 2020 (DOI:10.3389/fimmu.2020.01026; PMCID:PMC7251969) · `EV00232` · verified: yes
 
 ## CD3
+
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000045 (T lymphocyte), SOULCAP:SC000046 (CD56+ T cell), SOULCAP:SC000047 (CD56+ CD4 T cell), SOULCAP:SC000048 (CD56+ CD8 T cell), SOULCAP:SC000049 (CD56+ alpha/beta T cell), SOULCAP:SC000050 (CD56+ CD4+ alpha/beta T cell), SOULCAP:SC000051 (CD56+ CD8+ alpha/beta T cell), SOULCAP:SC000052 (CD56+ CD4+/CD8+ alpha/beta T cell), SOULCAP:SC000053 (CD56+ CD4-/CD8- alpha/beta T cell), SOULCAP:SC000054 (CD56+ gamma/delta T cell), SOULCAP:SC000055 (CD56+ CD4+ gamma/delta T cell), SOULCAP:SC000056 (CD56+ CD8+ gamma/delta T cell), SOULCAP:SC000057 (CD56+ CD4+/CD8+ gamma/delta T cell), SOULCAP:SC000058 (CD56+ CD8-/CD8- gamma/delta T cell), SOULCAP:SC000059 (Invariant Natural Killer T cell), SOULCAP:SC000060 (alpha/beta T cell), SOULCAP:SC000061 (gamma/delta T cell), SOULCAP:SC000062 (alpha/beta and gamma/delta CD4+ T cells), SOULCAP:SC000063 (alpha/beta and gamma/delta CD8+ T cells), SOULCAP:SC000064 (alpha/beta and gamma/delta CD4+ and CD8+ T cells), SOULCAP:SC000065 (alpha/beta and gamma/delta CD4- and CD8- T cells), SOULCAP:SC000066 (CD4+ alpha/beta T cell), SOULCAP:SC000067 (CD8+ alpha/beta T cell), SOULCAP:SC000068 (CD4+ and CD8+ alpha/beta T cell), SOULCAP:SC000069 (CD4- and CD8- alpha/beta T cell), SOULCAP:SC000070 (CD4+ gamma/delta T cell), SOULCAP:SC000071 (CD8+ gamma/delta T cell), SOULCAP:SC000072 (CD4+/CD8+ gamma/delta T cell), SOULCAP:SC000073 (CD4-/CD8- gamma/delta T cell), SOULCAP:SC000074 (Mucosal-associated Invariant T cell), SOULCAP:SC000075 (Conv TCRab), SOULCAP:SC000076 (CD4+ Conv TCRab), SOULCAP:SC000077 (CD8+ Conv TCRab), SOULCAP:SC000078 (CD4+/CD8+ Conv TCRab), SOULCAP:SC000079 (CD4-/CD8- Conv TCRab), SOULCAP:SC000107 (T helper), SOULCAP:SC000109 (ConT Treg-like), SOULCAP:SC000110 (ConT Tfh-like), SOULCAP:SC000111 (Th1-like), SOULCAP:SC000112 (Th2-like), SOULCAP:SC000113 (Th9-like), SOULCAP:SC000114 (Th17-like), SOULCAP:SC000115 (CD4 PanT helper), SOULCAP:SC000116 (Th1-like), SOULCAP:SC000117 (Th2-like), SOULCAP:SC000118 (Th9-like), SOULCAP:SC000119 (Th17-like), SOULCAP:SC000121 (CD4 PanT Treg), SOULCAP:SC000122 (Vg9 Vd2), SOULCAP:SC000123 (Vd2), SOULCAP:SC000124 (Vd3), SOULCAP:SC000125 (Vg9 Vd1), SOULCAP:SC000126 (Vd1), SOULCAP:SC000127 (Vg9 )
 
 > "CD3+/CD8−/CD4+/CCR7+/CD45RA+"
 
@@ -211,6 +233,8 @@ Do not edit by hand.
 
 ## CD4
 
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000047 (CD56+ CD4 T cell), SOULCAP:SC000048 (CD56+ CD8 T cell), SOULCAP:SC000050 (CD56+ CD4+ alpha/beta T cell), SOULCAP:SC000051 (CD56+ CD8+ alpha/beta T cell), SOULCAP:SC000052 (CD56+ CD4+/CD8+ alpha/beta T cell), SOULCAP:SC000053 (CD56+ CD4-/CD8- alpha/beta T cell), SOULCAP:SC000055 (CD56+ CD4+ gamma/delta T cell), SOULCAP:SC000056 (CD56+ CD8+ gamma/delta T cell), SOULCAP:SC000057 (CD56+ CD4+/CD8+ gamma/delta T cell), SOULCAP:SC000058 (CD56+ CD8-/CD8- gamma/delta T cell), SOULCAP:SC000062 (alpha/beta and gamma/delta CD4+ T cells), SOULCAP:SC000063 (alpha/beta and gamma/delta CD8+ T cells), SOULCAP:SC000064 (alpha/beta and gamma/delta CD4+ and CD8+ T cells), SOULCAP:SC000065 (alpha/beta and gamma/delta CD4- and CD8- T cells), SOULCAP:SC000066 (CD4+ alpha/beta T cell), SOULCAP:SC000067 (CD8+ alpha/beta T cell), SOULCAP:SC000068 (CD4+ and CD8+ alpha/beta T cell), SOULCAP:SC000069 (CD4- and CD8- alpha/beta T cell), SOULCAP:SC000070 (CD4+ gamma/delta T cell), SOULCAP:SC000071 (CD8+ gamma/delta T cell), SOULCAP:SC000072 (CD4+/CD8+ gamma/delta T cell), SOULCAP:SC000073 (CD4-/CD8- gamma/delta T cell), SOULCAP:SC000076 (CD4+ Conv TCRab), SOULCAP:SC000077 (CD8+ Conv TCRab), SOULCAP:SC000078 (CD4+/CD8+ Conv TCRab), SOULCAP:SC000079 (CD4-/CD8- Conv TCRab), SOULCAP:SC000109 (ConT Treg-like), SOULCAP:SC000110 (ConT Tfh-like), SOULCAP:SC000111 (Th1-like), SOULCAP:SC000112 (Th2-like), SOULCAP:SC000113 (Th9-like), SOULCAP:SC000114 (Th17-like), SOULCAP:SC000115 (CD4 PanT helper), SOULCAP:SC000116 (Th1-like), SOULCAP:SC000117 (Th2-like), SOULCAP:SC000118 (Th9-like), SOULCAP:SC000119 (Th17-like), SOULCAP:SC000121 (CD4 PanT Treg)
+
 > "CD3+/CD8−/CD4+/CCR7+/CD45RA−"
 
 — Finak G et al. 2016 (PMID:26861911; DOI:10.1038/srep20686; PMCID:PMC4748244) · `EV00204` · verified: yes
@@ -220,6 +244,8 @@ Do not edit by hand.
 — Finak G et al. 2016 (PMID:26861911; DOI:10.1038/srep20686; PMCID:PMC4748244) · `EV00206` · verified: yes
 
 ## CD45RA
+
+**Candidate SOULCAP cell types (unreviewed):** none found
 
 > "CD3+/CD8−/CD4+/CCR7+/CD45RA+"
 
@@ -242,6 +268,8 @@ Do not edit by hand.
 — Gholizadeh F et al. 2026 (PMID:41928597; DOI:10.1002/eji.70177; PMCID:PMC13047356) · `EV00251` · verified: no
 
 ## CD8
+
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000047 (CD56+ CD4 T cell), SOULCAP:SC000048 (CD56+ CD8 T cell), SOULCAP:SC000050 (CD56+ CD4+ alpha/beta T cell), SOULCAP:SC000051 (CD56+ CD8+ alpha/beta T cell), SOULCAP:SC000052 (CD56+ CD4+/CD8+ alpha/beta T cell), SOULCAP:SC000053 (CD56+ CD4-/CD8- alpha/beta T cell), SOULCAP:SC000055 (CD56+ CD4+ gamma/delta T cell), SOULCAP:SC000056 (CD56+ CD8+ gamma/delta T cell), SOULCAP:SC000057 (CD56+ CD4+/CD8+ gamma/delta T cell), SOULCAP:SC000058 (CD56+ CD8-/CD8- gamma/delta T cell), SOULCAP:SC000062 (alpha/beta and gamma/delta CD4+ T cells), SOULCAP:SC000063 (alpha/beta and gamma/delta CD8+ T cells), SOULCAP:SC000064 (alpha/beta and gamma/delta CD4+ and CD8+ T cells), SOULCAP:SC000065 (alpha/beta and gamma/delta CD4- and CD8- T cells), SOULCAP:SC000066 (CD4+ alpha/beta T cell), SOULCAP:SC000067 (CD8+ alpha/beta T cell), SOULCAP:SC000068 (CD4+ and CD8+ alpha/beta T cell), SOULCAP:SC000069 (CD4- and CD8- alpha/beta T cell), SOULCAP:SC000070 (CD4+ gamma/delta T cell), SOULCAP:SC000071 (CD8+ gamma/delta T cell), SOULCAP:SC000072 (CD4+/CD8+ gamma/delta T cell), SOULCAP:SC000073 (CD4-/CD8- gamma/delta T cell), SOULCAP:SC000076 (CD4+ Conv TCRab), SOULCAP:SC000077 (CD8+ Conv TCRab), SOULCAP:SC000078 (CD4+/CD8+ Conv TCRab), SOULCAP:SC000079 (CD4-/CD8- Conv TCRab), SOULCAP:SC000115 (CD4 PanT helper), SOULCAP:SC000116 (Th1-like), SOULCAP:SC000117 (Th2-like), SOULCAP:SC000118 (Th9-like), SOULCAP:SC000119 (Th17-like), SOULCAP:SC000121 (CD4 PanT Treg)
 
 > "CD3+/CD8−/CD4+/CCR7+/CD45RA−"
 

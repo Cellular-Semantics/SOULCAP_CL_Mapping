@@ -5,6 +5,8 @@ Do not edit by hand.
 
 ## CD11c
 
+**Candidate SOULCAP cell types (unreviewed):** none found
+
 > "Conventional DCs (cDCs), also known as myeloid DCs, can be defined as CD11c+ CD123−"
 
 — Rhodes JW et al. 2019 (DOI:10.3389/fimmu.2019.01088; PMCID:PMC6532592) · `EV00058` · verified: yes
@@ -27,6 +29,8 @@ Do not edit by hand.
 
 ## CD123
 
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000011 (Conventional Dendritic Cell), SOULCAP:SC000012 (Conventional Dendritic Cell 1), SOULCAP:SC000013 (Conventional Dendritic Cell 2), SOULCAP:SC000014 (Peripheral Dendritic Cell)
+
 > "Conventional DCs (cDCs), also known as myeloid DCs, can be defined as CD11c+ CD123−"
 
 — Rhodes JW et al. 2019 (DOI:10.3389/fimmu.2019.01088; PMCID:PMC6532592) · `EV00075` · verified: yes
@@ -45,6 +49,8 @@ Do not edit by hand.
 
 ## CD14
 
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000011 (Conventional Dendritic Cell), SOULCAP:SC000012 (Conventional Dendritic Cell 1), SOULCAP:SC000013 (Conventional Dendritic Cell 2), SOULCAP:SC000014 (Peripheral Dendritic Cell)
+
 > "DCs were defined as live, LIN(CD3, CD19, CD56)−CD14−HLA-DR+ cells."
 
 — Villani AC et al. 2017 (PMID:28428369; DOI:10.1126/science.aah4573) · `EV00084` · verified: not_checked
@@ -54,6 +60,8 @@ Do not edit by hand.
 — Guilliams M et al. 2016 (PMID:27637149; DOI:10.1016/j.immuni.2016.08.057; PMCID:PMC5040826) · `EV00085` · verified: yes
 
 ## CD141
+
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000012 (Conventional Dendritic Cell 1), SOULCAP:SC000013 (Conventional Dendritic Cell 2)
 
 > "DC1 corresponds to the cross-presenting CD141/BDCA-3+ cDC1, which is best marked by CLEC9A"
 
@@ -65,11 +73,15 @@ Do not edit by hand.
 
 ## CD16
 
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000011 (Conventional Dendritic Cell), SOULCAP:SC000012 (Conventional Dendritic Cell 1), SOULCAP:SC000013 (Conventional Dendritic Cell 2), SOULCAP:SC000014 (Peripheral Dendritic Cell)
+
 > "The DC4 cluster mapped to the CD141−CD1C− population and was accurately delineated by FCGR3A/CD16."
 
 — Villani AC et al. 2017 (PMID:28428369; DOI:10.1126/science.aah4573) · `EV00086` · verified: not_checked
 
 ## CD172a
+
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000012 (Conventional Dendritic Cell 1), SOULCAP:SC000013 (Conventional Dendritic Cell 2)
 
 > "using CADM1 or XCR1 in combination with CD172a to separate cDC1s from cDC2s"
 
@@ -80,6 +92,8 @@ Do not edit by hand.
 — Guilliams M et al. 2016 (PMID:27637149; DOI:10.1016/j.immuni.2016.08.057; PMCID:PMC5040826) · `EV00073` · verified: yes
 
 ## CD1c
+
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000012 (Conventional Dendritic Cell 1), SOULCAP:SC000013 (Conventional Dendritic Cell 2)
 
 > "DC2 and DC3 correspond to new subdivisions of the CD1C/BDCA-1+ cDC2"
 
@@ -99,11 +113,15 @@ Do not edit by hand.
 
 ## CD3
 
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000011 (Conventional Dendritic Cell), SOULCAP:SC000012 (Conventional Dendritic Cell 1), SOULCAP:SC000013 (Conventional Dendritic Cell 2), SOULCAP:SC000014 (Peripheral Dendritic Cell)
+
 > "DCs were defined as live, LIN(CD3, CD19, CD56)−CD14−HLA-DR+ cells."
 
 — Villani AC et al. 2017 (PMID:28428369; DOI:10.1126/science.aah4573) · `EV00087` · verified: not_checked
 
 ## CD303
+
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000011 (Conventional Dendritic Cell), SOULCAP:SC000012 (Conventional Dendritic Cell 1), SOULCAP:SC000013 (Conventional Dendritic Cell 2), SOULCAP:SC000014 (Peripheral Dendritic Cell)
 
 > "pDCs (e.g. IL3RA/CD123, CLEC4C/CD303)"
 
@@ -119,9 +137,11 @@ Do not edit by hand.
 
 ## CD64
 
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000011 (Conventional Dendritic Cell), SOULCAP:SC000012 (Conventional Dendritic Cell 1), SOULCAP:SC000013 (Conventional Dendritic Cell 2)
+
 > "In human and macaque, CD64 cannot be used, as cDCs also express some CD64."
 
-— Guilliams M et al. 2016 (PMID:27637149; DOI:10.1016/j.immuni.2016.08.057; PMCID:PMC5040826) · `EV00082` · verified: no
+— Guilliams M et al. 2016 (PMID:27637149; DOI:10.1016/j.immuni.2016.08.057; PMCID:PMC5040826) · `EV00082` · verified: exact_except_trailing_punctuation
 
 > "CD64 is highly expressed on Macs"
 
@@ -129,11 +149,15 @@ Do not edit by hand.
 
 ## FceR1a
 
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000012 (Conventional Dendritic Cell 1), SOULCAP:SC000013 (Conventional Dendritic Cell 2), SOULCAP:SC000014 (Peripheral Dendritic Cell)
+
 > "CD1C+ DCs (DC2 and DC3) expressed unique markers (e.g. CD1C, CLEC10A, FCER1A, FCGR2B, and CD1D"
 
 — Villani AC et al. 2017 (PMID:28428369; DOI:10.1126/science.aah4573) · `EV00074` · verified: not_checked
 
 ## HLA-DR
+
+**Candidate SOULCAP cell types (unreviewed):** none found
 
 > "DCs were defined as live, LIN(CD3, CD19, CD56)−CD14−HLA-DR+ cells."
 

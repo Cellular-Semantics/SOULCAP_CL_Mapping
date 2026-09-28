@@ -195,7 +195,7 @@ lane per the existing division of labor. Monocyte doubles as evidence for
    reachable, falling back to `soulcap-europepmc` when it isn't.
 3. Mine the `OMIPs` tab as a secondary source when the reference set alone
    comes up short.
-4. Write `literature/<category>_markers.md` with verbatim,
+4. Add rows to `literature/evidence.tsv` (formerly `literature/<category>_markers.md`) with verbatim,
    source-checked quotes — the PreToolUse hook blocks the write if any quote
    isn't in the snippet cache.
 5. For monocyte specifically: cross-reference #12's requested corrections

@@ -130,6 +130,8 @@ def test_check_quote_exact_near_and_mismatch():
         "M: CD27+",
     ]
     assert le.fragments('"(*) LIN2 is"') == ["(*) LIN2 is"]
+    verdict, note = le.check_quote('"NK cells rare."', "some NK cells rare[12].")
+    assert verdict == le.TRAILING and note.startswith("exact apart")
 
 
 def fake_epmc(pages):
@@ -256,6 +258,82 @@ def test_committed_evidence_quotes_are_copied_exactly_from_their_source():
                 break
             block.append(line[1:].strip())
         assert row["quote"] in " ".join(block), row["evidence_id"]
-        assert row["verified"] in {"yes", "no", "not_checked"}
+        assert row["verified"] in le.VERIFIED_VALUES
         if row["source_file"].endswith(tuple(le.WEBFETCH_FILES)):
-            assert row["verified"] in {"yes", "no"}, row["evidence_id"]
+            assert row["verified"] != "not_checked", row["evidence_id"]
+
+
+def profile(abbrev, parent="", req="", ideal_excl=""):
+    cols = dict.fromkeys(le.MARKER_COLUMNS, "")
+    cols["Required phenotypic markers"] = req
+    cols["Ideal exclusion"] = ideal_excl
+    return {"Abbreviation": abbrev, "Parent": parent, **cols}
+
+
+def test_families_and_marker_candidates():
+    profiles = {
+        "S:1": profile("NK", req="CD56+/hi CD127-"),
+        "S:2": profile(
+            "NK2", parent="NK", req="CD56hi", ideal_excl="[HLA-DR+ CD11chi]-"
+        ),
+        "S:3": profile("T cell", req="CD3+"),
+        "S:4": profile("TCRgd", parent="T cell", req="CD3+ (TCRab-|TCRgd+) TCRVd2+"),
+        "S:5": profile("MAIT", parent="T Lymph", req="CD3+ (TCRVa7.2+|MR1 Tetramer+)"),
+        "S:6": profile("cDC1", parent="DCM", req="CD11chi CD1c-"),
+    }
+    fam = le.families(profiles)
+    assert fam["NK cell"] == {"S:1", "S:2"}
+    assert fam["T cell"] == {"S:3", "S:4", "S:5"}
+    assert fam["gamma-delta T cell"] == {"S:4"}
+    assert fam["MAIT cell"] == {"S:5"}
+    assert fam["dendritic cell"] == {"S:6"}
+    assert le.uses_marker(profiles["S:2"], "CD11c")  # CD11chi, in an exclusion
+    assert not le.uses_marker(profiles["S:3"], "CD38")
+    assert not le.uses_marker(profiles["S:1"], "CD5")  # not CD56
+    assert le.uses_marker(profiles["S:4"], "TCR Vδ2")
+    assert le.uses_marker(profiles["S:5"], "MR1 Tetramer")
+    rows = [
+        {"cell_type_label": "NK cell", "marker_token": "CD56"},
+        {"cell_type_label": "NK cell", "marker_token": "CD57"},
+    ]
+    le.add_candidates(rows, profiles)
+    assert rows[0]["candidate_subject_ids"] == "S:1|S:2"
+    assert rows[0]["candidate_status"] == "unreviewed"
+    assert rows[1]["candidate_status"] == "none_found"
+    view = le.render_view(
+        "NK cell",
+        [
+            dict(
+                rows[0],
+                quote='"q"',
+                first_author_year="A 2020",
+                pmid="1",
+                doi="",
+                pmcid="",
+                evidence_id="EV1",
+                verified="yes",
+            )
+        ],
+        "marker_token",
+        {"S:1": "Natural Killer Cell"},
+    )
+    assert (
+        "Candidate SOULCAP cell types (unreviewed):** S:1 (Natural Killer Cell), S:2 (?)"
+        in view
+    )
+
+
+def test_candidates_cli(tmp_path, narrative):
+    lit = narrative.parent
+    assert le.main(["migrate", "--literature", str(lit)]) == 0
+    source = tmp_path / "sheet.csv"
+    header = ["subject_id", "Abbreviation", "Parent", *le.MARKER_COLUMNS]
+    source.write_text(
+        ",".join(header) + "\nSOULCAP:SC000001,NK,,,,CD56+,\n", encoding="utf-8"
+    )
+    assert (
+        le.main(["candidates", "--literature", str(lit), "--source", str(source)]) == 0
+    )
+    rows = le.read_tsv(lit / "evidence.tsv")
+    cd56 = [r for r in rows if r["marker_token"] == "CD56"]
+    assert cd56[0]["candidate_subject_ids"] == "SOULCAP:SC000001"

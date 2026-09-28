@@ -46,7 +46,7 @@ mapping — it reflects a real CL gap (see below), not a poor match.
 - Literature: "Natural killer cells are prototypic members of the innate
   lymphoid cell (ILC) family and characterized in humans by expression of the
   phenotypic marker CD56 in the absence of CD3." — Van Acker HH et al. 2017
-  (PMID:28791027) — [literature/nk_cell_markers.md](../literature/nk_cell_markers.md)
+  (PMID:28791027) — [archive/2026-09_literature_narratives/nk_cell_markers.md](../archive/2026-09_literature_narratives/nk_cell_markers.md)
 
 **CL gap flagged:** `CL:0000623` asserts no positive marker axiom at all
 (only CD14-/CD19-/CD3-/CD20- negatives), even though CD56 positivity is the
@@ -75,7 +75,7 @@ negative-exclusion markers; the CD16-negative axiom aligns with SOULCAP's
 **Evidence:** Marker→gene as above (CD56 → NCAM1); CD16 → FCGR3A (see
 [marker_mappings/marker_protein_gene.csv](../marker_mappings/marker_protein_gene.csv)).
 Literature distinguishing CD56bright/CD56dim NK subsets:
-[literature/nk_cell_markers.md](../literature/nk_cell_markers.md).
+[archive/2026-09_literature_narratives/nk_cell_markers.md](../archive/2026-09_literature_narratives/nk_cell_markers.md).
 
 ---
 
@@ -104,7 +104,7 @@ yet based on current `cl_pro_relationships` data. Flagged for follow-up, not
 yet logged as a formal CL gap.
 
 **Evidence:** Marker→gene as above; literature on CD16+CD56dim cytotoxic NK
-subset: [literature/nk_cell_markers.md](../literature/nk_cell_markers.md).
+subset: [archive/2026-09_literature_narratives/nk_cell_markers.md](../archive/2026-09_literature_narratives/nk_cell_markers.md).
 
 ---
 

@@ -128,9 +128,12 @@ type as claimed.
 - Distinguish "no supporting evidence found" from "evidence found" — never
   invent support.
 
-**Deliverable:** a set of markdown reports under `literature/` (moved from `reports/literature/` on 2026-09-28) (e.g. one
-per cell type or per marker), each listing markers, verified supporting quotes,
-and citations.
+**Deliverable:** originally a set of markdown reports under `reports/literature/`
+(one per cell type or per marker, each listing markers, verified supporting
+quotes and citations). Since 2026-09-28 the evidence lives in
+`literature/evidence.tsv` (one row per cell type, marker and quote, checked
+against the paper's full text), and the narrative reports are archived in
+`archive/2026-09_literature_narratives/`.
 
 **Status (2026-09-08):** 8 of the 14 cell-type categories in the `Citation
 Mgr` tab are covered — B cell, DC, ILC, iNKT, NK cell, T cell, gdT, MAIT

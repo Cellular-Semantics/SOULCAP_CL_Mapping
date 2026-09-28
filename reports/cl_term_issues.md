@@ -80,7 +80,7 @@ cells.
 ### Natural killer cell missing CD56 marker axiom — CL:0000623
 
 **Repo issue:** not yet filed
-**Reference:** SOULCAP `NK` row ([data/marker_combinations.csv](../data/marker_combinations.csv), regenerate via `uv run soulcap-sync`); literature in [literature/nk_cell_markers.md](../literature/nk_cell_markers.md)
+**Reference:** SOULCAP `NK` row ([data/marker_combinations.csv](../data/marker_combinations.csv), regenerate via `uv run soulcap-sync`); literature in [archive/2026-09_literature_narratives/nk_cell_markers.md](../archive/2026-09_literature_narratives/nk_cell_markers.md)
 **Status:** Drafted during Milestone 4 candidate mapping work — not yet filed as a repo issue
 
 #### CL:0000623 — "natural killer cell"

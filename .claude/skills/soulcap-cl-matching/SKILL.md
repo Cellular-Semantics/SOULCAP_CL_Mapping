@@ -140,7 +140,8 @@ for the column rules.
   rank/score.
 - `lexical_evidence`, `literature_evidence`, `curator_evidence`: structured
   evidence, kept separate. Literature evidence must be verbatim quotes with
-  PMID/DOI from `literature/`; leave it blank rather than invent a citation.
+  PMID/DOI, citing rows of `literature/evidence.tsv` by `evidence_id` (prefer
+  `verified = yes`); leave it blank rather than invent a citation.
 - `evidence_source`: where the evidence lives (file path or URL).
 - Leave `evidence_override` blank; it is historical provenance only.
 

@@ -5,6 +5,8 @@ Do not edit by hand.
 
 ## CD11c
 
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000001 (Natural Killer Cell), SOULCAP:SC000002 (Natural Killer Cell 2), SOULCAP:SC000003 (Cytotoxice Natural Killer Cell), SOULCAP:SC000004 (Natural Killer Cell 1), SOULCAP:SC000005 (Natural Killer Cell 3)
+
 > "CD11C (ITGAX) expression was more pronounced in NK2."
 
 — Rebuffet L et al. 2024 (PMID:38956378; DOI:10.1038/s41590-024-01883-0; PMCID:PMC11291291) · `EV00199` · verified: yes
@@ -14,6 +16,8 @@ Do not edit by hand.
 — Rebuffet L et al. 2024 (PMID:38956378; DOI:10.1038/s41590-024-01883-0; PMCID:PMC11291291) · `EV00200` · verified: yes
 
 ## CD127
+
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000004 (Natural Killer Cell 1), SOULCAP:SC000005 (Natural Killer Cell 3)
 
 > "In humans, all non-NK ILCs express CD127 (IL-7Rα) and CD161 (NKRP1A) (13–16), and they may be further distinguished according to the expression of other subset-associated surface antigens including CXCR3, CD294 (CRTH2), and CD117 (c-Kit) for ILC1s, ILC2s, and ILC3s, respectively (10, 17). Human NK cells can also express the pan-ILC markers CD127 and CD161 (18–20), but NK cells are typically distinguished by their surface expression of CD16 (FcγRIIIA), CD94/NKG2 heterodimers, killer immunoglobulin-like receptors (KIRs), NKG2D, and NKp80 (21)."
 
@@ -25,6 +29,8 @@ Do not edit by hand.
 
 ## CD14
 
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000001 (Natural Killer Cell), SOULCAP:SC000002 (Natural Killer Cell 2), SOULCAP:SC000003 (Cytotoxice Natural Killer Cell), SOULCAP:SC000004 (Natural Killer Cell 1), SOULCAP:SC000005 (Natural Killer Cell 3)
+
 > "ILCs are identified as “lineage” (Lin) negative lymphocytes, lacking expression of surface markers more specifically expressed on T cells (CD3, CD5, TCR), B cells (CD19, CD20, BCR), myelomonocytic cells (CD14, CD15, CD36), and dendritic cells (DCs) (CD116, CD123, CD303)."
 
 — Scoville SD et al. 2017 (PMID:28396671; DOI:10.3389/fimmu.2017.00360; PMCID:PMC5366880) · `EV00182` · verified: yes
@@ -34,6 +40,8 @@ Do not edit by hand.
 — Van Acker HH et al. 2017 (PMID:28791027; DOI:10.3389/fimmu.2017.00892; PMCID:PMC5522883) · `EV00183` · verified: yes
 
 ## CD16
+
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000002 (Natural Killer Cell 2), SOULCAP:SC000003 (Cytotoxice Natural Killer Cell), SOULCAP:SC000004 (Natural Killer Cell 1), SOULCAP:SC000005 (Natural Killer Cell 3)
 
 > "NK cells are typically distinguished by their surface expression of CD16 (FcγRIIIA), CD94/NKG2 heterodimers, killer immunoglobulin-like receptors (KIRs), NKG2D, and NKp80 (21)."
 
@@ -49,6 +57,8 @@ Do not edit by hand.
 
 ## CD19
 
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000001 (Natural Killer Cell), SOULCAP:SC000002 (Natural Killer Cell 2), SOULCAP:SC000003 (Cytotoxice Natural Killer Cell), SOULCAP:SC000004 (Natural Killer Cell 1), SOULCAP:SC000005 (Natural Killer Cell 3)
+
 > "ILCs lack expression of markers specific for other leukocytes, including antigen-specific T and B cell receptors (i.e., CD3/TCR and CD19/BCR)."
 
 — Scoville SD et al. 2017 (PMID:28396671; DOI:10.3389/fimmu.2017.00360; PMCID:PMC5366880) · `EV00179` · verified: yes
@@ -63,6 +73,8 @@ Do not edit by hand.
 
 ## CD3
 
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000001 (Natural Killer Cell), SOULCAP:SC000002 (Natural Killer Cell 2), SOULCAP:SC000003 (Cytotoxice Natural Killer Cell), SOULCAP:SC000004 (Natural Killer Cell 1), SOULCAP:SC000005 (Natural Killer Cell 3)
+
 > "Natural killer cells are prototypic members of the innate lymphoid cell (ILC) family and characterized in humans by expression of the phenotypic marker CD56 in the absence of CD3."
 
 — Van Acker HH et al. 2017 (PMID:28791027; DOI:10.3389/fimmu.2017.00892; PMCID:PMC5522883) · `EV00176` · verified: yes
@@ -76,6 +88,8 @@ Do not edit by hand.
 — Van Acker HH et al. 2017 (PMID:28791027; DOI:10.3389/fimmu.2017.00892; PMCID:PMC5522883) · `EV00178` · verified: yes
 
 ## CD56
+
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000001 (Natural Killer Cell), SOULCAP:SC000003 (Cytotoxice Natural Killer Cell), SOULCAP:SC000004 (Natural Killer Cell 1), SOULCAP:SC000005 (Natural Killer Cell 3)
 
 > "Natural killer cells are prototypic members of the innate lymphoid cell (ILC) family and characterized in humans by expression of the phenotypic marker CD56 in the absence of CD3."
 
@@ -111,6 +125,8 @@ Do not edit by hand.
 
 ## CD57
 
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000004 (Natural Killer Cell 1), SOULCAP:SC000005 (Natural Killer Cell 3)
+
 > "Further distinctions in the CD56dim population are made on the basis of expression of the CD57 carbohydrate moiety3 on the cell surface and the absence of CD94–NKG2A and CD62L; cells with these features comprise a more mature subset4–7."
 
 — Rebuffet L et al. 2024 (PMID:38956378; DOI:10.1038/s41590-024-01883-0; PMCID:PMC11291291) · `EV00195` · verified: yes
@@ -124,6 +140,8 @@ Do not edit by hand.
 — Scoville SD et al. 2017 (PMID:28396671; DOI:10.3389/fimmu.2017.00360; PMCID:PMC5366880) · `EV00197` · verified: yes
 
 ## HLA-DR
+
+**Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000001 (Natural Killer Cell), SOULCAP:SC000002 (Natural Killer Cell 2), SOULCAP:SC000003 (Cytotoxice Natural Killer Cell), SOULCAP:SC000004 (Natural Killer Cell 1), SOULCAP:SC000005 (Natural Killer Cell 3)
 
 > "Notably, NK3B (cluster 1) was distinguished by expression of members of the HLA-D gene family, CD74, CCL5, CD7 and KLRC1, and NK3A exhibited enhanced cytotoxic capabilities (through expression of GZMA, GZMB and PRF1)"
 
