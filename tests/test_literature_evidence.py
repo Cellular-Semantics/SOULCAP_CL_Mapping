@@ -246,7 +246,8 @@ def test_committed_evidence_quotes_are_copied_exactly_from_their_source():
     cache: dict[str, list[str]] = {}
     for row in rows:
         path = root / row["source_file"]
-        if not path.exists():  # narrative archived; nothing to compare against
+        if not row["source_file"] or not path.is_file():
+            # Added directly from the paper (no narrative source line).
             continue
         if row["source_file"] not in cache:
             cache[row["source_file"]] = path.read_text(encoding="utf-8").splitlines()
@@ -337,3 +338,23 @@ def test_candidates_cli(tmp_path, narrative):
     rows = le.read_tsv(lit / "evidence.tsv")
     cd56 = [r for r in rows if r["marker_token"] == "CD56"]
     assert cd56[0]["candidate_subject_ids"] == "SOULCAP:SC000001"
+
+
+def test_views_skip_superseded_rows(tmp_path):
+    base = dict(
+        cell_type_label="NK cell",
+        quote='"q"',
+        first_author_year="A 2020",
+        pmid="1",
+        doi="",
+        pmcid="",
+        verified="yes",
+        candidate_subject_ids="",
+    )
+    rows = [
+        dict(base, evidence_id="EV1", marker_token="CD56", superseded_by="EV2"),
+        dict(base, evidence_id="EV2", marker_token="CD56", superseded_by=""),
+    ]
+    le.write_views(rows, tmp_path)
+    view = (tmp_path / "by_marker" / "cd56.md").read_text(encoding="utf-8")
+    assert "EV2" in view and "EV1" not in view

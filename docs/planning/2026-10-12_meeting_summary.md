@@ -71,18 +71,20 @@ In [reports/cl_term_issues.md](../../reports/cl_term_issues.md#candidates-for-re
 
 ## 7. Literature evidence
 
-[literature/evidence.tsv](../../literature/evidence.tsv): 255 rows (188 quotes,
-52 markers, 35 papers), one per cell type, marker and quote.
+[literature/evidence.tsv](../../literature/evidence.tsv): 253 active rows
+(187 quotes, 51 markers, 35 papers), one per cell type, marker and quote.
 
-- Checked against Europe PMC full text: **161 exact**, 6 exact apart from
-  final punctuation, 42 not found exactly, 46 with no open-access text.
-- Quotes from the two WebFetch-extracted files: 13 unverified rows. For 11 of
-  them, exact replacement sentences are proposed and awaiting Alex's approval;
-  the other 2 (the CD27/CD28 gating claim) have no equivalent in the paper.
-- Each row lists unreviewed candidate SOULCAP cell types (220 of 255 rows);
+- Checked against Europe PMC full text: **168 exact**, 6 exact apart from
+  final punctuation, 33 not found exactly, 46 with no open-access text.
+- Quotes from the two WebFetch-extracted files: 7 replaced by exact sentences
+  from the papers (old rows kept, marked superseded), 2 removed because the
+  extraction added text that isn't in the paper (logged in
+  `removed_evidence.tsv`), 4 still unverified and under review.
+- Each row lists unreviewed candidate SOULCAP cell types (220 of 253 rows);
   `subject_id` stays blank until reviewed. 15 quotes couldn't be placed.
-- Source types: 8 papers tagged Review by PubMed; 27 proposed types need
-  checking. Review papers go in [literature/reviews/](../../literature/reviews/README.md),
+- Source types: 10 reviews (8 tagged by PubMed), 5 sorting papers, 2 panel or
+  method papers (OMIP-046, Finak 2016), 3 atlases; 15 still to classify.
+  Review papers go in [literature/reviews/](../../literature/reviews/README.md),
   NK cells first.
 
 ## On hold until after this meeting

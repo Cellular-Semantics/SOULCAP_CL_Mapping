@@ -91,6 +91,6 @@ Do not edit by hand.
 
 — Alkon et al 2022 (PMID:34363841; DOI:10.1016/j.jaci.2021.07.025; PMCID:PMC9130781) · `EV00127` · verified: no
 
-> "CD3− cells were selected for lineage marker negative (Lin−) status using antibodies against CD3, CD4, TCRαβ, and TCRγδ (T cells), CD19 (B cells) CD14 (monocytes)"
+> "Subsequently we gated out non‐relevant lineages using antibodies against CD3, CD4, TCRαβ, and TCRγδ (T cells), CD19 (B cells) CD14 (monocytes)"
 
-— Krabbendam et al 2021 (PMID:33300130; DOI:10.1002/eji.202048696; PMCID:PMC8248192) · `EV00128` · verified: no
+— Krabbendam et al 2021 (PMID:33300130; DOI:10.1002/eji.202048696; PMCID:PMC8248192) · `EV00256` · verified: yes

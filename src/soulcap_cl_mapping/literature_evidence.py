@@ -84,8 +84,12 @@ FIELDS = [
     "notes",
     "verified",
     "verification_note",
+    "superseded_by",
     "added_on",
 ]
+# Rows removed from evidence.tsv (e.g. the extraction added text not in the
+# paper) are logged here with the reason; they are never silently deleted.
+REMOVED_FIELDS = ["removed_on", "reason", *FIELDS]
 # Candidate cell types: which SOULCAP rows belong to each family. Membership
 # follows each row's Parent chain to its root (a dangling parent name counts as
 # the root). This is a mechanical, UNREVIEWED rule; a curator confirms each
@@ -606,8 +610,10 @@ def write_views(
         folder.mkdir(parents=True, exist_ok=True)
         for old in folder.glob("*.md"):
             old.unlink()
-        for value in sorted({r[key] for r in rows}):
-            subset = [r for r in rows if r[key] == value]
+        # Superseded rows stay in evidence.tsv for provenance but not in views.
+        active = [r for r in rows if not r.get("superseded_by")]
+        for value in sorted({r[key] for r in active}):
+            subset = [r for r in active if r[key] == value]
             (folder / f"{slug(value)}.md").write_text(
                 render_view(value, subset, other, lab), encoding="utf-8"
             )

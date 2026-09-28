@@ -31,17 +31,9 @@ Do not edit by hand.
 
 **Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000109 (ConT Treg-like), SOULCAP:SC000110 (ConT Tfh-like), SOULCAP:SC000111 (Th1-like), SOULCAP:SC000112 (Th2-like), SOULCAP:SC000113 (Th9-like), SOULCAP:SC000114 (Th17-like), SOULCAP:SC000121 (CD4 PanT Treg)
 
-> "Tregs are typically identified by the expression of the transcription factor FoxP3 or the IL-2 receptor α-chain (CD25)...the absence or low expression of the IL-7 receptor α-chain (CD127) has been proposed as a distinguishing marker for Tregs"
-
-— Kamran M et al. 2025 (PMID:41394832; DOI:10.3389/fimmu.2025.1676937; PMCID:PMC12695756) · `EV00234` · verified: no
-
 > "In humans, a combination of high CD25 and low or absent CD127 expression helps differentiate Tregs from effector T cells, which usually express high levels of CD127"
 
 — Kamran M et al. 2025 (PMID:41394832; DOI:10.3389/fimmu.2025.1676937; PMCID:PMC12695756) · `EV00236` · verified: yes
-
-> "Expression of CD127, the α-chain of the IL‐7 receptor, is inversely correlated with the expression of hallmark Treg cell regulator FOXP3."
-
-— Morgana F et al. 2026 (PMID:41645582; DOI:10.1002/eji.70107; PMCID:PMC12877429) · `EV00237` · verified: no
 
 > "the CD4+CD25+CD127low/– population arguably contains a mixture of Treg cells with variable degrees of commitment to the Treg cell lineage."
 
@@ -50,6 +42,14 @@ Do not edit by hand.
 > "nonnaive CD4 T cells" analyzed using "FOXP3, CD45RA, CD25, CCR4, CCR6, CXCR5, CXCR3, and CD127"
 
 — Nalubega M et al. 2026 (PMID:41757944; DOI:10.1093/infdis/jiag115; PMCID:PMC13127770) · `EV00242` · verified: yes
+
+> "are typically identified by the expression of the transcription factor FoxP3 or the IL-2 receptor α-chain (CD25)" … "the absence or low expression of the IL-7 receptor α-chain (CD127) has been proposed as a distinguishing marker for Tregs"
+
+— Kamran M et al. 2025 (PMID:41394832; DOI:10.3389/fimmu.2025.1676937; PMCID:PMC12695756) · `EV00260` · verified: yes
+
+> "Expression of CD127, the α‐chain of the IL‐7 receptor, is inversely correlated with the expression of hallmark Treg cell regulator FOXP3"
+
+— Morgana F et al. 2026 (PMID:41645582; DOI:10.1002/eji.70107; PMCID:PMC12877429) · `EV00261` · verified: yes
 
 ## CD183
 
@@ -77,7 +77,7 @@ Do not edit by hand.
 
 > "human Th9 cells express CD183 (CXCR3), CD193 (CCR3), and CD196 (CCR6), but not CD194+(CCR4+) or D294 (CRTH2), which are expressed on the surface of Th2 cells"
 
-— Frontiers Immunology 2020 (DOI:10.3389/fimmu.2020.01026; PMCID:PMC7251969) · `EV00213` · verified: yes
+— Chen T et al. 2020 (DOI:10.3389/fimmu.2020.01026; PMCID:PMC7251969) · `EV00213` · verified: yes
 
 ## CD185
 
@@ -133,7 +133,7 @@ Do not edit by hand.
 
 > "human Th9 cells express CD183 (CXCR3), CD193 (CCR3), and CD196 (CCR6), but not CD194+(CCR4+) or D294 (CRTH2), which are expressed on the surface of Th2 cells"
 
-— Frontiers Immunology 2020 (DOI:10.3389/fimmu.2020.01026; PMCID:PMC7251969) · `EV00225` · verified: yes
+— Chen T et al. 2020 (DOI:10.3389/fimmu.2020.01026; PMCID:PMC7251969) · `EV00225` · verified: yes
 
 ## CD196
 
@@ -157,7 +157,7 @@ Do not edit by hand.
 
 > "human Th9 cells express CD183 (CXCR3), CD193 (CCR3), and CD196 (CCR6)"
 
-— Frontiers Immunology 2020 (DOI:10.3389/fimmu.2020.01026; PMCID:PMC7251969) · `EV00230` · verified: yes
+— Chen T et al. 2020 (DOI:10.3389/fimmu.2020.01026; PMCID:PMC7251969) · `EV00230` · verified: yes
 
 > "Th1 (CXCR3+ CCR6−), Th17 (CXCR3− CCR6+), and Th2 (CXCR3− CCR6−"
 
@@ -166,10 +166,6 @@ Do not edit by hand.
 ## CD25
 
 **Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000109 (ConT Treg-like), SOULCAP:SC000110 (ConT Tfh-like), SOULCAP:SC000111 (Th1-like), SOULCAP:SC000112 (Th2-like), SOULCAP:SC000113 (Th9-like), SOULCAP:SC000114 (Th17-like), SOULCAP:SC000121 (CD4 PanT Treg)
-
-> "Tregs are typically identified by the expression of the transcription factor FoxP3 or the IL-2 receptor α-chain (CD25)...the absence or low expression of the IL-7 receptor α-chain (CD127) has been proposed as a distinguishing marker for Tregs"
-
-— Kamran M et al. 2025 (PMID:41394832; DOI:10.3389/fimmu.2025.1676937; PMCID:PMC12695756) · `EV00233` · verified: no
 
 > "In humans, a combination of high CD25 and low or absent CD127 expression helps differentiate Tregs from effector T cells, which usually express high levels of CD127"
 
@@ -187,25 +183,17 @@ Do not edit by hand.
 
 — Nalubega M et al. 2026 (PMID:41757944; DOI:10.1093/infdis/jiag115; PMCID:PMC13127770) · `EV00241` · verified: yes
 
+> "are typically identified by the expression of the transcription factor FoxP3 or the IL-2 receptor α-chain (CD25)" … "the absence or low expression of the IL-7 receptor α-chain (CD127) has been proposed as a distinguishing marker for Tregs"
+
+— Kamran M et al. 2025 (PMID:41394832; DOI:10.3389/fimmu.2025.1676937; PMCID:PMC12695756) · `EV00259` · verified: yes
+
 ## CD27
 
 **Candidate SOULCAP cell types (unreviewed):** none found
 
-> "For all analyses, cells were gated on singlets and live cells defined based on scatter properties, followed by CD3+ lymphocytes and subsequent αβ/γδ and memory−subset gates" with markers including "CD27, CD28, CD45RA, CCR7" used to distinguish naïve, central memory (CM), and effector memory (EM) subsets.
+> "Zole-expanded Vδ2 γδ T cells displayed a highly homogeneous effector memory (EM) phenotype (CD27-CD45RA-)"
 
-— Kelm M et al. 2026 (PMID:41727470; DOI:10.3389/fimmu.2026.1739493; PMCID:PMC12920462) · `EV00253` · verified: no
-
-> "Zole-expanded Vδ2 γδ T cells displayed a highly homogeneous effector memory (EM) phenotype (CD27−CD45RA−)"
-
-— Kelm M et al. 2026 (PMID:41727470; DOI:10.3389/fimmu.2026.1739493; PMCID:PMC12920462) · `EV00255` · verified: no
-
-## CD28
-
-**Candidate SOULCAP cell types (unreviewed):** none found
-
-> "For all analyses, cells were gated on singlets and live cells defined based on scatter properties, followed by CD3+ lymphocytes and subsequent αβ/γδ and memory−subset gates" with markers including "CD27, CD28, CD45RA, CCR7" used to distinguish naïve, central memory (CM), and effector memory (EM) subsets.
-
-— Kelm M et al. 2026 (PMID:41727470; DOI:10.3389/fimmu.2026.1739493; PMCID:PMC12920462) · `EV00254` · verified: no
+— Kelm M et al. 2026 (PMID:41727470; DOI:10.3389/fimmu.2026.1739493; PMCID:PMC12920462) · `EV00262` · verified: yes
 
 ## CD294
 
@@ -213,7 +201,7 @@ Do not edit by hand.
 
 > "human Th9 cells express CD183 (CXCR3), CD193 (CCR3), and CD196 (CCR6), but not CD194+(CCR4+) or D294 (CRTH2), which are expressed on the surface of Th2 cells"
 
-— Frontiers Immunology 2020 (DOI:10.3389/fimmu.2020.01026; PMCID:PMC7251969) · `EV00232` · verified: yes
+— Chen T et al. 2020 (DOI:10.3389/fimmu.2020.01026; PMCID:PMC7251969) · `EV00232` · verified: yes
 
 ## CD3
 
