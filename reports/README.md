@@ -41,6 +41,7 @@ September 2026 run is [archived](../archive/2026-09_resolver_experiments/regress
 | [marker_validation.md](marker_validation.md) | Marker strings that fail the EBNF grammar | `uv run soulcap-sync` or `uv run soulcap-validate` | Generated |
 | [marker_string_issues.md](marker_string_issues.md) | Reviewed list of marker-string errors and inconsistencies in the sheet | Hand-written | Curated |
 | [proposed_marker_fixes.xlsx](proposed_marker_fixes.xlsx) | Proposed corrections to send to SOULCAP | Hand-written | Curated |
+| [soulcap_feedback.tsv](soulcap_feedback.tsv) | **Draft, not sent.** Rows for SOULCAP to fix: (a) marker strings with syntax errors or that split wrongly, with a suggested fix where one is obvious and passes the grammar; (b) rows with an empty *Required phenotypic markers* column. Built 2026-09-28 from the 2026-09-18 sync and `proposed_marker_fixes.xlsx` | One-off script, then hand-reviewed | Curated |
 
 ## Cell Ontology reference snapshots
 

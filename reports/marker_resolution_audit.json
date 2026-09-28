@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
-  "generated_utc": "2026-09-11T04:13:34.206460+00:00",
+  "generated_utc": "2026-09-28T17:00:54.153030+00:00",
   "inputs": {
     "C:\\Users\\s28al\\SOULCAP_CL_Mapping\\data\\marker_combinations.csv": "29b476e499ac402094b3dbccc410d052010a9b804ca9865e2624dda3ba9bfc44",
     "C:\\Users\\s28al\\SOULCAP_CL_Mapping\\mappings\\soulcap_entities.tsv": "b7d312081b5279669599ead19d3d201a1003ff4978eb814302f16c9783b659a8",
     "C:\\Users\\s28al\\SOULCAP_CL_Mapping\\mappings\\curated_mappings.tsv": "2ce1d078ed3d374b0c96d04184bb3520d37a1970415ad08584e33bc26e31434e",
     "C:\\Users\\s28al\\SOULCAP_CL_Mapping\\reports\\cl_pro_relationships.tsv": "293edb6a7dc435caf9d85a758425be9305eb4eb00c877074fdec4593ef0d1b3c",
     "C:\\Users\\s28al\\SOULCAP_CL_Mapping\\marker_mappings\\marker_protein_gene.csv": "4d1982db77c57a9a9e43b1fc883c5b0b32f0d69184e081764880baacb37992b7",
-    "C:\\Users\\s28al\\SOULCAP_CL_Mapping\\marker_mappings\\marker_resolution.tsv": "317578b4b7fb1a9837b9a61fa85c2dc1ea6469eab4404b0435476ba4a12a1f84"
+    "C:\\Users\\s28al\\SOULCAP_CL_Mapping\\marker_mappings\\marker_resolution.tsv": "2e5ad5387ffc0576eba2485173b14efd5ae22531170a01072efff7aa8eda39ce"
   },
   "note": "Same source and axiom snapshots; no lexical expansion. Counts describe computational evidence, not biological accuracy. Source usage comes from valid cells only.",
   "summary": {
@@ -32,6 +32,10 @@
       "canonical": "CCR4",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CCR4",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "CCR4"
       ],
@@ -50,6 +54,10 @@
       "canonical": "CCR6",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CCR6",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "CCR6"
       ],
@@ -68,6 +76,10 @@
       "canonical": "CD10",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CD10",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "CD10"
       ],
@@ -93,6 +105,10 @@
       "canonical": "CD117",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CD117",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "CD117"
       ],
@@ -114,6 +130,10 @@
       "canonical": "CD11C",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CD11c",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "CD11c"
       ],
@@ -250,6 +270,10 @@
       "canonical": "CD123",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CD123",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "CD123"
       ],
@@ -388,6 +412,10 @@
       "canonical": "CD127",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CD127",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "CD127"
       ],
@@ -443,6 +471,10 @@
       "canonical": "CD138",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CD138",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "CD138"
       ],
@@ -462,6 +494,10 @@
       "canonical": "CD14",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CD14",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "CD14"
       ],
@@ -603,6 +639,10 @@
       "canonical": "CD141",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CD141",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "CD141"
       ],
@@ -622,6 +662,10 @@
       "canonical": "CD15",
       "rationale": "Conservative hold: registry protein label or reagent context does not explicitly establish whole-marker identity; review required.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CD15",
+      "failure_category": "carbohydrate_epitope",
+      "specific_rationale": "CD15 antibodies detect the Lewis X (SSEA-1) carbohydrate, not a protein. The registry PRO ID (PR:000001456) is FUT4, the fucosyltransferase that makes it; PRO lists CD15 as an exact synonym of FUT4 and CL uses FUT4 in 8 asserted CD15 axioms. Possible CHEBI representation: CHEBI:62287 (Gal-(1->4)-[Fuc-(1->3)]-GlcNAc), structural match to be confirmed.",
+      "evidence_level": "ontology_checked",
+      "next_action": "leave withheld; propose CL/PRO issue on CD15 = FUT4",
       "registry_tokens": [
         "CD15"
       ],
@@ -761,6 +805,10 @@
       "canonical": "CD16",
       "rationale": "Conservative hold: registry protein label or reagent context does not explicitly establish whole-marker identity; review required.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CD16",
+      "failure_category": "multi_gene_product",
+      "specific_rationale": "Human CD16 is two genes: FCGR3A (CD16a, PR:000001484) and FCGR3B (CD16b, PR:000001485). The registry and CL use PR:000001483, which PRO defines as the product of the mouse Fcgr3 gene or a 1:1 ortholog, so it does not clearly cover either human gene. OMIP-069 uses clone 3G8; its CD16a/CD16b specificity is not yet verified here.",
+      "evidence_level": "ontology_checked",
+      "next_action": "ask David (CD16a vs CD16a+CD16b); propose CL issue on PR:000001483 for human cell types",
       "registry_tokens": [
         "CD16"
       ],
@@ -896,6 +944,10 @@
       "canonical": "CD161",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CD161",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "CD161"
       ],
@@ -914,6 +966,10 @@
       "canonical": "CD172A",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CD172a",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "CD172a"
       ],
@@ -933,6 +989,10 @@
       "canonical": "CD183",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CD183",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "CD183"
       ],
@@ -955,6 +1015,10 @@
       "canonical": "CD185",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CD185",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "CD185"
       ],
@@ -981,6 +1045,10 @@
       "canonical": "CD19",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CD19",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "CD19"
       ],
@@ -1119,6 +1187,10 @@
       "canonical": "CD193",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CD193",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "CD193"
       ],
@@ -1144,6 +1216,10 @@
       "canonical": "CCR4",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CD194",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "CD194"
       ],
@@ -1166,6 +1242,10 @@
       "canonical": "CCR6",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CD196",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "CD196"
       ],
@@ -1188,6 +1268,10 @@
       "canonical": "CD198",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CD198",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "CD198"
       ],
@@ -1207,6 +1291,10 @@
       "canonical": "CD1C",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CD1c",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "CD1c"
       ],
@@ -1226,6 +1314,10 @@
       "canonical": "CD1D-A-GALCER",
       "rationale": "Registry notes describe a reagent, lipid antigen, or carbohydrate epitope rather than a single protein.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CD1d-a-GalCer",
+      "failure_category": "lipid_antigen_reagent",
+      "specific_rationale": "First half of CD1d-a-GalCer Tetramer+ (rows 60, 76-80, 108, 110-115): CD1d loaded with the lipid alpha-galactosylceramide, a reagent that stains iNKT TCRs. Not a protein marker on the cell.",
+      "evidence_level": "source_traced",
+      "next_action": "leave withheld; report spacing to SOULCAP",
       "registry_tokens": [
         "CD1d-a-GalCer"
       ],
@@ -1242,6 +1334,10 @@
       "canonical": "CD20",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CD20",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "CD20"
       ],
@@ -1363,6 +1459,10 @@
       "canonical": "CD21",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CD21",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "CD21"
       ],
@@ -1384,6 +1484,10 @@
       "canonical": "CD24",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CD24",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "CD24"
       ],
@@ -1409,6 +1513,10 @@
       "canonical": "CD25",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CD25",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "CD25"
       ],
@@ -1427,6 +1535,10 @@
       "canonical": "CD27",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CD27",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "CD27"
       ],
@@ -1464,6 +1576,10 @@
       "canonical": "CD294",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CD294",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "CD294"
       ],
@@ -1487,6 +1603,10 @@
       "canonical": "CD3",
       "rationale": "Conservative hold: registry protein label or reagent context does not explicitly establish whole-marker identity; review required.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CD3",
+      "failure_category": "protein_complex",
+      "specific_rationale": "CD3 is a multi-chain complex (CD3 gamma, delta, epsilon, zeta). PRO has no general CD3 complex term: its only CD3 complex is the phosphorylated CD3 epsilon:gamma dimer (PR:000025781). Options are CD3 epsilon (PR:000001020, which CL uses in all 23 asserted CD3-negative axioms) or the family term PR:000001018 (CD3 delta/epsilon/gamma). CL encodes T-cell identity with GO TCR complexes (GO:0042101/GO:0042105/GO:0042106). OMIP-069 uses clone SK7. Blocks 71 cell types.",
+      "evidence_level": "ontology_checked",
+      "next_action": "ask David; decision needed: see docs/marker_resolution.md#decisions-for-david",
       "registry_tokens": [
         "CD3"
       ],
@@ -1582,6 +1702,10 @@
       "canonical": "CD303",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CD303",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "CD303"
       ],
@@ -1604,6 +1728,10 @@
       "canonical": "CD33",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CD33",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "CD33"
       ],
@@ -1745,6 +1873,10 @@
       "canonical": "CD34",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CD34",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "CD34"
       ],
@@ -1771,6 +1903,10 @@
       "canonical": "CD38",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CD38",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "CD38"
       ],
@@ -1808,6 +1944,10 @@
       "canonical": "CD4",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CD4",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "CD4"
       ],
@@ -1853,6 +1993,10 @@
       "canonical": "CD45",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CD45",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "CD45"
       ],
@@ -1948,6 +2092,10 @@
       "canonical": "CD56",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CD56",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "CD56"
       ],
@@ -2016,6 +2164,10 @@
       "canonical": "CD57",
       "rationale": "Registry notes describe a reagent, lipid antigen, or carbohydrate epitope rather than a single protein.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CD57",
+      "failure_category": "carbohydrate_epitope",
+      "specific_rationale": "CD57 antibodies (clone HNK-1 in OMIP-069) detect the HNK-1 sulfoglucuronyl carbohydrate, not a protein. B3GAT1 (PR:000001440) is the enzyme that makes it. Possible CHEBI representation: CHEBI:137065 (GlcA3S-(1->3)-Gal-(1->4)-GlcNAc), structural match to be confirmed.",
+      "evidence_level": "ontology_checked",
+      "next_action": "leave withheld",
       "registry_tokens": [
         "CD57"
       ],
@@ -2036,6 +2188,10 @@
       "canonical": "CD64",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CD64",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "CD64"
       ],
@@ -2175,6 +2331,10 @@
       "canonical": "CD66B",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CD66b",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "CD66b"
       ],
@@ -2314,13 +2474,17 @@
       "canonical": "CD8",
       "rationale": "Conservative hold: registry protein label or reagent context does not explicitly establish whole-marker identity; review required.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CD8",
+      "failure_category": "protein_complex",
+      "specific_rationale": "CD8 is expressed as a CD8 alpha-alpha homodimer or a CD8 alpha-beta heterodimer. PR:000025402 is specifically CD8 alpha-beta (exact synonym CD8alphabeta; components CD8 alpha + CD8 beta), so it excludes CD8aa+ gamma-delta T and NK cells. CD8 alpha (PR:000001084) covers both; CD8 beta is PR:000001085. CL uses PR:000001084, PR:000025402 and PR:000025403. OMIP-069 uses clone SK1.",
+      "evidence_level": "ontology_checked",
+      "next_action": "ask David; decision needed: see docs/marker_resolution.md#decisions-for-david",
       "registry_tokens": [
         "CD8"
       ],
       "legacy_axiom_rows": 318,
-      "enhanced_axiom_rows": 0,
+      "enhanced_axiom_rows": 39,
       "gained": 0,
-      "lost": 318,
+      "lost": 279,
       "affected_subjects": [
         "SOULCAP:SC000047",
         "SOULCAP:SC000048",
@@ -2359,6 +2523,10 @@
       "canonical": "CD183",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CXCR3",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "CXCR3"
       ],
@@ -2377,6 +2545,10 @@
       "canonical": "CD185",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#CXCR5",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "CXCR5"
       ],
@@ -2395,6 +2567,10 @@
       "canonical": "DELTA",
       "rationale": "No PRO identity recorded; possible source artifact or unresolved marker requires clarification.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#delta",
+      "failure_category": "source_syntax_artifact",
+      "specific_rationale": "From TCR V delta 1+ / TCR V delta 2- (rows 124-128), split at the spaces. Intended markers are TCR Vd1 and Vd2.",
+      "evidence_level": "source_traced",
+      "next_action": "report to SOULCAP (see reports/soulcap_feedback.tsv)",
       "registry_tokens": [
         "delta"
       ],
@@ -2411,6 +2587,10 @@
       "canonical": "DELTA1",
       "rationale": "No PRO identity recorded; possible source artifact or unresolved marker requires clarification.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#delta1",
+      "failure_category": "source_syntax_artifact",
+      "specific_rationale": "From TCR V delta1- (Ideal phenotypic, rows 123-124). Intended marker is TCR Vd1.",
+      "evidence_level": "source_traced",
+      "next_action": "report to SOULCAP (see reports/soulcap_feedback.tsv)",
       "registry_tokens": [
         "delta1"
       ],
@@ -2430,6 +2610,10 @@
       "canonical": "FCER1A",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#FceR1a",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "FceR1a"
       ],
@@ -2451,6 +2635,10 @@
       "canonical": "GAMMA",
       "rationale": "No PRO identity recorded; possible source artifact or unresolved marker requires clarification.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#gamma",
+      "failure_category": "source_syntax_artifact",
+      "specific_rationale": "From TCR V gamma 9+ / TCR V gamma 9- (rows 124-128), split at the spaces. Intended marker is TCR Vg9.",
+      "evidence_level": "source_traced",
+      "next_action": "report to SOULCAP (see reports/soulcap_feedback.tsv)",
       "registry_tokens": [
         "gamma"
       ],
@@ -2467,6 +2655,10 @@
       "canonical": "HLA-DR",
       "rationale": "Registry notes describe an assembled or multi-gene marker; component PRO identity cannot establish whole-marker equivalence.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#HLA-DR",
+      "failure_category": "protein_complex",
+      "specific_rationale": "HLA-DR is a heterodimer of the DR alpha chain (DRA) and one of several DR beta chains (DRB1/3/4/5). The registry uses DRA (PR:000002015), as do 6 asserted CL axioms; CL also uses the generic GO:0042613 (MHC class II protein complex) in 23 axioms, which is not DR-specific. OMIP-069 uses clone L243.",
+      "evidence_level": "ontology_checked",
+      "next_action": "ask David (DRA vs GO:0042613)",
       "registry_tokens": [
         "HLA-DR"
       ],
@@ -2603,6 +2795,10 @@
       "canonical": "IFNG",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#IFNg",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "IFNg"
       ],
@@ -2621,6 +2817,10 @@
       "canonical": "IGA",
       "rationale": "Registry notes document a non-single-protein or pan-marker representation.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#IgA",
+      "failure_category": "protein_family",
+      "specific_rationale": "Surface IgA is a two-gene family (IGHA1/IGHA2) assembled with light chains. CL models surface immunoglobulin with GO immunoglobulin complex terms; PRO has human IgA1/IgA2 B cell receptor complexes (PR:000050161, PR:000050162) and GO has GO:0071747 (IgA B cell receptor complex).",
+      "evidence_level": "ontology_checked",
+      "next_action": "use a GO immunoglobulin complex term as CL does (confirm with David)",
       "registry_tokens": [
         "IgA"
       ],
@@ -2641,6 +2841,10 @@
       "canonical": "IGD",
       "rationale": "Registry notes document a non-single-protein or pan-marker representation.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#IgD",
+      "failure_category": "protein_family",
+      "specific_rationale": "Surface IgD is the IgD immunoglobulin complex. CL uses GO:0071738 (IgD immunoglobulin complex) in 14 axioms (has/lacks plasma membrane part), e.g. on naive B cell. PRO also has PR:000050172 (IgD B cell receptor complex, human).",
+      "evidence_level": "ontology_checked",
+      "next_action": "use GO:0071738 as CL does (confirm with David)",
       "registry_tokens": [
         "IgD"
       ],
@@ -2672,6 +2876,10 @@
       "canonical": "IGE",
       "rationale": "Registry notes document a non-single-protein or pan-marker representation.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#IgE",
+      "failure_category": "protein_family",
+      "specific_rationale": "Surface IgE is an immunoglobulin complex. GO has GO:0071744 (IgE B cell receptor complex); CL uses GO:0071743 (IgE immunoglobulin complex, circulating) for secreted IgE. No human PRO IgE BCR complex found.",
+      "evidence_level": "ontology_checked",
+      "next_action": "use a GO immunoglobulin complex term (confirm with David)",
       "registry_tokens": [
         "IgE"
       ],
@@ -2694,6 +2902,10 @@
       "canonical": "IGG",
       "rationale": "Registry notes document a non-single-protein or pan-marker representation.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#IgG",
+      "failure_category": "protein_family",
+      "specific_rationale": "Surface IgG spans four subclass genes (IGHG1-4). CL uses GO:0071735 (IgG immunoglobulin complex); PRO has human IgG1-4 B cell receptor complexes (PR:000050313 to PR:000050316) and GO has GO:0071737 (IgG B cell receptor complex).",
+      "evidence_level": "ontology_checked",
+      "next_action": "use GO:0071735 as CL does (confirm with David)",
       "registry_tokens": [
         "IgG"
       ],
@@ -2714,6 +2926,10 @@
       "canonical": "IGM",
       "rationale": "Registry notes document a non-single-protein or pan-marker representation.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#IgM",
+      "failure_category": "protein_family",
+      "specific_rationale": "Surface IgM is the IgM immunoglobulin complex. CL uses GO:0071753 (IgM immunoglobulin complex) in 11 axioms, e.g. on naive B cell; GO also has GO:0071755 (IgM B cell receptor complex).",
+      "evidence_level": "ontology_checked",
+      "next_action": "use GO:0071753 as CL does (confirm with David)",
       "registry_tokens": [
         "IgM"
       ],
@@ -2738,6 +2954,10 @@
       "canonical": "IL-13",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#IL-13",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "IL-13"
       ],
@@ -2758,6 +2978,10 @@
       "canonical": "IL-17A",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#IL-17a",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "IL-17a"
       ],
@@ -2777,6 +3001,10 @@
       "canonical": "IL-4",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#IL-4",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "IL-4"
       ],
@@ -2797,6 +3025,10 @@
       "canonical": "IL-5",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#IL-5",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "IL-5"
       ],
@@ -2817,6 +3049,10 @@
       "canonical": "IL-9",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#IL-9",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "IL-9"
       ],
@@ -2836,6 +3072,10 @@
       "canonical": "MR1",
       "rationale": "Conservative hold: registry protein label or reagent context does not explicitly establish whole-marker identity; review required.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#MR1",
+      "failure_category": "multimer_reagent",
+      "specific_rationale": "Every sheet use is MR1 Tetramer+ (rows 75-80, 108, 110-115): a tetramer of MR1 loaded with antigen that stains MAIT TCRs. It detects TCR specificity, not MR1 on the cell, so mapping it to MR1 protein (PR:Q95460) would be wrong. The token is split from MR1 Tetramer by the space.",
+      "evidence_level": "source_traced",
+      "next_action": "leave withheld; report spacing to SOULCAP",
       "registry_tokens": [
         "MR1"
       ],
@@ -2852,6 +3092,10 @@
       "canonical": "TCR",
       "rationale": "Registry notes document a non-single-protein or pan-marker representation.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#TCR",
+      "failure_category": "source_syntax_artifact",
+      "specific_rationale": "No sheet row uses TCR alone as a marker. The token comes from spaced names split by the tokenizer: TCR Vb11+, TCR VB11+, TCR V delta 1+ and TCR V gamma 9 (sheet rows 60, 76-80, 123-128). If a genuine pan-TCR marker were needed, CL uses GO:0042101 (T cell receptor complex).",
+      "evidence_level": "source_traced",
+      "next_action": "report to SOULCAP (see reports/soulcap_feedback.tsv)",
       "registry_tokens": [
         "TCR"
       ],
@@ -2871,6 +3115,10 @@
       "canonical": "TCRAB",
       "rationale": "Registry notes describe an assembled or multi-gene marker; component PRO identity cannot establish whole-marker equivalence.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#TCRab",
+      "failure_category": "protein_complex",
+      "specific_rationale": "Pan alpha-beta TCR antibodies recognise the assembled alpha-beta heterodimer. CL encodes this with GO:0042105 (alpha-beta T cell receptor complex), e.g. on CL:0000789 alpha-beta T cell. No PRO complex term found.",
+      "evidence_level": "ontology_checked",
+      "next_action": "use GO:0042105 as CL does (confirm with David)",
       "registry_tokens": [
         "TCRab"
       ],
@@ -2909,6 +3157,10 @@
       "canonical": "TCRGD",
       "rationale": "Registry notes describe an assembled or multi-gene marker; component PRO identity cannot establish whole-marker equivalence.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#TCRgd",
+      "failure_category": "protein_complex",
+      "specific_rationale": "Pan gamma-delta TCR antibodies (clone B1.1 in OMIP-069) recognise the assembled gamma-delta heterodimer. CL encodes this with GO:0042106 (gamma-delta T cell receptor complex) on CL:0000798. No PRO complex term found.",
+      "evidence_level": "ontology_checked",
+      "next_action": "use GO:0042106 as CL does (confirm with David)",
       "registry_tokens": [
         "TCRgd"
       ],
@@ -2947,6 +3199,10 @@
       "canonical": "TCRVA24",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#TCRVa24",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "TCRVa24",
         "TCRva24"
@@ -2964,6 +3220,10 @@
       "canonical": "TCRVA24-JA18",
       "rationale": "Registry notes describe an assembled or multi-gene marker; component PRO identity cannot establish whole-marker equivalence.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#TCRVa24-Ja18",
+      "failure_category": "multi_gene_product",
+      "specific_rationale": "The invariant iNKT TCR alpha chain is a rearrangement of two gene segments, TRAV10 (V alpha 24) and TRAJ18. The registry maps only the V segment (PR:A0A0B4J240, TRAV10), which would also match non-invariant V alpha 24 TCRs.",
+      "evidence_level": "registry_note_only",
+      "next_action": "leave withheld",
       "registry_tokens": [
         "TCRVa24-Ja18"
       ],
@@ -2980,6 +3240,10 @@
       "canonical": "TCRVA7.2",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#TCRVa7.2",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "TCRVa7.2"
       ],
@@ -2996,6 +3260,10 @@
       "canonical": "TCRVB11",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#TCRVb11",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "TCRVb11"
       ],
@@ -3012,6 +3280,10 @@
       "canonical": "TCRVD2",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#TCRVd2",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "TCRVd2"
       ],
@@ -3030,6 +3302,10 @@
       "canonical": "TCRVG9",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#TCRVg9",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "TCRVg9"
       ],
@@ -3048,6 +3324,10 @@
       "canonical": "TETRAMER",
       "rationale": "Registry notes describe a reagent, lipid antigen, or carbohydrate epitope rather than a single protein.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#Tetramer",
+      "failure_category": "source_syntax_artifact",
+      "specific_rationale": "Second half of the spaced names MR1 Tetramer+ and CD1d-a-GalCer Tetramer+ (rows 60, 75-80, 108, 110-115). Not a marker.",
+      "evidence_level": "source_traced",
+      "next_action": "report to SOULCAP (see reports/soulcap_feedback.tsv)",
       "registry_tokens": [
         "Tetramer"
       ],
@@ -3064,6 +3344,10 @@
       "canonical": "V",
       "rationale": "No PRO identity recorded; possible source artifact or unresolved marker requires clarification.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#V",
+      "failure_category": "source_syntax_artifact",
+      "specific_rationale": "From TCR V delta1- (Ideal phenotypic, rows 123-124), which parses without error but splits into TCR / V / delta1, and from TCR V delta 2+ style names (rows 124-128). Intended markers are TCR Vd1, Vd2 and Vg9 (written TCRVd2+, TCRVg9+ in row 123).",
+      "evidence_level": "source_traced",
+      "next_action": "report to SOULCAP (see reports/soulcap_feedback.tsv)",
       "registry_tokens": [
         "V"
       ],
@@ -3083,6 +3367,10 @@
       "canonical": "TCRVB11",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#VB11",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "VB11",
         "Vb11"
@@ -3100,6 +3388,10 @@
       "canonical": "VD1",
       "rationale": "Retains the registry's single PRO representation; computational identity only, not biological sign-off.",
       "source_ref": "marker_mappings/marker_protein_gene.csv#Vd1",
+      "failure_category": "",
+      "specific_rationale": "",
+      "evidence_level": "",
+      "next_action": "",
       "registry_tokens": [
         "Vd1"
       ],
@@ -3297,6 +3589,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001002",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -3318,6 +3611,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001020",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -3339,6 +3633,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001289",
+            "relation": "CL:4030046",
             "asserted": "True",
             "paths": [
               {
@@ -3360,6 +3655,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001889",
+            "relation": "CL:4030046",
             "asserted": "True",
             "paths": [
               {
@@ -3604,6 +3900,7 @@
           {
             "sense": "high",
             "pr": "PR:000001024",
+            "relation": "RO:0015015",
             "asserted": "True",
             "paths": [
               {
@@ -3625,6 +3922,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001002",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -3646,6 +3944,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001020",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -3667,6 +3966,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001289",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -3688,12 +3988,14 @@
           {
             "sense": "negative",
             "pr": "PR:000001483",
+            "relation": "CL:4030046",
             "asserted": "True",
             "paths": []
           },
           {
             "sense": "negative",
             "pr": "PR:000001889",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -3715,12 +4017,14 @@
           {
             "sense": "negative",
             "pr": "PR:000002015",
+            "relation": "CL:4030046",
             "asserted": "True",
             "paths": []
           },
           {
             "sense": "positive",
             "pr": "PR:000001319",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": [
               {
@@ -3948,6 +4252,7 @@
           {
             "sense": "low",
             "pr": "PR:000001024",
+            "relation": "RO:0015016",
             "asserted": "True",
             "paths": [
               {
@@ -3969,6 +4274,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001002",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -3990,6 +4296,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001020",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -4011,6 +4318,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001289",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -4032,6 +4340,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001889",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -4053,12 +4362,14 @@
           {
             "sense": "negative",
             "pr": "PR:000002015",
+            "relation": "CL:4030046",
             "asserted": "True",
             "paths": []
           },
           {
             "sense": "positive",
             "pr": "PR:000001483",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": []
           }
@@ -4286,6 +4597,7 @@
           {
             "sense": "low",
             "pr": "PR:000001024",
+            "relation": "RO:0015016",
             "asserted": "True",
             "paths": [
               {
@@ -4307,6 +4619,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001002",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -4328,6 +4641,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001020",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -4349,6 +4663,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001289",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -4370,6 +4685,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001889",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -4391,12 +4707,14 @@
           {
             "sense": "negative",
             "pr": "PR:000002015",
+            "relation": "CL:4030046",
             "asserted": "True",
             "paths": []
           },
           {
             "sense": "positive",
             "pr": "PR:000001483",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": []
           }
@@ -4624,6 +4942,7 @@
           {
             "sense": "low",
             "pr": "PR:000001024",
+            "relation": "RO:0015016",
             "asserted": "True",
             "paths": [
               {
@@ -4645,6 +4964,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001002",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -4666,6 +4986,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001020",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -4687,6 +5008,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001289",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -4708,6 +5030,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001889",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -4729,12 +5052,14 @@
           {
             "sense": "negative",
             "pr": "PR:000002015",
+            "relation": "CL:4030046",
             "asserted": "True",
             "paths": []
           },
           {
             "sense": "positive",
             "pr": "PR:000001483",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": []
           }
@@ -4901,6 +5226,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001002",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -4922,6 +5248,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001020",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -4943,6 +5270,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001003",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -4964,6 +5292,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001024",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -4985,6 +5314,7 @@
           {
             "sense": "positive",
             "pr": "PR:000002065",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -5006,18 +5336,21 @@
           {
             "sense": "positive",
             "pr": "PR:P10721",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": []
           },
           {
             "sense": "positive",
             "pr": "PR:P13591",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": []
           },
           {
             "sense": "positive",
             "pr": "PR:P28906",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": []
           }
@@ -5187,6 +5520,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001002",
+            "relation": "CL:4030046",
             "asserted": "True",
             "paths": [
               {
@@ -5208,6 +5542,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001020",
+            "relation": "CL:4030046",
             "asserted": "True",
             "paths": [
               {
@@ -5416,6 +5751,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001002",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -5437,6 +5773,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001020",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -5693,6 +6030,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001002",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -5714,6 +6052,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001020",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -5735,6 +6074,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001380",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -5756,6 +6096,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001869",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -5784,24 +6125,28 @@
           {
             "sense": "positive",
             "pr": "PR:000001874",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": []
           },
           {
             "sense": "positive",
             "pr": "PR:000001941",
+            "relation": "BFO:0000051",
             "asserted": "False",
             "paths": []
           },
           {
             "sense": "positive",
             "pr": "PR:P01589",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": []
           },
           {
             "sense": "positive",
             "pr": "PR:P16871",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": [
               {
@@ -5816,12 +6161,14 @@
           {
             "sense": "positive",
             "pr": "PR:P23771",
+            "relation": "BFO:0000051",
             "asserted": "True",
             "paths": []
           },
           {
             "sense": "positive",
             "pr": "PR:Q12918",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": [
               {
@@ -5843,6 +6190,7 @@
           {
             "sense": "positive",
             "pr": "PR:Q9Y5Y4",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": [
               {
@@ -6077,6 +6425,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001002",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -6098,6 +6447,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001020",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -6119,6 +6469,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001869",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -6147,12 +6498,14 @@
           {
             "sense": "positive",
             "pr": "PR:000003455",
+            "relation": "BFO:0000051",
             "asserted": "False",
             "paths": []
           },
           {
             "sense": "positive",
             "pr": "PR:P16871",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": [
               {
@@ -6383,6 +6736,7 @@
           {
             "sense": "high",
             "pr": "PR:000001013",
+            "relation": "RO:0015015",
             "asserted": "True",
             "paths": [
               {
@@ -6411,6 +6765,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001002",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -6432,6 +6787,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001003",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -6453,6 +6809,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001020",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -6474,6 +6831,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001024",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -6495,6 +6853,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001289",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -6818,6 +7177,7 @@
           {
             "sense": "high",
             "pr": "PR:000001013",
+            "relation": "RO:0015015",
             "asserted": "False",
             "paths": [
               {
@@ -6846,6 +7206,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001002",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -6867,6 +7228,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001003",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -6888,6 +7250,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001020",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -6909,6 +7272,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001024",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -6930,6 +7294,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001289",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -6951,6 +7316,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001865",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -6972,6 +7338,7 @@
           {
             "sense": "positive",
             "pr": "PR:000002105",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": [
               {
@@ -7295,6 +7662,7 @@
           {
             "sense": "high",
             "pr": "PR:000001013",
+            "relation": "RO:0015015",
             "asserted": "False",
             "paths": [
               {
@@ -7323,6 +7691,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001002",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -7344,6 +7713,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001003",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -7365,6 +7735,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001020",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -7386,6 +7757,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001024",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -7407,6 +7779,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001289",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -7428,6 +7801,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001865",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -7449,6 +7823,7 @@
           {
             "sense": "positive",
             "pr": "PR:000002027",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": [
               {
@@ -7679,6 +8054,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001002",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -7700,6 +8076,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001003",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -7721,6 +8098,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001013",
+            "relation": "CL:4030046",
             "asserted": "True",
             "paths": [
               {
@@ -7749,6 +8127,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001020",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -7770,6 +8149,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001024",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -7791,6 +8171,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001289",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -7812,6 +8193,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001889",
+            "relation": "CL:4030046",
             "asserted": "True",
             "paths": [
               {
@@ -7833,6 +8215,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001865",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": [
               {
@@ -7854,6 +8237,7 @@
           {
             "sense": "positive",
             "pr": "PR:000002015",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": []
           }
@@ -8123,6 +8507,7 @@
           {
             "sense": "high",
             "pr": "PR:000001255",
+            "relation": "RO:0015015",
             "asserted": "False",
             "paths": [
               {
@@ -8144,6 +8529,7 @@
           {
             "sense": "high",
             "pr": "PR:000001865",
+            "relation": "RO:0015015",
             "asserted": "False",
             "paths": [
               {
@@ -8165,6 +8551,7 @@
           {
             "sense": "high",
             "pr": "PR:000007431",
+            "relation": "RO:0015015",
             "asserted": "False",
             "paths": [
               {
@@ -8179,6 +8566,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001002",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -8200,6 +8588,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001020",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -8221,6 +8610,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001024",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -8242,6 +8632,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001084",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -8263,6 +8654,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001012",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -8284,6 +8676,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001332",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -8312,6 +8705,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001344",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -8326,6 +8720,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001950",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -8354,6 +8749,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001969",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -8585,6 +8981,7 @@
           {
             "sense": "high",
             "pr": "PR:000001255",
+            "relation": "RO:0015015",
             "asserted": "False",
             "paths": [
               {
@@ -8606,6 +9003,7 @@
           {
             "sense": "high",
             "pr": "PR:000001865",
+            "relation": "RO:0015015",
             "asserted": "False",
             "paths": [
               {
@@ -8627,6 +9025,7 @@
           {
             "sense": "high",
             "pr": "PR:000007431",
+            "relation": "RO:0015015",
             "asserted": "False",
             "paths": [
               {
@@ -8641,6 +9040,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001002",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -8662,6 +9062,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001020",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -8683,6 +9084,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001024",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -8704,6 +9106,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001084",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -8725,6 +9128,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001012",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -8746,6 +9150,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001332",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -8774,6 +9179,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001344",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -8788,6 +9194,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001950",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -8816,6 +9223,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001969",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -9225,6 +9633,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001002",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -9246,6 +9655,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001020",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -9267,6 +9677,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001024",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -9288,6 +9699,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001084",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -9309,6 +9721,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001012",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -9330,6 +9743,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001332",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -9358,18 +9772,21 @@
           {
             "sense": "positive",
             "pr": "PR:000001479",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": []
           },
           {
             "sense": "positive",
             "pr": "PR:000001879",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": []
           },
           {
             "sense": "positive",
             "pr": "PR:000001969",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -9625,6 +10042,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001002",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -9646,6 +10064,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001020",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -9667,6 +10086,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001024",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -9688,6 +10108,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001084",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -9709,6 +10130,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001012",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -9730,6 +10152,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001254",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": [
               {
@@ -9744,6 +10167,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001255",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": [
               {
@@ -9765,6 +10189,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001307",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": [
               {
@@ -9786,6 +10211,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001332",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -9814,6 +10240,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001343",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": [
               {
@@ -9828,6 +10255,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001969",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -9842,6 +10270,7 @@
           {
             "sense": "positive",
             "pr": "PR:000005178",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": [
               {
@@ -10400,6 +10829,7 @@
           {
             "sense": "high",
             "pr": "PR:000001408",
+            "relation": "RO:0015015",
             "asserted": "True",
             "paths": [
               {
@@ -10421,6 +10851,7 @@
           {
             "sense": "high",
             "pr": "PR:000001963",
+            "relation": "RO:0015015",
             "asserted": "True",
             "paths": [
               {
@@ -10449,6 +10880,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001020",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -10470,6 +10902,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001289",
+            "relation": "CL:4030046",
             "asserted": "True",
             "paths": [
               {
@@ -10491,6 +10924,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001935",
+            "relation": "CL:4030046",
             "asserted": "True",
             "paths": [
               {
@@ -10512,6 +10946,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001002",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -10728,6 +11163,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001289",
+            "relation": "CL:4030046",
             "asserted": "True",
             "paths": [
               {
@@ -10749,6 +11185,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001935",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": [
               {
@@ -11027,6 +11464,7 @@
           {
             "sense": "high",
             "pr": "PR:000001408",
+            "relation": "RO:0015015",
             "asserted": "True",
             "paths": [
               {
@@ -11048,6 +11486,7 @@
           {
             "sense": "high",
             "pr": "PR:000001932",
+            "relation": "RO:0015015",
             "asserted": "True",
             "paths": [
               {
@@ -11069,6 +11508,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001020",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -11090,6 +11530,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001002",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -11111,6 +11552,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001289",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": [
               {
@@ -11314,6 +11756,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001020",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -11335,6 +11778,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001002",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -11612,6 +12056,7 @@
           {
             "sense": "high",
             "pr": "PR:000001408",
+            "relation": "RO:0015015",
             "asserted": "False",
             "paths": [
               {
@@ -11633,6 +12078,7 @@
           {
             "sense": "high",
             "pr": "PR:000001932",
+            "relation": "RO:0015015",
             "asserted": "False",
             "paths": [
               {
@@ -11654,6 +12100,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001020",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -11675,6 +12122,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001002",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -11696,6 +12144,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001289",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -11717,6 +12166,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001318",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": [
               {
@@ -11738,6 +12188,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001338",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": [
               {
@@ -11759,6 +12210,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001880",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": [
               {
@@ -12021,6 +12473,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001020",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -12042,6 +12495,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001963",
+            "relation": "CL:4030046",
             "asserted": "True",
             "paths": [
               {
@@ -12070,6 +12524,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001002",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -12091,6 +12546,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001289",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": [
               {
@@ -12362,6 +12818,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001020",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -12383,6 +12840,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001935",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -12404,6 +12862,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001963",
+            "relation": "CL:4030046",
             "asserted": "True",
             "paths": [
               {
@@ -12432,6 +12891,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001002",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -12453,6 +12913,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001289",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -12756,6 +13217,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001020",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -12777,6 +13239,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001935",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -12798,6 +13261,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001963",
+            "relation": "CL:4030046",
             "asserted": "True",
             "paths": [
               {
@@ -12826,6 +13290,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001002",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -12847,6 +13312,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001289",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -13142,6 +13608,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001020",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -13163,6 +13630,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001935",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -13184,6 +13652,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001963",
+            "relation": "CL:4030046",
             "asserted": "True",
             "paths": [
               {
@@ -13212,6 +13681,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001002",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -13233,6 +13703,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001289",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -13528,6 +13999,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001020",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -13549,6 +14021,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001935",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -13570,6 +14043,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001963",
+            "relation": "CL:4030046",
             "asserted": "True",
             "paths": [
               {
@@ -13598,6 +14072,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001002",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -13619,6 +14094,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001289",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -13922,6 +14398,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001020",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -13943,6 +14420,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001935",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -13964,6 +14442,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001963",
+            "relation": "CL:4030046",
             "asserted": "True",
             "paths": [
               {
@@ -13992,6 +14471,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001002",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -14013,6 +14493,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001289",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -14248,6 +14729,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001020",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -14269,6 +14751,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001935",
+            "relation": "CL:4030046",
             "asserted": "True",
             "paths": [
               {
@@ -14290,6 +14773,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001002",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -14311,6 +14795,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001289",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": [
               {
@@ -14582,6 +15067,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001020",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -14603,6 +15089,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001935",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -14624,6 +15111,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001002",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -14645,6 +15133,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001289",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -14666,6 +15155,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001963",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": [
               {
@@ -14924,6 +15414,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001020",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -14945,6 +15436,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001935",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -14966,6 +15458,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001002",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -14987,6 +15480,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001289",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -15258,6 +15752,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001020",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -15279,6 +15774,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001935",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -15300,6 +15796,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001002",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -15321,6 +15818,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001289",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -15342,6 +15840,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001963",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": [
               {
@@ -15644,6 +16143,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001020",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -15665,6 +16165,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001935",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -15686,6 +16187,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001002",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -15707,6 +16209,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001289",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -15728,6 +16231,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001963",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -16030,6 +16534,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001020",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -16051,6 +16556,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001935",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -16072,6 +16578,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001002",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -16093,6 +16600,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001289",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -16114,6 +16622,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001963",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -16416,6 +16925,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001020",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -16437,6 +16947,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001935",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -16458,6 +16969,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001002",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -16479,6 +16991,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001289",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -16500,6 +17013,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001963",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -17120,12 +17634,14 @@
           {
             "sense": "negative",
             "pr": "PR:000025402",
+            "relation": "CL:4030046",
             "asserted": "True",
             "paths": []
           },
           {
             "sense": "positive",
             "pr": "PR:000001004",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": [
               {
@@ -17262,6 +17778,19 @@
                 "asserted": "True"
               }
             ]
+          },
+          {
+            "column": "Required phenotypic markers",
+            "clause": "CD8:positive",
+            "assertion": "direct",
+            "axioms": [
+              {
+                "pr": "PR:000025402",
+                "relation": "RO:0002104",
+                "sense": "positive",
+                "asserted": "True"
+              }
+            ]
           }
         ],
         "contradictions": [],
@@ -17301,10 +17830,6 @@
           {
             "column": "Required phenotypic markers",
             "clause": "(TCRAB:positive OR TCRGD:negative)"
-          },
-          {
-            "column": "Required phenotypic markers",
-            "clause": "CD8:positive"
           }
         ],
         "ideal_conflicts": [],
@@ -17325,6 +17850,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001004",
+            "relation": "CL:4030046",
             "asserted": "True",
             "paths": [
               {
@@ -17346,6 +17872,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001084",
+            "relation": "BFO:0000051",
             "asserted": "False",
             "paths": [
               {
@@ -17367,12 +17894,26 @@
           {
             "sense": "positive",
             "pr": "PR:000025402",
+            "relation": "RO:0002104",
             "asserted": "True",
-            "paths": []
+            "paths": [
+              {
+                "via": "reviewed_surface_assertion",
+                "source_token": "CD8",
+                "tokens": [
+                  "CD8"
+                ],
+                "rule_id": "whole_cd8_surface_positive_v1",
+                "source_ref": "http://purl.obolibrary.org/obo/PR_000025402",
+                "review_ref": "archive/2026-09_resolver_experiments/regression-followup/README.md#scoped-correction",
+                "interpretation": "marker_assertion_not_molecular_equivalence"
+              }
+            ]
           },
           {
             "sense": "positive",
             "pr": "PR:000025403",
+            "relation": "BFO:0000051",
             "asserted": "False",
             "paths": [
               {
@@ -17553,6 +18094,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001004",
+            "relation": "CL:4030046",
             "asserted": "True",
             "paths": [
               {
@@ -17574,6 +18116,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001084",
+            "relation": "CL:4030046",
             "asserted": "True",
             "paths": [
               {
@@ -17749,12 +18292,14 @@
           {
             "sense": "negative",
             "pr": "PR:000025402",
+            "relation": "CL:4030046",
             "asserted": "True",
             "paths": []
           },
           {
             "sense": "positive",
             "pr": "PR:000001004",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": [
               {
@@ -17887,6 +18432,19 @@
                 "asserted": "True"
               }
             ]
+          },
+          {
+            "column": "Required phenotypic markers",
+            "clause": "CD8:positive",
+            "assertion": "direct",
+            "axioms": [
+              {
+                "pr": "PR:000025402",
+                "relation": "RO:0002104",
+                "sense": "positive",
+                "asserted": "True"
+              }
+            ]
           }
         ],
         "contradictions": [],
@@ -17922,10 +18480,6 @@
           {
             "column": "Required phenotypic markers",
             "clause": "CD3:positive"
-          },
-          {
-            "column": "Required phenotypic markers",
-            "clause": "CD8:positive"
           }
         ],
         "ideal_conflicts": [],
@@ -17946,6 +18500,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001004",
+            "relation": "CL:4030046",
             "asserted": "True",
             "paths": [
               {
@@ -17967,6 +18522,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001084",
+            "relation": "BFO:0000051",
             "asserted": "False",
             "paths": [
               {
@@ -17988,12 +18544,26 @@
           {
             "sense": "positive",
             "pr": "PR:000025402",
+            "relation": "RO:0002104",
             "asserted": "True",
-            "paths": []
+            "paths": [
+              {
+                "via": "reviewed_surface_assertion",
+                "source_token": "CD8",
+                "tokens": [
+                  "CD8"
+                ],
+                "rule_id": "whole_cd8_surface_positive_v1",
+                "source_ref": "http://purl.obolibrary.org/obo/PR_000025402",
+                "review_ref": "archive/2026-09_resolver_experiments/regression-followup/README.md#scoped-correction",
+                "interpretation": "marker_assertion_not_molecular_equivalence"
+              }
+            ]
           },
           {
             "sense": "positive",
             "pr": "PR:000025403",
+            "relation": "BFO:0000051",
             "asserted": "False",
             "paths": [
               {
@@ -19059,6 +19629,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001024",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -19080,12 +19651,14 @@
           {
             "sense": "positive",
             "pr": "PR:000001874",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": []
           },
           {
             "sense": "positive",
             "pr": "PR:P13591",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": []
           }
@@ -19251,6 +19824,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001024",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -19272,12 +19846,14 @@
           {
             "sense": "positive",
             "pr": "PR:000001874",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": []
           },
           {
             "sense": "positive",
             "pr": "PR:P13591",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": []
           }
@@ -19443,6 +20019,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001024",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -19464,12 +20041,14 @@
           {
             "sense": "positive",
             "pr": "PR:000001874",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": []
           },
           {
             "sense": "positive",
             "pr": "PR:P13591",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": []
           }
@@ -19627,6 +20206,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001024",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -19648,12 +20228,14 @@
           {
             "sense": "positive",
             "pr": "PR:000001874",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": []
           },
           {
             "sense": "positive",
             "pr": "PR:P13591",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": []
           }
@@ -19827,6 +20409,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001024",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -19848,12 +20431,14 @@
           {
             "sense": "positive",
             "pr": "PR:000001874",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": []
           },
           {
             "sense": "positive",
             "pr": "PR:P13591",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": []
           }
@@ -20027,6 +20612,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001024",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -20048,12 +20634,14 @@
           {
             "sense": "positive",
             "pr": "PR:000001874",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": []
           },
           {
             "sense": "positive",
             "pr": "PR:P13591",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": []
           }
@@ -20227,6 +20815,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001024",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -20248,12 +20837,14 @@
           {
             "sense": "positive",
             "pr": "PR:000001874",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": []
           },
           {
             "sense": "positive",
             "pr": "PR:P13591",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": []
           }
@@ -20427,6 +21018,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001024",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -20448,12 +21040,14 @@
           {
             "sense": "positive",
             "pr": "PR:000001874",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": []
           },
           {
             "sense": "positive",
             "pr": "PR:P13591",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": []
           }
@@ -20611,6 +21205,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001024",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -20632,12 +21227,14 @@
           {
             "sense": "positive",
             "pr": "PR:000001874",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": []
           },
           {
             "sense": "positive",
             "pr": "PR:P13591",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": []
           }
@@ -20811,6 +21408,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001024",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -20832,12 +21430,14 @@
           {
             "sense": "positive",
             "pr": "PR:000001874",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": []
           },
           {
             "sense": "positive",
             "pr": "PR:P13591",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": []
           }
@@ -21011,6 +21611,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001024",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -21032,12 +21633,14 @@
           {
             "sense": "positive",
             "pr": "PR:000001874",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": []
           },
           {
             "sense": "positive",
             "pr": "PR:P13591",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": []
           }
@@ -21211,6 +21814,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001024",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -21232,12 +21836,14 @@
           {
             "sense": "positive",
             "pr": "PR:000001874",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": []
           },
           {
             "sense": "positive",
             "pr": "PR:P13591",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": []
           }
@@ -21411,6 +22017,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001024",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -21432,12 +22039,14 @@
           {
             "sense": "positive",
             "pr": "PR:000001874",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": []
           },
           {
             "sense": "positive",
             "pr": "PR:P13591",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": []
           }
@@ -21559,6 +22168,7 @@
           {
             "sense": "high",
             "pr": "PR:000001318",
+            "relation": "RO:0015015",
             "asserted": "True",
             "paths": [
               {
@@ -21580,6 +22190,7 @@
           {
             "sense": "low",
             "pr": "PR:000001307",
+            "relation": "RO:0015016",
             "asserted": "True",
             "paths": [
               {
@@ -21601,6 +22212,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001006",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -21615,6 +22227,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001015",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": [
               {
@@ -21629,6 +22242,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001203",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": [
               {
@@ -21650,6 +22264,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001869",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": [
               {
@@ -21798,6 +22413,7 @@
           {
             "sense": "high",
             "pr": "PR:000001318",
+            "relation": "RO:0015015",
             "asserted": "False",
             "paths": [
               {
@@ -21819,6 +22435,7 @@
           {
             "sense": "low",
             "pr": "PR:000001307",
+            "relation": "RO:0015016",
             "asserted": "False",
             "paths": [
               {
@@ -21840,6 +22457,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001380",
+            "relation": "CL:4030046",
             "asserted": "True",
             "paths": [
               {
@@ -21861,12 +22479,14 @@
           {
             "sense": "negative",
             "pr": "PR:000025402",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": []
           },
           {
             "sense": "positive",
             "pr": "PR:000001004",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -21888,6 +22508,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001006",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -21902,6 +22523,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001015",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -21916,6 +22538,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001203",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -21937,6 +22560,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001869",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -22068,6 +22692,7 @@
           "CD45RA",
           "CD62",
           "CD62L",
+          "CD8",
           "CD8A",
           "CDW127",
           "CDW197",
@@ -22087,6 +22712,7 @@
           {
             "sense": "high",
             "pr": "PR:000001318",
+            "relation": "RO:0015015",
             "asserted": "False",
             "paths": [
               {
@@ -22108,6 +22734,7 @@
           {
             "sense": "low",
             "pr": "PR:000001307",
+            "relation": "RO:0015016",
             "asserted": "False",
             "paths": [
               {
@@ -22129,6 +22756,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001004",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -22150,6 +22778,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001380",
+            "relation": "CL:4030046",
             "asserted": "True",
             "paths": [
               {
@@ -22171,6 +22800,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001006",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -22185,6 +22815,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001015",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -22199,6 +22830,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001084",
+            "relation": "BFO:0000051",
             "asserted": "False",
             "paths": [
               {
@@ -22220,6 +22852,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001203",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -22241,6 +22874,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001869",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -22269,12 +22903,26 @@
           {
             "sense": "positive",
             "pr": "PR:000025402",
+            "relation": "RO:0002104",
             "asserted": "False",
-            "paths": []
+            "paths": [
+              {
+                "via": "reviewed_surface_assertion",
+                "source_token": "CD8",
+                "tokens": [
+                  "CD8"
+                ],
+                "rule_id": "whole_cd8_surface_positive_v1",
+                "source_ref": "http://purl.obolibrary.org/obo/PR_000025402",
+                "review_ref": "archive/2026-09_resolver_experiments/regression-followup/README.md#scoped-correction",
+                "interpretation": "marker_assertion_not_molecular_equivalence"
+              }
+            ]
           },
           {
             "sense": "positive",
             "pr": "PR:000025403",
+            "relation": "BFO:0000051",
             "asserted": "False",
             "paths": [
               {
@@ -22403,6 +23051,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001006",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -22417,6 +23066,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001015",
+            "relation": "CL:4030046",
             "asserted": "True",
             "paths": [
               {
@@ -22431,6 +23081,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001380",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -22452,12 +23103,14 @@
           {
             "sense": "negative",
             "pr": "PR:000025402",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": []
           },
           {
             "sense": "positive",
             "pr": "PR:000001004",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -22479,6 +23132,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001006",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -22493,6 +23147,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001017",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -22507,6 +23162,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001203",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": [
               {
@@ -22528,6 +23184,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001869",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -22654,6 +23311,7 @@
           "CD45",
           "CD45RA",
           "CD45RO",
+          "CD8",
           "CD8A",
           "CDW127",
           "CDW197"
@@ -22672,6 +23330,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001004",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -22693,6 +23352,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001006",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -22707,6 +23367,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001015",
+            "relation": "CL:4030046",
             "asserted": "True",
             "paths": [
               {
@@ -22721,6 +23382,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001380",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -22742,6 +23404,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001006",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -22756,6 +23419,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001017",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -22770,6 +23434,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001084",
+            "relation": "BFO:0000051",
             "asserted": "False",
             "paths": [
               {
@@ -22791,6 +23456,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001203",
+            "relation": "RO:0002104",
             "asserted": "True",
             "paths": [
               {
@@ -22812,6 +23478,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001869",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -22840,12 +23507,26 @@
           {
             "sense": "positive",
             "pr": "PR:000025402",
+            "relation": "RO:0002104",
             "asserted": "False",
-            "paths": []
+            "paths": [
+              {
+                "via": "reviewed_surface_assertion",
+                "source_token": "CD8",
+                "tokens": [
+                  "CD8"
+                ],
+                "rule_id": "whole_cd8_surface_positive_v1",
+                "source_ref": "http://purl.obolibrary.org/obo/PR_000025402",
+                "review_ref": "archive/2026-09_resolver_experiments/regression-followup/README.md#scoped-correction",
+                "interpretation": "marker_assertion_not_molecular_equivalence"
+              }
+            ]
           },
           {
             "sense": "positive",
             "pr": "PR:000025403",
+            "relation": "BFO:0000051",
             "asserted": "False",
             "paths": [
               {
@@ -22974,6 +23655,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001006",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -22988,6 +23670,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001015",
+            "relation": "CL:4030046",
             "asserted": "True",
             "paths": [
               {
@@ -23002,6 +23685,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001203",
+            "relation": "CL:4030046",
             "asserted": "True",
             "paths": [
               {
@@ -23023,6 +23707,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001380",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -23044,12 +23729,14 @@
           {
             "sense": "negative",
             "pr": "PR:000025402",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": []
           },
           {
             "sense": "positive",
             "pr": "PR:000001004",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -23071,6 +23758,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001006",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -23085,6 +23773,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001017",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -23099,6 +23788,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001869",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -23225,6 +23915,7 @@
           "CD45",
           "CD45RA",
           "CD45RO",
+          "CD8",
           "CD8A",
           "CDW127",
           "CDW197"
@@ -23243,6 +23934,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001004",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -23264,6 +23956,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001006",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -23278,6 +23971,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001015",
+            "relation": "CL:4030046",
             "asserted": "True",
             "paths": [
               {
@@ -23292,6 +23986,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001203",
+            "relation": "CL:4030046",
             "asserted": "True",
             "paths": [
               {
@@ -23313,6 +24008,7 @@
           {
             "sense": "negative",
             "pr": "PR:000001380",
+            "relation": "CL:4030046",
             "asserted": "False",
             "paths": [
               {
@@ -23334,6 +24030,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001006",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -23348,6 +24045,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001017",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -23362,6 +24060,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001084",
+            "relation": "BFO:0000051",
             "asserted": "False",
             "paths": [
               {
@@ -23383,6 +24082,7 @@
           {
             "sense": "positive",
             "pr": "PR:000001869",
+            "relation": "RO:0002104",
             "asserted": "False",
             "paths": [
               {
@@ -23411,12 +24111,26 @@
           {
             "sense": "positive",
             "pr": "PR:000025402",
+            "relation": "RO:0002104",
             "asserted": "False",
-            "paths": []
+            "paths": [
+              {
+                "via": "reviewed_surface_assertion",
+                "source_token": "CD8",
+                "tokens": [
+                  "CD8"
+                ],
+                "rule_id": "whole_cd8_surface_positive_v1",
+                "source_ref": "http://purl.obolibrary.org/obo/PR_000025402",
+                "review_ref": "archive/2026-09_resolver_experiments/regression-followup/README.md#scoped-correction",
+                "interpretation": "marker_assertion_not_molecular_equivalence"
+              }
+            ]
           },
           {
             "sense": "positive",
             "pr": "PR:000025403",
+            "relation": "BFO:0000051",
             "asserted": "False",
             "paths": [
               {

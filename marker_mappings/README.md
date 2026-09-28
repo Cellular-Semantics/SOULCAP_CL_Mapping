@@ -30,10 +30,23 @@ Think of it as three questions asked in order.
      `withhold`: the matcher then compares the token only by name, never by
      protein identity.
    - `rationale` and `source_ref`: why.
+   - For `withhold` rows only: `failure_category` (one of
+     `carbohydrate_epitope`, `lipid_antigen_reagent`, `multimer_reagent`,
+     `multi_gene_product`, `protein_complex`, `protein_family`,
+     `source_syntax_artifact`, `needs_curator`), `specific_rationale` (the
+     specific reason, with the PRO/GO IDs checked), `evidence_level`
+     (`ontology_checked`, `source_traced` or `registry_note_only`) and
+     `next_action`. These columns explain a decision; they don't change it,
+     and they are not part of the fingerprint.
 
    Today 51 tokens are `allow` and 22 are `withhold` (9 unresolved, 6 family,
-   4 complex, 3 reagent gate). CD16, CD15, CD3, CD8 and MR1 are held
-   deliberately until their representation is reviewed.
+   4 complex, 3 reagent gate). CD3 and CD8 alone block most cell types;
+   the options for them are in
+   [docs/marker_resolution.md](../docs/marker_resolution.md#decisions-for-david).
+   Eight withheld tokens are fragments of spaced names split by the
+   tokenizer, not markers in their own right: TCR, V, delta, delta1 and
+   gamma (from names like `TCR V delta 1+`), and Tetramer, MR1 and
+   CD1d-a-GalCer (from `MR1 Tetramer+` and `CD1d-a-GalCer Tetramer+`).
 
 3. **What difference does the policy make?**
    [reports/marker_resolution_audit.md](../reports/marker_resolution_audit.md)
