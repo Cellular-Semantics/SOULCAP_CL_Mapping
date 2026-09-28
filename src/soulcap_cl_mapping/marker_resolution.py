@@ -31,12 +31,12 @@ POLICY_FIELDS = [
 # denotes the whole CD8 coreceptor, unlike the CD8-alpha registry entry.
 # Require an explicit same-token label/exact synonym and this surface relation;
 # do not expand aliases, infer components, or convert generic has-part to surface.
-# Review and frozen-source provenance: reports/regression-followup/README.md.
+# Review and frozen-source provenance: archive/2026-09_resolver_experiments/regression-followup/README.md.
 REVIEWED_SURFACE_ASSERTIONS = {
     ("CD8", "PR:000025402", "RO:0002104", "positive"): {
         "rule_id": "whole_cd8_surface_positive_v1",
         "source_ref": "http://purl.obolibrary.org/obo/PR_000025402",
-        "review_ref": "reports/regression-followup/README.md#scoped-correction",
+        "review_ref": "archive/2026-09_resolver_experiments/regression-followup/README.md#scoped-correction",
         "interpretation": "marker_assertion_not_molecular_equivalence",
     }
 }

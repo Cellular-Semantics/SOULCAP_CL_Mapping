@@ -30,7 +30,7 @@ axioms are added.
   already carries a species qualifier (`(mouse)`/`(human)`). Run via
   `uv run python -c "..."` or a short driver script — not a CLI (deliberately;
   see the module docstring).
-- `reports/literature/*.md` — the Milestone 2 literature reports. **Check
+- `literature/*.md` — the Milestone 2 literature reports. **Check
   these first, always.** They already contain verbatim-quoted, hook-validated
   evidence for 7 cell families (NK, ILC, DC, iNKT, T cell, B cell, gdT/MAIT),
   and reusing a quote from here is strictly better than a fresh search: it's
@@ -72,7 +72,7 @@ refreshing rather than re-running everything.
 
 For each pair (or each CL cell type's group of pairs, sharing a seed set):
 
-1. **Search the relevant `reports/literature/*.md` file** for the marker's
+1. **Search the relevant `literature/*.md` file** for the marker's
    CD synonym or PR label. If a verbatim blockquote already covers it, reuse
    that quote and citation directly — `evidence_source: m2_literature_report`.
 2. **If Asta is reachable and no M2 coverage exists**, run `citation-traversal`
@@ -124,7 +124,7 @@ Append to `reports/pro_marker_species_support.tsv`
 | `evidence_source` | `m2_literature_report` / `citation_traversal` / `europepmc_search` / `none`. |
 | `citation` | Author/year/PMID/DOI, plus a trailing `-- ` caveat clause when the quote's context doesn't exactly match the pair's cell type/subset (e.g. a naive-T marker's only evidence coming from a Treg paper) — say so rather than let the row imply a cleaner match than it is. |
 | `quote` | The verbatim substring itself. |
-| `source_ref` | `reports/literature/<file>.md` for M2 reuse, an EuropePMC article URL for a fresh search, or `reports/citation_traversal/<run_id>/` for a traversal — or, for `insufficient_evidence`, a one-line note on what was tried. |
+| `source_ref` | `literature/<file>.md` for M2 reuse, an EuropePMC article URL for a fresh search, or `reports/citation_traversal/<run_id>/` for a traversal — or, for `insufficient_evidence`, a one-line note on what was tried. |
 
 ## Step 5 — flag real findings
 

@@ -127,7 +127,7 @@ format (one `##` section per cell type or closely related family):
 agreement, and calling out anything that had to be verified by hand>
 
 **Evidence:** <marker→gene table entries, literature quotes if available from
-reports/literature/, `soulcap-match` rank/score>
+literature/, `soulcap-match` rank/score>
 ```
 
 If a candidate is genuinely uncertain (e.g. the SOULCAP profile doesn't test

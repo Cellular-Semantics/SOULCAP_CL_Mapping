@@ -96,7 +96,7 @@ tie bounds are 59–139 for the first two and 114–120 for the third. These are
 change is not evidence of general improvement. Legacy mode remains the default.
 
 - [Corrected evaluation](corrected/matcher_evaluation.md)
-- [Fresh legacy control](legacy/matcher_evaluation.md)
+- [Fresh legacy control](../evaluation-legacy/matcher_evaluation.md) (this run's `.md`/`.tsv` were byte-identical to `evaluation-legacy/` and were deduplicated on 2026-09-28)
 - [Archived strict-before evaluation](../resolver-refinement/enhanced/matcher_evaluation.md)
 - [Earlier eight-way regression triage](../regression-triage/README.md)
 

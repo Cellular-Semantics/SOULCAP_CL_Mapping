@@ -34,7 +34,7 @@ wants to know if any existing mapping is now stale.
   CL ID's current marker-axiom support as `confirmed` (directly asserted),
   `inferred_only`, or `no_marker_axiom`, from
   `reports/cl_pro_relationships.tsv`.
-- `reports/literature/*.md` and `reports/pro_marker_species_support.tsv` — the
+- `literature/*.md` and `reports/pro_marker_species_support.tsv` — the
   literature side of the evidence a mapping might rely on, especially for
   species-specific marker claims.
 - `uv run soulcap-match --req-excl ... --ideal-excl ... --req-pheno ...

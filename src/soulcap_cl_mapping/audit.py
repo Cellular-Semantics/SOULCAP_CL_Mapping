@@ -694,7 +694,7 @@ def add_links(data: dict, root: Path, out: Path) -> None:
             if not isinstance(value, str):
                 continue
             for reference in re.findall(
-                r"https?://[^\s;<>\"]+|(?:reports|marker_mappings|data|mappings)/[^\s;<>\"]+",
+                r"https?://[^\s;<>\"]+|(?:reports|marker_mappings|data|mappings|literature|archive)/[^\s;<>\"]+",
                 value,
             ):
                 parsed = urlsplit(reference)

@@ -12,6 +12,18 @@ marker columns of the **`Marker Combinations`** sheet:
 It has two parts: a [human-readable guide](#1-human-readable-guide) and a
 [formal grammar](#2-formal-grammar-ebnf). They describe the same language.
 
+## Quick reference
+
+```
+live/        selection for live cells, not a marker
+(x|y)        x OR y
+space        AND
+[ ] and ( )  grouping (contents AND- or OR-joined); a postfix after a closing
+             bracket applies to the whole group, e.g. [A B]- = NOT(A AND B)
+postfixes    -, +, lo, hi, int, +/- (= low to undetectable)
+/            OR delimiter on a postfix, e.g. -/lo
+```
+
 ---
 
 ## 1. Human-readable guide

@@ -3,7 +3,7 @@
 Sprint-level breakdown of the Fall 2026 (Oct–Dec) working plan prepared for
 Dr. Alexander Diehl, baselined 2026-09-18. Every item from that plan is
 expanded into concrete sub-tasks with acceptance criteria, grounded in
-[ROADMAP.md](../ROADMAP.md), [gaps.tsv](gaps.tsv), and issues #5, #6, #7,
+[ROADMAP.md](../../ROADMAP.md), [gaps.tsv](../../reports/gaps.tsv), and issues #5, #6, #7,
 #12, #13, #14 as they stood on that date. **No scope beyond those sources** —
 this is a task breakdown of already-agreed work, not a new plan. An
 interactive version of this backlog also exists as a published Claude
@@ -139,7 +139,7 @@ evidence review; curator sign-off pending" — three flagged mappings and five
 marker-representation holds, none of them a coding task.
 
 1. Walk a curator through the three flagged cases in
-   `reports/regression-followup/mapping_review.tsv`: SC000063 (CL:0000625,
+   `archive/2026-09_resolver_experiments/regression-followup/mapping_review.tsv`: SC000063 (CL:0000625,
    Broad — lineage mismatch), SC000067 (CL:0000625, Exact — OR-gate
    equivalence unconfirmed), SC000073 (CL:0000803, Exact — missing tissue
    context).
@@ -195,7 +195,7 @@ lane per the existing division of labor. Monocyte doubles as evidence for
    reachable, falling back to `soulcap-europepmc` when it isn't.
 3. Mine the `OMIPs` tab as a secondary source when the reference set alone
    comes up short.
-4. Write `reports/literature/<category>_markers.md` with verbatim,
+4. Write `literature/<category>_markers.md` with verbatim,
    source-checked quotes — the PreToolUse hook blocks the write if any quote
    isn't in the snippet cache.
 5. For monocyte specifically: cross-reference #12's requested corrections
@@ -313,7 +313,7 @@ September's snapshot as the standing reference.
    `audit_summary.md`, and `audit_data.json`.
 2. Re-run `uv run soulcap-evaluate` for a refreshed matcher evaluation report.
 3. Diff both against the September baselines in
-   `reports/regression-followup/` and `reports/resolver-refinement/` — any
+   `archive/2026-09_resolver_experiments/regression-followup/` and `archive/2026-09_resolver_experiments/resolver-refinement/` — any
    metric regression must be explained, not silently accepted.
 
 **Acceptance criteria:** dashboard and evaluation artifacts carry a December

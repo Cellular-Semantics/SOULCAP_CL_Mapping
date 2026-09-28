@@ -44,7 +44,7 @@ Production scoring, biological policies, mappings, and existing exports were
 not changed by this investigation.
 
 - [Full report: eight runs, boundary cases, and all rank changes](regression_triage.md)
-- [JSON: profiles, targets, competitor scores, axiom and policy evidence, paired factor effects, hashes](regression_triage.json)
+- JSON: profiles, targets, competitor scores, axiom and policy evidence, paired factor effects, hashes. Removed from the tree on 2026-09-28 to save space; recover with `git show 4dfc726:reports/regression-triage/regression_triage.json`
 - [TSV: every case's rank in every run](regression_triage.tsv)
 
 Reproduce with `uv run python -m soulcap_cl_mapping.regression_triage`.

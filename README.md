@@ -35,13 +35,13 @@ the life sciences.
 Milestones and their status live in [ROADMAP.md](ROADMAP.md). The current
 semester's sprint-level breakdown (sub-tasks, acceptance criteria, and what's
 blocked on someone outside the repo) is
-[reports/fall_2026_sprint_backlog.md](reports/fall_2026_sprint_backlog.md).
+[docs/planning/fall_2026_sprint_backlog.md](docs/planning/fall_2026_sprint_backlog.md).
 
 The September 21 discussion draft for Dr. Diehl expands this into a
 plain-language October–December plan, recent-work summary, weekly schedule,
-and agent task instructions: [PDF](reports/fall_2026_semester_plan.pdf),
-[editable Markdown](reports/fall_2026_semester_plan.md), or
-[browser version](reports/fall_2026_semester_plan.html).
+and agent task instructions: [PDF](docs/planning/fall_2026_semester_plan.pdf),
+[editable Markdown](docs/planning/fall_2026_semester_plan.md), or
+[browser version](docs/planning/fall_2026_semester_plan.html).
 Its workload and review targets are proposed for approval, not confirmed commitments.
 
 ## Setup
@@ -181,8 +181,8 @@ mapping evidence, SSSOM export, and the audit now share the same resolver when
 `--marker-map` is explicitly enabled for each command; defaults remain legacy.
 
 ```bash
-uv run soulcap-match --batch --marker-map marker_mappings/marker_protein_gene.csv --term-cache reports/cl_lexical_cache.json --batch-out reports/candidate_cl_mappings_enhanced.tsv
-uv run soulcap-evaluate --marker-map marker_mappings/marker_protein_gene.csv --term-cache reports/cl_lexical_cache.json --baseline reports/matcher_evaluation_baseline.json
+uv run soulcap-match --batch --marker-map marker_mappings/marker_protein_gene.csv --term-cache reports/cl_lexical_cache.json --batch-out reports/candidate_cl_mappings_enhanced.tsv  # archived Sept run: archive/2026-09_resolver_experiments/
+uv run soulcap-evaluate --marker-map marker_mappings/marker_protein_gene.csv --term-cache reports/cl_lexical_cache.json --baseline SAVED_BASELINE.json --out-dir reports/evaluation-next
 uv run soulcap-audit
 ```
 
@@ -214,7 +214,9 @@ the affected policy and its fingerprint; do not simply refresh hashes to bypass 
 Resolution paths are recorded in candidate evidence; withheld cases are listed in
 evaluation JSON under `marker_resolution_issues`.
 
-Isolate resolver changes from lexical coverage and inspect detailed differences:
+Isolate resolver changes from lexical coverage and inspect detailed differences.
+The September 2026 run of these commands is archived in
+[archive/2026-09_resolver_experiments/resolver-refinement/](archive/2026-09_resolver_experiments/resolver-refinement/README.md):
 
 ```bash
 uv run soulcap-resolution-audit
@@ -250,8 +252,8 @@ profiles remain unscored. Single-profile CLI searches use `--subset` or `--paren
 The evaluation distinguishes targets absent from the global index from targets
 present but not retrieved for a row. Candidate-source labels, lexical evidence,
 and protein-resolution paths are exported in batch TSV and evaluation JSON.
-The original baseline is preserved in `reports/matcher_evaluation_baseline.json`;
-controlled runs are in `reports/evaluation-legacy/` and `reports/evaluation-alias/`.
+The original baseline and the controlled legacy/alias runs are archived in
+[archive/2026-09_resolver_experiments/](archive/2026-09_resolver_experiments/README.md) (summaries only; JSON recoverable from git history).
 Mode/input changes make comparisons descriptive rather than equivalent-condition
 regression tests. Broader coverage alone does not establish better ranking.
 
@@ -261,8 +263,9 @@ regression tests. Broader coverage alone does not establish better ranking.
 uv run python -m soulcap_cl_mapping.regression_triage
 ```
 
-Writes [regression_triage.md](reports/regression-triage/regression_triage.md),
-JSON evidence, and a per-case TSV under `reports/regression-triage/`. Optional
+Writes `regression_triage.md`, JSON evidence, and a per-case TSV under
+`reports/regression-triage/` (not currently committed; the September 2026 run is
+[archived](archive/2026-09_resolver_experiments/regression-triage/README.md)). Optional
 `--root` and `--out-dir` select another snapshot or report location. This is a
 diagnostic tool, not a production matcher mode: it does not change policies,
 mapping decisions, scoring weights, or existing audit/evaluation reports.
@@ -278,7 +281,8 @@ the provisional targets or establish biological correctness of a policy.
 ## Input data
 
 The single source of truth is a
-Google Sheet (ask for access)
+[Google Sheet](https://docs.google.com/spreadsheets/d/1uWwczLxgbpWMmXycL8Thq5NVExzlib4A/edit)
+(ask for edit access).
 
 Key tabs:
 
@@ -419,7 +423,7 @@ are retained in the registry's `legacy_subject_id` column.
 
 ## Evidence-reviewed regression follow-up
 
-The [steps 3–6 follow-up](reports/regression-followup/README.md) reviews the
+The [steps 3–6 follow-up](archive/2026-09_resolver_experiments/regression-followup/README.md) reviews the
 three lost top-five targets, retains a narrowly scoped whole-CD8 surface
 assertion in opt-in policy mode, and records controlled before/after results.
 Top-five provisional agreement remains 16/80; this is not a validated ranking
@@ -452,7 +456,7 @@ uncertainty trigger (weak literature, a conflict with CL axioms, no exact CL ter
 etc.) are sent for expert review; confident mappings go straight into the Google
 Sheet. See the folder README for the workflow, statuses, and template. Scaffolded
 2026-09-23 — no reviews written yet, and how it relates to the existing
-`reports/literature/` Milestone 2 reports is still being confirmed with Dr. Diehl
+[`literature/`](literature/) Milestone 2 reports is still being confirmed with Dr. Diehl
 (see [ROADMAP.md](ROADMAP.md)).
 
 ## Skills & literature workflows

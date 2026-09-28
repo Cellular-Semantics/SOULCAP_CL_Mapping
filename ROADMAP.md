@@ -36,7 +36,7 @@ working on any task.
 
 For the Oct–Dec 2026 execution plan against these milestones — broken into
 sprint-level sub-tasks, acceptance criteria, and who each item is blocked
-on — see [reports/fall_2026_sprint_backlog.md](reports/fall_2026_sprint_backlog.md).
+on — see [docs/planning/fall_2026_sprint_backlog.md](docs/planning/fall_2026_sprint_backlog.md).
 
 Status legend: ⬜ not started · 🟡 in progress · ✅ done · ⛔ blocked.
 
@@ -128,7 +128,7 @@ type as claimed.
 - Distinguish "no supporting evidence found" from "evidence found" — never
   invent support.
 
-**Deliverable:** a set of markdown reports under `reports/literature/` (e.g. one
+**Deliverable:** a set of markdown reports under `literature/` (moved from `reports/literature/` on 2026-09-28) (e.g. one
 per cell type or per marker), each listing markers, verified supporting quotes,
 and citations.
 
@@ -213,5 +213,5 @@ upstream to `obophenotype/cell-ontology`.
   before relying on automated parsing for M1/M3/M4.
 - **Folders to standardise:**
   - `marker_mappings/` — curated mapping CSVs (tracked).
-  - `reports/literature/` — M2 literature reports.
+  - `literature/` — M2 literature reports.
   - `reports/` — analysis/audit reports (M3, M4).
