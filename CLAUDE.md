@@ -163,7 +163,9 @@ exact ontology labels via OLS4 — prefer it for term resolution.
 - **`soulcap-cl-matching`** — propose a CL match for a SOULCAP cell type using
   both marker-axiom scoring (`soulcap-match`) and lexical search, cross-checked
   against each other and verified via direct OLS4 lookup when uncertain, then
-  written into `reports/candidate_cl_mappings.md` with rationale and evidence.
+  recorded as a row in `mappings/curated_mappings.tsv` with rationale and
+  evidence, followed by `uv run soulcap-sssom` to regenerate the reports. It
+  never edits the generated `reports/candidate_cl_mappings.md` directly.
   The Milestone 4 workflow. See
   [SKILL.md](.claude/skills/soulcap-cl-matching/SKILL.md).
 - **`pro-marker-species-support`** — check whether a CL PRO marker asserted on

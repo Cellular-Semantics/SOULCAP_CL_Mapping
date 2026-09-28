@@ -1,6 +1,6 @@
 ---
 name: soulcap-cl-matching
-description: Propose a Cell Ontology (CL) match for a SOULCAP cell type (one, several, or all of them) using both marker-axiom scoring and name-based lexical search, cross-checking the two before trusting either, and writing the result into reports/candidate_cl_mappings.md with rationale and evidence. Invoke when asked to map/match a SOULCAP cell type to CL, propose a CL ID, or extend Milestone 4 candidate mappings.
+description: Propose a Cell Ontology (CL) match for a SOULCAP cell type (one, several, or all of them) using both marker-axiom scoring and name-based lexical search, cross-checking the two before trusting either, and recording the result as a row in mappings/curated_mappings.tsv (then regenerating reports with soulcap-sssom) with rationale and evidence. Invoke when asked to map/match a SOULCAP cell type to CL, propose a CL ID, or extend Milestone 4 candidate mappings.
 ---
 
 You propose SOULCAP → Cell Ontology (CL) mappings the way they were actually
@@ -109,32 +109,43 @@ because it needed an OR-group marker check
 
 ## Step 4 — write the result
 
-Append an entry to `reports/candidate_cl_mappings.md` following the existing
-format (one `##` section per cell type or closely related family):
+Record the decision as a row in
+[`mappings/curated_mappings.tsv`](../../../mappings/curated_mappings.tsv), then
+regenerate the outputs:
 
-```markdown
-## <Abbreviation> — <Full Name>
-
-**SOULCAP definition:** <marker columns, briefly>
-
-| Field | Value |
-|---|---|
-| Proposed CL term | <label> |
-| Proposed CL ID | `CL:XXXXXXX` |
-| Match type | Exact / Broad |
-
-**Rationale:** <why this term, referencing marker matches AND/OR lexical
-agreement, and calling out anything that had to be verified by hand>
-
-**Evidence:** <marker→gene table entries, literature quotes if available from
-literature/, `soulcap-match` rank/score>
+```bash
+uv run soulcap-sssom
 ```
 
-If a candidate is genuinely uncertain (e.g. the SOULCAP profile doesn't test
-a marker needed to distinguish two otherwise-equal CL candidates), say so
-explicitly — mark it **tentative** and name the alternatives, rather than
-picking one silently. See the `ILCp` entry in `candidate_cl_mappings.md` for
-the pattern.
+This rewrites `reports/candidate_cl_mappings.sssom.tsv`, the readable
+`reports/candidate_cl_mappings.md`, and the provenance sidecar. **Never edit
+`reports/candidate_cl_mappings.md` directly** — it is generated, and hand edits
+are overwritten on the next export. See [mappings/README.md](../../../mappings/README.md)
+for the column rules.
+
+- `subject_id`: the cell type's permanent `SOULCAP:SCnnnnnn` ID from
+  `mappings/soulcap_entities.tsv`. If the cell type has no entity row, stop and
+  ask; never invent or renumber IDs.
+- To change an existing proposal, edit its row; add a new row only for a
+  subject with no proposal yet.
+- `abbreviation`, `subject_label`: as in the entity registry.
+- `cl_id`, `cl_label`: verified via OLS4 (Step 3), exact label.
+- `match_type`: `Exact` (proposed equivalence), `Broad` (CL is broader),
+  `Narrow` (CL is narrower) or `Related`.
+- `uncertain`: set it (and name the alternatives in `note`) when the profile
+  can't distinguish between CL candidates. Don't pick one silently.
+- `review_status`: always `needs_review`. Only a human curator changes it.
+- `note`: the rationale — why this term, marker matches and/or lexical
+  agreement, and anything verified by hand. Include the `soulcap-match`
+  rank/score.
+- `lexical_evidence`, `literature_evidence`, `curator_evidence`: structured
+  evidence, kept separate. Literature evidence must be verbatim quotes with
+  PMID/DOI from `literature/`; leave it blank rather than invent a citation.
+- `evidence_source`: where the evidence lives (file path or URL).
+- Leave `evidence_override` blank; it is historical provenance only.
+
+Marker evidence (matches, contradictions, unknowns) is computed by
+`soulcap-sssom` from the source profile — don't write it by hand.
 
 ## Step 5 — flag anything wrong in either resource
 
