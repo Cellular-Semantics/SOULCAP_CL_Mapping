@@ -55,7 +55,9 @@ Those 30 rows (mostly T-cell memory/naive subsets) are defined only by their
 Parent gate, and their defining markers (e.g. CCR7, CD45RA) aren't in the
 Sheet. **Should a row with an empty Required column inherit its parent gate's
 markers?** Parent names don't always match an existing row, which would need
-fixing first.
+fixing first. Example: CCR7 now has verified evidence (EV00264, EV00265), but
+no SOULCAP row can use it, because the T-cell memory subsets leave *Required
+phenotypic* empty.
 
 ## 6. CL/PRO issue candidates (not filed)
 
