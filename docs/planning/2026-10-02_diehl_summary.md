@@ -1,7 +1,7 @@
 # Human vs mouse validity of CL markers: pilot summary for 2 October 2026
 
 For Dr. Diehl. Your request from 28 September, a pilot on 3 CL terms, and
-four questions before the rest is done.
+three questions before the rest is done.
 
 ## The task and how it's done
 
@@ -69,8 +69,6 @@ b. **Negative lineage markers.** For assertions like "lacks CD14 / CD19 / CD20"
 c. **Human-specific CL terms.** For terms like CL:0000938 ("…, human"), is
    "mouse not applicable", scoped `human` when the human side is supported,
    the right rule?
-
-d. **Order of work.** Any CL terms or markers to prioritise?
 
 ## Remaining scope
 
