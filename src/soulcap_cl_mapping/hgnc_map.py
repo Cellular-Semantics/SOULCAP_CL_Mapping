@@ -107,11 +107,36 @@ def extract_hgnc(node: dict[str, Any]) -> tuple[str, str]:
     return "", ""
 
 
+def strip_isoform_suffix(curie: str) -> str:
+    """Strip isoform suffix from a UniProtKB CURIE.
+
+    The Monarch Node Normalizer resolves canonical accessions only; isoform
+    variants like ``UniProtKB:P16871-1`` must be reduced to ``UniProtKB:P16871``
+    before querying.  Non-UniProtKB CURIEs are returned unchanged.
+
+    Examples
+    --------
+    >>> strip_isoform_suffix("UniProtKB:P16871-1")
+    'UniProtKB:P16871'
+    >>> strip_isoform_suffix("UniProtKB:P16871")
+    'UniProtKB:P16871'
+    >>> strip_isoform_suffix("PR:000001002")
+    'PR:000001002'
+    """
+    if not curie.startswith("UniProtKB:"):
+        return curie
+    prefix, accession = curie.split(":", 1)
+    base = accession.split("-")[0]
+    return f"{prefix}:{base}"
+
+
 def collect_pr_mappings(rows: list[dict[str, str]]) -> dict[str, str]:
     """Collect unique PR CURIE → first human UniProt CURIE (or "") from the rows.
 
     De-duplicates by PR: the first occurrence wins.  If ``uniprot_human``
     contains several "; "-separated CURIEs, only the first is used for lookup.
+    Isoform suffixes (e.g. ``-1``, ``-2``) are stripped before returning so
+    that the Monarch Node Normalizer receives canonical accessions.
 
     Returns
     -------
@@ -125,7 +150,7 @@ def collect_pr_mappings(rows: list[dict[str, str]]) -> dict[str, str]:
             continue
         uniprot_human = row.get("uniprot_human", "")
         first_up = uniprot_human.split(";")[0].strip() if uniprot_human else ""
-        pr_to_uniprot[pr] = first_up
+        pr_to_uniprot[pr] = strip_isoform_suffix(first_up) if first_up else ""
     return pr_to_uniprot
 
 
