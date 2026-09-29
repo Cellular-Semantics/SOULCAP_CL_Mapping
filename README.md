@@ -1,473 +1,174 @@
 # SOULCAP ↔ Cell Ontology Mapping
 
-Warning - any mappings found on this repo or linked to from it are a work in progress. They are NOT official products of SOULCAP or the Cell Ontology
+> **Warning:** any mappings found in this repo or linked from it are a work in
+> progress. They are NOT official products of SOULCAP or the Cell Ontology.
 
 ## Aims
 
 Build mappings between [SOULCAP](https://soulcap.org/) and the
-[Cell Ontology](https://github.com/obophenotype/cell-ontology), improving both
-resources in the process.
-
-By aligning SOULCAP cell type definitions with Cell Ontology classes, this work
-aims to:
+[Cell Ontology](https://github.com/obophenotype/cell-ontology) (CL), improving
+both resources in the process:
 
 - Give SOULCAP cell types stable, interoperable ontology identifiers.
 - Surface gaps and inconsistencies in both resources (missing cell types,
   ambiguous definitions, conflicting marker assertions) so they can be fixed
   upstream.
 
-## Background
+**SOULCAP** defines immune cell types by positive/negative cell-surface marker
+combinations measured by flow cytometry, each backed by reference literature.
+**CL** is the community OBO ontology of cell types; many CL terms carry logical
+axioms linking them to Protein Ontology (PRO) marker proteins.
 
-**SOULCAP** ([soulcap.org](https://soulcap.org/)) is a resource that defines
-cell types — including by their positive and negative cell-surface marker
-combinations as measured by flow cytometry. Each cell type is backed by
-reference literature.
+**Status (2026-09-28):** 127 SOULCAP cell types have local IDs; 80 have a
+proposed CL mapping (50 Exact, 30 Broad). All 80 are `needs_review`. See
+[ROADMAP.md](ROADMAP.md) for milestones.
 
-**Cell Ontology (CL)**
-([github.com/obophenotype/cell-ontology](https://github.com/obophenotype/cell-ontology))
-is a community-developed OBO ontology providing a structured, cross-species
-controlled vocabulary of cell types. It is widely used for annotating
-single-cell datasets and is a standard reference for cell type identity across
-the life sciences.
+## Pipeline
+
+```mermaid
+flowchart TD
+    sheet[("Google Sheet<br/>Marker Combinations")] -->|soulcap-sync| data["data/*.csv<br/>(gitignored cache)"]
+    data -->|soulcap-validate| val["reports/marker_validation.md<br/>syntax errors for SOULCAP"]
+    data -->|soulcap-tokens| tokens["marker_mappings/marker_tokens.csv"]
+    tokens -->|soulcap-map| registry["marker_mappings/marker_protein_gene.csv<br/>token → PRO / UniProt / gene"]
+    registry --- policy["marker_mappings/marker_resolution.tsv<br/>allow / withhold per token"]
+    ubergraph[("Ubergraph<br/>CL + PRO")] -->|soulcap-cl-pro| clpro["reports/cl_pro_relationships.tsv<br/>CL marker axioms"]
+    data --> match
+    clpro --> match
+    policy -.->|"--marker-map (opt-in)"| match
+    match["soulcap-match<br/>marker-axiom + lexical scoring"] --> batch["reports/candidate_cl_mappings_batch.tsv<br/>unreviewed shortlist"]
+    batch -->|"agent skill + curator review"| curated["mappings/curated_mappings.tsv<br/>proposed decisions"]
+    curated -->|soulcap-sssom| sssom["reports/candidate_cl_mappings.sssom.tsv<br/>+ .md review + provenance hashes"]
+    curated -->|soulcap-audit| audit["reports/audit_dashboard.html"]
+    curated -->|soulcap-evaluate| evalr["reports/matcher_evaluation.md"]
+```
+
+Stage-by-stage commands and options: [docs/pipeline.md](docs/pipeline.md).
+
+## Key files
+
+| What | Where |
+|---|---|
+| Source definitions | The [Google Sheet](https://docs.google.com/spreadsheets/d/1uWwczLxgbpWMmXycL8Thq5NVExzlib4A/edit), synced into `data/`. Never edit `data/`; fix the Sheet. |
+| Marker expression grammar | [MARKER_SYNTAX.md](MARKER_SYNTAX.md) |
+| **Token → PRO mapping** | [marker_mappings/marker_protein_gene.csv](marker_mappings/marker_protein_gene.csv): each marker token with its PRO ID, UniProt ID and gene |
+| **Which tokens are withheld, and why** | [marker_mappings/marker_resolution.tsv](marker_mappings/marker_resolution.tsv) (policy per token) and [reports/marker_resolution_audit.md](reports/marker_resolution_audit.md) (effect on matching). How the three relate, and what the SHA-256 column is: [marker_mappings/README.md](marker_mappings/README.md) |
+| **Proposed CL mappings (decisions)** | [mappings/curated_mappings.tsv](mappings/curated_mappings.tsv), with local IDs in [mappings/soulcap_entities.tsv](mappings/soulcap_entities.tsv) |
+| Proposed CL mappings (to read) | [reports/candidate_cl_mappings.md](reports/candidate_cl_mappings.md) and the SSSOM export [reports/candidate_cl_mappings.sssom.tsv](reports/candidate_cl_mappings.sssom.tsv) |
+| CL's own marker axioms | [reports/cl_pro_relationships.md](reports/cl_pro_relationships.md) |
+| Gaps in CL or SOULCAP | [reports/gaps.tsv](reports/gaps.tsv), [reports/cl_term_issues.md](reports/cl_term_issues.md) |
+| Literature evidence | [literature/evidence.tsv](literature/evidence.tsv), one row per cell type, marker and quote, with views in [literature/](literature/README.md) |
+| Audit dashboard | [reports/audit_dashboard.html](reports/audit_dashboard.html) (download and open in a browser) |
+
+## Mapping machinery
+
+The mapping work mixes deterministic code, LLM agent skills and human review.
+Each has a clear boundary.
+
+**Deterministic Python** (`src/soulcap_cl_mapping/`, run with `uv run <command>`).
+Same inputs, same outputs; covered by unit tests at ≥80%.
+
+| Command | Does |
+|---|---|
+| `soulcap-sync` | Download the Sheet into `data/` and validate marker strings |
+| `soulcap-validate`, `soulcap-tokens` | Check marker strings against the grammar; extract distinct tokens |
+| `soulcap-map`, `soulcap-hgnc` | Build the token → PRO / UniProt / gene registry; add HGNC symbols to CL axioms |
+| `soulcap-cl-pro` | Pull CL→PRO marker axioms from Ubergraph |
+| `soulcap-match` | Rank CL terms against a SOULCAP marker profile (marker axioms, plus lexical with `--lexical`) |
+| `soulcap-oak-match`, `soulcap-lookup`, `soulcap-cache-terms` | Name/synonym search in CL (local OAK database, OLS4, or cached labels) |
+| `soulcap-sssom` | Turn `curated_mappings.tsv` into SSSOM + a readable review, with per-mapping marker evidence |
+| `soulcap-audit`, `soulcap-evaluate`, `soulcap-resolution-audit` | Dashboard, matcher retrieval metrics, effect of marker policies |
+| `soulcap-resolved` | List cell types whose markers all resolve to single PRO terms, and the CL terms they reach |
+| `soulcap-europepmc`, `soulcap-pubmed`, `soulcap-cache`, `soulcap-validate-report` | Literature search and snippet caching; quote verification |
+| `soulcap-evidence` | Literature evidence table: migrate narratives, verify quotes against Europe PMC full text, build views |
+
+**Agent skills** (`.claude/skills/`, run by Claude Code). These do judgement
+work: choosing between candidates, reading papers, writing rationale. They call
+the commands above for anything that can be computed.
+
+| Skill | Purpose | Inputs → outputs | Runs |
+|---|---|---|---|
+| [soulcap-cl-matching](.claude/skills/soulcap-cl-matching/SKILL.md) | Propose a CL term for a SOULCAP cell type, cross-checking marker and lexical matching, verifying via OLS4 | Sheet rows, CL axioms → proposed mapping with rationale | Agent + `soulcap-match`, `soulcap-lookup` |
+| [citation-traversal](.claude/skills/citation-traversal/SKILL.md) | Answer a question from seed papers by following their citations two levels deep | Question + seed DOIs/PMIDs → quoted summary in `reports/citation_traversal/` (gitignored) | Agent + Asta; a hook blocks any quote not verbatim in the cache |
+| [pro-marker-species-support](.claude/skills/pro-marker-species-support/SKILL.md) | Check whether a CL PRO marker is supported in human, mouse or both | CL axioms, `literature/` → [reports/pro_marker_species_support.tsv](reports/pro_marker_species_support.tsv) | Agent + `pro_species_support.py`, `soulcap-europepmc` |
+| [mapping-audit](.claude/skills/mapping-audit/SKILL.md) | Re-check proposed mappings against current CL axioms and literature; catch drift | SSSOM, CL axioms, `literature/` → `reports/mapping_audit.md` (not yet run) | Agent + `soulcap-match`, `soulcap-lookup` |
+| [ontology-term-lookup](.claude/skills/ontology-term-lookup/SKILL.md) | Resolve a biological term to an exact ontology label | Term + ontology → matched ID and label | Agent + OLS4 MCP |
+| [gap-issue-filing](.claude/skills/gap-issue-filing/SKILL.md) | File unfiled `gaps.tsv` rows as GitHub issues, avoiding duplicates | `reports/gaps.tsv` → GitHub issues, row updated | Agent + `gh` |
+| [roadmap-status-sync](.claude/skills/roadmap-status-sync/SKILL.md) | Correct stale milestone markers in ROADMAP.md from what is on disk | Repo files, issues → ROADMAP.md | Agent |
+
+**Human review.** Every proposal starts as `review_status = needs_review` in
+`curated_mappings.tsv`. Per-cell-type evidence and verdicts are written in
+[cell_type_reviews/](cell_type_reviews/README.md); only reviews that hit an
+uncertainty trigger go to Dr. Diehl. A verdict takes effect only once it is
+entered in the Sheet. Gap issues and CL change requests are filed only after
+review. (The review folder was scaffolded 2026-09-23 with no reviews yet; how
+it relates to [literature/](literature/README.md) is still being confirmed with
+Dr. Diehl.)
+
+**Reproducibility.**
+- Generated outputs carry SHA-256 hashes of their inputs: the SSSOM export has
+  a `.provenance.json` sidecar, and the evaluation JSON records input and
+  matcher-source hashes.
+- Each marker policy stores a fingerprint of its registry rows, so it fails
+  loudly if the registry changes.
+- Literature quotes must be verbatim and cited; the citation-traversal hook
+  enforces this.
+- No numeric confidence is assigned yet, pending calibration against reviewed
+  examples.
+
+## Outputs
+
+Every file in [reports/](reports/README.md) is listed in its README with the
+command that produces it and whether it is curated or generated. The ones most
+people want:
+
+| Output | Producer | Regenerable | For |
+|---|---|---|---|
+| [candidate_cl_mappings.md](reports/candidate_cl_mappings.md) / [.sssom.tsv](reports/candidate_cl_mappings.sssom.tsv) | `soulcap-sssom` | Yes | Reviewers; CL editors |
+| [audit_dashboard.html](reports/audit_dashboard.html) | `soulcap-audit` | Yes (needs `data/`) | Reviewers |
+| [gaps.tsv](reports/gaps.tsv), [cl_term_issues.md](reports/cl_term_issues.md) | Hand-curated | No | CL and SOULCAP maintainers |
+| [marker_validation.md](reports/marker_validation.md), [marker_string_issues.md](reports/marker_string_issues.md) | `soulcap-sync` / hand-curated | Partly | SOULCAP curators |
+| [pro_marker_species_support.tsv](reports/pro_marker_species_support.tsv) | `pro-marker-species-support` skill | No | CL editors |
+| [matcher_evaluation.md](reports/matcher_evaluation.md) | `soulcap-evaluate` | Yes | Developers |
+
+## Quick start
+
+Install [UV](https://docs.astral.sh/uv/), then:
+
+```bash
+uv sync                  # create the environment
+uv run soulcap-sync      # pull the Sheet into data/ (sheet must be link-viewable)
+uv run soulcap-match --batch     # candidate shortlist for every cell type
+uv run soulcap-sssom     # regenerate the mapping review + SSSOM from curated_mappings.tsv
+uv run soulcap-audit     # regenerate the dashboard
+uv run pytest            # tests (≥80% coverage enforced)
+```
+
+To change a mapping decision, edit
+[mappings/curated_mappings.tsv](mappings/curated_mappings.tsv) and re-run
+`soulcap-sssom`. MCP servers and API keys (Asta, optional PubMed):
+[docs/setup.md](docs/setup.md).
+
+## Repository layout
+
+| Folder | Contents |
+|---|---|
+| [mappings/](mappings/README.md) | Curated mapping decisions and permanent local entity IDs |
+| [marker_mappings/](marker_mappings/README.md) | Token → PRO registry and per-token resolution policy |
+| [literature/](literature/README.md) | Literature evidence (verbatim quotes with citations) |
+| [cell_type_reviews/](cell_type_reviews/README.md) | One evidence-and-verdict file per SOULCAP cell type |
+| [reports/](reports/README.md) | Current outputs, each listed with its producer |
+| [docs/](docs/README.md) | Detailed documentation and planning documents |
+| [archive/](archive/README.md) | Finished experiments, kept for the record |
+| [src/](src/README.md), `tests/` | Python package and its unit tests |
+
+Agent guidance, including where new files go, is in [CLAUDE.md](CLAUDE.md).
 
 ## Planning
 
-Milestones and their status live in [ROADMAP.md](ROADMAP.md). The current
-semester's sprint-level breakdown (sub-tasks, acceptance criteria, and what's
-blocked on someone outside the repo) is
-[reports/fall_2026_sprint_backlog.md](reports/fall_2026_sprint_backlog.md).
-
-The September 21 discussion draft for Dr. Diehl expands this into a
-plain-language October–December plan, recent-work summary, weekly schedule,
-and agent task instructions: [PDF](reports/fall_2026_semester_plan.pdf),
-[editable Markdown](reports/fall_2026_semester_plan.md), or
-[browser version](reports/fall_2026_semester_plan.html).
-Its workload and review targets are proposed for approval, not confirmed commitments.
-
-## Setup
-
-### 1. Clone this repo
-
-### 2. Install UV and create the environment
-
-Install [UV](https://docs.astral.sh/uv/), then use it to create a virtual
-environment with the project dependencies:
-
-```bash
-# Install UV (macOS / Linux)
-curl -LsSf https://astral.sh/uv/install.sh | sh
-
-# Create the virtual environment and install dependencies
-uv sync
-```
-
-### 2. MCP servers (Claude Code)
-
-The MCP servers used by this project — `Asta_semanticscholar` (literature
-search), `artl-mcp`, and `ols4` — are defined in the committed
-[.mcp.json](.mcp.json) and enabled for the project in the committed
-`.claude/settings.json`. No per-developer action is needed to enable them.
-
-### 3. Configure the Asta API token
-
-The [Asta](https://allenai.org/asta/resources/mcp) tools require a personal API
-key. Request one from <https://allenai.org/asta/resources/mcp>, then add it to
-your **local, gitignored** Claude Code settings at
-`.claude/settings.local.json`:
-
-```json
-{
-  "env": {
-    "ASTA_API_KEY": "{token}"
-  }
-}
-```
-
-Replace `{token}` with your actual key. Claude Code reads this `env` block at
-startup and expands `${ASTA_API_KEY}` into the `x-api-key` header in
-[.mcp.json](.mcp.json).
-
-`.claude/settings.local.json` is gitignored and must **never** be committed —
-it is the only place the secret lives. Restart Claude Code after editing it so
-the key is picked up.
-
-### Optional: PubMed (NCBI E-utilities)
-
-`soulcap-pubmed` (`src/soulcap_cl_mapping/pubmed_search.py`) works keyless,
-same as `soulcap-europepmc`. An NCBI API key just raises the rate limit from
-3 to 10 requests/second. If you want one, generate it from your
-[NCBI account settings](https://www.ncbi.nlm.nih.gov/account/settings/) under
-**API Key Management**, then add it to the **local, gitignored** `.env`:
-
-```
-PUBMED_API_KEY={token}
-```
-
-Unlike `ASTA_API_KEY`, this is read directly by Python (via `python-dotenv`),
-not through Claude Code's MCP `env` substitution — it isn't an MCP server key.
-
-## Unified audit dashboard
-
-Generate an offline dashboard from the local data and mapping registries:
-
-```bash
-uv run soulcap-audit
-```
-
-Open [reports/audit_dashboard.html](reports/audit_dashboard.html) in a browser.
-It includes searchable, filterable review tables for SOULCAP entities, proposed
-CL targets, prioritized findings, marker coverage, gaps, species evidence, and
-input provenance. Expand a row to inspect its evidence and source references.
-No server, network calls, or additional dashboard dependencies are required.
-
-The command also writes [audit_summary.md](reports/audit_summary.md) and
-[audit_data.json](reports/audit_data.json). Use `--root PATH` for another repository
-snapshot, `--out-dir PATH` for another output directory, or `--strict` to return
-exit code 1 when error findings exist (reports are still generated).
-
-The audit recomputes marker evidence without changing source data or mappings.
-Missing inputs are reported as unavailable, not zero. Local hashes and export
-evidence are checked for drift; upstream freshness is not checked. Historical
-agreement reports and family-level gaps are not silently joined to entity IDs.
-Mapping proposals and marker compatibility do **not** establish equivalence.
-
-## Matcher evaluation
-
-```bash
-uv run soulcap-evaluate
-uv run soulcap-audit
-```
-
-The first command writes `reports/matcher_evaluation.md`, `.json`, and `.tsv`;
-the second refreshes the dashboard's evaluation view. Evaluation is offline and
-uses the production matcher unchanged, including its name hints and tie order.
-It measures CL target retrieval, not the correctness of an equivalence relation.
-
-Existing mapping proposals automatically form a **provisional agreement** cohort.
-The separate [benchmark TSV](mappings/matcher_benchmark.tsv) starts empty: no
-proposal is automatically certified as ground truth. Add manually reviewed cases
-with columns `subject_id`, `acceptable_cl_ids` (`|`-separated alternatives),
-`match_type` (`Exact`, `Broad`, `Narrow`, `Related`), `review_status` (`reviewed`
-or `provisional`), and `evidence_reference` (required for reviewed cases).
-One case represents a subject/relation within a cohort. An explicit provisional
-case overrides that subject/relation's proposal-derived targets. Review statuses
-in the proposal registry never automatically promote cases to the reviewed cohort.
-
-Top-1/3/5 hit rates and mean reciprocal rank include every cohort case in their
-denominators, with zero credit for unscorable profiles and absent targets. Empty
-cohorts report unavailable metrics. Best/worst tie bounds expose ordering
-sensitivity; disqualified candidates are retained and flagged, not endorsed.
-Exact/Broad/Narrow/Related results are reported separately. Profile drift requires
-review before scoring; benchmark targets must be re-reviewed if definitions change.
-
-To compare against a saved JSON baseline without overwriting it:
-
-```bash
-uv run soulcap-evaluate --baseline reports/matcher_evaluation.json --out-dir reports/evaluation-next
-```
-
-Use `--root PATH` or `--benchmark PATH` for other snapshots/case files. The JSON
-records input and matcher-source hashes. Input/configuration drift marks baseline
-comparisons non-equivalent; rank changes are descriptive, not significance tests.
-The dashboard reads the default report location and checks local hashes; a custom
-benchmark is unverified unless its contents match the default benchmark.
-Missing or malformed required inputs fail before reports are written.
-
-## Alias/protein-aware matching and local candidate coverage
-
-The enhanced modes are explicit opt-ins; omitting the flags preserves the legacy
-marker scorer. They do not change curated mapping decisions. Candidate scoring,
-mapping evidence, SSSOM export, and the audit now share the same resolver when
-`--marker-map` is explicitly enabled for each command; defaults remain legacy.
-
-```bash
-uv run soulcap-match --batch --marker-map marker_mappings/marker_protein_gene.csv --term-cache reports/cl_lexical_cache.json --batch-out reports/candidate_cl_mappings_enhanced.tsv
-uv run soulcap-evaluate --marker-map marker_mappings/marker_protein_gene.csv --term-cache reports/cl_lexical_cache.json --baseline reports/matcher_evaluation_baseline.json
-uv run soulcap-audit
-```
-
-Marker resolution uses explicit registry aliases and exact PRO identity, preserving
-positive/negative and expression-level distinctions. Its sibling policy file,
-[marker_resolution.tsv](marker_mappings/marker_resolution.tsv), must classify
-every normalized registry marker as `single_protein`, `protein_family`, `complex`,
-`reagent_gate`, or `unresolved`, with an explicit `allow`/`withhold` protein policy,
-rationale, source reference, and SHA-256 of the original registry rows. Runtime
-resolution does not interpret free-text notes to decide protein identity. Only
-single-protein policies with exactly one PRO ID can allow protein expansion.
-Missing, conflicting, or stale policies fail rather than silently guessing.
-
-Initial policies preserve existing single-PRO representations as computational
-assumptions, not biological sign-offs. CD3, CD8, CD15, CD16, and MR1 have conservative
-holds because the registry's component/family/reagent representation needs review;
-no source identifiers have been changed. Complex, family, and reagent policies
-cannot inherit a component-protein assertion through an alias. An explicit
-same-marker assertion without a component PRO remains distinguishable evidence.
-Related/broad ontology synonyms do not imply identity. No gene-symbol,
-cross-species, or protein-hierarchy equivalence is inferred.
-
-Compatible duplicate aliases with the same allowed PRO identity are merged;
-conflicting owners remain unresolved. Identical semantic clauses count once across
-required/ideal columns (required takes precedence), while contradictory signs,
-different levels, and distinct OR constraints remain separate. Original source
-spelling is retained for evidence display. After a registry edit, review and update
-the affected policy and its fingerprint; do not simply refresh hashes to bypass review.
-Resolution paths are recorded in candidate evidence; withheld cases are listed in
-evaluation JSON under `marker_resolution_issues`.
-
-Isolate resolver changes from lexical coverage and inspect detailed differences:
-
-```bash
-uv run soulcap-resolution-audit
-uv run soulcap-evaluate --out-dir reports/resolver-refinement/legacy
-uv run soulcap-evaluate --marker-map marker_mappings/marker_protein_gene.csv --out-dir reports/resolver-refinement/enhanced --baseline reports/resolver-refinement/legacy/matcher_evaluation.json
-uv run soulcap-sssom --marker-map marker_mappings/marker_protein_gene.csv --out reports/resolver-refinement/enhanced.sssom.tsv
-uv run soulcap-audit --marker-map marker_mappings/marker_protein_gene.csv --out-dir reports/resolver-refinement/audit
-```
-
-The [resolution audit](reports/marker_resolution_audit.md) includes per-marker
-gains/losses and JSON with per-mapping before/after evidence. Case-normalized
-resolution covers 73 marker groups from 75 registry rows. Comparison runs use
-identical source/axiom snapshots and no lexical expansion; modes intentionally
-differ, so the general evaluation comparison flags them as non-equivalent runs.
-Enhanced SSSOM export requires a separate output path to protect the default export.
-The audit explicitly distinguishes export/audit mode differences from evidence drift.
-
-The local lexical cache contains active CL labels and exact synonyms from a local
-OAK SQLite snapshot, with a source-database hash. To rebuild from your own snapshot:
-
-```bash
-uv run soulcap-cache-terms --database PATH_TO_CL_DB --out reports/cl_lexical_cache.json
-```
-
-No network services are contacted. The cache extraction timestamp is not an
-ontology release date or upstream freshness check. Lexical candidates use the source
-full name (abbreviation fallback), never expected mapping targets: normalized exact
-matches first, then word overlap of at least 0.5, limited to 20 candidates per row.
-They are unioned with marker candidates and scored with the existing weights;
-missing axioms remain unknown, not supporting evidence. Invalid/no-qualified-marker
-profiles remain unscored. Single-profile CLI searches use `--subset` or `--parent`.
-
-The evaluation distinguishes targets absent from the global index from targets
-present but not retrieved for a row. Candidate-source labels, lexical evidence,
-and protein-resolution paths are exported in batch TSV and evaluation JSON.
-The original baseline is preserved in `reports/matcher_evaluation_baseline.json`;
-controlled runs are in `reports/evaluation-legacy/` and `reports/evaluation-alias/`.
-Mode/input changes make comparisons descriptive rather than equivalent-condition
-regression tests. Broader coverage alone does not establish better ranking.
-
-## Offline regression triage
-
-```bash
-uv run python -m soulcap_cl_mapping.regression_triage
-```
-
-Writes [regression_triage.md](reports/regression-triage/regression_triage.md),
-JSON evidence, and a per-case TSV under `reports/regression-triage/`. Optional
-`--root` and `--out-dir` select another snapshot or report location. This is a
-diagnostic tool, not a production matcher mode: it does not change policies,
-mapping decisions, scoring weights, or existing audit/evaluation reports.
-
-All eight combinations separate enhanced token-evidence additions, legacy
-token-evidence removals, and semantic-clause deduplication. Candidates, their order,
-source profiles, and scoring weights remain fixed; no lexical search is run.
-Both endpoints must reproduce the production matchers. The report includes ties,
-changed expected-target and competitor evidence, policy references, pairwise
-factor effects, and input/code hashes. These computational findings do not validate
-the provisional targets or establish biological correctness of a policy.
-
-## Input data
-
-The single source of truth is a
-Google Sheet (ask for access)
-
-Key tabs:
-
-- **`Marker Combinations`** — master definition of SOULCAP cell types by
-  positive/negative flow-cytometry markers. The `OLS CL identifier` and
-  `CL Mapping Notes` columns are the targets this project populates. The marker
-  expression language used in this sheet is specified in
-  [MARKER_SYNTAX.md](MARKER_SYNTAX.md).
-- **`Citation Mgr`** — reference papers per major cell type.
-
-**Do not hand-edit the local copies — edit the Google Sheet instead.** Pull the
-latest snapshot at any time with:
-
-```bash
-uv run soulcap-sync
-```
-
-This downloads the workbook to `data/soulcap_source.xlsx` and explodes each tab
-into a CSV under `data/` (e.g. `data/marker_combinations.csv`). The entire
-`data/` directory is a regenerable cache and is gitignored.
-
-Options:
-
-```bash
-uv run soulcap-sync --no-csv            # download the raw .xlsx only
-uv run soulcap-sync --sheet-id <id>     # pull a different sheet
-SOULCAP_SHEET_ID=<id> uv run soulcap-sync
-```
-
-> The sheet must be shared as *"anyone with the link can view"* for the
-> unauthenticated export to work.
-
-## CL ↔ PR (Cell Ontology → PRO) marker relationships
-
-The Cell Ontology already defines many cell types by their protein markers via
-logical axioms. To use these as a SOULCAP↔CL mapping reference, pull them from
-the [Ubergraph](https://ubergraph.apps.renci.org/sparql) SPARQL endpoint:
-
-```bash
-uv run soulcap-cl-pro
-```
-
-This regenerates two artifacts under `reports/`:
-
-- **`cl_pro_relationships.md`** — CL-centric: each cell type with its PR markers
-  grouped by sense (positive / negative / high / low), annotated with CD
-  synonyms and mouse/human UniProt IDs, flagging inferred-only edges.
-- **`cl_pro_relationships.tsv`** — one row per (cell, relation, PR) for diffing
-  across CL/PRO releases.
-
-```bash
-uv run soulcap-cl-pro --reports-dir other/   # write elsewhere
-uv run soulcap-cl-pro --endpoint <url>        # use a different SPARQL endpoint
-```
-
-## Candidate CL matching (`soulcap-match`)
-
-Validation, token extraction, and scoring share one phenotype AST. Boolean
-negation and expression levels are preserved. Malformed profiles are flagged
-without producing marker candidates; missing axioms remain unknown. Batch
-outputs include stable `subject_id` and specimen context so duplicate
-abbreviations cannot be merged accidentally. Token regeneration also refuses
-invalid source expressions. See [MARKER_SYNTAX.md](MARKER_SYNTAX.md#4-implementation-semantics).
-
-The committed agreement TSV predates this parser/identity migration. Regenerate
-it with `soulcap-match --batch --lexical` before comparing it with current
-batch results; cached old lexical results cannot safely distinguish all
-duplicated source rows.
-
-Ranks CL terms against a SOULCAP marker profile, scored from
-`cl_pro_relationships.tsv`. Single-profile mode (paste the four marker columns
-for one cell type):
-
-```bash
-uv run soulcap-match --req-excl "CD14- CD3- CD19-" --req-pheno "CD45+ CD56+/hi" --parent "NK cell"
-```
-
-Batch mode scores every row of `data/marker_combinations.csv` in one pass:
-
-```bash
-uv run soulcap-match --batch                # -> reports/candidate_cl_mappings_batch.tsv
-uv run soulcap-match --batch --lexical       # + name-based OLS4 CL search and an
-                                              #   agreement report (reports/candidate_cl_mappings_agreement.tsv)
-```
-
-Marker-axiom scoring can only rank CL terms that already have a PR axiom in
-`cl_pro_relationships.tsv` — many CL terms (including some "obvious" parent
-classes) have none and are invisible to it. `--lexical` adds an independent
-name-based candidate per row; rows where both approaches agree are a much
-stronger signal than either alone. **Treat batch output as an unreviewed draft
-shortlist** — check the `contradictions`/`marker_conflict` columns before
-trusting a rank-1 pick, since shared exclusion markers can inflate scores for
-biologically wrong candidates.
-
-## OAK lexical/synonym matching (`soulcap-oak-match`)
-
-A second, independent lexical matcher using [OAK](https://incatools.github.io/ontology-access-kit/)
-(Ontology Access Kit) instead of the OLS4 REST API:
-
-```bash
-uv run soulcap-oak-match "Natural Killer Cell"
-uv run soulcap-oak-match "NK cell" --top 5
-```
-
-Uses OAK's `sqlite:obo:cl` adapter — a search-optimised local database that
-ranks exact label/synonym matches first by construction (OLS4's free-text
-relevance ranking, by contrast, can bury an exact match behind dozens of
-more-specific subtype variants). Downloads and caches a local CL database
-(~100MB) on first use; instant afterwards.
-
-## SSSOM mapping export (`soulcap-sssom`)
-
-The decision source is [mappings/curated_mappings.tsv](mappings/curated_mappings.tsv).
-The [entity registry](mappings/soulcap_entities.tsv) supplies permanent local
-SOULCAP IDs; [registry documentation](mappings/README.md) explains identity
-resolution, migration aliases, review status, and evidence fields.
-
-```bash
-uv run soulcap-sssom
-```
-
-This generates `reports/candidate_cl_mappings.sssom.tsv`, the readable
-`reports/candidate_cl_mappings.md`, and an input-hash provenance sidecar.
-The original detailed rationale, including sheet-confirmation notes, is
-preserved in [the narrative archive](reports/candidate_cl_mappings_narrative.md).
-
-Evidence is evaluated against each source phenotype: required-marker matches,
-contradictions, unknown clauses, ideal-marker conflicts, and direct versus
-inferred support. Current sheet confirmation, lexical evidence, and literature
-evidence remain separate. Missing or malformed profiles are explicitly flagged.
-Numeric confidence is omitted pending calibration, and all mappings remain
-proposals requiring review. Marker compatibility alone does not prove that two
-cell-type definitions are equivalent.
-
-Use `--source`, `--mappings`, `--tsv`, `--out`, and `--review-out` to
-select inputs and output locations. Existing abbreviation-based subject IDs
-are retained in the registry's `legacy_subject_id` column.
-
-## Evidence-reviewed regression follow-up
-
-The [steps 3–6 follow-up](reports/regression-followup/README.md) reviews the
-three lost top-five targets, retains a narrowly scoped whole-CD8 surface
-assertion in opt-in policy mode, and records controlled before/after results.
-Top-five provisional agreement remains 16/80; this is not a validated ranking
-improvement. Two proposed mapping relations lack sufficient support.
-
-[Resolver constraint examples](mappings/marker_assertion_benchmark.json) run
-as regression tests. A [five-entity prospective reserve](mappings/benchmark_reserve.json)
-is kept separate from development proposals and identical profiles. It still
-needs independent annotation; no gold-standard mappings or held-out accuracy
-are claimed. The report explains the remaining curator decisions.
-
-## ROBOT ontology QC
-
-`.github/workflows/robot-qc.yml` runs on every PR and audits upstream CL —
-downloads CL's `cl-base.owl` (import-free release artifact) and runs
-`robot report` + `robot reason` (ELK) on it standalone, independent of
-anything in this repo. Catches pre-existing CL bugs (e.g. duplicate
-equivalence/subclass axioms) worth reporting upstream. It never touches our
-own candidate mappings — those stay as SSSOM, a proposal for human review,
-not something this repo should unilaterally convert into OWL axioms and merge
-into CL as if already accepted.
-
-## Cell-type reviews
-
-[`cell_type_reviews/`](cell_type_reviews/README.md) holds one review file per
-SOULCAP cell type. Each file gathers the marker definition, marker → protein/gene
-mappings, verbatim literature support, a comparison against Cell Ontology terms
-and their marker axioms, and a proposed CL mapping. Reviews that meet an
-uncertainty trigger (weak literature, a conflict with CL axioms, no exact CL term,
-etc.) are sent for expert review; confident mappings go straight into the Google
-Sheet. See the folder README for the workflow, statuses, and template. Scaffolded
-2026-09-23 — no reviews written yet, and how it relates to the existing
-`reports/literature/` Milestone 2 reports is still being confirmed with Dr. Diehl
-(see [ROADMAP.md](ROADMAP.md)).
-
-## Skills & literature workflows
-
-This repo ships Claude Code skills under `.claude/skills/`:
-
-- **`citation-traversal`** — answer a specific research question from a set of
-  seed papers via a two-round ASTA (Semantic Scholar) citation traversal:
-  `snippet_search` the seeds, follow the inline references that support the
-  answering sentences, `snippet_search` those cited papers, cache every snippet,
-  then synthesise a referenced summary. Every quote in the summary must be
-  verbatim from a cached snippet — a PreToolUse hook
-  (`.claude/hooks/validate_report_quotes.py`) blocks the report otherwise. Caches
-  and reports land under `reports/citation_traversal/<run_id>/` (gitignored).
-  Supporting CLIs: `soulcap-cache` (persist snippet results) and
-  `soulcap-validate-report` (manual quote check). See the
-  [skill](.claude/skills/citation-traversal/SKILL.md).
-- **`ontology-term-lookup`** — resolve biological terms to ontology labels via OLS4.
+- Milestones and status: [ROADMAP.md](ROADMAP.md)
+- Fall 2026 sprint backlog: [docs/planning/fall_2026_sprint_backlog.md](docs/planning/fall_2026_sprint_backlog.md)
+- Sept 21 semester plan draft for Dr. Diehl (proposed, not confirmed):
+  [Markdown](docs/planning/fall_2026_semester_plan.md),
+  [PDF](docs/planning/fall_2026_semester_plan.pdf),
+  [HTML](docs/planning/fall_2026_semester_plan.html)

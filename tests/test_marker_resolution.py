@@ -103,6 +103,9 @@ def change_policy(path, update):
             representation="complex", protein_resolution="allow"
         ),
         lambda rows: rows.clear(),
+        # An allowed marker cannot carry a failure category.
+        lambda rows: rows[0].update(failure_category="protein_family"),
+        lambda rows: rows[0].update(evidence_level="hunch"),
     ],
 )
 def test_invalid_or_stale_policy_rejected(tmp_path, update):
@@ -110,6 +113,41 @@ def test_invalid_or_stale_policy_rejected(tmp_path, update):
     change_policy(path, update)
     with pytest.raises(ValueError):
         mr.load(path)
+
+
+def test_withheld_policy_failure_category(tmp_path):
+    path = marker_file(tmp_path, [marker(), marker("HLA-DR", "HLA-DR", "PR:1")])
+    ok = dict(
+        failure_category="protein_complex",
+        specific_rationale="heterodimer",
+        evidence_level="ontology_checked",
+        next_action="ask David",
+    )
+    change_policy(path, lambda rows: rows[1].update(ok))
+    assert mr.load(path)["policies"]["HLA-DR"]["failure_category"] == "protein_complex"
+    change_policy(path, lambda rows: rows[1].update(failure_category="mystery"))
+    with pytest.raises(ValueError, match="failure category"):
+        mr.load(path)
+
+
+REAL_MARKER_MAP = Path(__file__).resolve().parents[1] / (
+    "marker_mappings/marker_protein_gene.csv"
+)
+
+
+def test_every_real_withheld_marker_says_why():
+    policies = mr.load(REAL_MARKER_MAP)["policies"]
+    withheld = {
+        t: p for t, p in policies.items() if p["protein_resolution"] == "withhold"
+    }
+    assert withheld
+    for token, p in withheld.items():
+        assert p["failure_category"] in mr.FAILURE_CATEGORIES, token
+        assert p["evidence_level"] in mr.EVIDENCE_LEVELS, token
+        assert p["specific_rationale"].strip(), token
+        assert p["next_action"].strip(), token
+    allowed = [p for p in policies.values() if p["protein_resolution"] == "allow"]
+    assert all(not p["failure_category"] for p in allowed)
 
 
 def test_missing_or_malformed_policy(tmp_path):
@@ -152,6 +190,9 @@ def test_export_audit_report_consistency(snapshot, tmp_path):
     report = json.loads((snapshot / "reports/marker_resolution_audit.json").read_text())
     assert report["summary"]["normalized_markers"] == 1
     assert report["mapping_comparisons"][0]["enhanced_evidence"] == expected
+    assert "failure_category" in report["markers"][0]
+    md = (snapshot / "reports/marker_resolution_audit.md").read_text(encoding="utf-8")
+    assert "## Why each withheld marker is withheld" in md
     out = snapshot / "enhanced"
     assert (
         audit.main(

@@ -60,6 +60,10 @@ def build_report(root: Path, marker_map: Path) -> dict:
                 canonical=resolver["canonical"].get(token),
                 rationale=policy["rationale"],
                 source_ref=policy["source_ref"],
+                failure_category=policy["failure_category"],
+                specific_rationale=policy["specific_rationale"],
+                evidence_level=policy["evidence_level"],
+                next_action=policy["next_action"],
                 registry_tokens=sorted(
                     {r["marker_token"] for r in resolver["groups"][token]}
                 ),
@@ -145,6 +149,10 @@ def main(argv: list[str] | None = None) -> int:
                     "lost",
                     "rationale",
                     "source_ref",
+                    "failure_category",
+                    "specific_rationale",
+                    "evidence_level",
+                    "next_action",
                 ],
                 delimiter="\t",
                 extrasaction="ignore",
@@ -166,6 +174,19 @@ def main(argv: list[str] | None = None) -> int:
         for r in data["markers"]:
             lines.append(
                 f"| {r['marker_token']} | {r['representation']} / {r['protein_resolution']} | {r['legacy_axiom_rows']} → {r['enhanced_axiom_rows']} | {r['rationale'].replace('|', '/').replace(chr(10), ' ')} |"
+            )
+        withheld = [r for r in data["markers"] if r["protein_resolution"] == "withhold"]
+        cell = lambda s: s.replace("|", "/").replace(chr(10), " ")  # noqa: E731
+        lines += [
+            "",
+            "## Why each withheld marker is withheld",
+            "",
+            "| Marker | Category | Why | Evidence | Next action |",
+            "|---|---|---|---|---|",
+        ]
+        for r in withheld:
+            lines.append(
+                f"| {r['marker_token']} | {r['failure_category']} | {cell(r['specific_rationale'])} | {r['evidence_level']} | {cell(r['next_action'])} |"
             )
         lines += [
             "",

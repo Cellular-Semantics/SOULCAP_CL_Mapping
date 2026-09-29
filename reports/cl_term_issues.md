@@ -80,7 +80,7 @@ cells.
 ### Natural killer cell missing CD56 marker axiom — CL:0000623
 
 **Repo issue:** not yet filed
-**Reference:** SOULCAP `NK` row ([data/marker_combinations.csv](../data/marker_combinations.csv), regenerate via `uv run soulcap-sync`); literature in [reports/literature/nk_cell_markers.md](literature/nk_cell_markers.md)
+**Reference:** SOULCAP `NK` row ([data/marker_combinations.csv](../data/marker_combinations.csv), regenerate via `uv run soulcap-sync`); literature in [archive/2026-09_literature_narratives/nk_cell_markers.md](../archive/2026-09_literature_narratives/nk_cell_markers.md)
 **Status:** Drafted during Milestone 4 candidate mapping work — not yet filed as a repo issue
 
 #### CL:0000623 — "natural killer cell"
@@ -135,6 +135,55 @@ marker profile ranks `CL:0000623` only 33rd of 826 CL terms — well below its
 own CD56-bright/dim children — specifically because of this missing axiom,
 despite `CL:0000623` being the conceptually correct parent-level match for
 SOULCAP's unqualified "NK" cell type.
+
+---
+
+## Candidates for review (not filed)
+
+Found during the 2026-09-28 marker-resolution review (tidy plan Phase 3).
+**Not filed anywhere, here or upstream.** For Dr. Osumi-Sutherland to review
+first. Evidence and the full marker-resolution context are in
+[docs/marker_resolution.md](../docs/marker_resolution.md#decisions-for-david).
+
+### CD16 is represented by a mouse-defined PRO term — PR:000001483
+
+**Status:** candidate — not filed
+
+CL's CD16 axioms use PR:000001483 "low affinity immunoglobulin gamma Fc region
+receptor III". PRO defines it (OLS4, retrieved 2026-09-28) as "An
+immunoglobulin gamma Fc receptor II/III/IV that is a translation product of the
+mouse Fcgr3 gene or a 1:1 ortholog thereof." Human CD16 comes from two genes,
+which PRO models separately: PR:000001484 (FCGR3A, CD16a) and PR:000001485
+(FCGR3B, CD16b). Neither is a child of PR:000001483; both sit under
+PR:000001355.
+
+It is used in 20 asserted axioms, including three terms labelled as human:
+
+- CL:0000938 "CD16-negative, CD56-bright natural killer cell, human" (lacks)
+- CL:0000939 "CD16-positive, CD56-dim natural killer cell, human" (has)
+- CL:0002343 "decidual natural killer cell, human" (lacks)
+
+**Question for review:** should human CD16 axioms use CD16a and/or CD16b
+instead? The common clone 3G8 binds both (see the clone table in the doc
+linked above), so a CD16− flow gate means "lacks CD16a and lacks CD16b".
+
+### CD15 is represented by the enzyme that makes it — PR:000001456 (FUT4)
+
+**Status:** candidate — not filed
+
+CD15 antibodies detect the Lewis X carbohydrate, but CL's CD15 axioms use
+PR:000001456 "alpha-(1,3)-fucosyltransferase 4" (FUT4), the enzyme that
+synthesises it. PRO lists "CD15" as an exact synonym of FUT4 (OLS4, retrieved
+2026-09-28), which is probably where the link comes from. It is used in 8
+asserted `has plasma membrane part` axioms, all on granulocyte-lineage terms
+(e.g. CL:0000096 mature neutrophil, CL:0000836 promyelocyte).
+
+**Question for review:** is "has plasma membrane part FUT4" an acceptable
+stand-in for "CD15-positive", or should CD15 be modelled as a carbohydrate
+(a CHEBI Lewis X term such as CHEBI:62287, structural match to be
+confirmed)? The same question applies to CD57 (HNK-1 epitope, made by
+B3GAT1, PR:000001440): CL has one such axiom, CL:4033092 "CD57-positive
+enterocyte" `expresses` PR:000001440.
 
 ---
 

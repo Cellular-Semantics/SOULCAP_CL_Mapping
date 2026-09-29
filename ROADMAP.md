@@ -36,7 +36,7 @@ working on any task.
 
 For the Oct–Dec 2026 execution plan against these milestones — broken into
 sprint-level sub-tasks, acceptance criteria, and who each item is blocked
-on — see [reports/fall_2026_sprint_backlog.md](reports/fall_2026_sprint_backlog.md).
+on — see [docs/planning/fall_2026_sprint_backlog.md](docs/planning/fall_2026_sprint_backlog.md).
 
 Status legend: ⬜ not started · 🟡 in progress · ✅ done · ⛔ blocked.
 
@@ -128,9 +128,12 @@ type as claimed.
 - Distinguish "no supporting evidence found" from "evidence found" — never
   invent support.
 
-**Deliverable:** a set of markdown reports under `reports/literature/` (e.g. one
-per cell type or per marker), each listing markers, verified supporting quotes,
-and citations.
+**Deliverable:** originally a set of markdown reports under `reports/literature/`
+(one per cell type or per marker, each listing markers, verified supporting
+quotes and citations). Since 2026-09-28 the evidence lives in
+`literature/evidence.tsv` (one row per cell type, marker and quote, checked
+against the paper's full text), and the narrative reports are archived in
+`archive/2026-09_literature_narratives/`.
 
 **Status (2026-09-08):** 8 of the 14 cell-type categories in the `Citation
 Mgr` tab are covered — B cell, DC, ILC, iNKT, NK cell, T cell, gdT, MAIT
@@ -213,5 +216,5 @@ upstream to `obophenotype/cell-ontology`.
   before relying on automated parsing for M1/M3/M4.
 - **Folders to standardise:**
   - `marker_mappings/` — curated mapping CSVs (tracked).
-  - `reports/literature/` — M2 literature reports.
+  - `literature/` — M2 literature reports.
   - `reports/` — analysis/audit reports (M3, M4).

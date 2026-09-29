@@ -25,18 +25,38 @@ POLICY_FIELDS = [
     "rationale",
     "source_ref",
     "registry_sha256",
+    "failure_category",
+    "specific_rationale",
+    "evidence_level",
+    "next_action",
 ]
+# Why a withheld token cannot be resolved to one PRO term. Blank for allow rows.
+FAILURE_CATEGORIES = {
+    "carbohydrate_epitope",
+    "lipid_antigen_reagent",
+    "multimer_reagent",
+    "multi_gene_product",
+    "protein_complex",
+    "protein_family",
+    "source_syntax_artifact",
+    "needs_curator",
+}
+EVIDENCE_LEVELS = {
+    "ontology_checked",  # PRO/GO/CHEBI terms looked up and cited
+    "source_traced",  # traced to the sheet rows that produce the token
+    "registry_note_only",  # only the registry's own notes
+}
 
 # Evidence-scoped exceptions, NOT molecular-identity mappings. PR:000025402
 # denotes the whole CD8 coreceptor, unlike the CD8-alpha registry entry.
 # Require an explicit same-token label/exact synonym and this surface relation;
 # do not expand aliases, infer components, or convert generic has-part to surface.
-# Review and frozen-source provenance: reports/regression-followup/README.md.
+# Review and frozen-source provenance: archive/2026-09_resolver_experiments/regression-followup/README.md.
 REVIEWED_SURFACE_ASSERTIONS = {
     ("CD8", "PR:000025402", "RO:0002104", "positive"): {
         "rule_id": "whole_cd8_surface_positive_v1",
         "source_ref": "http://purl.obolibrary.org/obo/PR_000025402",
-        "review_ref": "reports/regression-followup/README.md#scoped-correction",
+        "review_ref": "archive/2026-09_resolver_experiments/regression-followup/README.md#scoped-correction",
         "interpretation": "marker_assertion_not_molecular_equivalence",
     }
 }
@@ -90,6 +110,15 @@ def load(path: Path) -> dict:
                 raise ValueError("Invalid representation or protein resolution policy")
             if not row["rationale"].strip() or not row["source_ref"].strip():
                 raise ValueError("Policy needs rationale and source reference")
+            category = row["failure_category"].strip()
+            if category and (
+                category not in FAILURE_CATEGORIES
+                or row["protein_resolution"] == "allow"
+            ):
+                raise ValueError(f"Invalid failure category for {token}: {category}")
+            level = row["evidence_level"].strip()
+            if level and level not in EVIDENCE_LEVELS:
+                raise ValueError(f"Invalid evidence level for {token}: {level}")
             if row["registry_sha256"] != signature(groups[token]):
                 raise ValueError(
                     f"Stale marker policy: {token}; review registry changes"

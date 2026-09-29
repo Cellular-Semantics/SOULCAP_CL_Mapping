@@ -55,16 +55,21 @@ AST in `marker_syntax.py`, compiled/evaluated by `phenotype.py`.
 
 | Path | Purpose |
 |------|---------|
-| [README.md](README.md) | Project overview + setup (UV, Asta token). |
+| [README.md](README.md) | Short overview: aims, pipeline diagram, key files, mapping machinery (code vs skills vs human review), outputs, quick start. |
 | `CLAUDE.md` | This file — guidance for Claude. |
 | [ROADMAP.md](ROADMAP.md) | Planned work / milestones and their deliverables and dependencies. |
-| [Notes.md](Notes.md) | Scratch notes on data sources + a marker-syntax quick reference. |
 | [MARKER_SYNTAX.md](MARKER_SYNTAX.md) | **Canonical spec** of the marker expression language (human-readable guide + EBNF). Cite this for anything parsing/validating marker strings. |
-| [reports/](reports/) | Analysis reports. `marker_string_issues.md` is the curated review; `marker_validation.md` is **auto-generated** by the EBNF validator on each sync. `cl_pro_relationships.md`/`.tsv` are **auto-generated** by `soulcap-cl-pro` from Ubergraph. `cl_term_issues.md` tracks proposed CL corrections found during mapping work. `candidate_cl_mappings.md` is the Milestone 4 deliverable — proposed SOULCAP→CL mappings with rationale and evidence. `candidate_cl_mappings_batch.tsv`/`candidate_cl_mappings_agreement.tsv` are **auto-generated** by `soulcap-match --batch [--lexical]` (issue #6) — a marker-axiom-only pass and a marker/lexical agreement pass across every SOULCAP cell type; treat as an unreviewed draft shortlist (conflicts must be checked), not curated output. `candidate_cl_mappings.sssom.tsv` is **auto-generated** by `soulcap-sssom` from the curated `CURATED_MAPPINGS` table in `sssom_export.py` (kept in sync by hand with `candidate_cl_mappings.md`) — standard SSSOM format, with `confidence`/`comment` derived from whether the match is backed by a directly-asserted CL marker axiom, an inferred-only one, or none at all (lexical/name match only). `gaps.tsv` is a curated, hand-maintained log of cases where SOULCAP has no reasonable CL match, CL conflicts with a marker panel, CL has an axiom gap, or the sheet itself has a data problem — separate from the mapping table; matching GitHub issues use the `gap` label (`.github/ISSUE_TEMPLATE/mapping_gap.yml`). `pro_marker_species_support.tsv` is the issue #11 deliverable — for each (CL cell type, general PRO marker) pair SOULCAP's mappings actually touch, whether literature supports the marker as human, mouse, or both, or `insufficient_evidence`; built by the `pro-marker-species-support` skill, every quote verified verbatim against its source before writing. `fall_2026_sprint_backlog.md` is the sprint-level breakdown of [ROADMAP.md](ROADMAP.md)'s Fall 2026 (Oct–Dec) working plan, prepared for Dr. Diehl — hand-maintained, not regenerable; update it as items complete or scope is renegotiated, don't treat it as a generated report. New reports go here. `reports/citation_traversal/` holds gitignored, regenerable snippet caches + summaries from the `citation-traversal` skill. |
-| [cell_type_reviews/](cell_type_reviews/README.md) | **One review file per SOULCAP cell type** (tracked, curated — not a regenerable cache): definition, marker→protein, verbatim literature support, CL comparison, proposed verdict, uncertainty flags. Start from `_template.md` and keep the folder README's index in sync. Only reviews flagged **uncertain** go to Dr. Diehl for expert review. Scaffolded 2026-09-23, no reviews written yet; its relationship to the existing `reports/literature/` Milestone 2 output is still being confirmed with Dr. Diehl — see ROADMAP.md before assuming one supersedes the other. |
-| `src/soulcap_cl_mapping/` | All Python code. `sync_sheets.py` → `soulcap-sync`; `marker_syntax.py` → `soulcap-validate` (EBNF validator); `snippet_cache.py` → `soulcap-cache`; `report_validator.py` → `soulcap-validate-report`; `cl_pro.py` → `soulcap-cl-pro` (CL→PR relationships via Ubergraph SPARQL); `cl_match.py` → `soulcap-match` (marker-axiom + lexical CL candidate scoring, single-profile or `--batch`); `oak_match.py` → `soulcap-oak-match` (OAK sqlite-backed lexical/synonym CL search — downloads/caches a local CL database on first use, ~100MB); `sssom_export.py` → `soulcap-sssom` (curated mappings → SSSOM TSV, with confidence derived from CL marker-axiom assertion status); `pro_species_support.py` (scopes CL PRO markers needing species-specificity literature support — no CLI, called as a library from the `pro-marker-species-support` skill); `europepmc_search.py` → `soulcap-europepmc` (free, keyless Europe PMC search — fallback literature source when the Asta MCP server isn't reachable); `pubmed_search.py` → `soulcap-pubmed` (NCBI E-utilities search — reads `PUBMED_API_KEY` from `.env` if set for the higher rate limit, otherwise works keyless; use when a task specifically needs NCBI's own index/query syntax rather than Europe PMC's mirror of it). |
+| [reports/](reports/README.md) | **Current outputs only.** Every file is listed in [reports/README.md](reports/README.md) with its producer and whether it is curated or generated. Curated (hand-maintained): `gaps.tsv`, `cl_term_issues.md`, `marker_string_issues.md`, `pro_marker_species_support.tsv` (issue #11, built by the `pro-marker-species-support` skill), `proposed_marker_fixes.xlsx`, `soulcap_feedback.tsv` (draft feedback for SOULCAP, not yet sent), `candidate_cl_mappings_narrative.md`. Generated (don't hand-edit): `candidate_cl_mappings.md`/`.sssom.tsv` (`soulcap-sssom`, from `mappings/curated_mappings.tsv`), `candidate_cl_mappings_batch.tsv`/`_agreement.tsv` (`soulcap-match --batch [--lexical]`, unreviewed draft shortlists), `audit_*` (`soulcap-audit`), `matcher_evaluation.*` (`soulcap-evaluate`), `marker_resolution_audit.*` (`soulcap-resolution-audit`), `fully_resolved_*` (`soulcap-resolved`), `marker_validation.md` (`soulcap-sync`/`soulcap-validate`), `cl_pro_relationships.md`/`.tsv` (`soulcap-cl-pro`, Ubergraph), `cl_lexical_cache.json` (`soulcap-cache-terms`). `reports/citation_traversal/` holds gitignored snippet caches from the `citation-traversal` skill. |
+| [cell_type_reviews/](cell_type_reviews/README.md) | **One review file per SOULCAP cell type** (tracked, curated — not a regenerable cache): definition, marker→protein, verbatim literature support, CL comparison, proposed verdict, uncertainty flags. Start from `_template.md` and keep the folder README's index in sync. Only reviews flagged **uncertain** go to Dr. Diehl for expert review. Scaffolded 2026-09-23, no reviews written yet; its relationship to the existing [`literature/`](literature/) Milestone 2 output is still being confirmed with Dr. Diehl — see ROADMAP.md before assuming one supersedes the other. |
+| [mappings/](mappings/README.md) | Curated mapping decisions (`curated_mappings.tsv`), permanent local entity IDs (`soulcap_entities.tsv`), and matcher benchmark files. The decision source of truth for this repo. |
+| [marker_mappings/](marker_mappings/README.md) | Token → PRO/UniProt/gene registry (`marker_protein_gene.csv`), per-token resolution policy (`marker_resolution.tsv`), token list, and PRO→UniProt overrides. Tracked, curated. |
+| [literature/](literature/README.md) | Milestone 2 literature evidence. `evidence.tsv` is the curated table (one row per cell type, marker and quote, with a `verified` flag from `soulcap-evidence verify`); `by_cell_type/` and `by_marker/` are generated views; `reviews/` indexes review papers; the original narrative `*_markers.md` files are archived in `archive/2026-09_literature_narratives/`. Moved from `reports/literature/` on 2026-09-28. |
+| [docs/](docs/README.md) | Detailed docs moved out of the README: `setup.md`, `pipeline.md`, `marker_resolution.md`, `matching_and_evaluation.md`. |
+| [docs/planning/](docs/planning/) | Planning documents: `fall_2026_sprint_backlog.md` (hand-maintained sprint breakdown of ROADMAP.md; update as items complete, not a generated report) and the Sept 21 `fall_2026_semester_plan` draft (`.md`, `.pdf`, `.html`). |
+| [archive/](archive/README.md) | Finished one-off experiments, one dated folder each with a README. Not current output; nothing regenerates it. |
+| [src/](src/README.md) `soulcap_cl_mapping/` | All Python code (module-by-stage table in `src/README.md`). `sync_sheets.py` → `soulcap-sync`; `marker_syntax.py` → `soulcap-validate` (EBNF validator); `snippet_cache.py` → `soulcap-cache`; `report_validator.py` → `soulcap-validate-report`; `cl_pro.py` → `soulcap-cl-pro` (CL→PR relationships via Ubergraph SPARQL); `cl_match.py` → `soulcap-match` (marker-axiom + lexical CL candidate scoring, single-profile or `--batch`); `oak_match.py` → `soulcap-oak-match` (OAK sqlite-backed lexical/synonym CL search — downloads/caches a local CL database on first use, ~100MB); `sssom_export.py` → `soulcap-sssom` (curated mappings → SSSOM TSV, with confidence derived from CL marker-axiom assertion status); `pro_species_support.py` (scopes CL PRO markers needing species-specificity literature support — no CLI, called as a library from the `pro-marker-species-support` skill); `europepmc_search.py` → `soulcap-europepmc` (free, keyless Europe PMC search — fallback literature source when the Asta MCP server isn't reachable); `pubmed_search.py` → `soulcap-pubmed` (NCBI E-utilities search — reads `PUBMED_API_KEY` from `.env` if set for the higher rate limit, otherwise works keyless; use when a task specifically needs NCBI's own index/query syntax rather than Europe PMC's mirror of it). |
 | `tests/` | Unit tests (mirror `src/` layout). |
-| `.claude/skills/` | Project skills — see [citation-traversal](.claude/skills/citation-traversal/SKILL.md), `ontology-term-lookup`, [pro-marker-species-support](.claude/skills/pro-marker-species-support/SKILL.md), [gap-issue-filing](.claude/skills/gap-issue-filing/SKILL.md), [roadmap-status-sync](.claude/skills/roadmap-status-sync/SKILL.md), and [mapping-audit](.claude/skills/mapping-audit/SKILL.md). |
+| `.claude/skills/` | Project skills — see [soulcap-cl-matching](.claude/skills/soulcap-cl-matching/SKILL.md), [citation-traversal](.claude/skills/citation-traversal/SKILL.md), `ontology-term-lookup`, [pro-marker-species-support](.claude/skills/pro-marker-species-support/SKILL.md), [gap-issue-filing](.claude/skills/gap-issue-filing/SKILL.md), [roadmap-status-sync](.claude/skills/roadmap-status-sync/SKILL.md), and [mapping-audit](.claude/skills/mapping-audit/SKILL.md). |
 | `.claude/hooks/` | Claude Code hooks. `validate_report_quotes.py` is a PreToolUse guard that blocks writing a citation-traversal report whose quotes aren't verbatim in the snippet cache. |
 | `data/` | Gitignored cache of the synced sheet (CSV + xlsx). |
 | `pyproject.toml` | Project metadata, deps, and the CLI entry points. |
@@ -75,8 +80,29 @@ When you create a new artifact, put it in the established location and link it
 from here and the README so locations stay consistent. Do not scatter
 documents at the repo root.
 
+### Where things go
+
+Follow these rules for every new or moved file. Update the relevant folder
+README **in the same commit** as the change.
+
+| New file is… | Put it in | Also |
+|---|---|---|
+| A current generated output (report, export, dashboard) | `reports/` | Add a row to `reports/README.md` (a test enforces this). Never hand-edit generated files. |
+| A one-off experiment, comparison run or diagnostic | `archive/<YYYY-MM>_<topic>/` | Add a README saying what ran, what it showed, how to reproduce. Keep `.md`/`.tsv` summaries; leave out large JSON/HTML. Add a row to `archive/README.md`. |
+| Literature evidence (quotes, review-paper notes) | A row in `literature/evidence.tsv`; review papers in `literature/reviews/reviews.tsv` | Verbatim quotes with PMID/DOI only. No paywalled PDFs. Then run `soulcap-evidence verify` and `views`. |
+| A mapping decision | `mappings/curated_mappings.tsv` (a row, not a new file) | Re-run `soulcap-sssom`. Never put decisions in Python or in `candidate_cl_mappings.md`. |
+| A marker token → protein change | `marker_mappings/` | Review the token's policy row in `marker_resolution.tsv` before updating its `registry_sha256`. |
+| A per-cell-type review | `cell_type_reviews/<slug>.md` | Update the index in `cell_type_reviews/README.md`. |
+| Detailed documentation | `docs/` | Link it from `docs/README.md`. Keep the top-level README short. |
+| A planning document | `docs/planning/` | |
+| Python code / tests | `src/soulcap_cl_mapping/` / `tests/` | Add the module to `src/README.md`; CLIs go in `pyproject.toml`. |
+
+Never create a new top-level folder or root-level file without updating the
+README's layout table and this table. `tests/test_doc_links.py` fails if a
+relative link in the hand-written docs breaks.
+
 The September 21 Fall 2026 planning draft for Dr. Diehl is
-`reports/fall_2026_semester_plan.md`, with matching `.pdf` and `.html` versions.
+`docs/planning/fall_2026_semester_plan.md`, with matching `.pdf` and `.html` versions.
 It summarizes recent work and proposes weekly deliverables and agent task
 instructions. It does not replace the existing sprint backlog or establish
 new scientific approvals or collaborator commitments without agreement.
@@ -93,8 +119,15 @@ new scientific approvals or collaborator commitments without agreement.
   mappings. It never merges our own candidate mappings into CL or reasons
   over them as if accepted — those stay as SSSOM (`soulcap-sssom`), a
   proposal for human review, not something this repo asserts unilaterally.
-- Use **UV** for environment and dependency management (`uv sync`,
-  `uv run ...`). Don't invoke `pip` directly.
+- Use **UV** for environment and dependency management (`uv sync --extra dev`,
+  `uv run ...`). Plain `uv sync` removes the dev tools (pytest, ruff, mypy).
+  Don't invoke `pip` directly.
+- **Never write an identifier from memory.** This covers DOIs, PMIDs, PMCIDs
+  and PRO, CL, GO, CHEBI and UniProt IDs. Look each one up (OLS4, Europe PMC,
+  the source paper or datasheet, or a file in this repo) and cite where it
+  came from. The same applies to facts about an identifier, such as a term's
+  definition, parent or components, or which chain an antibody clone binds:
+  if you can't verify it, say so rather than state it.
 - The marker expression language is precisely defined in
   [MARKER_SYNTAX.md](MARKER_SYNTAX.md) — any parser/validator must conform to
   its EBNF (including the hyphen-disambiguation lexer rule).
@@ -137,7 +170,9 @@ exact ontology labels via OLS4 — prefer it for term resolution.
 - **`soulcap-cl-matching`** — propose a CL match for a SOULCAP cell type using
   both marker-axiom scoring (`soulcap-match`) and lexical search, cross-checked
   against each other and verified via direct OLS4 lookup when uncertain, then
-  written into `reports/candidate_cl_mappings.md` with rationale and evidence.
+  recorded as a row in `mappings/curated_mappings.tsv` with rationale and
+  evidence, followed by `uv run soulcap-sssom` to regenerate the reports. It
+  never edits the generated `reports/candidate_cl_mappings.md` directly.
   The Milestone 4 workflow. See
   [SKILL.md](.claude/skills/soulcap-cl-matching/SKILL.md).
 - **`pro-marker-species-support`** — check whether a CL PRO marker asserted on
