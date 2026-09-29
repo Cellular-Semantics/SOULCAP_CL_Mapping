@@ -333,6 +333,15 @@ def test_tokens_main_missing_csv(tmp_path, capsys):
     assert "not found" in capsys.readouterr().out
 
 
+def test_tokens_main_invalid_source_preserves_output(tmp_path):
+    source = tmp_path / "bad.csv"
+    source.write_text("Abbreviation,Required phenotypic markers\nNK,CD56+)\n")
+    out = tmp_path / "tokens.csv"
+    out.write_text("existing curated tokens\n")
+    assert ms.tokens_main([str(source), "--out", str(out)]) == 1
+    assert out.read_text() == "existing curated tokens\n"
+
+
 def test_tokens_main_creates_output_dir(tmp_path):
     csv = tmp_path / "mc.csv"
     _write_markers_csv(csv)

@@ -28,6 +28,8 @@ wheels/
 
 # Test / coverage / type-check caches
 .pytest_cache/
+.test-runs/
+.uv-cache/
 .ruff_cache/
 .mypy_cache/
 .coverage

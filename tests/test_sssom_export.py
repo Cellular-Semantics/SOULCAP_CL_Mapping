@@ -1,304 +1,202 @@
-"""Tests for soulcap_cl_mapping.sssom_export."""
+"""Regression tests for registry-backed mapping exports."""
 
 from __future__ import annotations
 
 import csv
-from pathlib import Path
+import json
 
+import pytest
+
+from soulcap_cl_mapping import mapping_evidence as me
+from soulcap_cl_mapping import registry
 from soulcap_cl_mapping import sssom_export as se
 
-# --------------------------------------------------------------------------- #
-# Helpers
-# --------------------------------------------------------------------------- #
-_TSV_FIELDS = [
-    "cell",
-    "cell_label",
-    "sense",
-    "asserted",
-    "pr",
-    "pr_label",
-    "cd_synonym",
-]
 
-
-def _make_tsv(rows: list[dict], tmp_path: Path) -> Path:
-    path = tmp_path / "cl_pro.tsv"
-    with path.open("w", encoding="utf-8", newline="") as fh:
-        writer = csv.DictWriter(fh, fieldnames=_TSV_FIELDS, delimiter="\t")
-        writer.writeheader()
-        for row in rows:
-            writer.writerow(row)
-    return path
-
-
-def _row(cell: str, asserted: str) -> dict:
+def decision(**kw):
     return {
-        "cell": cell,
-        "cell_label": "x",
-        "sense": "positive",
-        "asserted": asserted,
-        "pr": "",
-        "pr_label": "",
-        "cd_synonym": "",
+        "subject_id": "SOULCAP:SC000001",
+        "abbreviation": "NK",
+        "subject_label": "NK",
+        "cl_id": "CL:1",
+        "cl_label": "cell",
+        "match_type": "Exact",
+        **kw,
     }
 
 
-# --------------------------------------------------------------------------- #
-# load_assertion_status
-# --------------------------------------------------------------------------- #
-def test_load_assertion_status_confirmed(tmp_path):
-    tsv = _make_tsv([_row("CL:1", "True")], tmp_path)
-    status = se.load_assertion_status(tsv)
-    assert status["CL:1"] is True
+def axiom(marker="CD56", sense="positive", asserted="True", cell="CL:1"):
+    return {
+        "cell": cell,
+        "cell_label": "cell",
+        "sense": sense,
+        "asserted": asserted,
+        "cd_synonym": marker + " (exact)",
+        "pr": "PR:000001024",
+        "relation": "RO:0002104",
+    }
 
 
-def test_load_assertion_status_inferred_only(tmp_path):
-    tsv = _make_tsv([_row("CL:1", "False")], tmp_path)
-    status = se.load_assertion_status(tsv)
-    assert status["CL:1"] is False
+def evidence(entry=None, expr="CD56+", axioms=None, **columns):
+    return me.assess(
+        entry or decision(),
+        {"Required phenotypic markers": expr, **columns},
+        axioms if axioms is not None else [axiom()],
+    )
 
 
-def test_load_assertion_status_any_true_wins(tmp_path):
-    tsv = _make_tsv([_row("CL:1", "False"), _row("CL:1", "True")], tmp_path)
-    status = se.load_assertion_status(tsv)
-    assert status["CL:1"] is True
+def test_unrelated_asserted_axiom_cannot_confirm_mapping():
+    ev = evidence(axioms=[axiom("CD3")])
+    assert ev["status"] == "no_marker_support"
+    assert ev["matched"] == []
+    assert ev["gaps"]
+    assert ev["untested_cl_markers"] == ["CD3"]
 
 
-def test_load_assertion_status_missing_cl_id_absent(tmp_path):
-    tsv = _make_tsv([_row("CL:1", "True")], tmp_path)
-    status = se.load_assertion_status(tsv)
-    assert "CL:999" not in status
+def test_direct_and_inferred_support_are_per_clause():
+    ev = evidence(
+        expr="CD56+ CD3-", axioms=[axiom(), axiom("CD3", "negative", "False")]
+    )
+    assert ev["status"] == "required_markers_supported"
+    assert [m["assertion"] for m in ev["matched"]] == ["direct", "inferred"]
+    assert ev["matched"][0]["axioms"][0]["pr"] == "PR:000001024"
 
 
-# --------------------------------------------------------------------------- #
-# classify_evidence
-# --------------------------------------------------------------------------- #
-def test_classify_evidence_confirmed():
-    assert se.classify_evidence("CL:1", {"CL:1": True}) == "confirmed"
-
-
-def test_classify_evidence_inferred_only():
-    assert se.classify_evidence("CL:1", {"CL:1": False}) == "inferred_only"
-
-
-def test_classify_evidence_no_marker_axiom():
-    assert se.classify_evidence("CL:999", {"CL:1": True}) == "no_marker_axiom"
-
-
-# --------------------------------------------------------------------------- #
-# build_mapping_rows
-# --------------------------------------------------------------------------- #
-def test_build_mapping_rows_confirmed_exact_confidence():
-    curated = [
-        {
-            "abbreviation": "X",
-            "subject_label": "X cell",
-            "cl_id": "CL:1",
-            "cl_label": "x cell",
-            "match_type": "Exact",
-        }
-    ]
-    rows = se.build_mapping_rows(curated, {"CL:1": True})
-    r = rows[0]
-    assert r["confidence"] == 0.9
-    assert r["predicate_id"] == "skos:exactMatch"
-    assert r["mapping_cardinality"] == "1:1"
-    assert "directly-asserted" in r["comment"]
-
-
-def test_build_mapping_rows_inferred_only_lower_confidence():
-    curated = [
-        {
-            "abbreviation": "X",
-            "subject_label": "X cell",
-            "cl_id": "CL:1",
-            "cl_label": "x cell",
-            "match_type": "Exact",
-        }
-    ]
-    rows = se.build_mapping_rows(curated, {"CL:1": False})
-    r = rows[0]
-    assert r["confidence"] == 0.6
-    assert "inferred" in r["comment"].lower()
-
-
-def test_build_mapping_rows_no_marker_axiom_lowest_confirmed_tier():
-    curated = [
-        {
-            "abbreviation": "X",
-            "subject_label": "X cell",
-            "cl_id": "CL:999",
-            "cl_label": "x cell",
-            "match_type": "Exact",
-        }
-    ]
-    rows = se.build_mapping_rows(curated, {"CL:1": True})
-    r = rows[0]
-    assert r["confidence"] == 0.55
-    assert "no marker axiom" in r["comment"].lower()
-
-
-def test_build_mapping_rows_broad_match_lower_than_exact():
-    curated_exact = [
-        {
-            "abbreviation": "X",
-            "subject_label": "X",
-            "cl_id": "CL:1",
-            "cl_label": "x",
-            "match_type": "Exact",
-        }
-    ]
-    curated_broad = [
-        {
-            "abbreviation": "Y",
-            "subject_label": "Y",
-            "cl_id": "CL:1",
-            "cl_label": "x",
-            "match_type": "Broad",
-        }
-    ]
-    exact_conf = se.build_mapping_rows(curated_exact, {"CL:1": True})[0]["confidence"]
-    broad_conf = se.build_mapping_rows(curated_broad, {"CL:1": True})[0]["confidence"]
-    assert broad_conf < exact_conf
-
-
-def test_build_mapping_rows_uncertain_caps_confidence():
-    curated = [
-        {
-            "abbreviation": "X",
-            "subject_label": "X",
-            "cl_id": "CL:1",
-            "cl_label": "x",
-            "match_type": "Exact",
-            "uncertain": True,
-        }
-    ]
-    rows = se.build_mapping_rows(curated, {"CL:1": True})
-    assert rows[0]["confidence"] == se.UNCERTAIN_CONFIDENCE_CAP
-
-
-def test_build_mapping_rows_evidence_override_takes_precedence():
-    curated = [
-        {
-            "abbreviation": "X",
-            "subject_label": "X",
-            "cl_id": "CL:1",  # confirmed in the TSV lookup...
-            "cl_label": "x",
-            "match_type": "Exact",
-            "evidence_override": "no_marker_axiom",  # ...but match wasn't marker-based
-        }
-    ]
-    rows = se.build_mapping_rows(curated, {"CL:1": True})
-    assert rows[0]["confidence"] == 0.55
-
-
-def test_build_mapping_rows_note_prepended_to_comment():
-    curated = [
-        {
-            "abbreviation": "X",
-            "subject_label": "X",
-            "cl_id": "CL:1",
-            "cl_label": "x",
-            "match_type": "Exact",
-            "note": "Custom caveat text.",
-        }
-    ]
-    rows = se.build_mapping_rows(curated, {"CL:1": True})
-    assert rows[0]["comment"].startswith("Custom caveat text.")
-
-
-def test_build_mapping_rows_cardinality_n_to_1():
-    curated = [
-        {
-            "abbreviation": "A",
-            "subject_label": "A",
-            "cl_id": "CL:SHARED",
-            "cl_label": "shared",
-            "match_type": "Exact",
-        },
-        {
-            "abbreviation": "B",
-            "subject_label": "B",
-            "cl_id": "CL:SHARED",
-            "cl_label": "shared",
-            "match_type": "Exact",
-        },
-    ]
-    rows = se.build_mapping_rows(curated, {"CL:SHARED": True})
-    assert all(r["mapping_cardinality"] == "n:1" for r in rows)
-
-
-def test_build_mapping_rows_subject_id_format():
-    curated = [
-        {
-            "abbreviation": "Basophil (PBMC)",
-            "subject_label": "Basophil",
-            "cl_id": "CL:1",
-            "cl_label": "x",
-            "match_type": "Exact",
-        }
-    ]
-    rows = se.build_mapping_rows(curated, {"CL:1": True})
-    assert rows[0]["subject_id"] == "SOULCAP:Basophil_(PBMC)"
-
-
-# --------------------------------------------------------------------------- #
-# write_sssom
-# --------------------------------------------------------------------------- #
-def test_write_sssom_creates_valid_file(tmp_path):
+def test_sheet_confirmation_preserved_without_overriding_conflict():
+    entry = decision(
+        evidence_override="sheet_confirmed",
+        curator_evidence="Confirmed in master Google Sheet",
+    )
+    profile = {"Required phenotypic markers": "CD56-", "OLS CL identifier": "CL:1"}
     rows = se.build_mapping_rows(
-        [
-            {
-                "abbreviation": "X",
-                "subject_label": "X cell",
-                "cl_id": "CL:1",
-                "cl_label": "x cell",
-                "match_type": "Exact",
-            }
-        ],
+        [entry],
         {"CL:1": True},
+        profiles={entry["subject_id"]: profile},
+        axiom_rows=[axiom()],
     )
-    out_path = tmp_path / "nested" / "out.sssom.tsv"
-    se.write_sssom(out_path, rows)
-    assert out_path.exists()
-    content = out_path.read_text(encoding="utf-8")
-    assert "curie_map" in content
-    assert "SOULCAP:X" in content
-    assert "subject_id" in content
+    details = json.loads(rows[0]["comment"])
+    assert details["marker_evidence"]["status"] == "contradicted"
+    assert details["marker_evidence"]["sheet_confirmation"] == "agrees"
+    assert "master Google Sheet" in details["marker_evidence"]["curator_evidence"]
+    assert details["legacy_evidence_override"] == "sheet_confirmed"
+    assert "confidence" not in rows[0]
 
 
-# --------------------------------------------------------------------------- #
-# CURATED_MAPPINGS sanity checks (guards against typos when hand-editing)
-# --------------------------------------------------------------------------- #
-def test_curated_mappings_all_have_required_fields():
-    required = {"abbreviation", "subject_label", "cl_id", "cl_label", "match_type"}
-    for entry in se.CURATED_MAPPINGS:
-        assert required <= entry.keys()
-        assert entry["match_type"] in ("Exact", "Broad")
-        assert entry["cl_id"].startswith("CL:")
+def test_partial_ideal_conflict_and_unknown_are_distinct():
+    ev = evidence(expr="CD56+ CD19-", **{"Ideal exclusion": "CD56-"})
+    assert ev["status"] == "partial_support"
+    assert ev["ideal_conflicts"] and ev["gaps"]
+    assert not ev["contradictions"]
 
 
-def test_curated_mappings_build_without_error():
-    rows = se.build_mapping_rows(se.CURATED_MAPPINGS, {})
-    assert len(rows) == len(se.CURATED_MAPPINGS)
+def test_malformed_profile_is_not_partially_scored():
+    ev = evidence(expr="CD56+ (CD3-")
+    assert ev["status"] == "invalid_profile"
+    assert ev["errors"] and not ev["matched"]
 
 
-# --------------------------------------------------------------------------- #
-# CLI
-# --------------------------------------------------------------------------- #
-def test_main_missing_tsv(tmp_path, capsys):
-    rc = se.main(
-        ["--tsv", str(tmp_path / "missing.tsv"), "--out", str(tmp_path / "out.tsv")]
+def test_missing_profile_and_term_inventory_are_not_support():
+    rows = se.build_mapping_rows([decision()], {"CL:1": True})
+    assert (
+        json.loads(rows[0]["comment"])["marker_evidence"]["status"] == "missing_profile"
     )
-    assert rc == 1
-    assert "not found" in capsys.readouterr().err
+    assert "confidence" not in rows[0]
 
 
-def test_main_writes_output(tmp_path, capsys):
-    tsv = _make_tsv([_row("CL:0000623", "True")], tmp_path)
-    out_path = tmp_path / "out.sssom.tsv"
-    rc = se.main(["--tsv", str(tsv), "--out", str(out_path)])
-    assert rc == 0
-    assert out_path.exists()
-    out = capsys.readouterr().out
-    assert "Wrote" in out
+def test_empty_profile_has_no_marker_support():
+    assert evidence(expr="")["status"] == "no_marker_support"
+
+
+def test_negated_unknown_is_unknown():
+    ev = evidence(expr="[CD3+ CD19+]-", axioms=[])
+    assert ev["status"] == "no_marker_support"
+    assert ev["gaps"]
+
+
+def test_evidence_only_uses_target_cl_term():
+    assert evidence(axioms=[axiom(cell="CL:2")])["status"] == "no_marker_support"
+
+
+@pytest.mark.parametrize(
+    "match,predicate",
+    [
+        ("Exact", "exactMatch"),
+        ("Broad", "broadMatch"),
+        ("Narrow", "narrowMatch"),
+        ("Related", "relatedMatch"),
+    ],
+)
+def test_predicates_preserve_direction(match, predicate):
+    assert (
+        se.build_mapping_rows([decision(match_type=match)])[0]["predicate_id"]
+        == "skos:" + predicate
+    )
+
+
+def test_cardinality_handles_both_directions():
+    entries = [
+        decision(),
+        decision(subject_id="SOULCAP:SC000002"),
+        decision(cl_id="CL:2"),
+    ]
+    rows = se.build_mapping_rows(entries)
+    assert [r["mapping_cardinality"] for r in rows] == ["n:n", "n:1", "1:n"]
+
+
+def test_subject_id_survives_display_name_change():
+    a = se.build_mapping_rows([decision()])[0]
+    b = se.build_mapping_rows(
+        [decision(abbreviation="renamed", subject_label="renamed")]
+    )[0]
+    assert a["subject_id"] == b["subject_id"]
+
+
+def test_registry_migration_preserves_80_decisions_and_local_notes():
+    entries = registry.load_mappings()
+    assert len(entries) == 80
+    assert len({r["subject_id"] for r in entries}) == 80
+    assert sum(r["match_type"] == "Exact" for r in entries) == 50
+    assert sum(r["uncertain"] for r in entries) == 8
+    confirmations = [r for r in entries if r["evidence_override"] == "sheet_confirmed"]
+    assert {r["abbreviation"] for r in confirmations} == {
+        "Mono",
+        "CMo",
+        "NCMo",
+        "IntMo",
+    }
+    assert all(
+        r["curator_evidence"] and "Sheet-confirmed" in r["note"] for r in confirmations
+    )
+
+
+def test_export_writes_sssom_review_and_provenance(tmp_path):
+    source = tmp_path / "source.csv"
+    source.write_text(
+        "Abbreviation,Parent,WB or PBMC,Required phenotypic markers\nNK,,,CD56+\n"
+    )
+    axioms = tmp_path / "axioms.tsv"
+    with axioms.open("w", newline="") as fh:
+        writer = csv.DictWriter(fh, fieldnames=list(axiom()), delimiter="\t")
+        writer.writeheader()
+        writer.writerow(axiom())
+    out = tmp_path / "out.sssom.tsv"
+    assert (
+        se.main(["--source", str(source), "--tsv", str(axioms), "--out", str(out)]) == 0
+    )
+    assert "SOULCAP:SC000001" in out.read_text()
+    assert out.with_suffix(".md").exists()
+    assert len(json.loads(out.with_suffix(".provenance.json").read_text())) == 4
+
+
+def test_export_missing_input_fails(tmp_path, capsys):
+    assert se.main(["--source", str(tmp_path / "missing.csv")]) == 1
+    assert "error:" in capsys.readouterr().err
+
+
+def test_legacy_inventory_helpers_are_still_available(tmp_path):
+    path = tmp_path / "axioms.tsv"
+    path.write_text("cell\tasserted\nCL:1\tFalse\nCL:1\tTrue\nCL:2\tFalse\n\tTrue\n")
+    status = se.load_assertion_status(path)
+    assert status == {"CL:1": True, "CL:2": False}
+    assert se.classify_evidence("CL:1", status) == "confirmed"
+    assert se.classify_evidence("CL:2", status) == "inferred_only"
+    assert se.classify_evidence("CL:3", status) == "no_marker_axiom"
