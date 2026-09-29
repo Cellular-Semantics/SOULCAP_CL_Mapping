@@ -132,6 +132,7 @@ upstream to `obophenotype/cell-ontology`.
 | Issue | Terms | Status |
 |-------|-------|--------|
 | [#13 NKT cell naming](https://github.com/Cellular-Semantics/SOULCAP_CL_Mapping/issues/13) | CL:4052055 → "CD56-positive T cell, human"; CL:0000814 → "iNKT cell" | Filed upstream: [CL#3663](https://github.com/obophenotype/cell-ontology/issues/3663), [CL#3664](https://github.com/obophenotype/cell-ontology/issues/3664) |
+| [#14 Missing human-specific ILC1 term](https://github.com/Cellular-Semantics/SOULCAP_CL_Mapping/issues/14) | CL:0001067 "group 1 innate lymphoid cell" — no `, human` variant, unlike group 2 (CL:0001081) and group 3 (CL:0001078) | Open — not yet filed upstream |
 
 ---
 

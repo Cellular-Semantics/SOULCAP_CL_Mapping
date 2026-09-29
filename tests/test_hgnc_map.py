@@ -185,6 +185,65 @@ def test_collect_pr_mappings_skips_empty_pr() -> None:
     assert result == {}
 
 
+def test_collect_pr_mappings_override_fills_empty() -> None:
+    """Overrides supply UniProt for PRs with no uniprot_human in the TSV."""
+    rows = [{"pr": "PR:000001479", "uniprot_human": ""}]
+    overrides = {"PR:000001479": "UniProtKB:P12318"}
+    result = hgnc_map.collect_pr_mappings(rows, overrides=overrides)
+    assert result == {"PR:000001479": "UniProtKB:P12318"}
+
+
+def test_collect_pr_mappings_override_does_not_clobber_existing() -> None:
+    """Overrides must not replace a UniProt entry already in the TSV."""
+    rows = [{"pr": "PR:000001479", "uniprot_human": "UniProtKB:P15391"}]
+    overrides = {"PR:000001479": "UniProtKB:P12318"}
+    result = hgnc_map.collect_pr_mappings(rows, overrides=overrides)
+    assert result == {"PR:000001479": "UniProtKB:P15391"}
+
+
+def test_collect_pr_mappings_no_overrides_unchanged() -> None:
+    """Passing no overrides leaves the result identical to the original behaviour."""
+    rows = [{"pr": "PR:000001479", "uniprot_human": ""}]
+    assert hgnc_map.collect_pr_mappings(rows) == {"PR:000001479": ""}
+
+
+# --------------------------------------------------------------------------- #
+# load_overrides
+# --------------------------------------------------------------------------- #
+
+
+def test_load_overrides_reads_csv(tmp_path: Path) -> None:
+    csv_file = tmp_path / "overrides.csv"
+    csv_file.write_text(
+        "pr,uniprot_human\nPR:000001479,UniProtKB:P12318\n", encoding="utf-8"
+    )
+    result = hgnc_map.load_overrides(csv_file)
+    assert result == {"PR:000001479": "UniProtKB:P12318"}
+
+
+def test_load_overrides_strips_isoform_suffix(tmp_path: Path) -> None:
+    csv_file = tmp_path / "overrides.csv"
+    csv_file.write_text(
+        "pr,uniprot_human\nPR:000001479,UniProtKB:P12318-2\n", encoding="utf-8"
+    )
+    result = hgnc_map.load_overrides(csv_file)
+    assert result == {"PR:000001479": "UniProtKB:P12318"}
+
+
+def test_load_overrides_missing_file_returns_empty(tmp_path: Path) -> None:
+    result = hgnc_map.load_overrides(tmp_path / "nonexistent.csv")
+    assert result == {}
+
+
+def test_load_overrides_skips_blank_rows(tmp_path: Path) -> None:
+    csv_file = tmp_path / "overrides.csv"
+    csv_file.write_text(
+        "pr,uniprot_human\nPR:000001479,UniProtKB:P12318\n,\n", encoding="utf-8"
+    )
+    result = hgnc_map.load_overrides(csv_file)
+    assert result == {"PR:000001479": "UniProtKB:P12318"}
+
+
 # --------------------------------------------------------------------------- #
 # fetch_normalized_nodes
 # --------------------------------------------------------------------------- #

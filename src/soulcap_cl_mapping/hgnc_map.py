@@ -36,6 +36,7 @@ import requests
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_TSV = REPO_ROOT / "reports" / "cl_pro_relationships.tsv"
+DEFAULT_OVERRIDES = REPO_ROOT / "marker_mappings" / "pr_uniprot_overrides.csv"
 
 # Monarch Node Normalizer — accepts repeated ``?curie=`` query parameters and
 # returns a JSON object keyed by input CURIE.
@@ -130,13 +131,42 @@ def strip_isoform_suffix(curie: str) -> str:
     return f"{prefix}:{base}"
 
 
-def collect_pr_mappings(rows: list[dict[str, str]]) -> dict[str, str]:
+def load_overrides(path: Path = DEFAULT_OVERRIDES) -> dict[str, str]:
+    """Load manual PR → UniProt overrides from a CSV file.
+
+    The file must have ``pr`` and ``uniprot_human`` columns.  Missing or
+    non-existent files are silently ignored (returns empty dict).
+
+    Returns
+    -------
+    dict[str, str]
+        ``{"PR:000001479": "UniProtKB:P12318", ...}``
+    """
+    if not path.exists():
+        return {}
+    with open(path, encoding="utf-8", newline="") as fh:
+        reader = csv.DictReader(fh)
+        return {
+            row["pr"]: strip_isoform_suffix(row["uniprot_human"])
+            for row in reader
+            if row.get("pr") and row.get("uniprot_human")
+        }
+
+
+def collect_pr_mappings(
+    rows: list[dict[str, str]],
+    overrides: dict[str, str] | None = None,
+) -> dict[str, str]:
     """Collect unique PR CURIE → first human UniProt CURIE (or "") from the rows.
 
     De-duplicates by PR: the first occurrence wins.  If ``uniprot_human``
     contains several "; "-separated CURIEs, only the first is used for lookup.
     Isoform suffixes (e.g. ``-1``, ``-2``) are stripped before returning so
     that the Monarch Node Normalizer receives canonical accessions.
+
+    Manual *overrides* (from ``marker_mappings/pr_uniprot_overrides.csv``) are
+    applied after the TSV scan: any PR whose UniProt slot is still empty gets
+    filled from the override table.
 
     Returns
     -------
@@ -151,6 +181,12 @@ def collect_pr_mappings(rows: list[dict[str, str]]) -> dict[str, str]:
         uniprot_human = row.get("uniprot_human", "")
         first_up = uniprot_human.split(";")[0].strip() if uniprot_human else ""
         pr_to_uniprot[pr] = strip_isoform_suffix(first_up) if first_up else ""
+
+    if overrides:
+        for pr, uniprot in overrides.items():
+            if pr in pr_to_uniprot and not pr_to_uniprot[pr]:
+                pr_to_uniprot[pr] = uniprot
+
     return pr_to_uniprot
 
 
@@ -313,6 +349,7 @@ def write_tsv(path: Path, headers: list[str], rows: list[dict[str, str]]) -> Non
 
 def run(
     tsv_path: Path = DEFAULT_TSV,
+    overrides_path: Path = DEFAULT_OVERRIDES,
     dry_run: bool = False,
     session: requests.Session | None = None,
     url: str = MONARCH_URL,
@@ -326,7 +363,13 @@ def run(
     print(f"Reading {tsv_path} ...")
     headers, rows = load_tsv(tsv_path)
 
-    pr_to_uniprot = collect_pr_mappings(rows)
+    overrides = load_overrides(overrides_path)
+    if overrides:
+        print(
+            f"Loaded {len(overrides)} manual UniProt override(s) from {overrides_path}."
+        )
+
+    pr_to_uniprot = collect_pr_mappings(rows, overrides=overrides)
     unique_prs = len(pr_to_uniprot)
     n_with_uniprot = sum(1 for v in pr_to_uniprot.values() if v)
     n_without_uniprot = unique_prs - n_with_uniprot

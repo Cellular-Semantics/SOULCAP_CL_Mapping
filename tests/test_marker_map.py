@@ -444,6 +444,44 @@ def test_resolve_group4_not_found() -> None:
     assert result["gene_symbol"] == "IFNG"  # falls back to provided symbol
 
 
+def test_resolve_group4_fetches_pro_term_via_uniprot() -> None:
+    session = _make_session(HGNC_IFNG_RESPONSE, OLS4_PR_TERM_RESPONSE)
+    result = marker_map.resolve_group4(
+        "IFNg",
+        "col",
+        "IFNG",
+        session,
+        hgnc_url="http://hgnc",
+        ols4_url="http://ols4",
+        sleep_between=0,
+    )
+    assert result["pro_id"] == "PR:P05112"
+    assert result["pro_label"] == "interleukin-4 (human)"
+    assert "ols4" in result["evidence"]
+
+
+def test_resolve_group4_no_uniprot_skips_pro_lookup() -> None:
+    session = _make_session(
+        {
+            "response": {
+                "numFound": 1,
+                "docs": [{"hgnc_id": "HGNC:1", "symbol": "X", "name": "x"}],
+            }
+        }
+    )
+    result = marker_map.resolve_group4(
+        "IFNg",
+        "col",
+        "IFNG",
+        session,
+        hgnc_url="http://hgnc",
+        ols4_url="http://ols4",
+        sleep_between=0,
+    )
+    assert result["pro_id"] == ""
+    session.get.assert_called_once()  # only the HGNC call, no PRO lookup
+
+
 def test_resolve_group4_hgnc_id_already_prefixed() -> None:
     """hgnc_id in HGNC API already has 'HGNC:' prefix — should not double-prefix."""
     session = _make_session(
@@ -510,6 +548,74 @@ def test_resolve_group6_gene_token() -> None:
     assert "TRAV10" in result["notes"]
 
 
+def test_resolve_group6_gene_token_fetches_pro_term_via_uniprot() -> None:
+    hgnc_with_uniprot = {
+        "response": {
+            "numFound": 1,
+            "docs": [
+                {
+                    "hgnc_id": "HGNC:12124",
+                    "symbol": "TRAV10",
+                    "name": "T cell receptor alpha variable 10",
+                    "uniprot_ids": ["A0A0B4J240"],
+                }
+            ],
+        }
+    }
+    pro_response = {
+        "_embedded": {
+            "terms": [
+                {
+                    "obo_id": "PR:A0A0B4J240",
+                    "label": "T cell receptor alpha variable 10 (human)",
+                }
+            ]
+        }
+    }
+    session = _make_session(hgnc_with_uniprot, pro_response)
+    result = marker_map.resolve_group6_gene_token(
+        "TCRVa24",
+        "col",
+        "TRAV10",
+        "",
+        session,
+        hgnc_url="http://hgnc",
+        ols4_url="http://ols4",
+        sleep_between=0,
+    )
+    assert result["pro_id"] == "PR:A0A0B4J240"
+    assert result["uniprot_id"] == "A0A0B4J240"
+
+
+def test_resolve_group6_gene_token_no_pro_hit_keeps_medium_confidence() -> None:
+    hgnc_with_uniprot = {
+        "response": {
+            "numFound": 1,
+            "docs": [
+                {
+                    "hgnc_id": "HGNC:1",
+                    "symbol": "TRBV25-1",
+                    "name": "TCR beta variable 25-1",
+                    "uniprot_ids": ["A0A075B6N4"],
+                }
+            ],
+        }
+    }
+    session = _make_session(hgnc_with_uniprot, {"_embedded": {"terms": []}})
+    result = marker_map.resolve_group6_gene_token(
+        "TCRVb11",
+        "col",
+        "TRBV25-1",
+        "",
+        session,
+        hgnc_url="http://hgnc",
+        ols4_url="http://ols4",
+        sleep_between=0,
+    )
+    assert result["pro_id"] == ""
+    assert result["confidence"] == "medium"
+
+
 def test_resolve_group6_gene_token_not_found() -> None:
     session = _make_session({"response": {"numFound": 0, "docs": []}})
     result = marker_map.resolve_group6_gene_token(
@@ -558,6 +664,30 @@ def test_resolve_group7_mr1() -> None:
     assert result["uniprot_id"] == "Q95460"
     assert result["mapping_method"] == "manual"
     assert "MR1 tetramer" in result["notes"]
+
+
+def test_resolve_group7_mr1_fetches_pro_term_via_uniprot() -> None:
+    pro_response = {
+        "_embedded": {
+            "terms": [
+                {
+                    "obo_id": "PR:Q95460",
+                    "label": "major histocompatibility complex class I-related protein 1 (human)",
+                }
+            ]
+        }
+    }
+    session = _make_session(HGNC_MR1_RESPONSE, pro_response)
+    result = marker_map.resolve_group7_mr1(
+        "MR1",
+        "col",
+        session,
+        hgnc_url="http://hgnc",
+        ols4_url="http://ols4",
+        sleep_between=0,
+    )
+    assert result["pro_id"] == "PR:Q95460"
+    assert "class I-related" in result["pro_label"]
 
 
 # --------------------------------------------------------------------------- #
@@ -644,6 +774,54 @@ def test_search_ols4_pr_skips_non_pr_docs() -> None:
     result = marker_map.search_ols4_pr("test", session, ols4_url="http://ols4")
     assert result is not None
     assert result["pr_id"] == "PR:000001"
+
+
+# --------------------------------------------------------------------------- #
+# fetch_pr_by_uniprot
+# --------------------------------------------------------------------------- #
+
+OLS4_PR_TERM_RESPONSE = {
+    "_embedded": {
+        "terms": [
+            {"obo_id": "PR:P05112", "label": "interleukin-4 (human)"},
+        ]
+    }
+}
+
+
+def test_fetch_pr_by_uniprot_found() -> None:
+    session = _make_session(OLS4_PR_TERM_RESPONSE)
+    result = marker_map.fetch_pr_by_uniprot("P05112", session, ols4_url="http://ols4")
+    assert result is not None
+    assert result["pr_id"] == "PR:P05112"
+    assert result["pr_label"] == "interleukin-4 (human)"
+
+
+def test_fetch_pr_by_uniprot_empty_id_returns_none() -> None:
+    session = MagicMock()
+    result = marker_map.fetch_pr_by_uniprot("", session, ols4_url="http://ols4")
+    assert result is None
+    session.get.assert_not_called()
+
+
+def test_fetch_pr_by_uniprot_no_terms_embedded() -> None:
+    session = _make_session({"_embedded": {"terms": []}})
+    result = marker_map.fetch_pr_by_uniprot(
+        "ZZZNOTREAL", session, ols4_url="http://ols4"
+    )
+    assert result is None
+
+
+def test_fetch_pr_by_uniprot_404_returns_none() -> None:
+    session = MagicMock()
+    resp = MagicMock()
+    resp.status_code = 404
+    session.get.return_value = resp
+    result = marker_map.fetch_pr_by_uniprot(
+        "ZZZNOTREAL", session, ols4_url="http://ols4"
+    )
+    assert result is None
+    resp.raise_for_status.assert_not_called()
 
 
 # --------------------------------------------------------------------------- #
@@ -750,20 +928,31 @@ def test_write_csv(tmp_path: Path) -> None:
 def _build_mock_session_for_run() -> MagicMock:
     """Build a session that responds to the API calls made during run() for the
     minimal test token set in MARKER_TOKENS_TSV_CONTENT."""
-    # Calls made:
+    # Calls made, in token-iteration order:
     # 1. OLS4 search for "CD57" (Group 3)
     # 2. Monarch lookup for PR:000015709 (Group 3)
     # 3. HGNC lookup for IFNG (Group 4)
-    # 4. HGNC lookup for TRAV10 (Group 6 — TCRVa24)
-    # 5. HGNC lookup for TRAV10 again for TCRva24 duplicate (no call — copy)
-    # 6. HGNC lookup for TRBV25-1 (Vb11 / VB11 / TCRVb11 not in our minimal token list)
-    # 7. HGNC lookup for TRDV1 (Vd1 — Group 6)
-    # 8. HGNC lookup for MR1 (Group 7)
+    # 4. PRO term fetch for IFNG's UniProt P01579 (Group 4 — has a uniprot hit)
+    # 5. HGNC lookup for TRAV10 (Group 6 — TCRVa24; no uniprot -> no PRO call)
+    # 6. HGNC lookup for TRAV10 again for TCRva24 duplicate (no call — copy)
+    # 7. HGNC lookup for TRBV25-1 (Vb11 / VB11 / TCRVb11 not in our minimal token list)
+    # 8. HGNC lookup for TRDV1 (Vd1 — Group 6; no uniprot -> no PRO call)
+    # 9. HGNC lookup for MR1 (Group 7)
+    # 10. PRO term fetch for MR1's UniProt Q95460 (Group 7 — has a uniprot hit)
     session = MagicMock()
     session.get.side_effect = [
         _make_mock_response(OLS4_CD57_RESPONSE),  # CD57 OLS4
         _make_mock_response(MONARCH_PR_000015709),  # CD57 Monarch
         _make_mock_response(HGNC_IFNG_RESPONSE),  # IFNg
+        _make_mock_response(  # IFNg PRO term (P01579)
+            {
+                "_embedded": {
+                    "terms": [
+                        {"obo_id": "PR:P01579", "label": "interferon gamma (human)"}
+                    ]
+                }
+            }
+        ),
         _make_mock_response(HGNC_TRAV10_RESPONSE),  # TCRVa24
         _make_mock_response(
             {  # Vd1 → TRDV1
@@ -781,6 +970,21 @@ def _build_mock_session_for_run() -> MagicMock:
             }
         ),
         _make_mock_response(HGNC_MR1_RESPONSE),  # MR1
+        _make_mock_response(  # MR1 PRO term (Q95460)
+            {
+                "_embedded": {
+                    "terms": [
+                        {
+                            "obo_id": "PR:Q95460",
+                            "label": (
+                                "major histocompatibility complex class "
+                                "I-related protein 1 (human)"
+                            ),
+                        }
+                    ]
+                }
+            }
+        ),
     ]
     return session
 

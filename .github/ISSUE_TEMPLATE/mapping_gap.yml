@@ -1,0 +1,48 @@
+name: Mapping gap
+description: A SOULCAP cell type has no reasonable CL match, or CL's marker axioms conflict with SOULCAP's marker panel for a candidate match.
+title: "[gap] <SOULCAP abbreviation>: <short description>"
+labels: ["gap"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this for gaps, not proposed mappings — a case where matching
+        broke down, not a candidate you're confident in. Confident candidates
+        go in `reports/candidate_cl_mappings.md`; gaps also get logged in
+        `reports/gaps.tsv` (add a row there too, if practical, so this issue
+        has a durable, filterable record alongside it).
+  - type: input
+    id: soulcap_abbreviation
+    attributes:
+      label: SOULCAP abbreviation
+      placeholder: e.g. NK, ILC1, Transitional
+    validations:
+      required: true
+  - type: dropdown
+    id: gap_type
+    attributes:
+      label: Gap type
+      options:
+        - no_reasonable_cl_match — no CL term fits, even loosely
+        - cl_marker_conflict — a candidate CL term's asserted markers contradict SOULCAP's panel
+        - cl_axiom_gap — CL is missing a marker axiom or term a defining SOULCAP marker implies
+        - sheet_data_issue — the SOULCAP sheet itself has missing/incorrect data blocking a match
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What was tried, what broke down, and why. Link the SOULCAP row and any candidate CL IDs considered and rejected.
+    validations:
+      required: true
+  - type: input
+    id: related_cl_ids
+    attributes:
+      label: Related CL ID(s), if any
+      placeholder: "CL:0000623"
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Links to reports/, marker data, or literature backing this up.

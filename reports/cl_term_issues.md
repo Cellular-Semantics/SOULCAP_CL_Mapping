@@ -77,6 +77,65 @@ cells.
 | Intermediate monocyte | CL:0002393 | CD14^hi/+ CD16^+/hi CD11c^hi HLA-DR^hi |
 | Non-classical monocyte | CL:0000875 | CD14^lo/− CD16^hi CD11c^hi HLA-DR^+ |
 
+### Natural killer cell missing CD56 marker axiom — CL:0000623
+
+**Repo issue:** not yet filed
+**Reference:** SOULCAP `NK` row ([data/marker_combinations.csv](../data/marker_combinations.csv), regenerate via `uv run soulcap-sync`); literature in [reports/literature/nk_cell_markers.md](literature/nk_cell_markers.md)
+**Status:** Drafted during Milestone 4 candidate mapping work — not yet filed as a repo issue
+
+#### CL:0000623 — "natural killer cell"
+
+| Field | Current | Proposed |
+|-------|---------|----------|
+| Marker axioms | Negative only: CD14, CD19, CD3, CD20 (no positive marker asserted) | Add positive axiom: CD56 (`PR:000001024`, neural cell adhesion molecule 1 / NCAM1) |
+
+**Rationale:** SOULCAP defines its parent "NK" cell type by required phenotypic
+markers `CD45+ CD56+/hi CD127-`, combined with exclusion of CD14/CD33/CD64/
+CD34/CD3/CD19. CD56 positivity is the field-standard defining marker for NK
+cells, not just an incidental one:
+
+> "Natural killer cells are prototypic members of the innate lymphoid cell
+> (ILC) family and characterized in humans by expression of the phenotypic
+> marker CD56 in the absence of CD3."
+> — Van Acker HH et al. 2017 (PMID:28791027; DOI:10.3389/fimmu.2017.00892)
+
+CL already captures this CD56 axiom on **child** terms of natural killer cell
+— `CL:0000938` (CD16-negative, CD56-bright NK cell) and `CL:0000939`
+(CD16-positive, CD56-dim NK cell) both assert a CD56 marker — but the parent
+class `CL:0000623` itself asserts no positive marker at all. This is an
+asymmetry: the defining marker of the general class is only captured on its
+subtypes, not on the class itself.
+
+### Missing human-specific "group 1 innate lymphoid cell" term
+
+**Repo issue:** [#14 Missing human-specific 'group 1 innate lymphoid cell' term (CL)](https://github.com/Cellular-Semantics/SOULCAP_CL_Mapping/issues/14)
+**Reference:** SOULCAP `ILC1` row ([data/marker_combinations.csv](../data/marker_combinations.csv)); [reports/candidate_cl_mappings.md](candidate_cl_mappings.md#ilc-family--innate-lymphoid-cells)
+**Status:** Filed as a repo issue — not yet filed upstream to `obophenotype/cell-ontology`
+
+**Rationale:** CL distinguishes species-specific variants for two of the
+three canonical ILC groups:
+
+- `CL:0001081` — "group 2 innate lymphoid cell, **human**"
+- `CL:0001078` — "group 3 innate lymphoid cell, **human**"
+
+...but ILC1 only has the species-generic `CL:0001067` "group 1 innate
+lymphoid cell," with no `, human`-suffixed counterpart. Confirmed by direct
+OLS4 search — querying "group 1 innate lymphoid cell, human" returns zero
+results, while the equivalent queries for group 2 and group 3 both return
+their human-specific term. This is an asymmetry in CL's own authoring
+(ILC1/ILC2/ILC3 are described in parallel throughout the literature and
+in CL's own group-3 subtyping, e.g. NKp44-positive/negative human variants
+of group 3), not an intentional omission specific to group 1.
+
+**Proposed fix:** add a "group 1 innate lymphoid cell, human" term to CL,
+following the same pattern as the existing group 2 and group 3 human terms.
+
+**How this was found:** running `soulcap-match` against the SOULCAP `NK`
+marker profile ranks `CL:0000623` only 33rd of 826 CL terms — well below its
+own CD56-bright/dim children — specifically because of this missing axiom,
+despite `CL:0000623` being the conceptually correct parent-level match for
+SOULCAP's unqualified "NK" cell type.
+
 ---
 
 ## Resolved issues

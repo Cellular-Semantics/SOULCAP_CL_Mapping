@@ -136,6 +136,81 @@ uv run soulcap-cl-pro --reports-dir other/   # write elsewhere
 uv run soulcap-cl-pro --endpoint <url>        # use a different SPARQL endpoint
 ```
 
+## Candidate CL matching (`soulcap-match`)
+
+Ranks CL terms against a SOULCAP marker profile, scored from
+`cl_pro_relationships.tsv`. Single-profile mode (paste the four marker columns
+for one cell type):
+
+```bash
+uv run soulcap-match --req-excl "CD14- CD3- CD19-" --req-pheno "CD45+ CD56+/hi" --parent "NK cell"
+```
+
+Batch mode scores every row of `data/marker_combinations.csv` in one pass:
+
+```bash
+uv run soulcap-match --batch                # -> reports/candidate_cl_mappings_batch.tsv
+uv run soulcap-match --batch --lexical       # + name-based OLS4 CL search and an
+                                              #   agreement report (reports/candidate_cl_mappings_agreement.tsv)
+```
+
+Marker-axiom scoring can only rank CL terms that already have a PR axiom in
+`cl_pro_relationships.tsv` — many CL terms (including some "obvious" parent
+classes) have none and are invisible to it. `--lexical` adds an independent
+name-based candidate per row; rows where both approaches agree are a much
+stronger signal than either alone. **Treat batch output as an unreviewed draft
+shortlist** — check the `contradictions`/`marker_conflict` columns before
+trusting a rank-1 pick, since shared exclusion markers can inflate scores for
+biologically wrong candidates.
+
+## OAK lexical/synonym matching (`soulcap-oak-match`)
+
+A second, independent lexical matcher using [OAK](https://incatools.github.io/ontology-access-kit/)
+(Ontology Access Kit) instead of the OLS4 REST API:
+
+```bash
+uv run soulcap-oak-match "Natural Killer Cell"
+uv run soulcap-oak-match "NK cell" --top 5
+```
+
+Uses OAK's `sqlite:obo:cl` adapter — a search-optimised local database that
+ranks exact label/synonym matches first by construction (OLS4's free-text
+relevance ranking, by contrast, can bury an exact match behind dozens of
+more-specific subtype variants). Downloads and caches a local CL database
+(~100MB) on first use; instant afterwards.
+
+## SSSOM mapping export (`soulcap-sssom`)
+
+Exports the curated Milestone 4 mapping decisions (`CURATED_MAPPINGS` in
+`sssom_export.py`, kept in sync by hand with `candidate_cl_mappings.md`) as a
+standard [SSSOM](https://mapping-commons.github.io/sssom/) TSV, instead of
+writing OWL axioms directly:
+
+```bash
+uv run soulcap-sssom # -> reports/candidate_cl_mappings.sssom.tsv
+```
+
+`confidence` and `comment` are derived automatically — not hand-typed — from
+whether CL directly asserts the matched marker axiom(s), only has them by
+inference, or has no marker axiom for the term at all. This is what lets the
+output distinguish "CL confirms this" from "this is only supported by
+inferred markers," per row.
+
+SSSOM is the final output here, deliberately: these are proposed mappings for
+human review, not assertions this repo makes unilaterally. This module does
+not convert them into OWL logical axioms or merge them into CL.
+
+## ROBOT ontology QC
+
+`.github/workflows/robot-qc.yml` runs on every PR and audits upstream CL —
+downloads CL's `cl-base.owl` (import-free release artifact) and runs
+`robot report` + `robot reason` (ELK) on it standalone, independent of
+anything in this repo. Catches pre-existing CL bugs (e.g. duplicate
+equivalence/subclass axioms) worth reporting upstream. It never touches our
+own candidate mappings — those stay as SSSOM, a proposal for human review,
+not something this repo should unilaterally convert into OWL axioms and merge
+into CL as if already accepted.
+
 ## Skills & literature workflows
 
 This repo ships Claude Code skills under `.claude/skills/`:

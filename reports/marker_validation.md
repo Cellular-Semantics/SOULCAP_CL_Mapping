@@ -1,11 +1,11 @@
-﻿# Marker Syntax Validation
+# Marker Syntax Validation
 
-> **Auto-generated** on each `soulcap-sync` by the EBNF validator (`soulcap_cl_mapping.marker_syntax`). Do not edit by hand â€” edit the Google Sheet master and re-sync.
+> **Auto-generated** on each `soulcap-sync` by the EBNF validator (`soulcap_cl_mapping.marker_syntax`). Do not edit by hand — edit the Google Sheet master and re-sync.
 
 - Source: `marker_combinations.csv`
 - Cells checked: **390**
 - Invalid cells: **26**
-- Grammar: [../MARKER_SYNTAX.md](../MARKER_SYNTAX.md) Â§2
+- Grammar: [../MARKER_SYNTAX.md](../MARKER_SYNTAX.md) §2
 
 ## Invalid cells
 
