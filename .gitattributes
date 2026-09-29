@@ -1,0 +1,5 @@
+# Files whose SHA-256 is frozen in mappings/benchmark_reserve.json and checked by
+# tests/test_benchmark_reserve.py. Keep them LF on every platform so a Windows
+# checkout (core.autocrlf=true) doesn't change the bytes and fail the hash check.
+mappings/soulcap_entities.tsv  text eol=lf
+mappings/curated_mappings.tsv  text eol=lf
