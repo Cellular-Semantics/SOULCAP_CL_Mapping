@@ -37,6 +37,13 @@ semester's sprint-level breakdown (sub-tasks, acceptance criteria, and what's
 blocked on someone outside the repo) is
 [reports/fall_2026_sprint_backlog.md](reports/fall_2026_sprint_backlog.md).
 
+The September 21 discussion draft for Dr. Diehl expands this into a
+plain-language October–December plan, recent-work summary, weekly schedule,
+and agent task instructions: [PDF](reports/fall_2026_semester_plan.pdf),
+[editable Markdown](reports/fall_2026_semester_plan.md), or
+[browser version](reports/fall_2026_semester_plan.html).
+Its workload and review targets are proposed for approval, not confirmed commitments.
+
 ## Setup
 
 ### 1. Clone this repo
@@ -83,6 +90,21 @@ startup and expands `${ASTA_API_KEY}` into the `x-api-key` header in
 `.claude/settings.local.json` is gitignored and must **never** be committed —
 it is the only place the secret lives. Restart Claude Code after editing it so
 the key is picked up.
+
+### Optional: PubMed (NCBI E-utilities)
+
+`soulcap-pubmed` (`src/soulcap_cl_mapping/pubmed_search.py`) works keyless,
+same as `soulcap-europepmc`. An NCBI API key just raises the rate limit from
+3 to 10 requests/second. If you want one, generate it from your
+[NCBI account settings](https://www.ncbi.nlm.nih.gov/account/settings/) under
+**API Key Management**, then add it to the **local, gitignored** `.env`:
+
+```
+PUBMED_API_KEY={token}
+```
+
+Unlike `ASTA_API_KEY`, this is read directly by Python (via `python-dotenv`),
+not through Claude Code's MCP `env` substitution — it isn't an MCP server key.
 
 ## Unified audit dashboard
 
@@ -419,6 +441,19 @@ equivalence/subclass axioms) worth reporting upstream. It never touches our
 own candidate mappings — those stay as SSSOM, a proposal for human review,
 not something this repo should unilaterally convert into OWL axioms and merge
 into CL as if already accepted.
+
+## Cell-type reviews
+
+[`cell_type_reviews/`](cell_type_reviews/README.md) holds one review file per
+SOULCAP cell type. Each file gathers the marker definition, marker → protein/gene
+mappings, verbatim literature support, a comparison against Cell Ontology terms
+and their marker axioms, and a proposed CL mapping. Reviews that meet an
+uncertainty trigger (weak literature, a conflict with CL axioms, no exact CL term,
+etc.) are sent for expert review; confident mappings go straight into the Google
+Sheet. See the folder README for the workflow, statuses, and template. Scaffolded
+2026-09-23 — no reviews written yet, and how it relates to the existing
+`reports/literature/` Milestone 2 reports is still being confirmed with Dr. Diehl
+(see [ROADMAP.md](ROADMAP.md)).
 
 ## Skills & literature workflows
 
