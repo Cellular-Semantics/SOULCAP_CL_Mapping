@@ -60,7 +60,7 @@ These are generated, but they are inputs to other code and need network access
 |---|---|---|---|
 | [gaps.tsv](gaps.tsv) | Cases with no good CL match, CL/marker conflicts, CL axiom gaps, or sheet data problems. Filed as GitHub issues by the `gap-issue-filing` skill | Hand-maintained | Curated |
 | [cl_term_issues.md](cl_term_issues.md) | Proposed Cell Ontology corrections found during mapping | Hand-maintained | Curated |
-| [pro_marker_species_support.tsv](pro_marker_species_support.tsv) | For every directly asserted PRO marker on a mapped CL term (87 pairs): is the assertion valid in human, mouse, or both? The first 10 columns are the original human-only check (issue #11, read-only); `species_scope`, `human_*`/`mouse_*` citation and quote, `note` and `checked_on` hold the human/mouse assessment (Dr. Diehl's request, 2026-09-28; pilot on 3 CL terms so far) | `pro-marker-species-support` skill; every quote checked against the paper's full text | Curated |
+| [pro_marker_species_support.tsv](pro_marker_species_support.tsv) | For every directly asserted PRO marker on a mapped CL term (87 pairs): is the assertion valid in human, mouse, or both? The first 10 columns are the original human-only check (issue #11, read-only); `species_scope`, `human_*`/`mouse_*` citation and quote, `note` and `checked_on` hold the human/mouse assessment (Dr. Diehl's request, 2026-09-28; pilot on 3 CL terms so far). Where they disagree with the legacy `species_support`, the new columns take precedence | `pro-marker-species-support` skill; every quote checked against the paper's full text | Curated |
 
 ## Not tracked
 

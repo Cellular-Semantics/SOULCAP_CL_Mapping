@@ -126,7 +126,9 @@ both?**
 
 **Never edit the first 10 (legacy) columns** of an existing row. They record
 the original human-only check from issue #11. All new work goes in the 7
-columns after them.
+columns after them. **Where the new columns disagree with the legacy
+`species_support` value, the new columns take precedence** (e.g. plasmablast
+"lacks CD138", where the legacy value still says `human`).
 
 | Column | Meaning |
 |---|---|
@@ -152,6 +154,10 @@ Rules for `species_scope`:
   mouse" as human-only.**
 - Pairs whose PRO label is species-qualified, e.g. "(human)", get
   `species_scope = human` and the note "species from PRO label".
+- **Human-specific CL terms** (label ending ", human", e.g. CL:0000938): the
+  mouse question doesn't apply. Set `species_scope = human` when the human
+  side is supported by a verified quote, otherwise `unresolved`, and start
+  `note` with "CL term is human-specific; mouse not applicable".
 - An existing mouse ortholog (Alliance of Genome Resources / MGI) is **not**
   evidence that a marker works in mouse. It may go in `note` with its record
   ID; mouse support needs literature.
