@@ -185,6 +185,44 @@ confirmed)? The same question applies to CD57 (HNK-1 epitope, made by
 B3GAT1, PR:000001440): CL has one such axiom, CL:4033092 "CD57-positive
 enterocyte" `expresses` PR:000001440.
 
+### Plasmablast "lacks CD138" — CL:0000980, PR:000001935 (syndecan-1)
+
+**Status:** candidate — not filed
+
+CL asserts CL:0000980 "plasmablast" `lacks_plasma_membrane_part`
+PR:000001935 "syndecan-1" (CD138). Found during the human/mouse marker
+review (2026-09-28; row in
+[pro_marker_species_support.tsv](pro_marker_species_support.tsv)). Both
+quotes were checked word for word against the Europe PMC full text:
+
+- **Contradicted in mouse:** "plasmablasts as B220+CD138+" (PMID 42774878;
+  PMC13594723, 2026).
+- **Conflicting in human:** one human scheme defines plasmablasts as CD138++:
+  "short-lived plasmablasts (CD19+CD138++ or CD19+CD27+CD38++)" (PMID
+  41771939; PMC13066544, 2026). The earlier human quote supporting the
+  assertion (Woodruff 2020 gating labels) could not be verified.
+
+**Question for review:** should this axiom be removed, weakened (e.g. "low"),
+or restricted to human?
+
+### CD56-bright NK "lacks HLA-DRA" — CL:0000938, PR:000002015
+
+**Status:** candidate — not filed
+
+CL asserts CL:0000938 "CD16-negative, CD56-bright natural killer cell, human"
+`lacks_plasma_membrane_part` PR:000002015 "MHC class II histocompatibility
+antigen alpha chain DRA". Human evidence reports HLA-DR+ CD56-bright cells:
+"the proportion of HLA-DR+CD56bright cells ex vivo" (PMID 42450353;
+PMC13362507, 2026; checked word for word against the full text). The
+supporting quote from the earlier check (Rebuffet 2024) concerns a different
+NK cluster (NK3B) and does not address CD56-bright cells.
+
+**Question for review:** is "lacks HLA-DRA" right for resting CD56-bright NK
+cells, with HLA-DR appearing only on an activated subset, or should the axiom
+be dropped? This is also Dr. Diehl's example of HLA-DRA as a human-only proxy
+for MHC class II: PRO notes "The mouse ortholog is called H2-Ea"
+(PR:000002015, OLS4).
+
 ---
 
 ## Resolved issues

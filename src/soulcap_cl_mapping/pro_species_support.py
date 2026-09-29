@@ -5,8 +5,8 @@ whether the underlying evidence is human, mouse, or both — the ``pr_label``
 just reads e.g. "neural cell adhesion molecule 1", not "... (mouse)". This
 module identifies exactly which (CL cell type, PR marker) pairs need a
 literature check, restricted to the CL terms this project actually maps
-SOULCAP cell types to (``CURATED_MAPPINGS`` in ``sssom_export.py``) rather
-than all of CL — see issue #11.
+SOULCAP cell types to (the ``cl_id`` values in ``mappings/curated_mappings.tsv``)
+rather than all of CL — see issue #11.
 
 Downstream literature work (citation-traversal runs, the standardised output
 TSV) is driven by this scoping, but lives outside this module; see the plan

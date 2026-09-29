@@ -118,21 +118,60 @@ own discipline here.
 
 ## Step 4 — write the row
 
-Append to `reports/pro_marker_species_support.tsv`
-(tab-separated, one row per pair):
+`reports/pro_marker_species_support.tsv` has one row per directly asserted
+(CL term, PRO marker) pair for every CL term in
+`mappings/curated_mappings.tsv` (87 pairs as of 2026-09-28). The question is
+Dr. Diehl's: **is each marker, as CL asserts it, valid in human, mouse, or
+both?**
+
+**Never edit the first 10 (legacy) columns** of an existing row. They record
+the original human-only check from issue #11. All new work goes in the 7
+columns after them. **Where the new columns disagree with the legacy
+`species_support` value, the new columns take precedence** (e.g. plasmablast
+"lacks CD138", where the legacy value still says `human`).
 
 | Column | Meaning |
 |---|---|
-| `cl_id`, `cl_label`, `pr_id`, `pr_label`, `cd_synonym` | From `get_scoped_pairs()` — don't hand-retype these, pull them programmatically to avoid transcription errors (a real bug caught during the first run: hand-typed PR labels didn't match `cl_pro_relationships.tsv`). |
-| `species_support` | `human` / `mouse` / `both` / `insufficient_evidence`. |
-| `evidence_source` | `m2_literature_report` / `citation_traversal` / `europepmc_search` / `none`. |
-| `citation` | Author/year/PMID/DOI, plus a trailing `-- ` caveat clause when the quote's context doesn't exactly match the pair's cell type/subset (e.g. a naive-T marker's only evidence coming from a Treg paper) — say so rather than let the row imply a cleaner match than it is. |
-| `quote` | The verbatim substring itself. |
-| `source_ref` | `literature/evidence.tsv#<evidence_id>` for M2 reuse (older rows cite `archive/2026-09_literature_narratives/<file>.md`), an EuropePMC article URL for a fresh search, or `reports/citation_traversal/<run_id>/` for a traversal — or, for `insufficient_evidence`, a one-line note on what was tried. |
+| `cl_id`, `cl_label`, `pr_id`, `pr_label`, `cd_synonym` | From `cl_pro_relationships.tsv` — pull them programmatically, don't retype them. |
+| `species_support`, `evidence_source`, `citation`, `quote`, `source_ref` | **Legacy** (issue #11 human-only check). Read-only. |
+| `species_scope` | `human`, `mouse`, `both` or `unresolved` (blank = not yet assessed). |
+| `human_citation`, `human_quote` | Citation (author, year, PMID, PMCID) and an exact quote for the human side. |
+| `mouse_citation`, `mouse_quote` | The same for mouse. |
+| `note` | Free text explaining the verdict, e.g. "not tested in mouse, no reagent", "ortholog exists but not expressed", "contradicted in mouse", or "species from PRO label". |
+| `checked_on` | Date the row was last assessed. |
+
+Rules for `species_scope`:
+
+- **Judge against the assertion as CL states it.** For a negative pair
+  ("lacks CD14"), evidence that the marker is absent in a species *supports*
+  it.
+- `both` only when **both** species have an exact quote supporting the
+  assertion.
+- `human` / `mouse` when that species is supported and the other is
+  contradicted by a quote (e.g. mouse NK cells are not classified by CD56).
+- `unresolved` whenever a species has no evidence, only "not tested", or
+  conflicting evidence. Explain which in `note`. **Never treat "not tested in
+  mouse" as human-only.**
+- Pairs whose PRO label is species-qualified, e.g. "(human)", get
+  `species_scope = human` and the note "species from PRO label".
+- **Human-specific CL terms** (label ending ", human", e.g. CL:0000938): the
+  mouse question doesn't apply. Set `species_scope = human` when the human
+  side is supported by a verified quote, otherwise `unresolved`, and start
+  `note` with "CL term is human-specific; mouse not applicable".
+- An existing mouse ortholog (Alliance of Genome Resources / MGI) is **not**
+  evidence that a marker works in mouse. It may go in `note` with its record
+  ID; mouse support needs literature.
+- Every quote is checked word for word against the paper's Europe PMC full
+  text (as `soulcap-evidence verify` does) before it is written. If none can
+  be verified, leave the quote blank and say so in `note`.
+
+Evidence sources, in order: references in `literature/reviews/` (Dr. Diehl's
+first); verified rows of `literature/evidence.tsv`; then open-access
+literature via `soulcap-europepmc` / Europe PMC full text.
 
 ## Step 5 — flag real findings
 
-If a `species_support` result is genuinely surprising (e.g. a marker CL
+If a `species_scope` result is genuinely surprising (e.g. a marker CL
 implicitly treats as pan-species turns out to only have mouse evidence, or a
 whole marker cluster comes back `insufficient_evidence` the way monocyte
 subset markers did), log it the same way other literature/CL gaps from this
