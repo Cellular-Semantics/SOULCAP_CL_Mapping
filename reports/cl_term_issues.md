@@ -81,7 +81,7 @@ cells.
 
 **Repo issue:** not yet filed
 **Reference:** SOULCAP `NK` row ([data/marker_combinations.csv](../data/marker_combinations.csv), regenerate via `uv run soulcap-sync`); literature in [archive/2026-09_literature_narratives/nk_cell_markers.md](../archive/2026-09_literature_narratives/nk_cell_markers.md)
-**Status:** Drafted during Milestone 4 candidate mapping work — not yet filed as a repo issue
+**Status:** Drafted during Milestone 4 candidate mapping work — **withdrawn 2026-10-05**. It conflicts with Dr. Diehl's rule that generic NK terms keep only lack statements; CD56 belongs on the human-specific children, which already assert it (see [nk_marker_audit_2026-10.md](nk_marker_audit_2026-10.md#ncam1--cd56)). Kept for the record.
 
 #### CL:0000623 — "natural killer cell"
 

@@ -85,8 +85,8 @@ PMID:41898531).
 This conflicts with an earlier draft in this repo: the unfiled `NK` row in
 [gaps.tsv](gaps.tsv) and the "Natural killer cell missing CD56 marker axiom"
 entry in [cl_term_issues.md](cl_term_issues.md) propose *adding* CD56 to
-generic `CL:0000623`. Under Dr. Diehl's rule, that proposal should be
-withdrawn.
+generic `CL:0000623`. That proposal conflicts with Dr. Diehl's rule and was
+**withdrawn** on 2026-10-05.
 
 ### Terms that mix human-only and mouse-only markers
 
@@ -120,9 +120,9 @@ opinion.
 ## Open questions for Alex and Dr. Diehl
 
 1. **Which term has the HLA-DR-positive definition?** Nothing in current CL
-   matches. Could it be a different resource, an older CL release, or
-   `CL:0000939` (which is also "lacks")? If it's the latter, the proposed
-   issue becomes "drop 'lacks HLA-DRA' from both CD56-bright and CD56-dim".
+   matches. **Resolved 2026-10-05:** the conflict was in Dr. Diehl's own old
+   curation spreadsheet, not in CL. The HLA-DRA issue draft now covers both
+   `CL:0000938` and `CL:0000939`.
 2. **CD14 in mouse NK:** `no_evidence_found`, not contradicted. Is that good
    enough to keep the axiom on generic `CL:0000623`, or do you want a mouse
    source before it stays?
@@ -132,7 +132,7 @@ opinion.
    human child, as with plasmablast?
 4. **ILC1, human (`CL:0001077`) IL-7Rα:** this is the standard gate, but
    Riggan 2019 argues it may miss IL-7Rα-negative human ILC1. Keep as is?
-5. **Withdraw the old "add CD56 to `CL:0000623`" draft?** (See NCAM1 above.)
+5. ~~Withdraw the old "add CD56 to `CL:0000623`" draft?~~ Withdrawn 2026-10-05.
 
 ## Reproducing
 
