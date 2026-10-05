@@ -23,8 +23,11 @@ how many logged gaps still lack a tracking issue.
 
 - `reports/gaps.tsv` — the source rows. Columns: `soulcap_abbreviation`,
   `soulcap_full_name`, `gap_type`, `description`, `related_cl_ids`,
-  `evidence`, `status` (`open` / `filed_as_issue`), `repo_issue`,
-  `date_logged`.
+  `evidence`, `status` (`open` / `filed_as_issue` / `draft_for_review` /
+  `on_hold`), `repo_issue`, `date_logged`. `draft_for_review` rows are CL
+  issue drafts waiting for Alex (and sometimes Dr. Diehl) to approve them;
+  change them to `open` only after that approval. `on_hold` rows wait on an
+  open question named in their description. Never file either directly.
 - `.github/ISSUE_TEMPLATE/mapping_gap.yml` — the template whose fields map
   directly onto `gaps.tsv` columns: `soulcap_abbreviation` → title, `gap_type`
   → the dropdown, `description` + `related_cl_ids` + `evidence` → the
@@ -38,7 +41,7 @@ how many logged gaps still lack a tracking issue.
 ## Step 1 — find what's actually unfiled
 
 Read `reports/gaps.tsv` and list every row where `status` is `open` (not
-`filed_as_issue`). Note two rows sharing a `soulcap_abbreviation` group (e.g.
+`filed_as_issue`, `draft_for_review` or `on_hold`). Note two rows sharing a `soulcap_abbreviation` group (e.g.
 `NK1 / NK3`) file as **one** issue, matching how the row itself is structured
 — don't split a single row into multiple issues.
 
