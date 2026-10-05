@@ -1,0 +1,2 @@
+# The benchmark reserve test hashes these files; keep LF on every OS.
+mappings/*.tsv text eol=lf
