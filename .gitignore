@@ -49,3 +49,6 @@ htmlcov/
 *.swp
 .idea/
 .vscode/
+
+# Library copies of paywalled papers, for local quote checks only (never commit)
+literature/paywalled/
