@@ -10,6 +10,40 @@ full text. Full detail is in
 [reports/plasmablast_marker_audit_2026-10.md](../reports/plasmablast_marker_audit_2026-10.md)
 and the draft rows at the end of [reports/gaps.tsv](../reports/gaps.tsv).
 
+## Decisions needed from Dr. Diehl
+
+Issue drafts (details below):
+
+1. **B1** HLA-DRA on the CD56-bright and CD56-dim NK terms: file, change or drop?
+2. **B3a** plasmablast "lacks CD138": file, change or drop?
+3. **B3b** plasmablast child: Option 1 "plasmablast, human" or Option 2 a
+   mammal-level child? And should the mature B cell → Mammalia link be raised
+   as its own issue?
+4. **Batch 2** (B6a DX5 on `CL:0002345`, B6b wrong PMID, B6c "T cell"
+   wording, B6d galectin-1 relation): file, change or drop, each.
+5. **Pre-NK** (`CL:0000937`, on hold): move CD34/CD117/CD122 to a human child?
+
+Group 1 ILC hierarchy (details in
+[group1_ilc_species_hierarchy_proposal.md](group1_ilc_species_hierarchy_proposal.md)):
+
+6. **Terms with unclear species.** Accept the recommended defaults?
+   - Keep uterine NK, liver-resident NK, hepatic pit cell and cycling NK generic.
+   - Make the uterine NK definition species-neutral.
+   - Move liver-resident NK's human sentences to a human child (draft C1 in
+     `gaps.tsv`).
+7. **New grouping terms.** NEW:7 "uterine natural killer cell, human" and
+   NEW:8 "group 1 innate lymphoid cell, human" (issue #14) are recommended.
+   NEW:9 "group 1 innate lymphoid cell, mouse" is optional. Which do you want?
+8. **Two parents.** Logical definitions with `in taxon` (suggested default), or
+   hand-asserted parents?
+9. **`CL:0002349`** CD27-high, CD11b-low NK cell, mouse: move from mature to
+   immature NK, mouse?
+10. **`CL:0002426`**: merge with `CL:0002347`, which it may duplicate?
+11. **`CL:0002346`** Dx5-negative, NK1.1-positive immature NK cell, mouse:
+    keep under NK despite its overlap with ILC1?
+
+---
+
 **The HLA-DR positive vs negative conflict** you described was in your old
 curation spreadsheet, not in CL, so it isn't a CL issue. In CL, both
 NK subset terms say "lacks HLA-DRA", and B1 below covers both.
