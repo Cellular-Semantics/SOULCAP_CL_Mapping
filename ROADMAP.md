@@ -250,6 +250,14 @@ upstream to `obophenotype/cell-ontology`.
 - **Data hygiene.** The errors in `reports/marker_string_issues.md` (spaced
   marker names, unbalanced brackets, etc.) should be fixed in the Google Sheet
   before relying on automated parsing for M1/M3/M4.
+- **Matcher evaluation fingerprints break on Windows checkouts** (noted
+  2026-10-05, not fixed yet). `soulcap-evaluate` fingerprints source files by
+  hashing their raw bytes (`evaluation.py`). With `core.autocrlf=true`, a
+  Windows checkout has CRLF line endings, so the hashes differ from a Linux
+  run and the dashboard shows the evaluation as `stale_or_unverified`. The
+  same problem in `mappings/*.tsv` was fixed with a `.gitattributes` LF rule.
+  Fix later: normalise line endings before hashing, or extend the LF rule to
+  the fingerprinted files.
 - **Folders to standardise:**
   - `marker_mappings/` — curated mapping CSVs (tracked).
   - `literature/` — M2 literature reports.

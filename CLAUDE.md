@@ -123,6 +123,8 @@ new scientific approvals or collaborator commitments without agreement.
 - Use **UV** for environment and dependency management (`uv sync --extra dev`,
   `uv run ...`). Plain `uv sync` removes the dev tools (pytest, ruff, mypy).
   Don't invoke `pip` directly.
+- **Never send Alex's email address or other personal information to an
+  outside service** (API parameters, headers, search queries) without asking first.
 - **Never write an identifier from memory.** This covers DOIs, PMIDs, PMCIDs
   and PRO, CL, GO, CHEBI and UniProt IDs. Look each one up (OLS4, Europe PMC,
   the source paper or datasheet, or a file in this repo) and cite where it
