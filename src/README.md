@@ -29,7 +29,7 @@ and must keep coverage at or above 80%.
 | | `regression_triage.py` | `uv run python -m soulcap_cl_mapping.regression_triage` |
 | Literature | `europepmc_search.py`, `pubmed_search.py` | `soulcap-europepmc`, `soulcap-pubmed` |
 | | `snippet_cache.py`, `report_validator.py` (citation-traversal support) | `soulcap-cache`, `soulcap-validate-report` |
-| | `pro_species_support.py` (used by the `pro-marker-species-support` skill) | library |
+| | `pro_species_support.py` (used by the `pro-marker-species-support` skill and `soulcap-audit`: scoping, plus the human/mouse status vocabulary and `not_applicable` rules) | library |
 | | `literature_evidence.py` (evidence table: migrate, verify against Europe PMC, views) | `soulcap-evidence` |
 
 See [docs/pipeline.md](../docs/pipeline.md) for how the stages connect.

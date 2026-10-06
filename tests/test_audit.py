@@ -3,6 +3,7 @@
 import csv
 import hashlib
 import json
+from collections import defaultdict
 from datetime import datetime, timezone
 
 import pytest
@@ -416,3 +417,95 @@ def test_unsafe_reference_is_not_a_link(snapshot):
     )
     audit.add_links(data, snapshot, snapshot / "reports")
     assert data["mappings"][0]["evidence_links"] == []
+
+
+def test_species_statuses_keep_contradicted_apart_from_not_applicable(snapshot):
+    fields = [
+        "cl_id",
+        "cl_label",
+        "pr_id",
+        "pr_label",
+        "species_support",
+        "species_scope",
+        "human_status",
+        "mouse_status",
+    ]
+    table(
+        snapshot,
+        "species",
+        [
+            # human-only marker, mouse side blank -> derived not_applicable
+            dict(
+                cl_id="CL:1",
+                cl_label="natural killer cell",
+                pr_id="PR:000001024",
+                pr_label="NCAM1",
+                species_support="",
+                species_scope="",
+                human_status="supported",
+                mouse_status="",
+            ),
+            dict(
+                cl_id="CL:2",
+                cl_label="NK cell, human",
+                pr_id="PR:000002015",
+                pr_label="DRA",
+                species_support="human",
+                species_scope="",
+                human_status="contradicted",
+                mouse_status="not_applicable",
+            ),
+            dict(
+                cl_id="CL:3",
+                cl_label="NK cell",
+                pr_id="PR:9",
+                pr_label="x",
+                species_support="",
+                species_scope="human",
+                human_status="supported",
+                mouse_status="no_evidence_found",
+            ),
+            dict(
+                cl_id="CL:4",
+                cl_label="NK cell",
+                pr_id="PR:8",
+                pr_label="x",
+                species_support="",
+                species_scope="",
+                human_status="maybe",
+                mouse_status="",
+            ),
+        ],
+        fields,
+    )
+    data = audit.build_audit(snapshot, NOW)
+    rows = {r["cl_id"]: r for r in data["species_support"]}
+    assert rows["CL:1"]["mouse_status"] == "not_applicable"
+    assert rows["CL:1"]["mouse_status_basis"].startswith("derived: human-only marker")
+    assert rows["CL:1"]["species_scope"] == "human"
+    assert rows["CL:3"]["species_scope"] == "human"  # recorded scope is kept
+    assert rows["CL:4"]["mouse_status"] == "not_assessed"
+    by_code = defaultdict(set)
+    for f in data["findings"]:
+        by_code[f["code"]].add(f["subject"])
+    assert by_code["species_marker_contradicted"] == {"CL:2 / PR:000002015"}
+    assert by_code["unknown_species_status"] == {"CL:4 / PR:8"}
+    summary = data["summary"]
+    assert summary["species_human_statuses"] == {
+        "supported": 2,
+        "contradicted": 1,
+        "maybe": 1,
+    }
+    assert summary["species_mouse_statuses"] == {
+        "not_applicable": 2,
+        "no_evidence_found": 1,
+        "not_assessed": 1,
+    }
+    assert "no_evidence_found" in audit.render_summary(data)
+
+
+def test_missing_species_table_reports_unavailable(snapshot):
+    (snapshot / audit.INPUTS["species"]).unlink()
+    data = audit.build_audit(snapshot, NOW)
+    assert data["summary"]["species_human_statuses"] is None
+    assert data["species_support"] == []

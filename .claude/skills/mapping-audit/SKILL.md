@@ -71,10 +71,22 @@ is to question it, not just print it — for each row, ask:
    fixes changes the term's markers/definition/label out from under a mapping
    made before the fix landed.
 3. **Does literature actually back a species-specific claim the mapping
-   relies on?** Cross-check against `reports/pro_marker_species_support.tsv`
-   — if a mapping leans on a marker that TSV records as
-   `insufficient_evidence` or a different species than SOULCAP's row assumes,
-   that's a real finding, not noise.
+   relies on?** Cross-check against `reports/pro_marker_species_support.tsv`,
+   using `human_status` (SOULCAP rows are human). The four values mean
+   different things, so report them separately and never merge them:
+   - `contradicted`: a real finding. Evidence goes against the CL assertion
+     (`soulcap-audit` raises `species_marker_contradicted`).
+   - `no_evidence_found`: searched, nothing found. Note it as an evidence gap,
+     **not** a contradiction.
+   - `not_applicable`: the species question doesn't apply (term or protein
+     limited to the other species, or a human-only marker such as HLA-DRA or
+     NCAM1/CD56 on the mouse side). **Never a failure.**
+   - blank / `not_assessed`: not checked yet; say so.
+
+   Use `pro_species_support.species_status(row, "human")` to read a row: it
+   fills a blank with `not_applicable` when a rule applies and never
+   overrides a recorded value. The legacy `species_support` column
+   (`insufficient_evidence` etc.) is superseded by these columns.
 4. **Was it marked `uncertain` for a reason that's since been resolved (or
    gotten worse)?** Re-read the `note` field and check whether the ambiguity
    it describes is still accurate.

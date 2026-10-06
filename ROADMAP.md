@@ -141,6 +141,18 @@ Mgr` tab are covered — B cell, DC, ILC, iNKT, NK cell, T cell, gdT, MAIT
 category, not a cell type). Still missing: monocyte, neutrophil, basophil,
 mast cell, granulocyte, MDSC.
 
+**Human/mouse marker validity (Dr. Diehl, 2026-09-28 and 2026-10-05):**
+[reports/pro_marker_species_support.tsv](reports/pro_marker_species_support.tsv)
+records, per CL marker assertion, a `human_status` and `mouse_status`. The
+values are `supported` / `contradicted` / `no_evidence_found` /
+`not_applicable`, each verdict backed by a quote checked against the paper.
+- **Done (2026-10-05):** every marker on the group 1 ILC / NK subtree
+  (66 pairs on 28 terms) and on plasmablast (4 pairs). See
+  [nk_marker_audit_2026-10.md](reports/nk_marker_audit_2026-10.md) and
+  [plasmablast_marker_audit_2026-10.md](reports/plasmablast_marker_audit_2026-10.md).
+- **Remaining:** the other pairs on mapped CL terms (blank status =
+  not assessed).
+
 ---
 
 ## Milestone 3 — Audit curated CL mappings ⛔ (blocked)
@@ -162,6 +174,14 @@ version of this — re-verifying curated mappings' evidence and `match_type`
 against current CL marker axioms and literature, catching drift — without
 needing the sheet columns. It cannot capture curator *intent*, so this
 milestone stays ⛔ for the full deliverable until the sheet changes.
+
+**Update (2026-10-05):** `soulcap-audit` now keeps `contradicted`,
+`no_evidence_found` and `not_applicable` species statuses apart. Only
+`contradicted` raises a finding, and human-only markers on the mouse side are
+`not_applicable`, not failures. The mapping-audit skill uses the same
+vocabulary. 6 contradicted marker assertions are currently in the review
+queue ([audit_summary.md](reports/audit_summary.md)). This is still the
+evidence half of M3; the blocker above is unchanged.
 
 ---
 
@@ -189,6 +209,14 @@ proposal. The SSSOM export is generated from this registry. All proposals are
 `needs_review`, not confirmed equivalences. The gap log includes family-level
 entries and is not a one-to-one accounting of the 47 entities without proposals.
 
+**CL structure proposal (2026-10-05, design only):**
+[docs/group1_ilc_species_hierarchy_proposal.md](docs/group1_ilc_species_hierarchy_proposal.md)
+proposes a parallel human/mouse hierarchy under group 1 ILC → NK.
+- 6 new grouping terms, plus 2 recommended (uterine NK, human; group 1 ILC,
+  human = #14) and 1 optional.
+- Awaiting Dr. Diehl's decisions ([docs/diehl_review_2026-10.md](docs/diehl_review_2026-10.md)).
+  No CL edits are made here; approved changes go to David's team as issues.
+
 ---
 
 ## CL term corrections
@@ -201,7 +229,15 @@ upstream to `obophenotype/cell-ontology`.
 | Issue | Terms | Status |
 |-------|-------|--------|
 | [#13 NKT cell naming](https://github.com/Cellular-Semantics/SOULCAP_CL_Mapping/issues/13) | CL:4052055 → "CD56-positive T cell, human"; CL:0000814 → "iNKT cell" | Filed upstream: [CL#3663](https://github.com/obophenotype/cell-ontology/issues/3663), [CL#3664](https://github.com/obophenotype/cell-ontology/issues/3664) |
-| [#14 Missing human-specific ILC1 term](https://github.com/Cellular-Semantics/SOULCAP_CL_Mapping/issues/14) | CL:0001067 "group 1 innate lymphoid cell" — no `, human` variant, unlike group 2 (CL:0001081) and group 3 (CL:0001078) | Open — not yet filed upstream |
+| [#14 Missing human-specific ILC1 term](https://github.com/Cellular-Semantics/SOULCAP_CL_Mapping/issues/14) | CL:0001067 "group 1 innate lymphoid cell" — no `, human` variant, unlike group 2 (CL:0001081) and group 3 (CL:0001078) | Open — not yet filed upstream. Recommended as NEW:8 in the group 1 ILC hierarchy proposal |
+| B1 "lacks HLA-DRA" on CD56-bright/dim NK (draft) | CL:0000938, CL:0000939 | Draft in [reports/gaps.tsv](reports/gaps.tsv), awaiting Dr. Diehl ([review](docs/diehl_review_2026-10.md)) |
+| B3a plasmablast "lacks CD138" (draft) | CL:0000980 | Draft, awaiting Dr. Diehl |
+| B3b plasmablast markers to a species child (draft) | CL:0000980 | Draft, awaiting Dr. Diehl (human vs mammal-level child) |
+| B6a–d smaller fixes (drafts) | CL:0002345 (DX5+); CL:0002348/0002349 (wrong PMID); CL:0002439–0002448 ("T cell" wording); CL:0002343 (galectin-1 relation) | Drafts, awaiting Dr. Diehl |
+| C1 liver-resident NK human sentences to a human child (draft) | CL:4047101 | Draft, awaiting Dr. Diehl |
+| Pre-NK markers (on hold) | CL:0000937 | On hold pending Dr. Diehl |
+| Protégé NCAM1 query returns too few classes | — | Not filed; repro note in [docs/protege_ncam1_query_repro.md](docs/protege_ncam1_query_repro.md) for Dr. Diehl to reproduce |
+| ~~Add CD56 to generic NK~~ | CL:0000623 | Withdrawn 2026-10-05 (generic NK keeps only lack statements) |
 
 ---
 
@@ -214,6 +250,14 @@ upstream to `obophenotype/cell-ontology`.
 - **Data hygiene.** The errors in `reports/marker_string_issues.md` (spaced
   marker names, unbalanced brackets, etc.) should be fixed in the Google Sheet
   before relying on automated parsing for M1/M3/M4.
+- **Matcher evaluation fingerprints break on Windows checkouts** (noted
+  2026-10-05, not fixed yet). `soulcap-evaluate` fingerprints source files by
+  hashing their raw bytes (`evaluation.py`). With `core.autocrlf=true`, a
+  Windows checkout has CRLF line endings, so the hashes differ from a Linux
+  run and the dashboard shows the evaluation as `stale_or_unverified`. The
+  same problem in `mappings/*.tsv` was fixed with a `.gitattributes` LF rule.
+  Fix later: normalise line endings before hashing, or extend the LF rule to
+  the fingerprinted files.
 - **Folders to standardise:**
   - `marker_mappings/` — curated mapping CSVs (tracked).
   - `literature/` — M2 literature reports.

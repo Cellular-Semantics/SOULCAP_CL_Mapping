@@ -80,6 +80,8 @@ WebFetch (an AI model copying page text), so they start as `no` and become
   not be accessed, say so; never quote from memory or from an abstract you
   have not retrieved. Never write an identifier from memory.
 - Paywalled papers are listed as inaccessible. Do not commit paywalled PDFs.
+  A library copy used to check a quote goes in `literature/paywalled/`, which
+  is gitignored; open-access PDFs may still be committed elsewhere.
 - "No evidence found" is a valid, recorded result.
 - The `pro-marker-species-support`, `mapping-audit` and `soulcap-cl-matching`
   skills read `evidence.tsv`; older rows of

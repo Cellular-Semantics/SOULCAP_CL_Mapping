@@ -120,12 +120,16 @@ own discipline here.
 
 `reports/pro_marker_species_support.tsv` has one row per directly asserted
 (CL term, PRO marker) pair for every CL term in
-`mappings/curated_mappings.tsv` (87 pairs as of 2026-09-28). The question is
+`mappings/curated_mappings.tsv` (87 pairs as of 2026-09-28), plus every term
+under group 1 ILC (`CL:0001067`, NK cells included) from the October 2026 NK
+audit (`audit_batch = nk_2026-10`; see `reports/nk_marker_audit_2026-10.md`).
+Extra terms can be added the same way: scope them from Ubergraph and pull
+their labels from `cl_pro_relationships.tsv`. The question is
 Dr. Diehl's: **is each marker, as CL asserts it, valid in human, mouse, or
 both?**
 
 **Never edit the first 10 (legacy) columns** of an existing row. They record
-the original human-only check from issue #11. All new work goes in the 7
+the original human-only check from issue #11. All new work goes in the
 columns after them. **Where the new columns disagree with the legacy
 `species_support` value, the new columns take precedence** (e.g. plasmablast
 "lacks CD138", where the legacy value still says `human`).
@@ -134,11 +138,43 @@ columns after them. **Where the new columns disagree with the legacy
 |---|---|
 | `cl_id`, `cl_label`, `pr_id`, `pr_label`, `cd_synonym` | From `cl_pro_relationships.tsv` — pull them programmatically, don't retype them. |
 | `species_support`, `evidence_source`, `citation`, `quote`, `source_ref` | **Legacy** (issue #11 human-only check). Read-only. |
-| `species_scope` | `human`, `mouse`, `both` or `unresolved` (blank = not yet assessed). |
-| `human_citation`, `human_quote` | Citation (author, year, PMID, PMCID) and an exact quote for the human side. |
+| `species_scope` | `human`, `mouse`, `both` or `unresolved` (blank = not yet assessed). Derived from the two status columns. |
+| `human_status`, `mouse_status` | One value per species, from the controlled list below. |
+| `human_citation`, `human_quote` | Citation (author, year, PMID, PMCID) and an exact quote: the evidence behind `human_status`. For `contradicted`, this is the contradicting quote. |
 | `mouse_citation`, `mouse_quote` | The same for mouse. |
+| `counter_citation`, `counter_quote` | For a `contradicted` verdict, the strongest quote on the other side (supporting the assertion), so both sides are recorded. Blank if none was found. |
 | `note` | Free text explaining the verdict, e.g. "not tested in mouse, no reagent", "ortholog exists but not expressed", "contradicted in mouse", or "species from PRO label". |
 | `checked_on` | Date the row was last assessed. |
+| `audit_batch` | Which audit last set the row, e.g. `nk_2026-10`. Blank for earlier rows. |
+
+Status values for `human_status` / `mouse_status` (Dr. Diehl, 2026-10-05).
+Keep these four apart; they mean different things:
+
+| Value | Meaning |
+|---|---|
+| `supported` | An exact quote supports the assertion as CL states it. |
+| `contradicted` | An exact quote goes against it. Put any supporting quote in `counter_*`. |
+| `no_evidence_found` | Searched, found nothing. **Not** a contradiction. Say in `note` what was searched. |
+| `not_applicable` | The species question doesn't apply: the CL term is limited to the other species (", human" / ", mouse"), the PRO term is the other species' protein, or the marker is human-only. Human-only markers so far: HLA-DRA (mouse ortholog H2-Ea is a different protein) and NCAM1/CD56 for NK cells. |
+| *(blank)* | Not assessed. |
+
+The same vocabulary is in code: `pro_species_support.SPECIES_STATUSES`,
+`HUMAN_ONLY_MARKERS`, `not_applicable_reason()`, `species_status()` and
+`species_scope()`. `soulcap-audit` uses them. It reports `contradicted` rows
+as findings and counts every status per species in `audit_summary.md`. Add
+a new human-only marker to `HUMAN_ONLY_MARKERS` (with a test), not only to a
+note. `tests/test_pro_species_support.py` checks that every recorded value is
+in the vocabulary, that `supported`/`contradicted` have a quote, and that a
+species which can't apply is never marked anything but `not_applicable`.
+
+Derive `species_scope` from them: `both` if both are `supported`; `human`
+if human is `supported` and mouse is `not_applicable` or `contradicted`
+(likewise `mouse`); otherwise `unresolved`.
+
+Lineage-negative markers (lacks CD3/CD19/CD20/CD14 on non-T, non-B,
+non-myeloid cells) are generally safe across species (Dr. Diehl), but still
+look for mouse evidence and record `no_evidence_found` if there is none. Never
+mark them `supported` on expert opinion alone; put the opinion in `note`.
 
 Rules for `species_scope`:
 

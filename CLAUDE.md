@@ -75,6 +75,7 @@ AST in `marker_syntax.py`, compiled/evaluated by `phenotype.py`.
 | `pyproject.toml` | Project metadata, deps, and the CLI entry points. |
 | `.mcp.json` | MCP servers available in this project (see below). |
 | `.env` | `ASTA_API_KEY=...` (gitignored; required for the Asta MCP server). |
+| `.gitattributes` | Forces LF line endings on `mappings/*.tsv`, whose hashes `tests/test_benchmark_reserve.py` checks (Windows `core.autocrlf` would otherwise break it). |
 
 When you create a new artifact, put it in the established location and link it
 from here and the README so locations stay consistent. Do not scatter
