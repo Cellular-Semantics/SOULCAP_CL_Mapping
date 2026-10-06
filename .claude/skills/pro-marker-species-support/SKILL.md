@@ -158,6 +158,15 @@ Keep these four apart; they mean different things:
 | `not_applicable` | The species question doesn't apply: the CL term is limited to the other species (", human" / ", mouse"), the PRO term is the other species' protein, or the marker is human-only. Human-only markers so far: HLA-DRA (mouse ortholog H2-Ea is a different protein) and NCAM1/CD56 for NK cells. |
 | *(blank)* | Not assessed. |
 
+The same vocabulary is in code: `pro_species_support.SPECIES_STATUSES`,
+`HUMAN_ONLY_MARKERS`, `not_applicable_reason()`, `species_status()` and
+`species_scope()`. `soulcap-audit` uses them. It reports `contradicted` rows
+as findings and counts every status per species in `audit_summary.md`. Add
+a new human-only marker to `HUMAN_ONLY_MARKERS` (with a test), not only to a
+note. `tests/test_pro_species_support.py` checks that every recorded value is
+in the vocabulary, that `supported`/`contradicted` have a quote, and that a
+species which can't apply is never marked anything but `not_applicable`.
+
 Derive `species_scope` from them: `both` if both are `supported`; `human`
 if human is `supported` and mouse is `not_applicable` or `contradicted`
 (likewise `mouse`); otherwise `unresolved`.

@@ -14,6 +14,7 @@ from pathlib import Path
 from urllib.parse import quote, urlsplit
 
 from soulcap_cl_mapping import mapping_evidence, marker_resolution, phenotype, registry
+from soulcap_cl_mapping import pro_species_support as species
 from soulcap_cl_mapping.marker_syntax import (
     MARKER_COLUMNS,
     MarkerSyntaxError,
@@ -454,6 +455,43 @@ def build_audit(
             }
         )
 
+    species_rows = []
+    for row in tables.get("species", []):
+        item = dict(row)
+        for side in ("human", "mouse"):
+            recorded = row.get(f"{side}_status", "").strip()
+            status = species.species_status(row, side)
+            item[f"{side}_status"] = status
+            item[f"{side}_status_basis"] = (
+                "recorded"
+                if recorded
+                else "derived: " + species.not_applicable_reason(row, side)
+                if status == species.NOT_APPLICABLE
+                else "not assessed"
+            )
+            subject = f"{row['cl_id']} / {row['pr_id']}"
+            if status not in (*species.SPECIES_STATUSES, species.NOT_ASSESSED):
+                issue(
+                    "warning",
+                    "unknown_species_status",
+                    subject,
+                    f"Unknown {side}_status value {status!r}.",
+                )
+            elif status == species.CONTRADICTED:
+                # Only a contradiction is a finding: "not applicable" and
+                # "no evidence found" are not failures.
+                issue(
+                    "warning",
+                    "species_marker_contradicted",
+                    subject,
+                    f"{side.capitalize()} evidence contradicts the CL marker assertion; "
+                    "see reports/pro_marker_species_support.tsv.",
+                )
+        item["species_scope"] = row.get("species_scope", "").strip() or (
+            species.species_scope(item["human_status"], item["mouse_status"])
+        )
+        species_rows.append(item)
+
     provenance: dict = {
         "export_inputs": "unverifiable",
         "differences": [],
@@ -636,6 +674,12 @@ def build_audit(
         "review_statuses": dict(Counter(m["review_status"] for m in mappings)),
         "marker_statuses": dict(Counter(m["status"] for m in markers)),
         "gap_records": len(gaps) if "gaps" in tables else None,
+        "species_human_statuses": dict(Counter(r["human_status"] for r in species_rows))
+        if "species" in tables
+        else None,
+        "species_mouse_statuses": dict(Counter(r["mouse_status"] for r in species_rows))
+        if "species" in tables
+        else None,
         "finding_severities": dict(Counter(f["severity"] for f in findings)),
     }
     return dict(
@@ -657,13 +701,14 @@ def build_audit(
         findings=findings,
         inputs=inputs,
         provenance=provenance,
-        species_support=tables.get("species", []),
+        species_support=species_rows,
         limitations=[
             "All mappings remain proposals; marker compatibility does not establish equivalence.",
             "Marker usage is extracted only from valid cells. Invalid cells can hide additional marker usage.",
             "Empty structured evidence fields do not mean that literature does not exist; consult the narrative.",
             "CL reverse view covers proposed targets, not the entire Cell Ontology.",
             "No upstream services were queried. Snapshot age is not proof that an ontology is outdated.",
+            "Species statuses: 'contradicted' means evidence against the CL assertion; 'no_evidence_found' means searched, nothing found (not a contradiction); 'not_applicable' means the species question doesn't apply (term or protein limited to the other species, or a human-only marker on the mouse side); 'not_assessed' means not checked yet.",
         ],
     )
 

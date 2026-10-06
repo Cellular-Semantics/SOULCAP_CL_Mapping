@@ -23,7 +23,7 @@ literature evidence in [literature/](../literature/), and planning documents in
 
 | File | What it is | Produced by | Type |
 |---|---|---|---|
-| [audit_dashboard.html](audit_dashboard.html) | Offline, filterable dashboard of entities, proposals, findings, marker coverage, gaps and provenance | `uv run soulcap-audit` | Generated |
+| [audit_dashboard.html](audit_dashboard.html) | Offline, filterable dashboard of entities, proposals, findings, marker coverage, gaps, provenance and species evidence (human and mouse status per CL marker: `supported`, `contradicted`, `no_evidence_found`, `not_applicable`, `not_assessed`; only `contradicted` raises a finding) | `uv run soulcap-audit` | Generated |
 | [audit_summary.md](audit_summary.md) | Text summary of the same audit | `uv run soulcap-audit` | Generated |
 | [audit_data.json](audit_data.json) | Data behind the dashboard | `uv run soulcap-audit` | Generated |
 | [matcher_evaluation.md](matcher_evaluation.md), [matcher_evaluation.tsv](matcher_evaluation.tsv), [matcher_evaluation.json](matcher_evaluation.json) | How well the matcher retrieves the proposed CL targets (provisional agreement, not accuracy) | `uv run soulcap-evaluate` | Generated |

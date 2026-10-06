@@ -1,6 +1,6 @@
 # SOULCAP mapping audit
 
-Generated: 2026-09-11T04:13:51.094265+00:00
+Generated: 2026-10-06T00:30:46.365140+00:00
 Mapping evidence resolution: legacy
 
 [Open dashboard](audit_dashboard.html) · [Audit data](audit_data.json)
@@ -17,8 +17,10 @@ Mapping evidence resolution: legacy
 - evidence statuses: {"partial_support": 54, "invalid_profile": 6, "no_marker_support": 20}
 - review statuses: {"needs_review": 80}
 - marker statuses: {"mapped": 55, "no_gene_mapping": 3, "documented_nonprotein_or_reagent": 3, "documented_complex_or_family": 10, "source_artifact_needs_review": 4}
-- gap records: 17
-- finding severities: {"error": 23, "warning": 8, "info": 81}
+- gap records: 27
+- species human statuses: {"supported": 33, "not_assessed": 70, "contradicted": 3, "no_evidence_found": 11, "not_applicable": 27}
+- species mouse statuses: {"no_evidence_found": 12, "not_assessed": 61, "not_applicable": 47, "contradicted": 3, "supported": 21}
+- finding severities: {"error": 23, "warning": 14, "info": 81}
 
 ## Provenance
 
@@ -29,7 +31,7 @@ Mapping evidence resolution: legacy
   "upstream_checked": false,
   "agreement": "historical_without_ids",
   "ontology_snapshot_date": "2026-06-29",
-  "ontology_age_days": 74,
+  "ontology_age_days": 99,
   "export_decisions": "match",
   "export_evidence": "match"
 }
@@ -60,6 +62,12 @@ Mapping evidence resolution: legacy
 - error / invalid_profile / SOULCAP:SC000125: 1 marker cell(s) cannot be scored.
 - error / invalid_profile / SOULCAP:SC000126: 2 marker cell(s) cannot be scored.
 - error / invalid_profile / SOULCAP:SC000127: 2 marker cell(s) cannot be scored.
+- warning / species_marker_contradicted / CL:0000937 / PR:000001381: Mouse evidence contradicts the CL marker assertion; see reports/pro_marker_species_support.tsv.
+- warning / species_marker_contradicted / CL:0000938 / PR:000002015: Human evidence contradicts the CL marker assertion; see reports/pro_marker_species_support.tsv.
+- warning / species_marker_contradicted / CL:0000939 / PR:000002015: Human evidence contradicts the CL marker assertion; see reports/pro_marker_species_support.tsv.
+- warning / species_marker_contradicted / CL:0000980 / PR:000001935: Human evidence contradicts the CL marker assertion; see reports/pro_marker_species_support.tsv.
+- warning / species_marker_contradicted / CL:0000980 / PR:000001935: Mouse evidence contradicts the CL marker assertion; see reports/pro_marker_species_support.tsv.
+- warning / species_marker_contradicted / CL:0002345 / PR:000001008: Mouse evidence contradicts the CL marker assertion; see reports/pro_marker_species_support.tsv.
 - warning / uncertain_proposal / SOULCAP:SC000006: Proposal for CL:0001074 is explicitly uncertain.
 - warning / uncertain_proposal / SOULCAP:SC000064: Proposal for CL:0000789 is explicitly uncertain.
 - warning / uncertain_proposal / SOULCAP:SC000065: Proposal for CL:0000084 is explicitly uncertain.
@@ -157,3 +165,4 @@ Mapping evidence resolution: legacy
 - Empty structured evidence fields do not mean that literature does not exist; consult the narrative.
 - CL reverse view covers proposed targets, not the entire Cell Ontology.
 - No upstream services were queried. Snapshot age is not proof that an ontology is outdated.
+- Species statuses: 'contradicted' means evidence against the CL assertion; 'no_evidence_found' means searched, nothing found (not a contradiction); 'not_applicable' means the species question doesn't apply (term or protein limited to the other species, or a human-only marker on the mouse side); 'not_assessed' means not checked yet.
