@@ -69,7 +69,7 @@ AST in `marker_syntax.py`, compiled/evaluated by `phenotype.py`.
 | [archive/](archive/README.md) | Finished one-off experiments, one dated folder each with a README. Not current output; nothing regenerates it. |
 | [src/](src/README.md) `soulcap_cl_mapping/` | All Python code (module-by-stage table in `src/README.md`). `sync_sheets.py` → `soulcap-sync`; `marker_syntax.py` → `soulcap-validate` (EBNF validator); `snippet_cache.py` → `soulcap-cache`; `report_validator.py` → `soulcap-validate-report`; `cl_pro.py` → `soulcap-cl-pro` (CL→PR relationships via Ubergraph SPARQL); `cl_match.py` → `soulcap-match` (marker-axiom + lexical CL candidate scoring, single-profile or `--batch`); `oak_match.py` → `soulcap-oak-match` (OAK sqlite-backed lexical/synonym CL search — downloads/caches a local CL database on first use, ~100MB); `sssom_export.py` → `soulcap-sssom` (curated mappings → SSSOM TSV, with confidence derived from CL marker-axiom assertion status); `pro_species_support.py` (scopes the CL PRO markers to check and holds the human/mouse status vocabulary, `HUMAN_ONLY_MARKERS` and the `not_applicable` rules — no CLI, used by the `pro-marker-species-support` skill and by `soulcap-audit`); `europepmc_search.py` → `soulcap-europepmc` (free, keyless Europe PMC search — fallback literature source when the Asta MCP server isn't reachable); `pubmed_search.py` → `soulcap-pubmed` (NCBI E-utilities search — reads `PUBMED_API_KEY` from `.env` if set for the higher rate limit, otherwise works keyless; use when a task specifically needs NCBI's own index/query syntax rather than Europe PMC's mirror of it). |
 | `tests/` | Unit tests (mirror `src/` layout). |
-| `.claude/skills/` | Project skills — see [soulcap-cl-matching](.claude/skills/soulcap-cl-matching/SKILL.md), [citation-traversal](.claude/skills/citation-traversal/SKILL.md), `ontology-term-lookup`, [pro-marker-species-support](.claude/skills/pro-marker-species-support/SKILL.md), [gap-issue-filing](.claude/skills/gap-issue-filing/SKILL.md), [roadmap-status-sync](.claude/skills/roadmap-status-sync/SKILL.md), and [mapping-audit](.claude/skills/mapping-audit/SKILL.md). |
+| `.claude/skills/` | Project skills — see [soulcap-cl-matching](.claude/skills/soulcap-cl-matching/SKILL.md), [citation-traversal](.claude/skills/citation-traversal/SKILL.md), [ontology-term-lookup](.claude/skills/ontology-term-lookup/SKILL.md), [pro-marker-species-support](.claude/skills/pro-marker-species-support/SKILL.md), [gap-issue-filing](.claude/skills/gap-issue-filing/SKILL.md), [roadmap-status-sync](.claude/skills/roadmap-status-sync/SKILL.md), [mapping-audit](.claude/skills/mapping-audit/SKILL.md), [cl-upstream-issue-filing](.claude/skills/cl-upstream-issue-filing/SKILL.md), [soulcap-pr-stack](.claude/skills/soulcap-pr-stack/SKILL.md), and [soulcap-meeting-brief](.claude/skills/soulcap-meeting-brief/SKILL.md). |
 | `.claude/hooks/` | Claude Code hooks. `validate_report_quotes.py` is a PreToolUse guard that blocks writing a citation-traversal report whose quotes aren't verbatim in the snippet cache. |
 | `data/` | Gitignored cache of the synced sheet (CSV + xlsx). |
 | `pyproject.toml` | Project metadata, deps, and the CLI entry points. |
@@ -167,7 +167,12 @@ exact ontology labels via OLS4 — prefer it for term resolution.
   PreToolUse hook (`.claude/hooks/validate_report_quotes.py`) blocks the report if
   any quote isn't verbatim in the cache. See
   [SKILL.md](.claude/skills/citation-traversal/SKILL.md).
-- **`ontology-term-lookup`** — resolve biological terms to ontology labels via OLS4.
+- **`ontology-term-lookup`**: resolve a term or ID to an exact, current
+  ontology term via OLS4 (CL, PR, GO, UBERON, NCBITaxon, CHEBI). It checks
+  `marker_mappings/`, `reports/cl_pro_relationships.tsv` and
+  `mappings/curated_mappings.tsv` first, never returns an obsolete term,
+  and says whether a CL or PR term is general or species-specific. See
+  [SKILL.md](.claude/skills/ontology-term-lookup/SKILL.md).
 - **`soulcap-cl-matching`** — propose a CL match for a SOULCAP cell type using
   both marker-axiom scoring (`soulcap-match`) and lexical search, cross-checked
   against each other and verified via direct OLS4 lookup when uncertain, then
@@ -194,13 +199,30 @@ exact ontology labels via OLS4 — prefer it for term resolution.
   states) and correct any stale ⬜/🟡/✅/⛔ marker, so the roadmap never
   undersells or oversells progress again. See
   [SKILL.md](.claude/skills/roadmap-status-sync/SKILL.md).
-- **`mapping-audit`** — re-verify curated SOULCAP→CL mappings in
-  `candidate_cl_mappings.sssom.tsv` against current CL marker axioms and
-  literature evidence, catching drift or a `match_type` that no longer fits
-  its evidence tier. The Milestone 3 workflow, run today in reduced form
-  (evidence/drift only, not curator-intent capture) pending the Sheet gaining
-  its planned broad/exact + comment columns. See
-  [SKILL.md](.claude/skills/mapping-audit/SKILL.md).
+- **`mapping-audit`**: re-verify the proposals in
+  `mappings/curated_mappings.tsv` (all still `needs_review`) against current
+  CL marker axioms and literature evidence, using the per-proposal marker
+  evidence that `soulcap-audit` writes to `reports/audit_data.json`. It flags
+  drift, contradictions, Sheet disagreements and a `match_type` the evidence
+  doesn't support, and writes findings to `reports/mapping_audit_<YYYY-MM>.md`.
+  The Milestone 3 workflow, run in reduced form (evidence/drift only, not
+  curator-intent capture) until the Sheet gains its planned broad/exact +
+  comment columns. See [SKILL.md](.claude/skills/mapping-audit/SKILL.md).
+- **`cl-upstream-issue-filing`**: file a CL correction that Dr. Diehl has
+  marked **file** (for example in `docs/diehl_review_2026-10.md`) as an
+  `obophenotype/cell-ontology` issue. It re-verifies every ID and quote,
+  checks for duplicates, files only after an explicit OK, then updates
+  `reports/cl_term_issues.md`, `reports/gaps.tsv`, the ROADMAP.md CL term
+  corrections table and the review doc. See
+  [SKILL.md](.claude/skills/cl-upstream-issue-filing/SKILL.md).
+- **`soulcap-pr-stack`**: split new work into small stacked `pr-NN-<topic>`
+  branches (David's review feedback), run the CI checks on each slice, and
+  restack the chain when a lower PR merges or changes. Never merges into
+  `main`. See [SKILL.md](.claude/skills/soulcap-pr-stack/SKILL.md).
+- **`soulcap-meeting-brief`**: write a short brief or agenda for Dr. Diehl or
+  David from what changed since the last one, with every number recomputed
+  and the decisions needed as explicit questions. Saved in `docs/planning/`.
+  See [SKILL.md](.claude/skills/soulcap-meeting-brief/SKILL.md).
 
 > Local RAG indexing (a `local-paper-index` skill) was trialled here but removed
 > to avoid confusion — it was copied verbatim from `atlas_chat` and unused.
