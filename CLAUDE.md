@@ -69,7 +69,7 @@ AST in `marker_syntax.py`, compiled/evaluated by `phenotype.py`.
 | [archive/](archive/README.md) | Finished one-off experiments, one dated folder each with a README. Not current output; nothing regenerates it. |
 | [src/](src/README.md) `soulcap_cl_mapping/` | All Python code (module-by-stage table in `src/README.md`). `sync_sheets.py` → `soulcap-sync`; `marker_syntax.py` → `soulcap-validate` (EBNF validator); `snippet_cache.py` → `soulcap-cache`; `report_validator.py` → `soulcap-validate-report`; `cl_pro.py` → `soulcap-cl-pro` (CL→PR relationships via Ubergraph SPARQL); `cl_match.py` → `soulcap-match` (marker-axiom + lexical CL candidate scoring, single-profile or `--batch`); `oak_match.py` → `soulcap-oak-match` (OAK sqlite-backed lexical/synonym CL search — downloads/caches a local CL database on first use, ~100MB); `sssom_export.py` → `soulcap-sssom` (curated mappings → SSSOM TSV, with confidence derived from CL marker-axiom assertion status); `pro_species_support.py` (scopes the CL PRO markers to check and holds the human/mouse status vocabulary, `HUMAN_ONLY_MARKERS` and the `not_applicable` rules — no CLI, used by the `pro-marker-species-support` skill and by `soulcap-audit`); `europepmc_search.py` → `soulcap-europepmc` (free, keyless Europe PMC search — fallback literature source when the Asta MCP server isn't reachable); `pubmed_search.py` → `soulcap-pubmed` (NCBI E-utilities search — reads `PUBMED_API_KEY` from `.env` if set for the higher rate limit, otherwise works keyless; use when a task specifically needs NCBI's own index/query syntax rather than Europe PMC's mirror of it). |
 | `tests/` | Unit tests (mirror `src/` layout). |
-| `.claude/skills/` | Project skills — see [soulcap-cl-matching](.claude/skills/soulcap-cl-matching/SKILL.md), [citation-traversal](.claude/skills/citation-traversal/SKILL.md), [ontology-term-lookup](.claude/skills/ontology-term-lookup/SKILL.md), [pro-marker-species-support](.claude/skills/pro-marker-species-support/SKILL.md), [gap-issue-filing](.claude/skills/gap-issue-filing/SKILL.md), [roadmap-status-sync](.claude/skills/roadmap-status-sync/SKILL.md), [mapping-audit](.claude/skills/mapping-audit/SKILL.md), [cl-upstream-issue-filing](.claude/skills/cl-upstream-issue-filing/SKILL.md), [soulcap-pr-stack](.claude/skills/soulcap-pr-stack/SKILL.md), and [soulcap-meeting-brief](.claude/skills/soulcap-meeting-brief/SKILL.md). |
+| `.claude/skills/` | Project skills — see [soulcap-cl-matching](.claude/skills/soulcap-cl-matching/SKILL.md), [citation-traversal](.claude/skills/citation-traversal/SKILL.md), [ontology-term-lookup](.claude/skills/ontology-term-lookup/SKILL.md), [pro-marker-species-support](.claude/skills/pro-marker-species-support/SKILL.md), [gap-issue-filing](.claude/skills/gap-issue-filing/SKILL.md), [roadmap-status-sync](.claude/skills/roadmap-status-sync/SKILL.md), [mapping-audit](.claude/skills/mapping-audit/SKILL.md), [cl-upstream-issue-filing](.claude/skills/cl-upstream-issue-filing/SKILL.md), [soulcap-git-workflow](.claude/skills/soulcap-git-workflow/SKILL.md), and [soulcap-meeting-brief](.claude/skills/soulcap-meeting-brief/SKILL.md). |
 | `.claude/hooks/` | Claude Code hooks. `validate_report_quotes.py` is a PreToolUse guard that blocks writing a citation-traversal report whose quotes aren't verbatim in the snippet cache. |
 | `data/` | Gitignored cache of the synced sheet (CSV + xlsx). |
 | `pyproject.toml` | Project metadata, deps, and the CLI entry points. |
@@ -215,10 +215,10 @@ exact ontology labels via OLS4 — prefer it for term resolution.
   `reports/cl_term_issues.md`, `reports/gaps.tsv`, the ROADMAP.md CL term
   corrections table and the review doc. See
   [SKILL.md](.claude/skills/cl-upstream-issue-filing/SKILL.md).
-- **`soulcap-pr-stack`**: split new work into small stacked `pr-NN-<topic>`
-  branches (David's review feedback), run the CI checks on each slice, and
-  restack the chain when a lower PR merges or changes. Never merges into
-  `main`. See [SKILL.md](.claude/skills/soulcap-pr-stack/SKILL.md).
+- **`soulcap-git-workflow`**: commit and push Alex's work on his
+  `Alzion_G_717` branch only, as small, clearly labelled commits with the CI
+  checks run first. Never creates new branches and never merges into `main`.
+  See [SKILL.md](.claude/skills/soulcap-git-workflow/SKILL.md).
 - **`soulcap-meeting-brief`**: write a short brief or agenda for Dr. Diehl or
   David from what changed since the last one, with every number recomputed
   and the decisions needed as explicit questions. Saved in `docs/planning/`.

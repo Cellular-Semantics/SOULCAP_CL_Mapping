@@ -60,7 +60,7 @@ Use `gh` if it works. If not, use the browser, or give the user the text and the
 - `ROADMAP.md`: update the row in the "CL term corrections" table.
 - The review doc: mark the decision as filed, with the link.
 
-Then run `uv run pytest` (it checks doc links) and commit on a branch, following the `soulcap-pr-stack` skill.
+Then run `uv run pytest` (it checks doc links) and commit on `Alzion_G_717`, following the `soulcap-git-workflow` skill.
 
 ## Finish
 
