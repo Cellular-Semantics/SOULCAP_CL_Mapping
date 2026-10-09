@@ -133,6 +133,16 @@ new scientific approvals or collaborator commitments without agreement.
   [MARKER_SYNTAX.md](MARKER_SYNTAX.md) — any parser/validator must conform to
   its EBNF (including the hyphen-disambiguation lexer rule).
 
+## Branches
+
+- **Don't create new branches.** Commit to the branch that is checked out.
+  Alex's work lives on `Alzion_G_717`, the branch he shows Dr. Diehl. Only
+  create a branch when the person you're working for explicitly asks for one.
+- `pr-01-*` to `pr-09-*` are under review by David. Don't commit to, rebase or
+  delete them.
+- For committing and pushing, follow the
+  [soulcap-git-workflow](.claude/skills/soulcap-git-workflow/SKILL.md) skill.
+
 ## Before committing
 
 Always, before every commit:
