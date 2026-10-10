@@ -138,8 +138,18 @@ new scientific approvals or collaborator commitments without agreement.
 - **Don't create new branches.** Commit to the branch that is checked out.
   Alex's work lives on `Alzion_G_717`, the branch he shows Dr. Diehl. Only
   create a branch when the person you're working for explicitly asks for one.
-- `pr-01-*` to `pr-09-*` are under review by David. Don't commit to, rebase or
-  delete them.
+- **The other branches are PRs waiting to be approved and merged into
+  `main`.** That is why there are so many. They are a stack: each PR targets
+  the branch before it, so they merge in order (checked on GitHub
+  2026-10-10, all open):
+  - `pr-01-lookup-tokens-ci` (#15, into `main`) ← `pr-02-*` (#16) ← … ←
+    `pr-09-species-pilot` (#23) ← `diehl-2026-10-05-nk-species` (#25).
+  - `fix-lf-hashed-inputs` (#24) goes into `main` on its own.
+
+  David reviews them. Don't commit to, rebase, force-push or delete any of
+  them, because a change to one breaks every PR stacked on it. Older branches
+  (`CL_to_PRO`, `citation-traversal-example`, `marker_validation`) are earlier
+  work; leave them alone too.
 - For committing and pushing, follow the
   [soulcap-git-workflow](.claude/skills/soulcap-git-workflow/SKILL.md) skill.
 

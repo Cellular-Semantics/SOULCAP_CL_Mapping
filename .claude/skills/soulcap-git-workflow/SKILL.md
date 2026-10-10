@@ -6,7 +6,11 @@ description: Commit and push Alex's SOULCAP work on his Alzion_G_717 branch only
 # SOULCAP git workflow
 
 Alex keeps all of his SOULCAP work on one branch, `Alzion_G_717`, and shows
-Dr. Diehl the work there. Extra branches make the repo look chaotic.
+Dr. Diehl the work there. The other branches on GitHub (`pr-01-*` to
+`pr-09-*`, `diehl-2026-10-05-nk-species`, `fix-lf-hashed-inputs`) are PRs
+waiting to be approved and merged into `main`; most are stacked, each on the
+one before. They're not clutter, but never touch them (see CLAUDE.md
+"Branches"). New branches only add confusion to that stack.
 
 **Rule: never create, switch to, or push a new branch.** No `git switch -c`,
 `git checkout -b` or `git branch <new>`. If a task seems to need a separate
