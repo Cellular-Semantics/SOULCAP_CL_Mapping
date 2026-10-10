@@ -45,6 +45,8 @@ Read the upstream repo's current issue templates (`.github/ISSUE_TEMPLATE/` in `
 
 Keep it short and specific. No em or en dashes.
 
+**One issue per contradiction or change** (Dr. Diehl, 2026-10-05). David's team applies these with their AI pipeline and reviews the resulting PRs, so small issues mean small PRs. Don't bundle unrelated terms. A batch of identical fixes (for example one wording error on ten sibling terms) can be one issue. Attach the evidence table (for example `reports/nk_hladr_conflicts_2026-10.tsv`) or link it. If no source exists yet, say "evidence needed" instead of asserting the change. See [docs/curation_principles.md](../../../docs/curation_principles.md).
+
 ## Step 5: confirm, then file
 
 Show the final text and get an explicit OK, because filing is public. Then:

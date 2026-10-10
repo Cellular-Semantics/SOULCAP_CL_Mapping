@@ -219,6 +219,35 @@ proposes a parallel human/mouse hierarchy under group 1 ILC → NK.
 
 ---
 
+## CL marker profile import and literature test set
+
+**Status:** ⬜ not started (requested 2026-09-28).
+
+Dr. Osumi-Sutherland's proposal: attach a standard JSON object to each CL
+term that SOULCAP fully resolves, holding its markers, their PRO links and
+SOULCAP's shorthand tokens (e.g. `CCR4`). A skill could then use these
+profiles to map marker strings from experiments and papers onto CL.
+
+1. **Profile list.** Every cell type that is fully resolved, with a confident
+   CL match ([fully_resolved_summary.md](reports/fully_resolved_summary.md)).
+   Currently 0, waiting on the CD3 / CD8 / GO complex decisions in
+   [docs/marker_resolution.md](docs/marker_resolution.md#decisions-for-david).
+2. **JSON design** ⬜ on hold until step 1 has entries. To settle: fields,
+   validation (a JSON Schema checked in tests), versioning and provenance
+   (SOULCAP release, registry hash), and how negative and level qualifiers
+   are written.
+3. **Literature test set** ⛔ waiting on Dr. Osumi-Sutherland. NLM curators
+   annotated cell type mentions across a corpus of papers, and an earlier CL
+   mapping agent did well on it, except for many immune cells described only
+   by marker strings. Plan: take those unmatched immune mentions and test
+   whether the profiles map them. He is checking whether it is published and,
+   if not, getting permission. This is the likely central result of a paper.
+
+Tracking for all September and October requests:
+[docs/planning/2026-10_collaborator_requests.md](docs/planning/2026-10_collaborator_requests.md).
+
+---
+
 ## CL term corrections
 
 Issues discovered during mapping where CL itself needs updating. Tracked in
