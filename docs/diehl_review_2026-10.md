@@ -33,16 +33,20 @@ in his own CL branch, and open the CL issue himself.
 
 ## Decisions needed from Dr. Diehl
 
-Issue drafts (details below):
+Only open items are listed. B1 and B6c are filed, and B3a and B3b are
+superseded by your own restructure: see
+[Decisions from 14 October 2026](#decisions-from-14-october-2026).
 
-1. **B1** HLA-DRA on the CD56-bright and CD56-dim NK terms: file, change or drop?
-2. **B3a** plasmablast "lacks CD138": file, change or drop?
-3. **B3b** plasmablast child: Option 1 "plasmablast, human" or Option 2 a
-   mammal-level child? And should the mature B cell → Mammalia link be raised
-   as its own issue?
-4. **Batch 2** (B6a DX5 on `CL:0002345`, B6b wrong PMID, B6c "T cell"
-   wording, B6d galectin-1 relation): file, change or drop, each.
-5. **Pre-NK** (`CL:0000937`, on hold): move CD34/CD117/CD122 to a human child?
+CL issue drafts (details below):
+
+1. **B6a** DX5-positive on `CL:0002345`: file, change or drop?
+2. **B6b** wrong PMID in `CL:0002348` and `CL:0002349`: waiting on your
+   reading of the two papers (links in B6b).
+3. **B6d** galectin-1 on `CL:0002343`: `expresses` instead of `has plasma
+   membrane part`? File, change or drop?
+4. **B7a** asserted parent of `CL:0002442`: file, change or drop?
+5. **B7b** "NKGA2" typo in the label and definition of `CL:0002439`: file,
+   change or drop?
 
 Group 1 ILC hierarchy (details in
 [group1_ilc_species_hierarchy_proposal.md](group1_ilc_species_hierarchy_proposal.md)):
@@ -63,11 +67,9 @@ Group 1 ILC hierarchy (details in
 11. **`CL:0002346`** Dx5-negative, NK1.1-positive immature NK cell, mouse:
     keep under NK despite its overlap with ILC1?
 
-New since 14 October (details in Batch 3):
+On hold:
 
-12. **B7a** asserted parent of `CL:0002442`: file, change or drop?
-13. **B7b** "NKGA2" typo in the label and definition of `CL:0002439`: file,
-    change or drop?
+12. **Pre-NK** (`CL:0000937`): move CD34/CD117/CD122 to a human child?
 
 ---
 
