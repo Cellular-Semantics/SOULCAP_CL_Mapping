@@ -39,6 +39,21 @@ to-do list from the same meetings is in
   treat ILC1 as a synonym of group 1. (Diehl, 2026-10-05)
 - **Label convention:** keep ", human" / ", mouse" for now; taxon suffixes are a
   possible later change. (Diehl, 2026-10-05)
+- **To widen a mammal-specific term, keep its IRI and relabel it.** Give it a
+  qualifier (for example "mature B cell, CD19-positive") and add a new generic
+  parent above it, so existing annotations keep their meaning.
+  (Diehl, 2026-10-14)
+- **Generic terms may carry no markers.** That is accepted: the
+  species-specific children carry the markers single-cell users need.
+  Annotating to the generic term is not wrong, only less informative.
+  (Diehl, 2026-10-14)
+- **Don't restrict a term to mammals when the cell type is reported outside
+  mammals.** Plasmablasts are reported in birds, and possibly in reptiles and
+  fish. (Diehl, 2026-10-14)
+- **Immunoglobulin isotype terms (IgA, IgG, ...) stay mammal-specific** until
+  someone raises non-mammal isotypes. (Diehl, 2026-10-14)
+- **Prefer full labels over heavy abbreviations** such as "T2NKT"; add the
+  short forms as synonyms. (Diehl, 2026-10-14)
 
 ## Reading markers
 
@@ -59,6 +74,11 @@ to-do list from the same meetings is in
   issues, which they apply with their AI pipeline. Keep each issue to one
   contradiction or one change, with its evidence attached, and split large
   changes into small PRs for review. (Diehl, 2026-10-05)
+- **Large restructures are made by Dr. Diehl by hand.** When a hierarchy change
+  has many species-specific parts (for example the mature B cell /
+  plasmablast branch), Dr. Diehl edits his own CL branch and opens the issue
+  himself. This repo supplies the evidence and the references for it.
+  (Diehl, 2026-10-14)
 - **Documentation keeps agents organised.** Say where each kind of file goes
   and keep every README current; otherwise agent output scatters.
   (Osumi-Sutherland, 2026-09-28; implemented in CLAUDE.md "Where things go")
