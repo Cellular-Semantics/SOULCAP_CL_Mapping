@@ -19,7 +19,7 @@ below are unchanged.
 |---|---|---|
 | B1 "lacks HLA-DRA" on `CL:0000938`, `CL:0000939` | **File.** "Safe to remove it for now." | **Filed** 14 Oct 2026: repo [#27](https://github.com/Cellular-Semantics/SOULCAP_CL_Mapping/issues/27), upstream [CL#3795](https://github.com/obophenotype/cell-ontology/issues/3795) |
 | B3a drop "lacks CD138" from plasmablast | Folded into Dr. Diehl's own B cell restructure | Evidence in his reference pack; not filed separately |
-| B3b plasmablast markers to a species child | **Superseded** by his B cell restructure: a new generic plasmablast, with `CL:0000980` kept as the CD19-positive (mammal) term | Reference pack with open questions for him |
+| B3b plasmablast markers to a species child | **Superseded** by his B cell restructure: a new generic plasmablast, with `CL:0000980` kept as the CD19-positive (mammal) term. The species-specific term should just be human (for example "plasmablast, human", as in Option 1), not a "human child" or a mammal-level child | Reference pack with open questions for him (question 2 answered) |
 | B6a DX5 on `CL:0002345` | No decision yet | Next Diehl agenda |
 | B6b wrong PMID on `CL:0002348`, `CL:0002349` | **Waiting:** "probably a typo", but Dr. Diehl will review both papers himself (links in the B6b section) | No issue until he has read them |
 | B6c "NK1.1-positive T cell" wording | **File, and fix every affected NK term** (copied from T cell definitions) | **Filed** 14 Oct 2026 (11 terms): repo [#26](https://github.com/Cellular-Semantics/SOULCAP_CL_Mapping/issues/26), upstream [CL#3794](https://github.com/obophenotype/cell-ontology/issues/3794) |

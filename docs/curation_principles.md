@@ -37,6 +37,9 @@ to-do list from the same meetings is in
   (Diehl, 2026-10-05)
 - **Group 1 ILC contains ILC1 (non-cytotoxic) and NK cells (cytotoxic).** Don't
   treat ILC1 as a synonym of group 1. (Diehl, 2026-10-05)
+- **Species-specific terms are just human (or mouse).** Name them
+  directly, for example "plasmablast, human", rather than as a "human child"
+  or a mammal-level child. (Diehl, 2026-10-14)
 - **Label convention:** keep ", human" / ", mouse" for now; taxon suffixes are a
   possible later change. (Diehl, 2026-10-05)
 - **To widen a mammal-specific term, keep its IRI and relabel it.** Give it a

@@ -75,15 +75,17 @@ not mention CD138, so it can be dropped in the same edit.
 
 1. Relabel `CL:0000980` to match (for example "plasmablast, CD19-positive"),
    or keep the label "plasmablast"?
-2. Is "plasmablast, human" (CD38 high, CD27 high, lacks CD20, all supported in
-   human) still wanted as a child of `CL:0000980`, as you said early in the
-   meeting?
-3. Should the new generic plasmablast also be asserted under antibody
+2. Should the new generic plasmablast also be asserted under antibody
    secreting cell, or is the reasoner's placement enough?
-4. **SOULCAP does have a plasmablast row:** `PB` (`SOULCAP:SC000025`),
+3. **SOULCAP does have a plasmablast row:** `PB` (`SOULCAP:SC000025`),
    "CD19+ CD27+/hi CD38hi CD138-", mapped to `CL:0000980` (Exact, still
    `needs_review`). Its CD138- matches the axiom you are dropping. Should we
    add a note on this to the SOULCAP feedback list?
+
+**Answered (14 October 2026):** the former question 2, whether "plasmablast,
+human" (CD38 high, CD27 high, lacks CD20, all supported in human) is still
+wanted. The species-specific term should just be human, for example
+"plasmablast, human", not a "human child" or a mammal-level child.
 
 ## Related CL threads
 
