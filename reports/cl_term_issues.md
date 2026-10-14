@@ -140,7 +140,7 @@ SOULCAP's unqualified "NK" cell type.
 ### CD56-bright / CD56-dim NK "lacks HLA-DRA" (B1): CL:0000938, CL:0000939, PR:000002015
 
 **Repo issue:** [#27](https://github.com/Cellular-Semantics/SOULCAP_CL_Mapping/issues/27)
-**Upstream:** [CL#3795](https://github.com/obophenotype/cell-ontology/issues/3795)
+**Upstream:** [CL#3795](https://github.com/obophenotype/cell-ontology/issues/3795) (labels left to CL maintainers)
 **Filed by:** Alex (s28ale-maker) · 2026-10-14, approved by Dr. Diehl on 14 Oct 2026 ("safe to remove it for now")
 **Evidence:** [nk_hladr_conflicts_2026-10.tsv](nk_hladr_conflicts_2026-10.tsv); draft B1 in [docs/diehl_review_2026-10.md](../docs/diehl_review_2026-10.md)
 **Status:** Filed upstream, awaiting CL maintainer review
@@ -164,7 +164,7 @@ for MHC class II: PRO notes "The mouse ortholog is called H2-Ea"
 ### "NK1.1-positive T cell" in 11 mouse NK definitions (B6c): CL:0002439 to CL:0002449
 
 **Repo issue:** [#26](https://github.com/Cellular-Semantics/SOULCAP_CL_Mapping/issues/26)
-**Upstream:** [CL#3794](https://github.com/obophenotype/cell-ontology/issues/3794)
+**Upstream:** [CL#3794](https://github.com/obophenotype/cell-ontology/issues/3794) (labels left to CL maintainers)
 **Filed by:** Alex (s28ale-maker) · 2026-10-14, approved by Dr. Diehl on 14 Oct 2026
 **Evidence:** [nk_t_cell_wording_2026-10.tsv](nk_t_cell_wording_2026-10.tsv)
 **Status:** Filed upstream, awaiting CL maintainer review

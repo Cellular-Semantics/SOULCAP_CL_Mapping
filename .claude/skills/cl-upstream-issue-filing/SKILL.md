@@ -51,13 +51,15 @@ Keep it short and specific. No em or en dashes.
 
 Show the final text and get an explicit OK, because filing is public. Then:
 1. Open (or reuse) the repo issue in `Cellular-Semantics/SOULCAP_CL_Mapping`, labelled `cl-correction`.
-2. Open the upstream issue.
+2. Open the upstream issue. Don't add labels: Alex's account can't label issues on `obophenotype/cell-ontology`, so skip the template's label and leave labels to the CL maintainers.
 
 Use `gh` if it works. If not, use the browser, or give the user the text and the new-issue URL to paste.
 
+**Never hardcode an issue number in a command.** Capture the URL that `gh issue create` returns (for example `URL=$(gh issue create ...)`) and take the number from it (`${URL##*/}`) for every later edit, comment or cross-link.
+
 ## Step 6: record the trail right after each issue is created
 
-- `reports/cl_term_issues.md`: move the entry from "Candidates for review (not filed)" to "Open issues", with **Repo issue**, **Upstream**, **Filed by**, the date and **Status**.
+- `reports/cl_term_issues.md`: move the entry from "Candidates for review (not filed)" to "Open issues", with **Repo issue**, **Upstream**, **Filed by**, the date and **Status**. Add "labels left to CL maintainers" to the upstream line.
 - `reports/gaps.tsv`: set `status` to `filed_as_issue` and `repo_issue` to the URL.
 - `ROADMAP.md`: update the row in the "CL term corrections" table.
 - The review doc: mark the decision as filed, with the link.
