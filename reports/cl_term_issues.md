@@ -16,6 +16,7 @@ See [CLAUDE.md](../CLAUDE.md) for project conventions.
 **Filed by:** Kelly Lundsten · 2026-07-08
 **Reference:** [PMC6647187](https://pmc.ncbi.nlm.nih.gov/articles/PMC6647187/)
 **Status:** Filed upstream — awaiting CL maintainer review
+**Review (14 Oct 2026):** [nkt_hierarchy_review_2026-10.md](../docs/nkt_hierarchy_review_2026-10.md) recommends keeping `CL:0000814` as the NKT umbrella (Option A), which would mean withdrawing the CL:0000814 rename below; awaiting Dr. Diehl's decision (N1, N6).
 
 #### CL:4052055 — "Mature NK T cell, human"
 
