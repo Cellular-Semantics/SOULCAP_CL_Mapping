@@ -66,7 +66,8 @@ Group 1 ILC hierarchy (details in
 New since 14 October (details in Batch 3):
 
 12. **B7a** asserted parent of `CL:0002442`: file, change or drop?
-13. **B7b** "NKGA2" typo in the label of `CL:0002439`: file, change or drop?
+13. **B7b** "NKGA2" typo in the label and definition of `CL:0002439`: file,
+    change or drop?
 
 ---
 
@@ -94,6 +95,10 @@ HLA-DR. PMID:22343568 mentions it on NK cells only as an activation marker:
 > "The similar use of HLA-DR to track activated NK cells is a possibility that
 > has been less well explored, but that might be equally fruitful."
 > — Maecker HT et al. 2012 (PMID:22343568)
+
+Its Figure 2 (HIPC gating, checked 14 October 2026) splits CD14-negative,
+CD20-negative cells into HLA-DR+ DCs and CD16+ NK cells. That split may be
+where the axiom came from, but the NK branch is not labelled HLA-DR negative.
 
 Resting NK cells are mostly HLA-DR negative, but not all:
 
@@ -204,14 +209,15 @@ neither is open access there):
   [Europe PMC](https://europepmc.org/article/MED/19949422) ·
   [DOI](https://doi.org/10.1038/icb.2009.94)
 
-### B6c. "NK1.1-positive T cell" in 10 NK definitions
+### B6c. "NK1.1-positive T cell" in 11 NK definitions
 
-**CL IDs:** `CL:0002439` to `CL:0002448` (Ly49, CD94 and NKG2A subsets of
-NK cells, mouse)
+**CL IDs:** `CL:0002439` to `CL:0002449` (Ly49, CD94 and NKG2A subsets of
+NK cells, mouse; full list in
+[nk_t_cell_wording_2026-10.tsv](../reports/nk_t_cell_wording_2026-10.tsv))
 
 **Change:** their definitions read "A NK1.1-positive T cell that is …", but
-they are NK cells (parent `CL:0002438` NK1.1-positive natural killer cell,
-mouse). Change to "A NK1.1-positive natural killer cell that is …".
+they are NK cells (all are subclasses of `CL:0000623` natural killer cell).
+Change to "A NK1.1-positive natural killer cell that is …".
 
 **Confidence:** high (wording error, no literature needed).
 
@@ -243,15 +249,24 @@ while its sibling subset terms are under `CL:0002438` NK1.1-positive natural
 killer cell, mouse. Should `CL:0002438` be its asserted parent? A hierarchy
 question, so it is kept out of the B6c wording issue.
 
-### B7b. "NKGA2" in the label of `CL:0002439`
+### B7b. "NKGA2" in the label and definition of `CL:0002439`
 
 **CL ID:** `CL:0002439` NKGA2-positive natural killer cell, mouse
 
-**Change:** relabel to "NKG2A-positive natural killer cell, mouse" and keep
-the old label as a synonym. The marker in its logical definition is
-`PR:000002023` NKG2-A/NKG2-B type II integral membrane protein, whose exact
-synonyms in PRO include "NKG2A" (OLS4, 14 October 2026), so "NKGA2" looks
-like a transposition typo.
+**Change:** fix the label and the text definition together:
+
+| | Current | Proposed |
+|---|---|---|
+| Label | NKGA2-positive natural killer cell, mouse | NKG2A-positive natural killer cell, mouse (old label kept as a synonym) |
+| Definition | A NK1.1-positive T cell that is NKGA2-positive. | A NK1.1-positive natural killer cell that is NKG2A-positive. |
+
+The proposed definition also includes the B6c fix ("T cell" to "natural
+killer cell"). The marker in the logical definition is `PR:000002023`
+NKG2-A/NKG2-B type II integral membrane protein, whose exact synonyms in PRO
+include "NKG2A" (OLS4, 14 October 2026), so "NKGA2" looks like a
+transposition typo. Dr. Osumi-Sutherland's open CL PR #3386 relabels this
+term to "NKGA2-positive natural killer cell (Mmus)", which carries the typo
+into the new label.
 
 ## Still on hold
 

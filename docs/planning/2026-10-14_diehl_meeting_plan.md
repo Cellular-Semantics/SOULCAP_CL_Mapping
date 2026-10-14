@@ -335,7 +335,9 @@ Only once David confirms on Slack (Alex will say). Use the
   proposal from us);
   the species naming in labels: Dr. Osumi-Sutherland's open CL PR #3386
   relabels terms to "(Mmus)", while Dr. Diehl asked to keep ", mouse" for
-  now (ask which convention to follow); and the generic vs species-specific trade-off for
+  now (ask which convention to follow). The same PR renames `CL:0002439` to
+  "NKGA2-positive natural killer cell (Mmus)", carrying the "NKGA2" typo
+  (draft B7b, should be NKG2A) into the new label; and the generic vs species-specific trade-off for
   single-cell users, as a question.
 - Save as `docs/planning/2026-10-19_meeting_brief.md` and give Alex a 5 to
   10 line version for Slack.
