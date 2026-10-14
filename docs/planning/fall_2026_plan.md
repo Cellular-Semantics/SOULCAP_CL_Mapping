@@ -62,7 +62,7 @@ The core job: get the 80 proposals reviewed and the 47 gaps explained.
 
 | ID | Task | Owner | Target |
 |---|---|---|---|
-| B1 | **Decisions on the 8 CL issue drafts** and the group 1 ILC hierarchy ([diehl_review_2026-10.md](../diehl_review_2026-10.md)) | Dr. Diehl | 14 Oct meeting |
+| B1 | **Decisions on the 8 CL issue drafts** and the group 1 ILC hierarchy ([diehl_review_2026-10.md](../diehl_review_2026-10.md)) | Dr. Diehl | 14 Oct meeting: partly decided ([decisions](../diehl_review_2026-10.md#decisions-from-14-october-2026)) |
 | B2 | **File approved issues**, one per contradiction with evidence attached, for David's team to apply with their AI pipeline | Alex, after approval | within a week of B1 |
 | B3 | **Human / mouse check** of the remaining CL markers on mapped terms, once the lineage-negative question is answered | Alex + agent | 20 Nov |
 | B4 | **Literature: the 6 missing categories** (monocyte, neutrophil, basophil, mast cell, granulocyte, MDSC). Monocyte also answers issue #12. Add the NK reviews already collected to `literature/reviews/` first | Alex; confirm whether Dr. Diehl shares this | NK reviews 17 Oct; categories 20 Nov |

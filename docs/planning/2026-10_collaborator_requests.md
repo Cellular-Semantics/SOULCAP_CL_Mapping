@@ -1,4 +1,4 @@
-# Meeting notes: requests and decisions, 28 September to 10 October 2026
+# Meeting notes: requests and decisions, 28 September to 14 October 2026
 
 Open requests from the SOULCAP ↔ CL meetings in this period: only items that
 are still in progress or need a decision are listed. Items marked **waiting**
@@ -11,6 +11,7 @@ Remove an item once it is done. General guidance from the same meetings is in
 | A. Biweekly SOULCAP ↔ CL call | 2026-09-28 (morning) | Dr. Osumi-Sutherland, Dr. Diehl, Courtney |
 | B. Species validity follow-up | 2026-09-28 (evening) | Dr. Diehl |
 | C. NK / group 1 ILC refactoring | 2026-10-05 | Dr. Diehl |
+| D. Decisions on the CL issue drafts | 2026-10-14 | Dr. Diehl |
 
 Status key: **waiting** (needs a decision or input from someone outside the
 repo), **on hold** (deliberately parked), **open** (Alex's to do), **outside**
@@ -42,15 +43,31 @@ repo), **on hold** (deliberately parked), **open** (Alex's to do), **outside**
 
 | # | Request | Status | Where |
 |---|---|---|---|
-| C1 | Remove or quarantine "lacks HLA-DRA" on the conflicting NK terms | **waiting** on his decision (draft B1). No CL edits are made from this repo | [diehl_review_2026-10.md](../diehl_review_2026-10.md) |
-| C2 | One GitHub issue per contradiction (HLA-DRA, duplicated definitions), with references or "evidence needed" | **waiting**: drafts written, filed only once marked **file** | [diehl_review_2026-10.md](../diehl_review_2026-10.md), [gaps.tsv](../../reports/gaps.tsv), `cl-upstream-issue-filing` skill |
-| C3 | Parallel human / mouse hierarchy under group 1 ILC (ILC1 and NK kept apart) | **waiting**: proposal done, 4 decisions open | [group1_ilc_species_hierarchy_proposal.md](../group1_ilc_species_hierarchy_proposal.md) |
-| C4 | Plasmablast markers: move mammal-specific ones (e.g. CD27) to a child term | **waiting** on his decisions for drafts B3a / B3b (audit done) | [plasmablast_marker_audit_2026-10.md](../../reports/plasmablast_marker_audit_2026-10.md) |
+| C1 | Remove or quarantine "lacks HLA-DRA" on the conflicting NK terms | **open**: approved 14 Oct (draft B1, "safe to remove it for now"); issue to be drafted and filed after Alex's OK | [diehl_review_2026-10.md](../diehl_review_2026-10.md) |
+| C2 | One GitHub issue per contradiction (HLA-DRA, duplicated definitions), with references or "evidence needed" | **open**: B1 and B6c approved 14 Oct; B6b waits on D5; B6a and B6d have no decision yet | [diehl_review_2026-10.md](../diehl_review_2026-10.md), [gaps.tsv](../../reports/gaps.tsv), `cl-upstream-issue-filing` skill |
+| C3 | Parallel human / mouse hierarchy under group 1 ILC (ILC1 and NK kept apart) | **waiting**: "looks good" (14 Oct), still under his review; decisions 6 to 11 open | [group1_ilc_species_hierarchy_proposal.md](../group1_ilc_species_hierarchy_proposal.md) |
 | C7 | Protégé query for "has plasma membrane part NCAM1" returned too few classes | **waiting**: Dr. Diehl to reproduce | [protege_ncam1_query_repro.md](../protege_ncam1_query_repro.md) |
-| C10 | Send SOULCAP meeting options; move the internal meeting to Wed 14 Oct, 1 pm | **outside** | |
+
+## D. 14 October, with Dr. Diehl
+
+Decisions on each draft are recorded in [diehl_review_2026-10.md](../diehl_review_2026-10.md#decisions-from-14-october-2026).
+
+| # | Request | Status | Where |
+|---|---|---|---|
+| D1 | Restructure the mature B cell / plasmablast branch: generic mature B cell and generic plasmablast, with `CL:0000785` and `CL:0000980` kept (IRIs unchanged) as the CD19-positive terms. Replaces drafts B3a and B3b | **outside**: Dr. Diehl edits CL by hand and opens the issue himself; we supply a reference pack | [diehl_review_2026-10.md](../diehl_review_2026-10.md) (B3a, B3b) |
+| D2 | Make the October output documents citable on GitHub | **open**: reference pack with commit permalinks | |
+| D3 | Fix every NK definition that says "T cell" (copied from T cell definitions) | **open**: full list, then one batch issue after Alex's OK | [diehl_review_2026-10.md](../diehl_review_2026-10.md) (B6c) |
+| D4 | Review every term under mature NK T cell: names, synonyms, structure (type 1 / type 2); full labels preferred, short forms as synonyms | **open** | |
+| D5 | Dr. Diehl reviews the two papers behind the wrong PMID (draft B6b) | **waiting** | [diehl_review_2026-10.md](../diehl_review_2026-10.md) (B6b, with links) |
+| D6 | Strategy for a human-only view of CL, to discuss with Dr. Osumi-Sutherland | **outside** | |
+| D7 | Meeting with Dr. Osumi-Sutherland, proposed Mon 19 Oct, 10:00 ET | **outside** | |
+| D8 | How to explain generic vs species-specific terms to single-cell users | **waiting**: ask Dr. Diehl whether he wants anything from us | |
 
 ## Alex's open items
 
 1. A4: add the NK reviews to `literature/reviews/reviews.tsv`, with identifiers looked up.
 2. B1: carry on the species check past NK and plasmablast once question b is answered.
-3. Bring A1 (marker decisions), A8 (confidence bar) and A10 (feedback format) to the 12 October meeting, as the agenda already does.
+3. Bring A1 (marker decisions), A8 (confidence bar) and A10 (feedback format) to the meeting with Dr. Osumi-Sutherland (proposed 19 Oct); the 12 October meeting did not take place.
+4. D2: send Dr. Diehl the reference pack for his B cell / plasmablast issue.
+5. C1 / D3: approve the B1 and B6c issue drafts before they are filed.
+6. D4: mature NKT sub-hierarchy review for the next Dr. Diehl meeting.

@@ -258,10 +258,10 @@ upstream to `obophenotype/cell-ontology`.
 |-------|-------|--------|
 | [#13 NKT cell naming](https://github.com/Cellular-Semantics/SOULCAP_CL_Mapping/issues/13) | CL:4052055 → "CD56-positive T cell, human"; CL:0000814 → "iNKT cell" | Filed upstream: [CL#3663](https://github.com/obophenotype/cell-ontology/issues/3663), [CL#3664](https://github.com/obophenotype/cell-ontology/issues/3664) |
 | [#14 Missing human-specific ILC1 term](https://github.com/Cellular-Semantics/SOULCAP_CL_Mapping/issues/14) | CL:0001067 "group 1 innate lymphoid cell" — no `, human` variant, unlike group 2 (CL:0001081) and group 3 (CL:0001078) | Open — not yet filed upstream. Recommended as NEW:8 in the group 1 ILC hierarchy proposal |
-| B1 "lacks HLA-DRA" on CD56-bright/dim NK (draft) | CL:0000938, CL:0000939 | Draft in [reports/gaps.tsv](reports/gaps.tsv), awaiting Dr. Diehl ([review](docs/diehl_review_2026-10.md)) |
-| B3a plasmablast "lacks CD138" (draft) | CL:0000980 | Draft, awaiting Dr. Diehl |
-| B3b plasmablast markers to a species child (draft) | CL:0000980 | Draft, awaiting Dr. Diehl (human vs mammal-level child) |
-| B6a–d smaller fixes (drafts) | CL:0002345 (DX5+); CL:0002348/0002349 (wrong PMID); CL:0002439–0002448 ("T cell" wording); CL:0002343 (galectin-1 relation) | Drafts, awaiting Dr. Diehl |
+| B1 "lacks HLA-DRA" on CD56-bright/dim NK | CL:0000938, CL:0000939 | Approved 14 Oct 2026; issue to be filed after Alex's OK ([decisions](docs/diehl_review_2026-10.md#decisions-from-14-october-2026)) |
+| B3a plasmablast "lacks CD138" | CL:0000980 | Superseded 14 Oct 2026 by Dr. Diehl's own B cell / plasmablast restructure |
+| B3b plasmablast markers to a species child | CL:0000980 | Superseded 14 Oct 2026 by the same restructure (generic plasmablast; CL:0000980 kept as the CD19-positive term) |
+| B6a–d smaller fixes | CL:0002345 (DX5+); CL:0002348/0002349 (wrong PMID); CL:0002439–0002448 ("T cell" wording); CL:0002343 (galectin-1 relation) | 14 Oct 2026: B6c approved (fix every affected NK term); B6b waits on Dr. Diehl reading both papers; B6a and B6d not decided |
 | C1 liver-resident NK human sentences to a human child (draft) | CL:4047101 | Draft, awaiting Dr. Diehl |
 | Pre-NK markers (on hold) | CL:0000937 | On hold pending Dr. Diehl |
 | Protégé NCAM1 query returns too few classes | — | Not filed; repro note in [docs/protege_ncam1_query_repro.md](docs/protege_ncam1_query_repro.md) for Dr. Diehl to reproduce |

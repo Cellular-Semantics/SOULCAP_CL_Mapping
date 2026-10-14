@@ -187,7 +187,7 @@ enterocyte" `expresses` PR:000001440.
 
 ### Plasmablast "lacks CD138" — CL:0000980, PR:000001935 (syndecan-1)
 
-**Status:** candidate — not filed
+**Status:** superseded 14 Oct 2026: Dr. Diehl is restructuring the mature B cell / plasmablast branch himself and will drop this axiom there (draft B3a in [docs/diehl_review_2026-10.md](../docs/diehl_review_2026-10.md))
 
 CL asserts CL:0000980 "plasmablast" `lacks_plasma_membrane_part`
 PR:000001935 "syndecan-1" (CD138). Found during the human/mouse marker
@@ -207,7 +207,7 @@ or restricted to human?
 
 ### CD56-bright NK "lacks HLA-DRA" — CL:0000938, PR:000002015
 
-**Status:** candidate — not filed
+**Status:** approved by Dr. Diehl on 14 Oct 2026 ("safe to remove it for now"); issue being drafted as B1, not filed yet
 
 CL asserts CL:0000938 "CD16-negative, CD56-bright natural killer cell, human"
 `lacks_plasma_membrane_part` PR:000002015 "MHC class II histocompatibility

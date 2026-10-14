@@ -10,6 +10,27 @@ full text. Full detail is in
 [reports/plasmablast_marker_audit_2026-10.md](../reports/plasmablast_marker_audit_2026-10.md)
 and the draft rows at the end of [reports/gaps.tsv](../reports/gaps.tsv).
 
+## Decisions from 14 October 2026
+
+Recorded after the 14 October meeting with Dr. Diehl. The original drafts
+below are unchanged.
+
+| Draft | Decision | Next step |
+|---|---|---|
+| B1 "lacks HLA-DRA" on `CL:0000938`, `CL:0000939` | **File.** "Safe to remove it for now." | Issue to be drafted and filed after Alex's OK |
+| B3a drop "lacks CD138" from plasmablast | Folded into Dr. Diehl's own B cell restructure | Evidence in his reference pack; not filed separately |
+| B3b plasmablast markers to a species child | **Superseded** by his B cell restructure: a new generic plasmablast, with `CL:0000980` kept as the CD19-positive (mammal) term | Reference pack with open questions for him |
+| B6a DX5 on `CL:0002345` | No decision yet | Next Diehl agenda |
+| B6b wrong PMID on `CL:0002348`, `CL:0002349` | **Waiting:** "probably a typo", but Dr. Diehl will review both papers himself (links in the B6b section) | No issue until he has read them |
+| B6c "NK1.1-positive T cell" wording | **File, and fix every affected NK term** (copied from T cell definitions) | Full list of affected terms, then one batch issue after Alex's OK |
+| B6d galectin-1 relation on `CL:0002343` | No decision yet | Next Diehl agenda |
+| Pre-NK `CL:0000937` | On hold | Next Diehl agenda |
+| Group 1 ILC hierarchy (decisions 6 to 11 below) | "Looks good", still under his review | Next Diehl agenda |
+| New: mature NKT cell sub-hierarchy | Requested: review every term under mature NK T cell (names, synonyms, structure) | Review document for Dr. Diehl |
+
+Dr. Diehl will make the B cell / plasmablast restructure himself, by hand,
+in his own CL branch, and open the CL issue himself.
+
 ## Decisions needed from Dr. Diehl
 
 Issue drafts (details below):
@@ -162,6 +183,21 @@ MH, pulmonary venoocclusive disease). Probably a typo for PMID:19949422
 
 **Confidence:** high that the PMID is wrong; medium that 19949422 is the
 intended one.
+
+**Papers for Dr. Diehl to review** (looked up in Europe PMC, 14 October 2026;
+neither is open access there):
+
+- PMID:1994922, cited now: Liang MH et al. 1991, "Fatal pulmonary
+  venoocclusive disease secondary to a generalized venulopathy", Arthritis
+  Rheum. [PubMed](https://pubmed.ncbi.nlm.nih.gov/1994922/) ·
+  [Europe PMC](https://europepmc.org/article/MED/1994922) ·
+  [DOI](https://doi.org/10.1002/art.1780340217)
+- PMID:19949422, probably intended: Andrews DM, Smyth MJ 2010, "A potential
+  role for RAG-1 in NK cell development revealed by analysis of NK cells
+  during ontogeny", Immunol Cell Biol.
+  [PubMed](https://pubmed.ncbi.nlm.nih.gov/19949422/) ·
+  [Europe PMC](https://europepmc.org/article/MED/19949422) ·
+  [DOI](https://doi.org/10.1038/icb.2009.94)
 
 ### B6c. "NK1.1-positive T cell" in 10 NK definitions
 
