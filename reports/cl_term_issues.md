@@ -137,6 +137,40 @@ own CD56-bright/dim children — specifically because of this missing axiom,
 despite `CL:0000623` being the conceptually correct parent-level match for
 SOULCAP's unqualified "NK" cell type.
 
+### CD56-bright / CD56-dim NK "lacks HLA-DRA" (B1): CL:0000938, CL:0000939, PR:000002015
+
+**Repo issue:** [#27](https://github.com/Cellular-Semantics/SOULCAP_CL_Mapping/issues/27)
+**Upstream:** [CL#3795](https://github.com/obophenotype/cell-ontology/issues/3795)
+**Filed by:** Alex (s28ale-maker) · 2026-10-14, approved by Dr. Diehl on 14 Oct 2026 ("safe to remove it for now")
+**Evidence:** [nk_hladr_conflicts_2026-10.tsv](nk_hladr_conflicts_2026-10.tsv); draft B1 in [docs/diehl_review_2026-10.md](../docs/diehl_review_2026-10.md)
+**Status:** Filed upstream, awaiting CL maintainer review
+
+Asks CL to remove `lacks_plasma_membrane_part` PR:000002015 from both terms (equivalent class and SubClassOf axioms) until a source is found. Neither definition source (PMID:19796267, PMID:22343568) states that NK cells lack HLA-DR. Earlier notes from the candidate stage:
+
+CL asserts CL:0000938 "CD16-negative, CD56-bright natural killer cell, human"
+`lacks_plasma_membrane_part` PR:000002015 "MHC class II histocompatibility
+antigen alpha chain DRA". Human evidence reports HLA-DR+ CD56-bright cells:
+"the proportion of HLA-DR+CD56bright cells ex vivo" (PMID 42450353;
+PMC13362507, 2026; checked word for word against the full text). The
+supporting quote from the earlier check (Rebuffet 2024) concerns a different
+NK cluster (NK3B) and does not address CD56-bright cells.
+
+**Question at review (answered 14 Oct 2026: remove it for now):** is "lacks HLA-DRA" right for resting CD56-bright NK
+cells, with HLA-DR appearing only on an activated subset, or should the axiom
+be dropped? This is also Dr. Diehl's example of HLA-DRA as a human-only proxy
+for MHC class II: PRO notes "The mouse ortholog is called H2-Ea"
+(PR:000002015, OLS4).
+
+### "NK1.1-positive T cell" in 11 mouse NK definitions (B6c): CL:0002439 to CL:0002449
+
+**Repo issue:** [#26](https://github.com/Cellular-Semantics/SOULCAP_CL_Mapping/issues/26)
+**Upstream:** [CL#3794](https://github.com/obophenotype/cell-ontology/issues/3794)
+**Filed by:** Alex (s28ale-maker) · 2026-10-14, approved by Dr. Diehl on 14 Oct 2026
+**Evidence:** [nk_t_cell_wording_2026-10.tsv](nk_t_cell_wording_2026-10.tsv)
+**Status:** Filed upstream, awaiting CL maintainer review
+
+Each definition begins "A NK1.1-positive T cell"; the issue asks to replace it with "A NK1.1-positive natural killer cell". Text definitions only; CL PR #3386 separately relabels the same terms.
+
 ---
 
 ## Candidates for review (not filed)
@@ -205,24 +239,6 @@ quotes were checked word for word against the Europe PMC full text:
 
 **Question for review:** should this axiom be removed, weakened (e.g. "low"),
 or restricted to human?
-
-### CD56-bright NK "lacks HLA-DRA" — CL:0000938, PR:000002015
-
-**Status:** approved by Dr. Diehl on 14 Oct 2026 ("safe to remove it for now"); issue being drafted as B1, not filed yet
-
-CL asserts CL:0000938 "CD16-negative, CD56-bright natural killer cell, human"
-`lacks_plasma_membrane_part` PR:000002015 "MHC class II histocompatibility
-antigen alpha chain DRA". Human evidence reports HLA-DR+ CD56-bright cells:
-"the proportion of HLA-DR+CD56bright cells ex vivo" (PMID 42450353;
-PMC13362507, 2026; checked word for word against the full text). The
-supporting quote from the earlier check (Rebuffet 2024) concerns a different
-NK cluster (NK3B) and does not address CD56-bright cells.
-
-**Question for review:** is "lacks HLA-DRA" right for resting CD56-bright NK
-cells, with HLA-DR appearing only on an activated subset, or should the axiom
-be dropped? This is also Dr. Diehl's example of HLA-DRA as a human-only proxy
-for MHC class II: PRO notes "The mouse ortholog is called H2-Ea"
-(PR:000002015, OLS4).
 
 ---
 

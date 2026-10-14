@@ -43,8 +43,8 @@ repo), **on hold** (deliberately parked), **open** (Alex's to do), **outside**
 
 | # | Request | Status | Where |
 |---|---|---|---|
-| C1 | Remove or quarantine "lacks HLA-DRA" on the conflicting NK terms | **open**: approved 14 Oct (draft B1, "safe to remove it for now"); issue to be drafted and filed after Alex's OK | [diehl_review_2026-10.md](../diehl_review_2026-10.md) |
-| C2 | One GitHub issue per contradiction (HLA-DRA, duplicated definitions), with references or "evidence needed" | **open**: B1 and B6c approved 14 Oct; B6b waits on D5; B6a and B6d have no decision yet | [diehl_review_2026-10.md](../diehl_review_2026-10.md), [gaps.tsv](../../reports/gaps.tsv), `cl-upstream-issue-filing` skill |
+| C1 | Remove or quarantine "lacks HLA-DRA" on the conflicting NK terms | **waiting** on CL: filed 14 Oct as [CL#3795](https://github.com/obophenotype/cell-ontology/issues/3795) (repo #27) | [diehl_review_2026-10.md](../diehl_review_2026-10.md) |
+| C2 | One GitHub issue per contradiction (HLA-DRA, duplicated definitions), with references or "evidence needed" | **open**: B1 and B6c filed 14 Oct ([CL#3795](https://github.com/obophenotype/cell-ontology/issues/3795), [CL#3794](https://github.com/obophenotype/cell-ontology/issues/3794)); B6b waits on D5; B6a and B6d have no decision yet | [diehl_review_2026-10.md](../diehl_review_2026-10.md), [gaps.tsv](../../reports/gaps.tsv), `cl-upstream-issue-filing` skill |
 | C3 | Parallel human / mouse hierarchy under group 1 ILC (ILC1 and NK kept apart) | **waiting**: "looks good" (14 Oct), still under his review; decisions 6 to 11 open | [group1_ilc_species_hierarchy_proposal.md](../group1_ilc_species_hierarchy_proposal.md) |
 | C7 | Protégé query for "has plasma membrane part NCAM1" returned too few classes | **waiting**: Dr. Diehl to reproduce | [protege_ncam1_query_repro.md](../protege_ncam1_query_repro.md) |
 
@@ -56,7 +56,7 @@ Decisions on each draft are recorded in [diehl_review_2026-10.md](../diehl_revie
 |---|---|---|---|
 | D1 | Restructure the mature B cell / plasmablast branch: generic mature B cell and generic plasmablast, with `CL:0000785` and `CL:0000980` kept (IRIs unchanged) as the CD19-positive terms. Replaces drafts B3a and B3b | **outside**: Dr. Diehl edits CL by hand and opens the issue himself; we supply a reference pack | [diehl_review_2026-10.md](../diehl_review_2026-10.md) (B3a, B3b) |
 | D2 | Make the October output documents citable on GitHub | **open**: reference pack with commit permalinks | |
-| D3 | Fix every NK definition that says "T cell" (copied from T cell definitions) | **open**: full list, then one batch issue after Alex's OK | [diehl_review_2026-10.md](../diehl_review_2026-10.md) (B6c) |
+| D3 | Fix every NK definition that says "T cell" (copied from T cell definitions) | **waiting** on CL: filed 14 Oct as [CL#3794](https://github.com/obophenotype/cell-ontology/issues/3794) (repo #26, 11 terms) | [diehl_review_2026-10.md](../diehl_review_2026-10.md) (B6c) |
 | D4 | Review every term under mature NK T cell: names, synonyms, structure (type 1 / type 2); full labels preferred, short forms as synonyms | **waiting**: review written 14 Oct (16 terms, 12 decisions; recommends keeping `CL:0000814` as the umbrella, which conflicts with our CL#3664) | [nkt_hierarchy_review_2026-10.md](../nkt_hierarchy_review_2026-10.md) |
 | D5 | Dr. Diehl reviews the two papers behind the wrong PMID (draft B6b) | **waiting** | [diehl_review_2026-10.md](../diehl_review_2026-10.md) (B6b, with links) |
 | D6 | Strategy for a human-only view of CL, to discuss with Dr. Osumi-Sutherland | **outside** | |
@@ -69,5 +69,4 @@ Decisions on each draft are recorded in [diehl_review_2026-10.md](../diehl_revie
 2. B1: carry on the species check past NK and plasmablast once question b is answered.
 3. Bring A1 (marker decisions), A8 (confidence bar) and A10 (feedback format) to the meeting with Dr. Osumi-Sutherland (proposed 19 Oct); the 12 October meeting did not take place.
 4. D2: send Dr. Diehl the reference pack for his B cell / plasmablast issue.
-5. C1 / D3: approve the B1 and B6c issue drafts before they are filed.
-6. D4: send Dr. Diehl the mature NKT review; if he picks Option A, comment on CL#3664.
+5. D4: send Dr. Diehl the mature NKT review; if he picks Option A, comment on CL#3664.
