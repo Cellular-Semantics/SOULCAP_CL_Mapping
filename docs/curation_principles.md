@@ -22,10 +22,14 @@ to-do list from the same meetings is in
 
 - **Keep generic, add specific.** High-level CL terms keep only assertions that
   hold across species, mainly lineage negatives such as lacks CD3, CD19, CD20,
-  CD14. Human-only or mammal-only positives (for example CD56 on NK cells) go
-  on ", human" / ", mouse" or mammal-level children with `in taxon`. This keeps
-  generic terms usable for zebrafish and other non-mammals, where reagents are
-  limited. (Diehl, 2026-10-05)
+  CD14. This keeps generic terms usable for zebrafish and other non-mammals,
+  where reagents are limited. Species-specific positives (for example CD56 on
+  NK cells) go on new ", human" or ", mouse" terms with `in taxon`, such as
+  "plasmablast, human", not on new mammal-level terms. Existing
+  mammal-scoped terms in Dr. Diehl's B cell design stay mammal-level: "mature
+  B cell, CD19-positive", `CL:0000980` plasmablast and the Ig isotype
+  plasmablasts. (Diehl, 2026-10-05 and 2026-10-14; the 14 Oct decision
+  replaces "or mammal-level children" from 5 Oct)
 - **Missing mouse data is not a human-only marker.** Flow cytometry depends on
   monoclonal antibodies. A human protein may have no mouse reagent, so a marker
   may never have been tested in mouse. Analogous cell types can therefore have
@@ -37,9 +41,6 @@ to-do list from the same meetings is in
   (Diehl, 2026-10-05)
 - **Group 1 ILC contains ILC1 (non-cytotoxic) and NK cells (cytotoxic).** Don't
   treat ILC1 as a synonym of group 1. (Diehl, 2026-10-05)
-- **Species-specific terms are just human (or mouse).** Name them
-  directly, for example "plasmablast, human", rather than as a "human child"
-  or a mammal-level child. (Diehl, 2026-10-14)
 - **Label convention:** keep ", human" / ", mouse" for now; taxon suffixes are a
   possible later change. (Diehl, 2026-10-05)
 - **To widen a mammal-specific term, keep its IRI and relabel it.** Give it a
