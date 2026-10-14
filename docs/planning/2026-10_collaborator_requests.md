@@ -1,15 +1,15 @@
-# Collaborator requests, 28 September to 10 October 2026
+# Meeting notes: requests and decisions, 28 September to 10 October 2026
 
-Every request made of this repo in the last month's SOULCAP ↔ CL meetings, and
-where it stands. Built from Alex's meeting notes (recordings, transcripts and
-summaries, kept outside the repo). Update the **Status** column as items move;
-the guidance itself (not the to-dos) is in
+Requests from the SOULCAP ↔ CL meetings in this period, and where each one
+stands. Items marked **waiting** need a decision from Dr. Diehl or
+Dr. Osumi-Sutherland before work continues. Update the **Status** column as
+items move. General guidance from the same meetings is in
 [../curation_principles.md](../curation_principles.md).
 
 | Meeting | Date | With |
 |---|---|---|
 | A. Biweekly SOULCAP ↔ CL call | 2026-09-28 (morning) | Dr. Osumi-Sutherland, Dr. Diehl, Courtney |
-| B. Species validity follow-up | 2026-09-28 (evening; note file labelled "8-28") | Dr. Diehl |
+| B. Species validity follow-up | 2026-09-28 (evening) | Dr. Diehl |
 | C. NK / group 1 ILC refactoring | 2026-10-05 | Dr. Diehl |
 
 Status key: **done**, **waiting** (on someone outside the repo), **on hold**
