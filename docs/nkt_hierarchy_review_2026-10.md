@@ -112,7 +112,7 @@ in mucosa. Each piece meets the `CL:0000814` definition: `PR:Q12918` is a
 subclass of `PR:000001874`, "has high plasma membrane amount" is a
 subproperty of "has plasma membrane part", and innate immune response in
 mucosa is a subclass of innate immune response (all checked in OLS4). This
-started when CL PR #3655 (merged May 2026) changed the CD161 axiom from
+started when CL PR #3655 (merged 1 June 2026) changed the CD161 axiom from
 "lacks" to "has high amount". Removing the KLRB1-like protein axiom from
 `CL:0000814` would not fix it: the generic MAIT term would then match too.
 A CD1d element (N4) would.

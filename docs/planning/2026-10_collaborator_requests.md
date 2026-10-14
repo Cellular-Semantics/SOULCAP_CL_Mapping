@@ -60,13 +60,13 @@ Decisions on each draft are recorded in [diehl_review_2026-10.md](../diehl_revie
 | D4 | Review every term under mature NK T cell: names, synonyms, structure (type 1 / type 2); full labels preferred, short forms as synonyms | **waiting**: review written 14 Oct (16 terms, 12 decisions; recommends keeping `CL:0000814` as the umbrella, which conflicts with our CL#3664) | [nkt_hierarchy_review_2026-10.md](../nkt_hierarchy_review_2026-10.md) |
 | D5 | Dr. Diehl reviews the two papers behind the wrong PMID (draft B6b) | **waiting** | [diehl_review_2026-10.md](../diehl_review_2026-10.md) (B6b, with links) |
 | D6 | Strategy for a human-only view of CL, to discuss with Dr. Osumi-Sutherland | **outside** | |
-| D7 | Meeting with Dr. Osumi-Sutherland, proposed Mon 19 Oct, 10:00 ET | **outside** | |
+| D7 | Meeting with Dr. Osumi-Sutherland, Mon 19 Oct, 10:00 ET (confirmed, with Dr. Diehl) | **outside**: brief written | [2026-10-19_meeting_brief.md](2026-10-19_meeting_brief.md) |
 | D8 | How to explain generic vs species-specific terms to single-cell users | **waiting**: ask Dr. Diehl whether he wants anything from us | |
 
 ## Alex's open items
 
 1. A4: add the NK reviews to `literature/reviews/reviews.tsv`, with identifiers looked up.
 2. B1: carry on the species check past NK and plasmablast once question b is answered.
-3. Bring A1 (marker decisions), A8 (confidence bar) and A10 (feedback format) to the meeting with Dr. Osumi-Sutherland (proposed 19 Oct); the 12 October meeting did not take place.
+3. Bring A1 (marker decisions), A8 (confidence bar) and A10 (feedback format) to the meeting with Dr. Osumi-Sutherland (19 Oct, confirmed; in the brief); the 12 October meeting did not take place.
 4. D2: send Dr. Diehl the reference pack for his B cell / plasmablast issue.
 5. D4: send Dr. Diehl the mature NKT review; if he picks Option A, comment on CL#3664.
