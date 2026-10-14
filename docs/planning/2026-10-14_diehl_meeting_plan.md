@@ -332,7 +332,10 @@ Only once David confirms on Slack (Alex will say). Use the
   all open when last checked on 10 Oct; re-check on GitHub), and Dr. Diehl's wish to have the October documents on `main` so he
   can cite them (ask David about merge order or reviewing #25 sooner);
   Dr. Diehl's topic of a human-only view of CL (list it as his item, no
-  proposal from us); and the generic vs species-specific trade-off for
+  proposal from us);
+  the species naming in labels: Dr. Osumi-Sutherland's open CL PR #3386
+  relabels terms to "(Mmus)", while Dr. Diehl asked to keep ", mouse" for
+  now (ask which convention to follow); and the generic vs species-specific trade-off for
   single-cell users, as a question.
 - Save as `docs/planning/2026-10-19_meeting_brief.md` and give Alex a 5 to
   10 line version for Slack.

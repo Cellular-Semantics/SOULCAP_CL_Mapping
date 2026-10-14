@@ -261,7 +261,7 @@ upstream to `obophenotype/cell-ontology`.
 | B1 "lacks HLA-DRA" on CD56-bright/dim NK | CL:0000938, CL:0000939 | Approved 14 Oct 2026; issue to be filed after Alex's OK ([decisions](docs/diehl_review_2026-10.md#decisions-from-14-october-2026)) |
 | B3a plasmablast "lacks CD138" | CL:0000980 | Superseded 14 Oct 2026 by Dr. Diehl's own B cell / plasmablast restructure |
 | B3b plasmablast markers to a species child | CL:0000980 | Superseded 14 Oct 2026 by the same restructure (generic plasmablast; CL:0000980 kept as the CD19-positive term) |
-| B6a–d smaller fixes | CL:0002345 (DX5+); CL:0002348/0002349 (wrong PMID); CL:0002439–0002448 ("T cell" wording); CL:0002343 (galectin-1 relation) | 14 Oct 2026: B6c approved (fix every affected NK term); B6b waits on Dr. Diehl reading both papers; B6a and B6d not decided |
+| B6a to B6d smaller fixes | CL:0002345 (DX5+); CL:0002348/0002349 (wrong PMID); CL:0002439 to CL:0002449, 11 terms ("T cell" wording); CL:0002343 (galectin-1 relation) | 14 Oct 2026: B6c approved (fix every affected NK term); B6b waits on Dr. Diehl reading both papers; B6a and B6d not decided |
 | C1 liver-resident NK human sentences to a human child (draft) | CL:4047101 | Draft, awaiting Dr. Diehl |
 | Pre-NK markers (on hold) | CL:0000937 | On hold pending Dr. Diehl |
 | Protégé NCAM1 query returns too few classes | — | Not filed; repro note in [docs/protege_ncam1_query_repro.md](docs/protege_ncam1_query_repro.md) for Dr. Diehl to reproduce |
