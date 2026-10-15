@@ -44,8 +44,13 @@ If Alex has not changed an answer, use the default.
   (97,822, 93,319, 93,319, 83,216).
 - **#22** (`pr-08-tidy-up`, "Repo tidy-up from 2026-09-28 feedback"): deletes
   735,493 lines, mostly those JSON dumps.
-- Even with squash merges, files added in #20 and deleted in #22 stay in
-  `main`'s history if the PRs merge one by one.
+- If the PRs are merged one by one (even as squash merges), the files added
+  in #20 and deleted in #22 stay in `main`'s history. If the whole stack is
+  squash-merged in one go at the end, they never reach `main`. The final
+  files are clean either way.
+- Scale: the 16 files #22 deletes are 24.3 MB raw but about 0.6 MB once git
+  compresses them. The real cost is a 1-million-line review diff on #20, not
+  repo size.
 - **Still tracked at the tip of `Alzion_G_717`** (about 275,000 lines), and
   each is read by code or tests:
 
@@ -252,8 +257,11 @@ Draft text for the new sections (recompute every number from T1 and T2):
 - #16 shows all 4,518 lines of `cl_pro_relationships.tsv` as changed. That
   is real: it appends `hgnc_id` and `hgnc_symbol` to every row, and the
   first 12 columns are unchanged.
-- **Question:** Shall I rebuild #20 to #22 so the deleted JSON never enters
-  history? That gives new commits to #21 to #25 and to `Alzion_G_717`.
+- **Question:** How would you like to handle #20? (a) Review it as is,
+  skipping the `.json` files that #22 deletes. (b) Merge the whole stack in
+  one squash at the end, so those files never reach `main`'s history.
+  (c) I rebuild #20 to #22 so they are never added; this gives new commits
+  to #21 to #25 and to `Alzion_G_717`.
 - **Question:** For the four JSON files still tracked: keep them, generate
   them in CI, or stop tracking them?
 - **Question (carried over):** Dr. Diehl wants the October documents on
@@ -344,22 +352,18 @@ After posting: list the comment URLs for Alex. No commit is needed.
 
 ### T5. Slack message to David (Alex sends it)
 
-Give Alex this text with the T1 numbers:
+Give Alex this text, checking the numbers against T1. Keep it this short
+and plain:
 
-> Hi David, before you start on the PR stack: #20 adds about 1.02M lines,
-> almost all generated JSON experiment output, and #22 deletes 735k of them.
-> Even with squash merges they would stay in history. I can rebuild #20 to
-> #22 so those dumps never enter history. Two things to decide:
-> 1. About 275k lines of generated JSON are still tracked at the tip
->    (audit_data.json, matcher_evaluation.json, marker_resolution_audit.json,
->    cl_lexical_cache.json) and some tests read them. Keep them, regenerate
->    in CI, or move them out?
-> 2. A rebuild changes the commits in #21 to #25, so their diffs will look
->    different.
-> Also, #16 shows all 4,518 lines of cl_pro_relationships.tsv as changed.
-> That is real: it adds hgnc_id and hgnc_symbol columns to every row, and
-> the first 12 columns are unchanged. Shall I go ahead with the rebuild?
-> Everything is also in the brief for Monday.
+> Hi David, heads up before you look at the PRs: #20 looks huge (about 1
+> million lines) because it accidentally included generated test output
+> files. #22 deletes them, so the final result is clean. When you review #20
+> you can skip the .json files. If you'd rather they never show up in main's
+> history, I can clean up #20, or you could merge the whole stack in one go
+> at the end. Whatever is easiest for you.
+
+The other details (the 275k JSON lines still tracked, the #16 columns) are
+in the brief and the PR #16 comment, not in this message.
 
 Do not send it. Alex sends it.
 
@@ -377,7 +381,7 @@ Do not send it. Alex sends it.
 ## 4. Out of scope for now
 
 - Rebuilding, rebasing or editing any PR branch, and creating tags. If David
-  says yes on Monday, Alex will ask for a separate plan. That plan must
+  picks option (c) on Monday, Alex will ask for a separate plan. That plan must
   start by keeping commit `c569af3` reachable (with Alex's OK) so the B cell
   reference pack links keep working.
 - Changing `mapping_export.py` or the SSSOM `mapping_justification`.

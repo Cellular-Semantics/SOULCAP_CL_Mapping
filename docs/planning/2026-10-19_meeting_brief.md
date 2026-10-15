@@ -18,6 +18,9 @@ October (section 8); everything else is analysis or a proposal.
   deletes 735,493 lines (734,089 of them JSON) after the 28 September
   tidy-up. Merged one by one, even with squash merges, the deleted files
   would stay in `main`'s history.
+- Scale: the 16 files #22 deletes are 24.3 MB raw but about 0.6 MB once git
+  compresses them. The real cost is a 1-million-line review diff on #20, not
+  repo size.
 - 275,301 lines of generated JSON are still tracked at the tip, and code or
   tests read each file:
 
@@ -33,8 +36,11 @@ October (section 8); everything else is analysis or a proposal.
   (3,919 rows get an HGNC ID, 598 stay blank). The first 12 columns are
   unchanged and both versions use LF.
 
-**Question:** Shall I rebuild #20 to #22 so the deleted JSON never enters
-history? That gives new commits to #21 to #25 and to `Alzion_G_717`.
+**Question:** How would you like to handle #20? (a) Review it as is,
+skipping the `.json` files that #22 deletes. (b) Merge the whole stack in
+one squash at the end, so those files never reach `main`'s history. (c) I
+rebuild #20 to #22 so they are never added; this gives new commits to #21 to
+#25 and to `Alzion_G_717`.
 
 **Question:** For the four JSON files still tracked: keep them, generate
 them in CI, or stop tracking them?
