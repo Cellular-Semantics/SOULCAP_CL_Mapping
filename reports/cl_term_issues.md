@@ -78,40 +78,11 @@ cells.
 | Intermediate monocyte | CL:0002393 | CD14^hi/+ CD16^+/hi CD11c^hi HLA-DR^hi |
 | Non-classical monocyte | CL:0000875 | CD14^lo/− CD16^hi CD11c^hi HLA-DR^+ |
 
-### Natural killer cell missing CD56 marker axiom — CL:0000623
-
-**Repo issue:** not yet filed
-**Reference:** SOULCAP `NK` row ([data/marker_combinations.csv](../data/marker_combinations.csv), regenerate via `uv run soulcap-sync`); literature in [archive/2026-09_literature_narratives/nk_cell_markers.md](../archive/2026-09_literature_narratives/nk_cell_markers.md)
-**Status:** Drafted during Milestone 4 candidate mapping work — **withdrawn 2026-10-05**. It conflicts with Dr. Diehl's rule that generic NK terms keep only lack statements; CD56 belongs on the human-specific children, which already assert it (see [nk_marker_audit_2026-10.md](nk_marker_audit_2026-10.md#ncam1--cd56)). Kept for the record.
-
-#### CL:0000623 — "natural killer cell"
-
-| Field | Current | Proposed |
-|-------|---------|----------|
-| Marker axioms | Negative only: CD14, CD19, CD3, CD20 (no positive marker asserted) | Add positive axiom: CD56 (`PR:000001024`, neural cell adhesion molecule 1 / NCAM1) |
-
-**Rationale:** SOULCAP defines its parent "NK" cell type by required phenotypic
-markers `CD45+ CD56+/hi CD127-`, combined with exclusion of CD14/CD33/CD64/
-CD34/CD3/CD19. CD56 positivity is the field-standard defining marker for NK
-cells, not just an incidental one:
-
-> "Natural killer cells are prototypic members of the innate lymphoid cell
-> (ILC) family and characterized in humans by expression of the phenotypic
-> marker CD56 in the absence of CD3."
-> — Van Acker HH et al. 2017 (PMID:28791027; DOI:10.3389/fimmu.2017.00892)
-
-CL already captures this CD56 axiom on **child** terms of natural killer cell
-— `CL:0000938` (CD16-negative, CD56-bright NK cell) and `CL:0000939`
-(CD16-positive, CD56-dim NK cell) both assert a CD56 marker — but the parent
-class `CL:0000623` itself asserts no positive marker at all. This is an
-asymmetry: the defining marker of the general class is only captured on its
-subtypes, not on the class itself.
-
 ### Missing human-specific "group 1 innate lymphoid cell" term
 
 **Repo issue:** [#14 Missing human-specific 'group 1 innate lymphoid cell' term (CL)](https://github.com/Cellular-Semantics/SOULCAP_CL_Mapping/issues/14)
 **Reference:** SOULCAP `ILC1` row ([data/marker_combinations.csv](../data/marker_combinations.csv)); [reports/candidate_cl_mappings.md](candidate_cl_mappings_narrative.md#ilc-family--innate-lymphoid-cells)
-**Status:** Filed as a repo issue — not yet filed upstream to `obophenotype/cell-ontology`
+**Status:** Filed as a repo issue; not yet filed upstream to `obophenotype/cell-ontology`. Included as NEW:8 "group 1 innate lymphoid cell, human" in the group 1 ILC species hierarchy proposal ([docs/group1_ilc_species_hierarchy_proposal.md](../docs/group1_ilc_species_hierarchy_proposal.md), PR #25), under Dr. Diehl's review.
 
 **Rationale:** CL distinguishes species-specific variants for two of the
 three canonical ILC groups:
@@ -130,12 +101,6 @@ of group 3), not an intentional omission specific to group 1.
 
 **Proposed fix:** add a "group 1 innate lymphoid cell, human" term to CL,
 following the same pattern as the existing group 2 and group 3 human terms.
-
-**How this was found:** running `soulcap-match` against the SOULCAP `NK`
-marker profile ranks `CL:0000623` only 33rd of 826 CL terms — well below its
-own CD56-bright/dim children — specifically because of this missing axiom,
-despite `CL:0000623` being the conceptually correct parent-level match for
-SOULCAP's unqualified "NK" cell type.
 
 ### CD56-bright / CD56-dim NK "lacks HLA-DRA" (B1): CL:0000938, CL:0000939, PR:000002015
 
@@ -220,6 +185,47 @@ confirmed)? The same question applies to CD57 (HNK-1 epitope, made by
 B3GAT1, PR:000001440): CL has one such axiom, CL:4033092 "CD57-positive
 enterocyte" `expresses` PR:000001440.
 
+---
+
+## Closed issues (resolved, withdrawn or superseded)
+
+Kept for the record. None of these will be filed.
+
+### Natural killer cell missing CD56 marker axiom — CL:0000623
+
+**Repo issue:** not yet filed
+**Reference:** SOULCAP `NK` row ([data/marker_combinations.csv](../data/marker_combinations.csv), regenerate via `uv run soulcap-sync`); literature in [archive/2026-09_literature_narratives/nk_cell_markers.md](../archive/2026-09_literature_narratives/nk_cell_markers.md)
+**Status:** Drafted during Milestone 4 candidate mapping work — **withdrawn 2026-10-05**. It conflicts with Dr. Diehl's rule that generic NK terms keep only lack statements; CD56 belongs on the human-specific children, which already assert it (see [nk_marker_audit_2026-10.md](nk_marker_audit_2026-10.md#ncam1--cd56)). Kept for the record.
+
+#### CL:0000623 — "natural killer cell"
+
+| Field | Current | Proposed |
+|-------|---------|----------|
+| Marker axioms | Negative only: CD14, CD19, CD3, CD20 (no positive marker asserted) | Add positive axiom: CD56 (`PR:000001024`, neural cell adhesion molecule 1 / NCAM1) |
+
+**Rationale:** SOULCAP defines its parent "NK" cell type by required phenotypic
+markers `CD45+ CD56+/hi CD127-`, combined with exclusion of CD14/CD33/CD64/
+CD34/CD3/CD19. CD56 positivity is the field-standard defining marker for NK
+cells, not just an incidental one:
+
+> "Natural killer cells are prototypic members of the innate lymphoid cell
+> (ILC) family and characterized in humans by expression of the phenotypic
+> marker CD56 in the absence of CD3."
+> — Van Acker HH et al. 2017 (PMID:28791027; DOI:10.3389/fimmu.2017.00892)
+
+CL already captures this CD56 axiom on **child** terms of natural killer cell
+— `CL:0000938` (CD16-negative, CD56-bright NK cell) and `CL:0000939`
+(CD16-positive, CD56-dim NK cell) both assert a CD56 marker — but the parent
+class `CL:0000623` itself asserts no positive marker at all. This is an
+asymmetry: the defining marker of the general class is only captured on its
+subtypes, not on the class itself.
+
+**How this was found:** running `soulcap-match` against the SOULCAP `NK`
+marker profile ranks `CL:0000623` only 33rd of 826 CL terms — well below its
+own CD56-bright/dim children — specifically because of this missing axiom,
+despite `CL:0000623` being the conceptually correct parent-level match for
+SOULCAP's unqualified "NK" cell type.
+
 ### Plasmablast "lacks CD138" — CL:0000980, PR:000001935 (syndecan-1)
 
 **Status:** superseded 14 Oct 2026: Dr. Diehl is restructuring the mature B cell / plasmablast branch himself and will drop this axiom there (draft B3a in [docs/diehl_review_2026-10.md](../docs/diehl_review_2026-10.md))
@@ -239,9 +245,3 @@ quotes were checked word for word against the Europe PMC full text:
 
 **Question for review:** should this axiom be removed, weakened (e.g. "low"),
 or restricted to human?
-
----
-
-## Resolved issues
-
-*(none yet)*
