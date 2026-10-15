@@ -175,8 +175,10 @@ or handle MAIT, human in its own issue?
   plasmablast restructure; our
   [reference pack](../b_cell_hierarchy_reference_2026-10.md) is ready.
 - **B6b** (wrong PMID): waiting on Dr. Diehl reading both papers.
-  **B6a, B6d**: not decided. **B7a, B7b**: new drafts, not decided.
+  **B6a, B6d**: not decided. **B7b**: new draft, not decided.
 - **Group 1 ILC species hierarchy:** "looks good", still under his review.
+  It includes B7a (`CL:0002442` under `CL:0002438`), which is not a separate
+  decision.
 - All in [diehl_review_2026-10.md](../diehl_review_2026-10.md#decisions-from-14-october-2026).
 
 ## 9. Mapping changes waiting on these decisions (not made)

@@ -25,7 +25,7 @@ below are unchanged.
 | B6c "NK1.1-positive T cell" wording | **File, and fix every affected NK term** (copied from T cell definitions) | **Filed** 14 Oct 2026 (11 terms): repo [#26](https://github.com/Cellular-Semantics/SOULCAP_CL_Mapping/issues/26), upstream [CL#3794](https://github.com/obophenotype/cell-ontology/issues/3794) |
 | B6d galectin-1 relation on `CL:0002343` | No decision yet | Next Diehl agenda |
 | Pre-NK `CL:0000937` | On hold | Next Diehl agenda |
-| Group 1 ILC hierarchy (decisions 6 to 11 below) | "Looks good", still under his review | Next Diehl agenda |
+| Group 1 ILC hierarchy (decisions 6 to 11 below) | "Looks good", still under his review. Includes B7a (15 Oct note) | Next Diehl agenda |
 | New: mature NKT cell sub-hierarchy | Requested: review every term under mature NK T cell (names, synonyms, structure) | Review document for Dr. Diehl |
 
 Dr. Diehl will make the B cell / plasmablast restructure himself, by hand,
@@ -44,12 +44,13 @@ CL issue drafts (details below):
    reading of the two papers (links in B6b).
 3. **B6d** galectin-1 on `CL:0002343`: `expresses` instead of `has plasma
    membrane part`? File, change or drop?
-4. **B7a** asserted parent of `CL:0002442`: file, change or drop?
-5. **B7b** "NKGA2" typo in the label and definition of `CL:0002439`: file,
+4. **B7b** "NKGA2" typo in the label and definition of `CL:0002439`: file,
    change or drop?
 
 Group 1 ILC hierarchy (details in
-[group1_ilc_species_hierarchy_proposal.md](group1_ilc_species_hierarchy_proposal.md)):
+[group1_ilc_species_hierarchy_proposal.md](group1_ilc_species_hierarchy_proposal.md)).
+This includes B7a: the proposal already moves `CL:0002442` under
+`CL:0002438`, so B7a is decided together with decisions 6 to 11.
 
 6. **Terms with unclear species.** Accept the recommended defaults?
    - Keep uterine NK, liver-resident NK, hepatic pit cell and cycling NK generic.
@@ -242,6 +243,12 @@ localisation just isn't shown.
 ## Batch 3: found 14 October while checking B6c
 
 ### B7a. Asserted parent of `CL:0002442`
+
+**Status (15 Oct 2026): part of the group 1 ILC proposal, not a separate
+decision.**
+[group1_ilc_species_hierarchy_proposal.md](group1_ilc_species_hierarchy_proposal.md)
+already moves `CL:0002442` under `CL:0002438` ("moved here", since 5 Oct),
+so B7a is decided together with decisions 6 to 11. Not filed on its own.
 
 **CL ID:** `CL:0002442` CD94-negative, Ly49CI-negative natural killer cell,
 mouse
