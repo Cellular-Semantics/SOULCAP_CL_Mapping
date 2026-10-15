@@ -170,8 +170,10 @@ Agent guidance, including where new files go, is in [CLAUDE.md](CLAUDE.md).
 ## Planning
 
 - Milestones and status: [ROADMAP.md](ROADMAP.md)
-- Fall 2026 sprint backlog: [docs/planning/fall_2026_sprint_backlog.md](docs/planning/fall_2026_sprint_backlog.md)
-- Sept 21 semester plan draft for Dr. Diehl (proposed, not confirmed):
-  [Markdown](docs/planning/fall_2026_semester_plan.md),
+- Current semester plan: [docs/planning/fall_2026_plan.md](docs/planning/fall_2026_plan.md)
+- Superseded, kept for the record:
+  [sprint backlog](docs/planning/fall_2026_sprint_backlog.md) (18 Sept) and
+  the Sept 21 semester plan draft
+  ([Markdown](docs/planning/fall_2026_semester_plan.md),
   [PDF](docs/planning/fall_2026_semester_plan.pdf),
-  [HTML](docs/planning/fall_2026_semester_plan.html)
+  [HTML](docs/planning/fall_2026_semester_plan.html))

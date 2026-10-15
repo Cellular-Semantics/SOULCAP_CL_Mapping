@@ -1,3 +1,5 @@
+> **Superseded (15 Oct 2026):** replaced by [fall_2026_plan.md](fall_2026_plan.md), the current semester plan. The .pdf and .html versions are superseded too. Kept for the record.
+
 # SOULCAP ↔ Cell Ontology
 ## Fall 2026 semester working plan
 

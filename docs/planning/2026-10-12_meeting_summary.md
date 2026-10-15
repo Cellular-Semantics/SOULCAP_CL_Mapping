@@ -1,3 +1,5 @@
+> **Superseded (15 Oct 2026):** this meeting did not take place; its open items are carried forward in the [19 Oct brief](2026-10-19_meeting_brief.md). Kept for the record.
+
 # SOULCAP ↔ CL: agenda for 12 October 2026
 
 For Dr. Osumi-Sutherland and Dr. Diehl. Follows up the 28 September meeting.

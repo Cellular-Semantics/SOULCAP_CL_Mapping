@@ -1,3 +1,5 @@
+> **Superseded (15 Oct 2026):** replaced by [fall_2026_plan.md](fall_2026_plan.md), the current semester plan. Kept for the record; no longer updated.
+
 # Fall 2026 sprint backlog
 
 Sprint-level breakdown of the Fall 2026 (Oct–Dec) working plan prepared for
