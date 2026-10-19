@@ -197,9 +197,7 @@ def test_main_returns_1_on_failures(tmp_path, monkeypatch):
     _write_csv(csv)
     # keep the report write inside tmp_path
     monkeypatch.chdir(tmp_path)
-    monkeypatch.setattr(
-        ms, "validate_marker_csv", lambda p: [{"x": 1}]
-    )
+    monkeypatch.setattr(ms, "validate_marker_csv", lambda p: [{"x": 1}])
     assert ms.main([str(csv)]) == 1
 
 
@@ -208,3 +206,146 @@ def test_main_returns_0_when_clean(tmp_path, monkeypatch):
     _write_csv(csv)
     monkeypatch.setattr(ms, "validate_marker_csv", lambda p: [])
     assert ms.main([str(csv)]) == 0
+
+
+# --------------------------------------------------------------------------- #
+# extract_markers
+# --------------------------------------------------------------------------- #
+@pytest.mark.parametrize(
+    "expr,expected",
+    [
+        ("CD4+", {"CD4"}),
+        ("CD4+ CD8-", {"CD4", "CD8"}),
+        ("(CD4+|CD8-)", {"CD4", "CD8"}),
+        ("[HLA-DR+ CD11chi]-", {"HLA-DR", "CD11c"}),  # group-level qual skipped
+        ("live/ CD4+", {"CD4"}),  # gate prefix skipped
+        ("live/ CD45+ CD56+/hi CD127-", {"CD45", "CD56", "CD127"}),
+        ("[(TCRVa7.2+|MR1Tetramer+) CD161+]-", {"TCRVa7.2", "MR1Tetramer", "CD161"}),
+        ("CD16-/lo", {"CD16"}),
+    ],
+)
+def test_extract_markers(expr, expected):
+    assert ms.extract_markers(expr) == expected
+
+
+def test_extract_markers_empty_string():
+    assert ms.extract_markers("") == set()
+
+
+def test_extract_markers_invalid_does_not_raise():
+    # Invalid expressions return empty set rather than raising.
+    assert ms.extract_markers("!!!") == set()
+
+
+def test_extract_markers_deduplicates():
+    # Same marker in multiple groups → appears once.
+    assert ms.extract_markers("(CD3+|CD3-)") == {"CD3"}
+
+
+# --------------------------------------------------------------------------- #
+# extract_markers_from_csv
+# --------------------------------------------------------------------------- #
+def _write_markers_csv(path):
+    pd.DataFrame(
+        {
+            "Subset name": ["NK cell", "T cell", "B cell"],
+            "Required phenotypic markers": ["CD45+ CD56+", "CD45+ CD3+", "CD45+ CD19+"],
+            "Ideal exclusion": ["CD3-", None, "CD3-"],
+            "Required exclusion": [None, None, None],
+            "Ideal phenotypic markers": [None, "CD4+", None],
+        }
+    ).to_csv(path, index=False)
+
+
+def test_extract_markers_from_csv_tokens(tmp_path):
+    csv = tmp_path / "mc.csv"
+    _write_markers_csv(csv)
+    records = ms.extract_markers_from_csv(csv)
+    tokens = {r["marker_token"] for r in records}
+    assert tokens == {"CD3", "CD4", "CD19", "CD45", "CD56"}
+
+
+def test_extract_markers_from_csv_sorted(tmp_path):
+    csv = tmp_path / "mc.csv"
+    _write_markers_csv(csv)
+    records = ms.extract_markers_from_csv(csv)
+    tokens = [r["marker_token"] for r in records]
+    assert tokens == sorted(tokens)
+
+
+def test_extract_markers_from_csv_provenance(tmp_path):
+    csv = tmp_path / "mc.csv"
+    _write_markers_csv(csv)
+    records = ms.extract_markers_from_csv(csv)
+    by_token = {r["marker_token"]: r for r in records}
+
+    # CD45 appears in Required phenotypic markers for all 3 subsets
+    cd45 = by_token["CD45"]
+    assert "Required phenotypic markers" in cd45["source_columns"]
+    assert "NK cell" in cd45["cell_types"]
+    assert "T cell" in cd45["cell_types"]
+    assert "B cell" in cd45["cell_types"]
+
+    # CD4 only in Ideal phenotypic markers, only for T cell
+    cd4 = by_token["CD4"]
+    assert cd4["source_columns"] == "Ideal phenotypic markers"
+    assert cd4["cell_types"] == "T cell"
+
+    # CD3 spans two columns
+    cd3 = by_token["CD3"]
+    cols = set(cd3["source_columns"].split("|"))
+    assert "Ideal exclusion" in cols
+    assert "Required phenotypic markers" in cols
+
+
+def test_extract_markers_from_csv_skips_nulls(tmp_path):
+    csv = tmp_path / "mc.csv"
+    pd.DataFrame(
+        {
+            "Subset name": ["X"],
+            "Required phenotypic markers": [None],
+            "Ideal exclusion": [None],
+        }
+    ).to_csv(csv, index=False)
+    assert ms.extract_markers_from_csv(csv) == []
+
+
+# --------------------------------------------------------------------------- #
+# tokens_main CLI
+# --------------------------------------------------------------------------- #
+def test_tokens_main_writes_csv(tmp_path, capsys):
+    csv = tmp_path / "mc.csv"
+    _write_markers_csv(csv)
+    out = tmp_path / "out" / "tokens.csv"
+
+    rc = ms.tokens_main([str(csv), "--out", str(out)])
+
+    assert rc == 0
+    assert out.exists()
+    df = pd.read_csv(out)
+    assert set(df["marker_token"]) == {"CD3", "CD4", "CD19", "CD45", "CD56"}
+    assert "Extracted 5" in capsys.readouterr().out
+
+
+def test_tokens_main_missing_csv(tmp_path, capsys):
+    rc = ms.tokens_main([str(tmp_path / "nope.csv")])
+    assert rc == 2
+    assert "not found" in capsys.readouterr().out
+
+
+def test_tokens_main_invalid_source_preserves_output(tmp_path):
+    source = tmp_path / "bad.csv"
+    source.write_text("Abbreviation,Required phenotypic markers\nNK,CD56+)\n")
+    out = tmp_path / "tokens.csv"
+    out.write_text("existing curated tokens\n")
+    assert ms.tokens_main([str(source), "--out", str(out)]) == 1
+    assert out.read_text() == "existing curated tokens\n"
+
+
+def test_tokens_main_creates_output_dir(tmp_path):
+    csv = tmp_path / "mc.csv"
+    _write_markers_csv(csv)
+    out = tmp_path / "deep" / "nested" / "tokens.csv"
+    rc = ms.tokens_main([str(csv), "--out", str(out)])
+    assert rc == 0
+    assert out.exists()

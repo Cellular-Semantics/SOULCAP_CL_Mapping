@@ -1,0 +1,317 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>SOULCAP–CL | Fall 2026 Semester Plan</title><style>
+@page {size: Letter; margin: .60in .65in .62in;}
+* {box-sizing: border-box;}
+body {margin:0; color:#213344; font:10.2pt/1.43 Arial, Helvetica, sans-serif;}
+.sheet {break-before:page; width:7.2in; margin:0 auto;}
+.sheet:first-child {break-before:auto;}
+.eyebrow {font-size:8pt; letter-spacing:1.6px; text-transform:uppercase; color:#587c8a; border-bottom:2px solid #2b7884; padding:0 0 8px; margin:0 0 16px;}
+h1 {font-size:29pt; line-height:1.13; color:#123d57; margin:24px 0 12px;}
+h2 {font-size:19pt; line-height:1.2; color:#123d57; margin:0 0 17px;}
+h3 {font-size:11.5pt; line-height:1.25; color:#146c75; margin:17px 0 7px; break-after:avoid;}
+p {margin:0 0 9px; orphans:3; widows:3;}
+strong {color:#19394e;}
+table {border-collapse:collapse; width:100%; margin:12px 0 16px; font-size:9.1pt; line-height:1.32;}
+th {background:#173e55; color:white; text-align:left; padding:8px;}
+td {border-bottom:1px solid #d9e3e7; padding:7px 8px; vertical-align:top;}
+tr:nth-child(even) td {background:#f1f6f7;}
+tr {break-inside:avoid;}
+thead {display:table-header-group;}
+code {font-family:Consolas,monospace; font-size:8.6pt; overflow-wrap:anywhere; color:#354e62;}
+a {color:#126575; text-decoration:underline; overflow-wrap:anywhere;}
+blockquote {margin:0; border-left:3px solid #2b7884; padding:2px 0 2px 15px; font-size:9.8pt;}
+blockquote p {margin-bottom:12px;}
+ol {margin:7px 0 14px; padding-left:23px;}
+li {margin-bottom:7px;}
+.sheet:first-child {border-top:7px solid #173e55; padding-top:16px;}
+@media screen {body {background:#dfe6eb; padding:24px;} .sheet {background:white; padding:36px 0; margin-bottom:24px; outline:24px solid white;}}
+</style></head><body><section class="sheet" id="page-1"><div class="eyebrow">SOULCAP × Cell Ontology · Fall 2026 · Proposed working plan</div><h1>SOULCAP ↔ Cell Ontology</h1>
+<h2>Fall 2026 semester working plan</h2>
+<p><strong>October • November • December 2026</strong></p>
+<p>Prepared for discussion with <strong>Dr. Alexander Diehl</strong><br> University at Buffalo • Prepared September 21, 2026</p>
+<h3>The project in one sentence</h3>
+<p>Help people decide whether a SOULCAP cell description and a Cell Ontology description mean the same thing, mean related but different things, or cannot yet be connected reliably.</p>
+<h3>The proposed semester goal</h3>
+<p>Turn a useful collection of suggested matches into a clearer, evidence-backed review system: every cell has a visible status, important decisions have a scientific explanation, and software improvements are tested fairly.</p>
+<h3>The three-month story</h3>
+<table><thead><tr><th>Month</th><th>Plain-language purpose</th><th>Main result</th></tr></thead><tbody>
+<tr><td>October</td><td>Make the information trustworthy and agree on the review rules.</td><td>A checked starting point, clearer marker rules, and the first reviewed examples.</td></tr>
+<tr><td>November</td><td>Review the existing suggestions and investigate missing matches.</td><td>Review packets for the existing proposals and a documented outcome for the remaining cells.</td></tr>
+<tr><td>December</td><td>Test fairly, explain the results, and hand over the work.</td><td>A reproducible project package, a clear report, and a spring priority list.</td></tr>
+</tbody></table>
+<p><strong>Important distinction:</strong> a suggested match is not a confirmed match. A computer can organize evidence and suggest candidates; a qualified reviewer must approve scientific conclusions.</p>
+<h3>How to use this document</h3>
+<p>Pages 1–6 explain the project, recent progress, goals, and schedule. Pages 7–11 give the work packages. Pages 12–16 describe the review process, testing, responsibilities, and agent instructions. Pages 17–18 provide meeting language and source references.</p>
+<p><strong>Approval status:</strong> proposed plan, not an approved commitment from Dr. Diehl or any other collaborator. Workload estimates, review targets, and expanded tasks require agreement. Creating this document does not authorize public issue filing, source-sheet changes, or scientific sign-off.</p></section><section class="sheet" id="page-2"><div class="eyebrow">SOULCAP × Cell Ontology · Fall 2026 · Proposed working plan</div><h2>1. Where the project stands today</h2>
+<p>The local repository was checked on September 21. The table distinguishes facts verified in the files from previously recorded results. No live source-sheet update or public issue-status check was performed for this document.</p>
+<table><thead><tr><th>Starting point</th><th>What it means in plain language</th></tr></thead><tbody>
+<tr><td>127 registered SOULCAP entities</td><td>There are 127 cell descriptions with stable local identifiers.</td></tr>
+<tr><td>80 proposals covering 80 entities</td><td>Someone has suggested a CL connection for these cells. Every proposal still says it needs review.</td></tr>
+<tr><td>47 entities without proposals</td><td>These require investigation, not an automatic promise of 47 new matches.</td></tr>
+<tr><td>0 reviewed mapping benchmark cases</td><td>There is not yet an independently approved answer set for measuring scientific matching quality.</td></tr>
+<tr><td>5 reserved, unlabelled entities</td><td>Five cases are set aside for possible future testing. They are not already a validated test set.</td></tr>
+<tr><td>75 marker-registry rows, grouped into 73 normalized marker groups</td><td>Different spellings and repeated entries need careful handling; they do not necessarily represent different proteins.</td></tr>
+<tr><td>826 CL terms in the recorded marker-only comparison</td><td>The marker-only search can consider this subset of CL, not every CL term.</td></tr>
+<tr><td>3,327 active terms in the local name-search cache</td><td>The optional local name search can look more widely, but names alone do not prove equivalence.</td></tr>
+</tbody></table>
+<h3>The current performance result must be explained carefully</h3>
+<p>In the recorded September comparison, the older matcher placed a provisional expected target in its first five suggestions for <strong>19 of 80 cases</strong>. The corrected strict marker-policy mode did so for <strong>16 of 80 cases</strong>. Neither number measures confirmed biological accuracy because the expected answers remain unreviewed. The stricter mode is still optional, not the default.</p>
+<p>The same comparison reports six invalid source profiles and 13 cases whose targets are absent from the index. These are counts within that 80-case evaluation, not counts of all source-sheet problems. All cases remain in the reported denominator.</p>
+<h3>What needs attention first</h3>
+<p>Fix the interpretation and review process before chasing a higher score. The immediate priorities are ambiguous marker names, three flagged T-cell mapping decisions, source expressions that cannot be read reliably, and the absence of a reviewed answer set.</p>
+<p><strong>Evidence:</strong> local registries and evaluation files [R1–R5]. The most recent recorded software check was 537 passing tests with 96.53% coverage on September 18; this is a historical result, not a fresh September 21 test run.</p></section><section class="sheet" id="page-3"><div class="eyebrow">SOULCAP × Cell Ontology · Fall 2026 · Proposed working plan</div><h2>2. Recent improvements already delivered</h2>
+<p>These are the main September improvements supported by the repository and its change history. They are completed software and reporting work, not claims that the biology has been approved.</p>
+<h3>A. One consistent way to read marker descriptions</h3>
+<p>Validation, marker extraction, and matching now share the same interpretation of marker expressions. Positive and negative markers, expression levels, and grouped alternatives are kept distinct. Invalid descriptions are flagged rather than quietly ranked as if they were valid.</p>
+<p><strong>Why it matters:</strong> two parts of the program should not read the same cell description differently. This reduces avoidable disagreement inside the software.</p>
+<h3>B. Stable cell identifiers and one mapping register</h3>
+<p>Each registered SOULCAP entity has a permanent local identifier. Proposed mapping decisions live in one table instead of being maintained separately in multiple reports. Existing proposals were preserved.</p>
+<p><strong>Why it matters:</strong> a renamed cell should not become a new, unconnected record. One decision table makes it easier to see what changed and prevents conflicting copies of the same decision.</p>
+<h3>C. Evidence attached to each proposed match</h3>
+<p>Reports now distinguish marker evidence, name-based evidence, literature evidence, and curator statements. They show which markers agree, disagree, or have no available information. Exported tables can be traced to the input files used to produce them.</p>
+<p><strong>Why it matters:</strong> the reader can ask “Why is this suggested?” and inspect the answer. The project avoids attaching a made-up confidence percentage to an unreviewed conclusion.</p>
+<h3>D. A unified audit dashboard</h3>
+<p>An offline dashboard brings together the cell list, proposed mappings, missing coverage, marker information, review findings, and report freshness. Users can search, filter, and open the details without running a web server.</p>
+<p><strong>Why it matters:</strong> Dr. Diehl and the student can work from the same review list instead of searching through many separate files.</p>
+<h3>E. A repeatable matcher evaluation</h3>
+<p>The evaluation harness checks whether an expected target appears near the top of the suggestions. It separates provisional expectations from reviewed cases and exposes ties, missing candidates, and invalid inputs.</p>
+<p><strong>Why it matters:</strong> future changes can be compared with an earlier version. However, software testing and agreement with old proposals are not substitutes for scientific review.</p>
+<p><strong>Where to inspect:</strong> <code>README.md</code>, the <code>mappings/</code> directory, <code>reports/audit_dashboard.html</code>, and the recorded matcher evaluations [R1–R4]. The major implementation commits are identified on page 18.</p></section><section class="sheet" id="page-4"><div class="eyebrow">SOULCAP × Cell Ontology · Fall 2026 · Proposed working plan</div><h2>3. More recent improvements—and what they did not solve</h2>
+<h3>F. Marker aliases and protein-aware matching</h3>
+<p>The optional enhanced mode recognizes approved alternative marker names and compatible protein identifiers. It avoids counting the same marker condition twice. Conflicting aliases remain unresolved rather than being guessed.</p>
+<p><strong>Why it matters:</strong> different names for the same approved marker should not cause a missed match or an unfair extra score.</p>
+<h3>G. Broader candidate search</h3>
+<p>An optional offline name-and-synonym search can find CL candidates outside the marker-only index. Its evidence is kept separate from marker evidence.</p>
+<p><strong>Why it matters:</strong> a suitable CL term should not be invisible merely because its marker information is incomplete. A name match remains only a candidate.</p>
+<h3>H. More honest status information</h3>
+<p>The roadmap was corrected to show 80 proposals for 80 of 127 entities, rather than the misleading older count of 87/127. Marker reports distinguish ordinary protein mappings from complexes, families, reagents, possible source artifacts, and unresolved entries.</p>
+<p><strong>Why it matters:</strong> a blank gene field is not automatically an error. Some measurements do not refer to a single protein or gene.</p>
+<h3>I. A controlled investigation of the regression</h3>
+<p>Eight diagnostic combinations separated three changes: added alias/protein evidence, removed evidence under stricter rules, and removal of duplicate conditions. In that snapshot, the changed target rankings came from removed evidence, not from the other two factors.</p>
+<p><strong>Why it matters:</strong> the project has a documented explanation for the regression instead of an unexplained lower score. This finding applies to that comparison, not every possible future dataset.</p>
+<h3>J. A narrow CD8 correction and protected test preparation</h3>
+<p>The resolver now retains a specific whole-CD8 surface assertion that had been discarded. It does not treat CD8 alpha as automatically equivalent to the whole coreceptor. The correction restores that evidence for 39 CL terms, but top-five agreement remains 16/80. Five evidence-constraint examples and additional tests protect this behavior.</p>
+<p>Three proposed mappings were reviewed by the agent: two relations lacked sufficient support, and one remained plausible but unconfirmed. No proposal was promoted to confirmed truth. Five unlabelled entities were reserved for later independent review.</p>
+<p><strong>Still unfinished:</strong> curator decisions, scientifically reviewed benchmark answers, a fair final test, and proof that any new default matcher is better. The old default remains in place [R4–R6].</p></section><section class="sheet" id="page-5"><div class="eyebrow">SOULCAP × Cell Ontology · Fall 2026 · Proposed working plan</div><h2>4. What success should look like by December</h2>
+<p>The semester should be judged by useful, reviewable outputs—not by a promise that every cell can be matched or that a particular accuracy percentage will be achieved.</p>
+<table><thead><tr><th>Deliverable</th><th>Proposed completion check</th></tr></thead><tbody>
+<tr><td>An honest project inventory</td><td>All 127 entities have a status and a next step. No record disappears because it is difficult.</td></tr>
+<tr><td>Existing-proposal review packets</td><td>All 80 proposals receive an automated evidence check and a readable packet. Aim for 30 completed human scientific reviews, subject to reviewer capacity.</td></tr>
+<tr><td>Missing-coverage investigation</td><td>Each of the 47 has a recorded disposition. Investigate the 42 non-reserved cases; keep five reserved cases outside tuning and mark their review route separately.</td></tr>
+<tr><td>Important ambiguity decisions</td><td>Three flagged mapping cases and five marker holds each receive a signed decision or an explicit unanswered question with an owner.</td></tr>
+<tr><td>A reviewed development answer set</td><td>Aim for 20 human-reviewed cases drawn from the reviewed proposals, spanning several cell groups and relation types. Do not manufacture examples to reach a quota.</td></tr>
+<tr><td>Literature evidence</td><td>Recheck the eight historically covered categories; prepare evidence packets for the six remaining categories, within agreed reviewer availability.</td></tr>
+<tr><td>Independent validation pilot</td><td>Independently label the five reserved cases if feasible, preserve separation from development, and report per-case results and limitations.</td></tr>
+<tr><td>A reproducible handoff</td><td>Another person can produce the dashboard and reports from the documented inputs and commands.</td></tr>
+</tbody></table>
+<h3>Workload assumptions to approve</h3>
+<p>Plan around <strong>10–12 student hours per active week</strong>, with a proposed total of roughly <strong>90–110 hours through December 7</strong>, including meeting preparation and troubleshooting. The agent supports drafting, coding, checks, and evidence organization within that supervised work; it does not replace review time.</p>
+<p>Ask for a <strong>30-minute weekly meeting</strong> plus approximately <strong>60 minutes of scientific review per week</strong>, shared with another qualified reviewer if available. Review speed will vary. Check actual throughput after two weeks and reduce the target if necessary.</p>
+<h3>Minimum, target, and stretch</h3>
+<p><strong>Minimum:</strong> an accurate inventory, packets for all 80 proposals, a documented route for all 47 uncovered entities, at least 10 completed human reviews if review support is available, and a reproducible report. Missing review support must be reported, not hidden.</p>
+<p><strong>Target:</strong> the deliverables above, including 30 scientific reviews and 20 usable development cases. The five-case validation pilot is conditional on independent annotation.</p>
+<p><strong>Stretch:</strong> expand independent testing toward 15–20 genuinely separate cases, or finish more scientific reviews. This requires additional review capacity and a redesigned split before selection or tuning; it is not a silent expansion of the current five-case reserve.</p></section><section class="sheet" id="page-6"><div class="eyebrow">SOULCAP × Cell Ontology · Fall 2026 · Proposed working plan</div><h2>5. Calendar and weekly delivery plan</h2>
+<p>The main handoff is <strong>December 7</strong>, with no essential task dependent on the examination period. UB lists fall break on October 12–13, Thanksgiving break on November 25–28, the last day of classes on December 7, and final exams on December 9–16 [U1]. These are the standard-session dates; confirm the student&#x27;s individual obligations.</p>
+<table><thead><tr><th>Work window</th><th>Main focus</th><th>Visible output</th></tr></thead><tbody>
+<tr><td>Oct. 1–2</td><td>Kickoff; confirm hours, reviewer, and approvals</td><td>Agreed scope and baseline checklist</td></tr>
+<tr><td>Oct. 5–9</td><td>Inventory, review form, source-sheet requests</td><td>Baseline report; first review packet</td></tr>
+<tr><td>Oct. 12–16</td><td>Light week around fall break; track responses</td><td>Decision log and approved correction requests</td></tr>
+<tr><td>Oct. 19–23</td><td>Three flagged cases; five marker holds</td><td>First signed decisions or named blockers</td></tr>
+<tr><td>Oct. 26–30</td><td>Fair evaluation setup; first development cases</td><td>October demonstration and review gate</td></tr>
+<tr><td>Nov. 2–6</td><td>Candidate coverage; first missing-category evidence</td><td>Candidate report and literature packets</td></tr>
+<tr><td>Nov. 9–13</td><td>Review batches; test one matching change at a time</td><td>Explained before/after experiment</td></tr>
+<tr><td>Nov. 16–20</td><td>Complete proposal packets; review uncovered cells</td><td>Coverage inventory; no silent omissions</td></tr>
+<tr><td>Nov. 23–24</td><td>Freeze the version to be tested; prepare handoff</td><td>Frozen input list and test protocol</td></tr>
+<tr><td>Nov. 25–28</td><td>Thanksgiving break</td><td>No required delivery</td></tr>
+<tr><td>Nov. 30–Dec. 4</td><td>Independent pilot; reproduce reports</td><td>Validation results or explicit limitation</td></tr>
+<tr><td>Dec. 7</td><td>Present and hand over</td><td>PDF report, repository package, spring priorities</td></tr>
+<tr><td>Dec. 8–16</td><td>Reading day and exams</td><td>No required development or review work</td></tr>
+<tr><td>Dec. 17–23</td><td>Optional, only if agreed</td><td>Small documentation corrections or archival work</td></tr>
+<tr><td>Dec. 24–31</td><td>Buffer, not a hidden deadline</td><td>No required semester deliverable</td></tr>
+</tbody></table>
+<h3>Three decision gates</h3>
+<p><strong>October 30:</strong> confirm that the review form works, source problems are tracked, review ownership is real, and the first answer-set cases are reliable. If not, reduce November feature work and focus on these foundations.</p>
+<p><strong>November 20:</strong> approve the version and datasets for final testing. Unresolved scientific questions stay visibly unresolved. Candidate-search changes that fail the review checks remain experimental.</p>
+<p><strong>December 7:</strong> accept the handoff based on reproducibility, evidence quality, clear status counts, and honest limitations—not a predetermined score.</p></section><section class="sheet" id="page-7"><div class="eyebrow">SOULCAP × Cell Ontology · Fall 2026 · Proposed working plan</div><h2>6. October work packages: establish the foundation</h2>
+<h3>A01 — Save and check the starting point</h3>
+<p><strong>Owner:</strong> student with agent support. <strong>Target:</strong> October 9. <strong>Planning allowance:</strong> 4–6 hours.</p>
+<p>Recount the entity, proposal, marker, and review tables. Record the exact source snapshot and software version. Run the software checks and preserve a baseline evaluation in a new output folder. Compare the roadmap, dashboard, and reports for conflicting claims.</p>
+<p><strong>Deliver:</strong> a dated baseline report and an input list. <strong>Done when:</strong> counts agree across outputs, missing inputs are identified, historical results are labelled, and no old baseline is overwritten. A failing test is a reported problem, not permission to weaken the test.</p>
+<h3>A02 — Agree on what a mapping decision means</h3>
+<p><strong>Owner:</strong> Dr. Diehl or a delegated curator decides; student and agent prepare. <strong>Target:</strong> October 9. <strong>Allowance:</strong> 4–6 hours plus review.</p>
+<p>Prepare one short form that asks whether the two descriptions mean the same population, whether one is broader, or whether they are only related. Include tissue, species, specimen, marker requirements, exclusions, source references, reviewer name, date, and unanswered questions.</p>
+<p><strong>Deliver:</strong> a review template and three example packets. <strong>Done when:</strong> the reviewer can use the form consistently and the direction of Broad/Narrow is explicit. No agent-generated text may impersonate a human review.</p>
+<h3>A03 — Request source-sheet and marker-string corrections</h3>
+<p><strong>Owner:</strong> student drafts; authorized sheet owner edits. <strong>Target:</strong> request by October 9; follow up October 16. <strong>Allowance:</strong> 3–5 hours.</p>
+<p>Check the historical request for a dedicated mapping-relation field. Confirm whether existing fields can support the needed information before asking for duplicate columns. Do not confuse the existing assay-type field with the CL mapping relation. Reuse the prior marker-fix proposal where appropriate; include the source expressions that currently cannot be parsed.</p>
+<p><strong>Deliver:</strong> a precise request, a change checklist, and a decision log. <strong>Done when:</strong> an authorized owner accepts or declines each request, or a dated blocker names the person and next follow-up. After approved edits, synchronize and verify; never repair the downloaded cache by hand.</p>
+<h3>A04 — Tidy the issue and licensing backlog safely</h3>
+<p><strong>Owner:</strong> student and agent prepare; authorized owner approves external changes. <strong>Target:</strong> October 23. <strong>Allowance:</strong> 3–4 hours.</p>
+<p>Recheck the existing gap log and issue history before proposing new issues. Draft duplicate-free issue descriptions and a licensing decision request. Verify who owns the code and data before applying a license. Do not assume an old issue is still open or already satisfied.</p>
+<p><strong>Deliver:</strong> an approved-action queue. <strong>Done when:</strong> each item is filed with permission, closed with permission, or has a documented reason to remain pending. No public messages or license changes are authorized by this plan alone.</p></section><section class="sheet" id="page-8"><div class="eyebrow">SOULCAP × Cell Ontology · Fall 2026 · Proposed working plan</div><h2>7. October work packages: resolve the high-risk questions</h2>
+<h3>A05 — Review the three flagged mapping proposals</h3>
+<p><strong>Owner:</strong> scientific reviewer; student and agent prepare evidence. <strong>Target:</strong> October 23. <strong>Allowance:</strong> 3–4 preparation hours plus review.</p>
+<p>For SC000063, ask whether a description containing both alpha/beta and gamma/delta cells can point to a target restricted to alpha-beta cells, and in which direction. For SC000067, ask whether the operational marker gate establishes the proposed equivalence. For SC000073, ask whether there is evidence for the target&#x27;s required intraepithelial location.</p>
+<p><strong>Deliver:</strong> three decision records. <strong>Done when:</strong> each has an accepted, rejected, revised, or insufficient-evidence outcome with reviewer, date, and reason. Insufficient evidence is a valid completed review, not a reason to invent a mapping.</p>
+<h3>A06 — Review the five important marker holds</h3>
+<p><strong>Owner:</strong> scientific reviewer defines the meaning; agent implements approved rules. <strong>Target:</strong> October 30. <strong>Allowance:</strong> 5–7 hours plus review.</p>
+<p>Review CD3, CD8, CD15, CD16, and MR1 individually. Ask what the source actually measures: a single protein, a larger complex, a family, or a reagent-defined signal. Identify when assay details are missing. Preserve the narrow whole-CD8 correction unless new evidence warrants a separately reviewed change.</p>
+<p><strong>Deliver:</strong> a policy table and tests for approved changes. <strong>Done when:</strong> every hold has a reasoned decision or a named evidence gap, and each implemented rule has both an example it should accept and a similar example it must reject. Do not merely change fingerprints to make stale policies pass.</p>
+<h3>A07 — Make the evaluation ready for fair review</h3>
+<p><strong>Owner:</strong> agent implements; student verifies; reviewer approves answers. <strong>Target:</strong> October 30. <strong>Allowance:</strong> 6–8 hours.</p>
+<p>Prepare the first 5–10 reviewed development examples. Keep them separate from unreviewed proposals. Add and test an explicit way to evaluate only a selected dataset, because the present evaluator automatically includes proposal-derived cases. Support a recorded no-supported-match outcome rather than forcing every reviewed case to name a target.</p>
+<p><strong>Deliver:</strong> separate development/final-test input handling and a small reviewed development set. <strong>Done when:</strong> tests prove that reserve cases cannot silently enter development results; missing answers are not treated as correct; invalid inputs and missing candidates remain visible. Do not score or inspect reserve rankings during tuning.</p>
+<p><strong>October gate:</strong> review these deliverables with Dr. Diehl. If source-sheet decisions are delayed, local evidence review can continue with its limitations stated. Missing curator intent must not be replaced by an agent&#x27;s guess.</p></section><section class="sheet" id="page-9"><div class="eyebrow">SOULCAP × Cell Ontology · Fall 2026 · Proposed working plan</div><h2>8. November work packages: improve evidence and coverage</h2>
+<h3>A08 — Check the literature coverage and fill the gaps</h3>
+<p><strong>Owner:</strong> confirm the scientific lead with Dr. Diehl; agent assists with retrieval and organization. <strong>Target:</strong> November 20. <strong>Allowance:</strong> 8–10 student hours plus scientific review.</p>
+<p>The older roadmap records eight of fourteen cell categories covered. Treat that as a starting claim, not a current quality certificate. Check that those reports contain accessible sources and support the actual statements made. Prepare packets for monocyte, neutrophil, basophil, mast cell, granulocyte, and myeloid-derived suppressor cell categories.</p>
+<p>Use primary sources when available. Record the exact claim, where it appears, organism and assay context, and limitations. Verify any short quotation against the source text and obey reuse limits. If the paper cannot be accessed or does not support the claim, say so.</p>
+<p><strong>Deliver:</strong> an evidence register and six missing-category packets. <strong>Done when:</strong> each category has source-checked support or a documented gap. A file existing is not the same as the category being scientifically complete.</p>
+<h3>A09 — Measure whether the right candidate can be found</h3>
+<p><strong>Owner:</strong> agent and student; reviewer checks examples. <strong>Target:</strong> November 13. <strong>Allowance:</strong> 4–6 hours.</p>
+<p>Compare the marker-only search with the wider offline name search using the same reviewed development cases. Separate two questions: “Was an acceptable term available at all?” and “Was it ranked well?” Keep the ontology snapshot fixed for the comparison.</p>
+<p><strong>Deliver:</strong> a candidate-coverage report listing missing targets, newly found targets, and misleading name matches. <strong>Done when:</strong> absent-target failures are separated from ranking failures, and broader coverage is not advertised as greater scientific accuracy without reviewed evidence.</p>
+<h3>A10 — Test small, explained matching improvements</h3>
+<p><strong>Owner:</strong> agent implements; student checks; reviewer approves scientific assumptions. <strong>Target:</strong> November 20. <strong>Allowance:</strong> 6–8 hours.</p>
+<p>Use the reviewed development examples to investigate failures one cause at a time. Prioritize alias conflicts, missing evidence, contradictions, and clearly different cell families. Explore tissue or lineage checks only when the source supplies that information; absence of tissue data is not a contradiction.</p>
+<p><strong>Deliver:</strong> a short experiment note per change: problem, evidence, code change, results, worse cases, and keep/reject decision. <strong>Done when:</strong> the same input set was used before and after, negative tests pass, and improvements are not caused by editing the expected answers. Any change without sufficient benefit or with unresolved harmful behavior stays optional.</p></section><section class="sheet" id="page-10"><div class="eyebrow">SOULCAP × Cell Ontology · Fall 2026 · Proposed working plan</div><h2>9. November work packages: work through the cells</h2>
+<h3>A11 — Prepare all existing proposals for scientific review</h3>
+<p><strong>Owner:</strong> agent prepares; student checks; curator signs decisions. <strong>Target:</strong> packets by November 20. <strong>Allowance:</strong> 6–8 student hours, with scientific review distributed across the semester.</p>
+<p>Create one consistent review packet for each of the 80 proposals. Show the source definition, target definition, relation direction, marker agreement, contradictions, missing information, literature, and unresolved questions. Triage high-risk cases first: the three flagged cases, invalid profiles, apparent contradictions, and exact-match claims needing more context.</p>
+<p><strong>Deliver:</strong> 80 packets and a review queue. <strong>Done when:</strong> every proposal is accounted for, automated checks and human decisions are distinguishable, and the number actually reviewed is reported separately. Aim for 30 human decisions, including valid rejections and insufficient-evidence findings—not 30 forced approvals.</p>
+<h3>A12 — Investigate the 47 entities without proposals</h3>
+<p><strong>Owner:</strong> agent and student; curator decides proposed connections. <strong>Target:</strong> November 20. <strong>Allowance:</strong> 6–8 hours.</p>
+<p>Protect the five reserved entities from routine candidate generation and tuning. For the other 42, prioritize valid source descriptions and use both marker and name evidence. Where the source is broken, record a source-correction dependency. Where CL lacks a suitable term, write a gap explanation rather than selecting the nearest-looking name.</p>
+<p><strong>Deliver:</strong> an entity-level coverage table. <strong>Done when:</strong> all 47 have a disposition: candidate awaiting review, source clarification needed, likely ontology gap, no supported candidate, or reserved for independent review. Do not equate this accounting with 127 successful mappings. Link family-level gap reports to affected entity IDs so coverage is not double-counted.</p>
+<h3>A13 — Turn genuine ontology gaps into useful drafts</h3>
+<p><strong>Owner:</strong> student and agent draft; Dr. Diehl or delegate approves public submission. <strong>Target:</strong> November 24. <strong>Allowance:</strong> 2–3 hours.</p>
+<p>For each prioritized gap, state the affected terms, the exact problem, the evidence, and the smallest proposed correction. Search existing local and upstream issues for duplicates. Separate a missing source detail from an actual ontology problem. Verify old issue statuses rather than copying September notes as current facts.</p>
+<p><strong>Deliver:</strong> submission-ready issue drafts and a tracking table. <strong>Done when:</strong> each approved submission has a real issue link, while unsubmitted drafts are labelled as drafts. Acceptance by CL maintainers is outside the semester team&#x27;s control and is not a promised deliverable.</p>
+<p><strong>November gate:</strong> freeze the candidate-search version, evidence rules, development answers, and independent-test protocol. Keep an unchanged copy of the September comparison for context, but use like-for-like current data to evaluate individual changes.</p></section><section class="sheet" id="page-11"><div class="eyebrow">SOULCAP × Cell Ontology · Fall 2026 · Proposed working plan</div><h2>10. December work packages: test and hand over</h2>
+<h3>A14 — Run the independent validation pilot</h3>
+<p><strong>Owner:</strong> independent annotator labels; student runs the frozen evaluation. <strong>Target:</strong> December 4. <strong>Allowance:</strong> 3–4 student hours plus independent review.</p>
+<p>Use the five reserved entities only after the software version and protocol are frozen. The annotator should not see the matcher&#x27;s rankings. Record acceptable targets, relation type, supporting evidence, uncertainty, and valid no-match outcomes. A second reviewer resolves disagreements where possible.</p>
+<p>The reserve is not proven historically unseen and may contain source-quality problems. If approved source corrections change its profiles, stop and document a new version; do not silently update the recorded hashes. If independence cannot be maintained, describe the result as a reviewed pilot, not a blind final test.</p>
+<p><strong>Deliver:</strong> a separate per-case validation report. <strong>Done when:</strong> final-test cases are absent from development inputs, all outcomes are shown, and failures remain in the accounting. Five cases are a small demonstration, not a reliable estimate of performance across all cell types. No tuning on these results before reporting the frozen run.</p>
+<h3>A15 — Rebuild the dashboard and handoff package</h3>
+<p><strong>Owner:</strong> agent generates; student verifies. <strong>Target:</strong> December 4. <strong>Allowance:</strong> 4–5 hours.</p>
+<p>Run the selected evaluation first, then refresh the dashboard so it displays the new results. Keep default and experimental modes visibly separate. Produce the mapping export from the decision register, not by editing a generated report. Include the input versions, environment instructions, commands, and known limitations.</p>
+<p><strong>Deliver:</strong> an offline dashboard, mapping export, evidence reports, and a reproduction guide. <strong>Done when:</strong> another person can follow the guide on an approved snapshot; figures agree across the package; absent caches fail with a useful explanation rather than silently producing incomplete results. Do not redistribute source material without the required rights.</p>
+<h3>A16 — Present the semester results and next steps</h3>
+<p><strong>Owner:</strong> student presents; Dr. Diehl agrees spring priorities. <strong>Target:</strong> December 7. <strong>Allowance:</strong> 3–4 hours.</p>
+<p>Report what changed, how many decisions were actually reviewed, which questions remain unanswered, and what the evaluation can and cannot establish. Demonstrate one strong match, one broader/narrower relation, and one case where declining to match is the right outcome.</p>
+<p><strong>Deliver:</strong> a plain-language PDF, a short demonstration, and 3–5 spring tasks with owners. <strong>Done when:</strong> Dr. Diehl can identify the scientific progress separately from the software progress, and the next person can resume work without reconstructing the semester from chat history.</p></section><section class="sheet" id="page-12"><div class="eyebrow">SOULCAP × Cell Ontology · Fall 2026 · Proposed working plan</div><h2>11. How a scientific review should work</h2>
+<p>The central question is not “Do the names look similar?” It is “Do the descriptions cover the same cells?” Use the following review process for every important decision.</p>
+<h3>Step 1 — Read the SOULCAP description literally</h3>
+<p>List required markers, exclusions, allowed alternatives, and any tissue, species, or specimen information. If an expression is broken or ambiguous, ask for clarification. Do not silently repair it into the meaning the reviewer expects.</p>
+<h3>Step 2 — Read the CL definition, not just its name</h3>
+<p>Check the definition and relevant parent terms in the recorded ontology version. Note requirements not supplied by the SOULCAP description. A shared marker does not establish that two populations are identical.</p>
+<h3>Step 3 — Check both directions</h3>
+<p>Ask whether every cell described by SOULCAP belongs to the CL population, then whether every cell in that CL population meets the SOULCAP definition. If only one direction is supported, an exact match is not justified.</p>
+<table><thead><tr><th>Decision</th><th>Plain meaning in this repository</th></tr></thead><tbody>
+<tr><td>Exact</td><td>The two descriptions refer to the same population at the intended level of detail.</td></tr>
+<tr><td>Broad</td><td>The CL target is broader than the SOULCAP description.</td></tr>
+<tr><td>Narrow</td><td>The CL target is narrower than the SOULCAP description.</td></tr>
+<tr><td>Related</td><td>There is a useful relationship, but equivalence or containment is not established.</td></tr>
+<tr><td>No supported match / unresolved</td><td>Available evidence does not justify one of the above yet. Record why.</td></tr>
+</tbody></table>
+<h3>Step 4 — Inspect the actual evidence</h3>
+<p>Record which statements are directly present in CL, which are inherited through its structure, and which come from a publication or an assay description. Keep a measurement reagent separate from the molecule it detects unless that relationship is established for the intended use.</p>
+<h3>Step 5 — Record the decision and its limits</h3>
+<p>Every completed review needs the source and target IDs, relation or no-match outcome, short reason, evidence location, relevant versions, reviewer identity, and date. Record alternative interpretations and unresolved disagreements. A decision can later change when the source or ontology changes; preserve its history.</p>
+<p><strong>Example of careful wording:</strong> “This is a plausible candidate, but the source does not state the tissue required by the CL definition. Keep it unconfirmed until the source owner clarifies the intended population.” This is more informative than either forcing an exact match or rejecting the candidate without explanation.</p></section><section class="sheet" id="page-13"><div class="eyebrow">SOULCAP × Cell Ontology · Fall 2026 · Proposed working plan</div><h2>12. How we will know whether the matcher improves</h2>
+<h3>Keep three different kinds of checking separate</h3>
+<p><strong>Software tests</strong> ask whether the program follows its rules. They catch broken parsing, unsafe alias expansion, stale inputs, and accidental changes. Passing them does not certify a biological mapping.</p>
+<p><strong>Development evaluation</strong> uses reviewed examples to diagnose and improve the program. Once an example influences a change, it belongs in development and cannot later be presented as independent validation.</p>
+<p><strong>Independent evaluation</strong> uses separately labelled cases after the version is frozen. It checks whether the approach works beyond the examples used to develop it. The existing five-case reserve is only a pilot opportunity, with stated limitations.</p>
+<h3>Report simple, interpretable measures</h3>
+<table><thead><tr><th>Measure</th><th>Question it answers</th></tr></thead><tbody>
+<tr><td>Candidate availability</td><td>Was any acceptable CL target available to the search?</td></tr>
+<tr><td>First-choice success</td><td>Was the first suggestion acceptable?</td></tr>
+<tr><td>First-five success</td><td>Was an acceptable target among the first five suggestions?</td></tr>
+<tr><td>Unsafe suggestion count</td><td>How often did a high-ranked suggestion contradict a reviewed requirement?</td></tr>
+<tr><td>Unresolved/no-match outcomes</td><td>Did the system acknowledge that no supported answer was available?</td></tr>
+<tr><td>Review completion</td><td>How many cases received real scientific decisions, rather than only automated checks?</td></tr>
+</tbody></table>
+<p>For each measure, state the number of cases and exactly which dataset was used. Show invalid profiles, missing targets, ties, and rejected candidates. Report target retrieval separately from the correctness of the relationship label. A retrieved target is not automatically an exact match.</p>
+<h3>Rules for a fair comparison</h3>
+<p>Use the same source snapshot, ontology version, candidate pool, reviewed answers, and scoring settings unless the changed component is the explicit subject of the experiment. If several inputs change together, call the result descriptive and do not attribute the gain to one code change.</p>
+<p>Before testing a change, state what failure it should fix and what it must not break. Inspect every worsened reviewed case, not just the average. Do not quietly remove difficult examples or edit expected answers to make a score rise. Scientifically justified answer corrections need their own dated review and comparison reset.</p>
+<p><strong>Default-change gate:</strong> keep the current default until development evidence supports the new behavior and scientific reviewers accept the important trade-offs. Final pilot results should be reported before any further tuning. No numerical accuracy promise is a semester requirement.</p></section><section class="sheet" id="page-14"><div class="eyebrow">SOULCAP × Cell Ontology · Fall 2026 · Proposed working plan</div><h2>13. Responsibilities, risks, and fallback decisions</h2>
+<h3>Who does what</h3>
+<p><strong>Student/project lead:</strong> manages the weekly queue, checks agent outputs, prepares meetings, coordinates permissions, and owns the final report. <strong>Agent:</strong> drafts local artifacts, checks consistency, prepares evidence, implements approved software work, and runs tests. <strong>Scientific reviewer:</strong> decides biological meaning and approves mapping conclusions. <strong>Sheet owner:</strong> authorizes and applies source changes. <strong>Independent annotator:</strong> labels final-test cases without seeing rankings. Roles may be shared only where independence is preserved.</p>
+<p>The existing backlog assigns some literature work to Dr. Diehl. Confirm this rather than assuming extra time has been committed. No person receives a new obligation merely because their name appears in this plan.</p>
+<table><thead><tr><th>Risk or delay</th><th>Response and decision point</th></tr></thead><tbody>
+<tr><td>No reviewer available by Oct. 9</td><td>Ask Dr. Diehl to nominate a delegate. Continue packets and tests; do not claim completed scientific review.</td></tr>
+<tr><td>Sheet corrections are delayed</td><td>Keep affected cells marked as blocked. Continue local evidence review; do not hand-edit the downloaded source cache.</td></tr>
+<tr><td>Review targets exceed available time</td><td>Re-estimate after two weeks. Reduce optional feature work first, then state a smaller review target openly.</td></tr>
+<tr><td>Stricter rules lower scores</td><td>Inspect why; keep them experimental if trade-offs are unresolved. A higher provisional score does not settle the science.</td></tr>
+<tr><td>Paper or service cannot be accessed</td><td>Use approved alternatives and record the missing evidence. Never invent a supporting quotation.</td></tr>
+<tr><td>Independent cases leak into tuning</td><td>Stop calling them held out. Record the exposure and select a new set only with an agreed protocol.</td></tr>
+<tr><td>Ontology or source changes mid-comparison</td><td>Preserve the old snapshot; review the change and start a new clearly labelled comparison.</td></tr>
+<tr><td>Finals reduce availability</td><td>Complete the essential package by Dec. 7. Late-December work is optional.</td></tr>
+</tbody></table>
+<h3>Weekly meeting, in 30 minutes</h3>
+<p>Use five minutes for changed counts and completed work; ten for the two or three scientific decisions that most affect progress; ten for the demonstration or evidence review; and five for next week&#x27;s owners and blockers. Circulate a short packet in advance rather than asking the reviewer to discover the issue live.</p>
+<h3>Permission boundaries</h3>
+<p>Drafting is not sending. Prepare public issues, emails, source-sheet edits, licensing changes, and release announcements locally, then obtain explicit permission before publishing or applying them. Do not close old issues simply because code now exists; verify their acceptance conditions first.</p></section><section class="sheet" id="page-15"><div class="eyebrow">SOULCAP × Cell Ontology · Fall 2026 · Proposed working plan</div><h2>14. Copy-and-paste master instructions for an agent</h2>
+<p>The following is a reusable task brief. Give the agent the repository and this plan, then name one approved work package. Do not issue the entire semester as an unattended instruction to “finish everything.”</p>
+<blockquote><p>Work in the SOULCAP_CL_Mapping repository on Fall 2026 package [A01–A16]. Read the current repository instructions and the approved version of reports/fall_2026_semester_plan.md. This is a scientific mapping project: suggestions, software checks, and human-reviewed conclusions must remain separate.</p>
+<p>First inspect the existing work, current source versions, and uncommitted changes. Summarize the requested deliverable, dependencies, files you expect to change, and how you will check the result. Do not duplicate a tool or report that already exists. Ask before materially expanding the approved package.</p>
+<p>Use stable SOULCAP IDs and the mapping register as the decision record. Do not hand-edit downloaded source caches or generated mapping reports. Preserve historical comparison outputs. Source-sheet corrections require the authorized owner; do not infer permission to edit or publish external data.</p>
+<p>Follow the selected package&#x27;s scope. Work in small reviewable steps. For a software change, add focused tests including cases that should be rejected. Run the relevant checks and the full project checks before handing off a merge-ready change. Explain any failure; do not bypass a check to make the result look complete.</p>
+<p>For scientific evidence, retrieve and inspect the actual source. Record the claim, reference, location, context, and uncertainty. Verify any short quotation. Do not fabricate evidence, a reviewer identity, a review date, or human approval. If a question needs a curator, prepare a decision packet and label it pending.</p>
+<p>Never assume a part is the whole protein complex, a gene is a protein measurement, or a name match proves cell-type equivalence. Preserve positive/negative markers, expression levels, alternatives, tissue, and species distinctions. Use the repository&#x27;s explicit Broad/Narrow direction.</p>
+<p>Keep the reserved validation cases out of candidate tuning and development reports. Do not reveal their rankings to independent annotators. If a source change invalidates the reserve, stop and request a documented re-freeze rather than updating hashes silently.</p>
+<p>Do not send messages, file or close public issues, change licenses, update the master sheet, or publish a release without specific approval. Prepare drafts instead. Do not commit or push unless instructed.</p>
+<p>At handoff, state what changed, the artifacts produced, checks run and results, scientific decisions still needed, before/after counts where relevant, and the next safe step. Use plain language first. Mark the package complete only when its stated completion checks are actually met; otherwise describe the blocker and owner.</p></blockquote>
+<p><strong>Optional research or implementation expansion:</strong> requires a separate decision. This brief authorizes neither new collaborators nor unlimited compute, paid services, or a wider project scope.</p></section><section class="sheet" id="page-16"><div class="eyebrow">SOULCAP × Cell Ontology · Fall 2026 · Proposed working plan</div><h2>15. Agent task cards and the weekly evidence record</h2>
+<h3>Example task card: review the three flagged proposals</h3>
+<p><strong>Package:</strong> A05. <strong>Inputs:</strong> the current entity and proposal tables, <code>reports/regression-followup/mapping_review.tsv</code>, relevant source profiles, CL definitions, and verified primary evidence. <strong>Output:</strong> three readable review packets and a proposed decision table in a new reports subfolder.</p>
+<p><strong>Boundaries:</strong> do not change accepted mapping status, assign a human reviewer, or rewrite the source. Do not run candidate generation on reserved cases. If the evidence is missing, specify the exact question for Dr. Diehl.</p>
+<p><strong>Completion check:</strong> each packet states the proposal, evidence for and against, relation direction, unknowns, and the decision requested. The student can explain each in two minutes. Human approval is a separate step.</p>
+<h3>Example task card: isolate evaluation datasets</h3>
+<p><strong>Package:</strong> A07. <strong>Inputs:</strong> <code>evaluation.py</code>, benchmark schema, reserve manifest, evaluation tests, and the recorded baseline. <strong>Output:</strong> a reviewed change that can evaluate a selected dataset without automatically adding proposal cases, plus tests and usage notes.</p>
+<p><strong>Boundaries:</strong> preserve existing command behavior unless an explicit new option is selected. Do not populate final-test answers or assume no-match cases have target IDs. Agree on how no-match outcomes are represented before adding them.</p>
+<p><strong>Completion check:</strong> synthetic tests prove the selected cases are the only cases scored, the reserve is excluded from development, unsupported answers stay visible, and old behavior still passes its tests. Check the code and schema before proposing exact new command-line flags; do not document nonexistent options as working commands.</p>
+<h3>Existing commands the agent should understand</h3>
+<p><code>uv run pytest</code> — run the project tests.<br> <code>uv run ruff check .</code> — check code quality.<br> <code>uv run mypy src</code> — check consistency of declared data types.<br> <code>uv run soulcap-evaluate --out-dir reports/&lt;new-run&gt;</code> — save an evaluation separately.<br> <code>uv run soulcap-audit --out-dir reports/&lt;new-audit&gt;</code> — create a separate audit report.</p>
+<p>These are examples, not an instruction to overwrite established outputs. The agent must check environment setup and mode flags; optional marker-policy mode must be enabled consistently when comparing matching and mapping evidence.</p>
+<h3>Weekly report template</h3>
+<p><strong>Week and package IDs:</strong> … <strong>Completed artifacts:</strong> … <strong>Source/software versions:</strong> … <strong>Tests run:</strong> … <strong>Human reviews completed:</strong> … <strong>Proposals still pending:</strong> … <strong>New evidence or contradictions:</strong> … <strong>Validation reserve untouched:</strong> yes/no, explanation … <strong>Decision needed from Dr. Diehl:</strong> … <strong>Next week&#x27;s deliverable and owner:</strong> …</p>
+<p>Keep a dated decision log. When a task is blocked, record what is missing and what work can safely continue. Do not present another planned task as completed progress.</p></section><section class="sheet" id="page-17"><div class="eyebrow">SOULCAP × Cell Ontology · Fall 2026 · Proposed working plan</div><h2>16. What to say to Dr. Diehl</h2>
+<h3>A one-minute explanation</h3>
+<p>“The repository is much easier to inspect now. We have stable cell identifiers, one place for the proposed mappings, a dashboard, and repeatable tests. We also added more careful handling of marker aliases and protein information. That work exposed an important issue: we have 80 proposed mappings, but they are not yet a reviewed answer set.</p>
+<p>“My semester plan is to spend October agreeing on the review rules and resolving the most important source and marker questions. In November, I want to review the existing suggestions, investigate the missing coverage, and test improvements against examples that have actually been checked. By December 7, I want to deliver a reproducible package and a clear report separating what is confirmed, what is only proposed, and what remains unresolved.</p>
+<p>“I need help choosing the scientific reviewer, confirming the time commitment, and agreeing on what would count as a successful semester. I am not promising that every SOULCAP cell has an exact CL match.”</p>
+<h3>Decisions to request at the meeting</h3>
+<ol>
+<li>Is the proposed scope right: trustworthy review and measurable progress before more ambitious ranking features?</li>
+<li>Can we plan for 10–12 student hours in an active week and a short weekly check-in?</li>
+<li>Who can provide scientific decisions, and is the target of 30 reviews realistic?</li>
+<li>Who owns the source sheet and can approve the required clarifications or edits?</li>
+<li>Who can independently annotate the five reserved cases without seeing rankings?</li>
+<li>Which cell categories should lead if review capacity is limited?</li>
+<li>May issue drafts be submitted after approval, and who decides licensing questions?</li>
+<li>Is December 7 the right main handoff date, with later December work optional?</li>
+</ol>
+<h3>Short email you can adapt</h3>
+<p><strong>Subject: Proposed October–December plan for SOULCAP–CL mapping</strong></p>
+<p>Dear Dr. Diehl,</p>
+<p>I have prepared a semester plan that summarizes the recent repository improvements and sets out the next steps for October, November, and December. The focus is on turning the existing suggestions into a clearer, evidence-backed review process, improving missing coverage, and testing changes fairly.</p>
+<p>The plan separates software work that an agent can carry out from biological decisions that need a qualified reviewer. It proposes a main handoff by December 7 and includes weekly deliverables, completion checks, and questions about review support and priorities.</p>
+<p>Could we review the scope and agree on the reviewer, time commitment, and first priorities? I have attached the detailed plan for discussion.</p>
+<p>Best,<br> [Your name]</p></section><section class="sheet" id="page-18"><div class="eyebrow">SOULCAP × Cell Ontology · Fall 2026 · Proposed working plan</div><h2>17. Sources, relationship to the older plan, and limits</h2>
+<h3>Repository evidence used for this document</h3>
+<p><strong>[R1] <code>README.md</code>, <code>ROADMAP.md</code>, and <code>mappings/README.md</code>.</strong> Project purpose, commands, decision conventions, current local status, and historical milestones.</p>
+<p><strong>[R2] <code>mappings/soulcap_entities.tsv</code>, <code>mappings/curated_mappings.tsv</code>, and <code>mappings/matcher_benchmark.tsv</code>.</strong> Directly counted on September 21: 127 entities, 80 proposals all needing review, and zero reviewed benchmark rows.</p>
+<p><strong>[R3] <code>reports/cl_lexical_cache.json</code> and <code>reports/marker_resolution_audit.md</code>.</strong> Local candidate-cache size and documented marker-resolution behavior. A cached source is not a claim about the latest online ontology release.</p>
+<p><strong>[R4] <code>reports/regression-followup/README.md</code> and its <code>legacy/</code> and <code>corrected/</code> evaluation JSON files.</strong> September comparison, the three flagged mapping cases, the scoped CD8 correction, and recorded software verification.</p>
+<p><strong>[R5] <code>mappings/benchmark_reserve.json</code> and <code>mappings/marker_assertion_benchmark.json</code>.</strong> Five unlabelled reserved entities and five development constraint examples. The current local source-profile hash matches the reserve&#x27;s recorded source hash.</p>
+<p><strong>[R6] <code>reports/regression-triage/README.md</code> and <code>reports/resolver-refinement/README.md</code>.</strong> Earlier comparisons and the diagnostic investigation of lost rankings.</p>
+<p><strong>[R7] <code>reports/fall_2026_sprint_backlog.md</code>.</strong> Existing September 18 backlog. Used as the starting plan, not overwritten. Its issue states and third-party commitments were not reverified in this planning task.</p>
+<p><strong>[R8] Git history.</strong> <code>f1e0772</code> (September 11): registry-backed mapping, dashboard, and evaluation; <code>4dfc726</code> (September 18): resolution policies, regression triage, and follow-up; <code>8a1094e</code>: semester backlog; <code>c6343c1</code>: missing-cache handling in reserve tests; <code>aa4743b</code>: refreshed validation report. This summarizes recorded repository work, not exclusive authorship of every change.</p>
+<p><strong>[U1] University at Buffalo, Office of the Registrar: Current Academic Calendar, Fall Semester 2026, standard session.</strong> Checked September 21, 2026. <a href="https://www.buffalo.edu/registrar/calendars/current-academic-calendar.html">Official calendar</a>. Dates may change; reconfirm before scheduling meetings.</p>
+<h3>How this proposal builds on the older backlog</h3>
+<p>Old October O1–O6 map to A01–A06; old November N1–N4 map to A08–A13; old December D1–D4 map to A14–A16. A07 adds explicit separation of evaluation datasets. A09–A10 make coverage and matching experiments more measurable. Routine tests, weekly meetings, and truthful claims continue across all packages.</p>
+<p>This draft deliberately qualifies four older expectations: review can progress locally without pretending sheet intent is known; the five reserved cases must not be consumed by the remaining-47 matching work; five cases cannot establish general accuracy; and human-dependent outcomes cannot be promised as agent-only deliverables. These are proposed refinements for approval, not a claim that the earlier plan has been formally replaced.</p>
+<p><strong>Document scope:</strong> planning and a record of recent work. No new biological decisions, live issue updates, license decisions, or performance gains are asserted. Only planning documents and PDF-generation artifacts are created for this request; the matching software and source data are unchanged.</p></section></body></html>

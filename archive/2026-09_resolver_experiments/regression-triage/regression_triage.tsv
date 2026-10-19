@@ -1,0 +1,81 @@
+case_id	label	outcome	lost_top5	gained_top5	000	001	010	011	100	101	110	111
+provisional/SOULCAP:SC000001/Exact	Natural Killer Cell	unchanged	False	False	6	6	6	6	6	6	6	6
+provisional/SOULCAP:SC000002/Exact	Natural Killer Cell 2	unchanged	False	False	1	1	1	1	1	1	1	1
+provisional/SOULCAP:SC000003/Exact	Cytotoxice Natural Killer Cell	regressed	False	False	1	1	3	3	1	1	3	3
+provisional/SOULCAP:SC000004/Broad	Natural Killer Cell 1	regressed	False	False	1	1	3	3	1	1	3	3
+provisional/SOULCAP:SC000005/Broad	Natural Killer Cell 3	regressed	False	False	1	1	3	3	1	1	3	3
+provisional/SOULCAP:SC000006/Broad	Innate Lymphoid Cell Progenitor	unchanged	False	False	3	3	3	3	3	3	3	3
+provisional/SOULCAP:SC000007/Exact	Innate Lymphoid Cell	regressed	False	False	155	155	162	162	155	155	162	162
+provisional/SOULCAP:SC000008/Exact	Innate Lymphoid Cell 1	regressed	False	False	161	161	171	171	161	161	171	171
+provisional/SOULCAP:SC000009/Exact	Innate Lymphoid Cell 2	improved	False	False	26	26	25	25	26	26	25	25
+provisional/SOULCAP:SC000010/Exact	Innate Lymphoid Cell 3	unchanged	False	False	118	118	118	118	118	118	118	118
+provisional/SOULCAP:SC000011/Exact	Conventional Dendritic Cell	regressed	False	False	18	18	20	20	18	18	20	20
+provisional/SOULCAP:SC000012/Exact	Conventional Dendritic Cell 1	unchanged	False	False	2	2	2	2	2	2	2	2
+provisional/SOULCAP:SC000013/Exact	Conventional Dendritic Cell 2	unchanged	False	False	2	2	2	2	2	2	2	2
+provisional/SOULCAP:SC000014/Exact	Peripheral Dendritic Cell	regressed	False	False	34	34	36	36	34	34	36	36
+provisional/SOULCAP:SC000015/Exact	Basophil	improved	False	False	3	3	2	2	3	3	2	2
+provisional/SOULCAP:SC000016/Exact	Basophil	unchanged	False	False	1	1	1	1	1	1	1	1
+provisional/SOULCAP:SC000017/Exact	Monocyte	unchanged	False	False								
+provisional/SOULCAP:SC000018/Exact	Classical Monocyte	unchanged	False	False								
+provisional/SOULCAP:SC000019/Exact	Non-classical Monocyte	unchanged	False	False								
+provisional/SOULCAP:SC000020/Exact	Intermediate Monocyte	unchanged	False	False								
+provisional/SOULCAP:SC000021/Exact	Neutrophil	regressed	False	False	9	9	10	10	9	9	10	10
+provisional/SOULCAP:SC000022/Exact	Eosinophil	unchanged	False	False	4	4	4	4	4	4	4	4
+provisional/SOULCAP:SC000023/Exact	B cell	unchanged	False	False								
+provisional/SOULCAP:SC000024/Exact	Antibody Secreting Cell	unchanged	False	False								
+provisional/SOULCAP:SC000025/Exact	Plasmablast	unchanged	False	False	3	3	3	3	3	3	3	3
+provisional/SOULCAP:SC000026/Exact	Plasma Cell	improved	False	False	31	31	6	6	31	31	6	6
+provisional/SOULCAP:SC000028/Broad	Transitonal B cell 1 and 2	unchanged	False	False	1	1	1	1	1	1	1	1
+provisional/SOULCAP:SC000029/Exact	Mature B cell	regressed	False	False	43	43	48	48	43	43	48	48
+provisional/SOULCAP:SC000030/Exact	Transitional B cell 3	unchanged	False	False	20	20	20	20	20	20	20	20
+provisional/SOULCAP:SC000031/Exact	Naive B cell	unchanged	False	False	5	5	5	5	5	5	5	5
+provisional/SOULCAP:SC000032/Exact	Double Negative B cells	unchanged	False	False	5	5	5	5	5	5	5	5
+provisional/SOULCAP:SC000033/Broad	Double Negative B cell 1	unchanged	False	False	12	12	12	12	12	12	12	12
+provisional/SOULCAP:SC000034/Broad	Double Negative B cell 2	unchanged	False	False	4	4	4	4	4	4	4	4
+provisional/SOULCAP:SC000035/Broad	Double Negative B cell 3	unchanged	False	False	5	5	5	5	5	5	5	5
+provisional/SOULCAP:SC000036/Broad	Double Negative B cell 4	unchanged	False	False	12	12	12	12	12	12	12	12
+provisional/SOULCAP:SC000037/Exact	Memory B cell	unchanged	False	False	39	39	39	39	39	39	39	39
+provisional/SOULCAP:SC000039/Exact	Unswitched Memory B cell	unchanged	False	False	13	13	13	13	13	13	13	13
+provisional/SOULCAP:SC000040/Exact	IgM-only Memory B cell	unchanged	False	False	33	33	33	33	33	33	33	33
+provisional/SOULCAP:SC000041/Exact	Switched Memory B cell	unchanged	False	False	14	14	14	14	14	14	14	14
+provisional/SOULCAP:SC000042/Exact	IgA-Class Switched B cell	unchanged	False	False	18	18	18	18	18	18	18	18
+provisional/SOULCAP:SC000043/Exact	IgG-Class Switched B cell	unchanged	False	False	18	18	18	18	18	18	18	18
+provisional/SOULCAP:SC000044/Exact	IgE-Class Switched B cell	unchanged	False	False	17	17	17	17	17	17	17	17
+provisional/SOULCAP:SC000045/Exact	T lymphocyte	unchanged	False	False								
+provisional/SOULCAP:SC000046/Broad	CD56+ T cell	regressed	False	False	34	34	87	87	34	34	87	87
+provisional/SOULCAP:SC000047/Broad	CD56+ CD4 T cell	regressed	False	False	42	42	127	127	42	42	127	127
+provisional/SOULCAP:SC000048/Broad	CD56+ CD8 T cell	regressed	False	False	63	63	119	119	63	63	119	119
+provisional/SOULCAP:SC000049/Broad	CD56+ alpha/beta T cell	regressed	False	False	34	34	87	87	34	34	87	87
+provisional/SOULCAP:SC000050/Broad	CD56+ CD4+ alpha/beta T cell	regressed	False	False	70	70	120	120	70	70	120	120
+provisional/SOULCAP:SC000051/Broad	CD56+ CD8+ alpha/beta T cell	regressed	False	False	63	63	114	114	63	63	114	114
+provisional/SOULCAP:SC000052/Broad	CD56+ CD4+/CD8+ alpha/beta T cell	regressed	False	False	42	42	120	120	42	42	120	120
+provisional/SOULCAP:SC000053/Broad	CD56+ CD4-/CD8- alpha/beta T cell	regressed	False	False	54	54	115	115	54	54	115	115
+provisional/SOULCAP:SC000054/Broad	CD56+ gamma/delta T cell	regressed	False	False	34	34	87	87	34	34	87	87
+provisional/SOULCAP:SC000055/Broad	CD56+ CD4+ gamma/delta T cell	regressed	False	False	70	70	120	120	70	70	120	120
+provisional/SOULCAP:SC000056/Broad	CD56+ CD8+ gamma/delta T cell	regressed	False	False	63	63	114	114	63	63	114	114
+provisional/SOULCAP:SC000057/Broad	CD56+ CD4+/CD8+ gamma/delta T cell	regressed	False	False	42	42	120	120	42	42	120	120
+provisional/SOULCAP:SC000058/Broad	CD56+ CD8-/CD8- gamma/delta T cell	regressed	False	False	54	54	120	120	54	54	120	120
+provisional/SOULCAP:SC000059/Exact	Invariant Natural Killer T cell	unchanged	False	False								
+provisional/SOULCAP:SC000060/Exact	alpha/beta T cell	unchanged	False	False								
+provisional/SOULCAP:SC000061/Exact	gamma/delta T cell	unchanged	False	False								
+provisional/SOULCAP:SC000062/Broad	alpha/beta and gamma/delta CD4+ T cells	regressed	False	False	9	9	70	70	9	9	70	70
+provisional/SOULCAP:SC000063/Broad	alpha/beta and gamma/delta CD8+ T cells	regressed	True	False	4	4	125	125	4	4	125	125
+provisional/SOULCAP:SC000064/Broad	alpha/beta and gamma/delta CD4+ and CD8+ T cells	unchanged	False	False								
+provisional/SOULCAP:SC000065/Broad	alpha/beta and gamma/delta CD4- and CD8- T cells	unchanged	False	False								
+provisional/SOULCAP:SC000066/Exact	CD4+ alpha/beta T cell	regressed	False	False	9	9	69	69	9	9	69	69
+provisional/SOULCAP:SC000067/Exact	CD8+ alpha/beta T cell	regressed	True	False	4	4	124	124	4	4	124	124
+provisional/SOULCAP:SC000068/Broad	CD4+ and CD8+ alpha/beta T cell	unchanged	False	False								
+provisional/SOULCAP:SC000069/Broad	CD4- and CD8- alpha/beta T cell	unchanged	False	False								
+provisional/SOULCAP:SC000070/Broad	CD4+ gamma/delta T cell	unchanged	False	False								
+provisional/SOULCAP:SC000071/Broad	CD8+ gamma/delta T cell	unchanged	False	False								
+provisional/SOULCAP:SC000072/Broad	CD4+/CD8+ gamma/delta T cell	unchanged	False	False								
+provisional/SOULCAP:SC000073/Exact	CD4-/CD8- gamma/delta T cell	regressed	True	False	1	1	117	117	1	1	117	117
+provisional/SOULCAP:SC000074/Exact	Mucosal-associated Invariant T cell	unchanged	False	False								
+provisional/SOULCAP:SC000082/Exact	CD4+ central memory alpha/beta T cell	regressed	False	False	238	238	246	246	238	238	246	246
+provisional/SOULCAP:SC000085/Exact	CD8+  central memory alpha/beta T cell	regressed	False	False	239	239	247	247	239	239	247	247
+provisional/SOULCAP:SC000087/Exact	Naive alpha/beta and gamma/delta T cell	improved	False	False	252	252	249	249	252	252	249	249
+provisional/SOULCAP:SC000089/Exact	CD4+ naive alpha/beta T cell	regressed	False	False	238	238	246	246	238	238	246	246
+provisional/SOULCAP:SC000092/Exact	CD8+ naive alpha/beta T cell	improved	False	False	253	253	250	250	253	253	250	250
+provisional/SOULCAP:SC000096/Exact	CD4+ effector memory alpha/beta T cell	regressed	False	False	238	238	246	246	238	238	246	246
+provisional/SOULCAP:SC000099/Exact	CD8+  effector memory alpha/beta T cell	regressed	False	False	239	239	247	247	239	239	247	247
+provisional/SOULCAP:SC000103/Exact	CD4+ CD45RA+ effector memory alpha/beta T cell	unchanged	False	False								

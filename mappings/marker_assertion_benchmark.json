@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "scope": "Resolver evidence constraints, not cell-type equivalence ground truth",
+  "reviewer": "Codex automated source review; no human curator sign-off",
+  "review_date": "2026-09-18",
+  "evidence_reference": "reports/regression-followup/README.md#scoped-correction",
+  "cases": [
+    {
+      "case_id": "whole_cd8_surface_positive",
+      "axiom": {"pr": "PR:000025402", "relation": "RO:0002104", "sense": "positive", "cd_synonym": "CD8 (label)"},
+      "expected_tokens": ["CD8"],
+      "expected_path": "reviewed_surface_assertion"
+    },
+    {
+      "case_id": "cd8_alpha_is_not_whole_coreceptor",
+      "axiom": {"pr": "PR:000001084", "relation": "RO:0002104", "sense": "positive", "cd_synonym": "CD8 (label)"},
+      "expected_tokens": [],
+      "expected_path": null
+    },
+    {
+      "case_id": "generic_part_does_not_establish_surface",
+      "axiom": {"pr": "PR:000025402", "relation": "BFO:0000051", "sense": "positive", "cd_synonym": "CD8 (label)"},
+      "expected_tokens": [],
+      "expected_path": null
+    },
+    {
+      "case_id": "cd8_alpha_negative_stays_withheld",
+      "axiom": {"pr": "PR:000001084", "relation": "CL:4030046", "sense": "negative", "cd_synonym": "CD8 (label)"},
+      "expected_tokens": [],
+      "expected_path": null
+    },
+    {
+      "case_id": "cd3_epsilon_is_not_whole_complex",
+      "axiom": {"pr": "PR:000001020", "relation": "CL:4030046", "sense": "negative", "cd_synonym": "CD3 (label)"},
+      "expected_tokens": [],
+      "expected_path": null
+    }
+  ]
+}
