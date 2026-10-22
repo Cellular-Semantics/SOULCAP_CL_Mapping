@@ -90,7 +90,7 @@ README **in the same commit** as the change.
 |---|---|---|
 | A current generated output (report, export, dashboard) | `reports/` | Add a row to `reports/README.md` (a test enforces this). Never hand-edit generated files. |
 | A one-off experiment, comparison run or diagnostic | `archive/<YYYY-MM>_<topic>/` | Add a README saying what ran, what it showed, how to reproduce. Keep `.md`/`.tsv` summaries; leave out large JSON/HTML. Add a row to `archive/README.md`. |
-| Literature evidence (quotes, review-paper notes) | A row in `literature/evidence.tsv`; review papers in `literature/reviews/reviews.tsv` | Verbatim quotes with PMID/DOI only. No paywalled PDFs. Then run `soulcap-evidence verify` and `views`. |
+| Literature evidence (quotes, review-paper notes) | A row in `literature/evidence.tsv`; review papers in `literature/reviews/reviews.tsv` | Verbatim quotes with PMID/DOI only. No paywalled PDFs. Then run `soulcap-evidence verify`, `soulcap-check-quotes lock` (freezes the newly verified quotes) and `views`. |
 | A mapping decision | `mappings/curated_mappings.tsv` (a row, not a new file) | Re-run `soulcap-sssom`. Never put decisions in Python or in `candidate_cl_mappings.md`. |
 | A marker token → protein change | `marker_mappings/` | Review the token's policy row in `marker_resolution.tsv` before updating its `registry_sha256`. |
 | A per-cell-type review | `cell_type_reviews/<slug>.md` | Update the index in `cell_type_reviews/README.md`. |
@@ -138,6 +138,11 @@ don't update them.
   yourself without that review. The `check_ids_on_write.py` hook enforces
   this as you write: an edit that adds a missing, obsolete or mislabelled
   identifier is blocked, with the fix in the message.
+- **Verified quotes are frozen.** Never edit the text or PMID of a verified
+  row in `literature/evidence.tsv`; `tests/test_evidence_quote_lock.py` fails
+  if you do. Any quote in a doc that cites a PMID must match a verified row
+  with that PMID: check with **`uv run soulcap-check-quotes`**. See
+  [literature/README.md](literature/README.md#frozen-quotes-and-doc-quotes).
 - The marker expression language is precisely defined in
   [MARKER_SYNTAX.md](MARKER_SYNTAX.md) — any parser/validator must conform to
   its EBNF (including the hyphen-disambiguation lexer rule).
