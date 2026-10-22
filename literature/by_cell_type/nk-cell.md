@@ -71,6 +71,18 @@ Do not edit by hand.
 
 — Van Acker HH et al. 2017 (PMID:28791027; DOI:10.3389/fimmu.2017.00892; PMCID:PMC5522883) · `EV00181` · verified: yes
 
+## CD27
+
+**Candidate SOULCAP cell types (unreviewed):** none found
+
+> "The results of these various experiments collectively support a 4-stage model of NK-cell maturation CD11b(low)CD27(low) --> CD11b(low)CD27(high) --> CD11b(high)CD27(high) --> CD11b(high)CD27(low)."
+
+— Chiossone et al. 2009 (PMID:19234143) · `EV00274` · verified: not_checked
+
+> "Neonatal NK cells in the bone marrow, spleen and lung exist as immature CD27(+)/CD11B(lo) cells."
+
+— Andrews et al. 2010 (PMID:19949422) · `EV00275` · verified: not_checked
+
 ## CD3
 
 **Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000001 (Natural Killer Cell), SOULCAP:SC000002 (Natural Killer Cell 2), SOULCAP:SC000003 (Cytotoxice Natural Killer Cell), SOULCAP:SC000004 (Natural Killer Cell 1), SOULCAP:SC000005 (Natural Killer Cell 3)
@@ -86,6 +98,14 @@ Do not edit by hand.
 > "there also exists a CD56− NK cell subpopulation, namely CD3−CD4−CD14−CD19−CD16+NKp46+ lymphocytes"
 
 — Van Acker HH et al. 2017 (PMID:28791027; DOI:10.3389/fimmu.2017.00892; PMCID:PMC5522883) · `EV00178` · verified: yes
+
+## CD49b
+
+**Candidate SOULCAP cell types (unreviewed):** none found
+
+> "Collective reports have demonstrated that iNK cells in mouse bone marrow and periphery can express Ly49 receptors, CD49a, CD90, TRAIL, CD69, and Eomes, and lack CD49b expression"
+
+— Riggan et al. 2019 (PMID:31500958) · `EV00272` · verified: not_checked
 
 ## CD56
 
@@ -134,3 +154,23 @@ Do not edit by hand.
 > "Notably, NK3B (cluster 1) was distinguished by expression of members of the HLA-D gene family, CD74, CCL5, CD7 and KLRC1, and NK3A exhibited enhanced cytotoxic capabilities (through expression of GZMA, GZMB and PRF1)"
 
 — Rebuffet L et al. 2024 (PMID:38956378; DOI:10.1038/s41590-024-01883-0; PMCID:PMC11291291) · `EV00198` · verified: yes
+
+> "The similar use of HLA-DR to track activated NK cells is a possibility that has been less well explored, but that might be equally fruitful."
+
+— Maecker et al. 2012 (PMID:22343568) · `EV00266` · verified: not_checked
+
+> "In contrast, only 2–5.5% (median 3.5%) of fresh NK cells ex vivo expressed HLA-DR"
+
+— Evans et al. 2011 (PMID:21491418) · `EV00267` · verified: not_checked
+
+> "We have observed that HLA-DR expression in freshly isolated circulating NK cells was mostly associated with less differentiated CD56brightCD57− cells, although in some individuals it could also be found in terminally differentiated CD57+ cells."
+
+— Erokhina et al. 2018 (PMID:29363179) · `EV00268` · verified: not_checked
+
+## galectin-1
+
+**Candidate SOULCAP cell types (unreviewed):** none found
+
+> "two secreted proteins, galectin-1 and progestagen-associated protein 14, known to have immunomodulatory functions, were selectively expressed in dNK cells"
+
+— Koopman et al. 2003 (PMID:14568979) · `EV00273` · verified: not_checked

@@ -3,6 +3,12 @@
 Generated from `literature/evidence.tsv` by `uv run soulcap-evidence views`.
 Do not edit by hand.
 
+## NKT cell
+
+> "NKT cells are more appropriately defined as “CD1d-restricted and TCR-αβ positive T cells”."
+
+— Khan & Khan 2021 (PMID:34579186) · `EV00284` · verified: not_checked
+
 ## iNKT cell
 
 > "Expression of T Cell Receptor (TCR)-αβ enables NKT cells to recognize antigenic lipids presented by CD1d"

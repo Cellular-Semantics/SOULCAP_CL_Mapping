@@ -255,6 +255,8 @@ def test_committed_evidence_quotes_are_copied_exactly_from_their_source():
         start = int(row["source_line"]) - 1
         block = []
         for line in lines[start:]:
+            # Blockquotes may be indented, e.g. inside a numbered list.
+            line = line.lstrip()
             if not line.startswith(">"):
                 break
             block.append(line[1:].strip())

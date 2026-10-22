@@ -79,6 +79,14 @@ Do not edit by hand.
 
 — Lal et al. 2018 (PMID:29533501; DOI:10.1002/cyto.a.23357) · `EV00168` · verified: not_checked
 
+## TCRVα14-Jα18
+
+**Candidate SOULCAP cell types (unreviewed):** none found
+
+> "Type I NKT cells, known as invariant NKT cells (iNKT cells) typically express an invariant Vα14-Jα18 TCRα chain"
+
+— Cui & Wan 2019 (PMID:31231193) · `EV00276` · verified: not_checked
+
 ## TCRVα24-Jα18
 
 **Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000059 (Invariant Natural Killer T cell)
@@ -94,6 +102,14 @@ Do not edit by hand.
 > "Vα24 TCR FITC C15 iNKT cell lineage"
 
 — Lal et al. 2018 (PMID:29533501; DOI:10.1002/cyto.a.23357) · `EV00163` · verified: not_checked
+
+> "Type I, or invariant, NKT (iNKT) cells express a semi-invariant TCRα chain comprised of Vα14Jα18 gene segments in mice and Vα24Jα18 segments in humans."
+
+— Brettschneider & Terabe 2021 (PMID:34208864) · `EV00278` · verified: not_checked
+
+> "The greater part of the NKT cells, called canonical or invariant NKT cells (iNKT cells) or type I NKT cells have a specific TCR α-chain rearrangement (Vα14-Jα18 in mice; Vα24-Jα18 in humans)"
+
+— Khan & Khan 2021 (PMID:34579186) · `EV00279` · verified: not_checked
 
 ## TCRαβ
 
