@@ -19,8 +19,8 @@ Do not edit by hand.
 
 > "Type I, or invariant, NKT (iNKT) cells express a semi-invariant TCRα chain comprised of Vα14Jα18 gene segments in mice and Vα24Jα18 segments in humans."
 
-— Brettschneider & Terabe 2021 (PMID:34208864) · `EV00278` · verified: not_checked
+— Brettschneider & Terabe 2021 (PMID:34208864; PMCID:PMC8307781) · `EV00278` · verified: yes
 
 > "The greater part of the NKT cells, called canonical or invariant NKT cells (iNKT cells) or type I NKT cells have a specific TCR α-chain rearrangement (Vα14-Jα18 in mice; Vα24-Jα18 in humans)"
 
-— Khan & Khan 2021 (PMID:34579186) · `EV00279` · verified: not_checked
+— Khan & Khan 2021 (PMID:34579186; PMCID:PMC8473043) · `EV00279` · verified: yes

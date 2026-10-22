@@ -15,7 +15,7 @@ Do not edit by hand.
 
 > "In contrast, only 2–5.5% (median 3.5%) of fresh NK cells ex vivo expressed HLA-DR"
 
-— Evans et al. 2011 (PMID:21491418) · `EV00267` · verified: not_checked
+— Evans et al. 2011 (PMID:21491418; PMCID:PMC3549558) · `EV00267` · verified: yes
 
 > "We have observed that HLA-DR expression in freshly isolated circulating NK cells was mostly associated with less differentiated CD56brightCD57− cells, although in some individuals it could also be found in terminally differentiated CD57+ cells."
 

@@ -7,7 +7,7 @@ Do not edit by hand.
 
 > "NKT cells are more appropriately defined as “CD1d-restricted and TCR-αβ positive T cells”."
 
-— Khan & Khan 2021 (PMID:34579186) · `EV00284` · verified: not_checked
+— Khan & Khan 2021 (PMID:34579186; PMCID:PMC8473043) · `EV00284` · verified: yes
 
 ## iNKT cell
 

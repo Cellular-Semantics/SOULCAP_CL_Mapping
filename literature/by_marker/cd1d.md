@@ -7,4 +7,4 @@ Do not edit by hand.
 
 > "NKT cells are CD1d-restricted T cells that recognize lipid antigens rather than peptides."
 
-— Brettschneider & Terabe 2021 (PMID:34208864) · `EV00283` · verified: not_checked
+— Brettschneider & Terabe 2021 (PMID:34208864; PMCID:PMC8307781) · `EV00283` · verified: yes

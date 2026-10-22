@@ -7,4 +7,4 @@ Do not edit by hand.
 
 > "two secreted proteins, galectin-1 and progestagen-associated protein 14, known to have immunomodulatory functions, were selectively expressed in dNK cells"
 
-— Koopman et al. 2003 (PMID:14568979) · `EV00273` · verified: not_checked
+— Koopman et al. 2003 (PMID:14568979; PMCID:PMC2194228) · `EV00273` · verified: yes
