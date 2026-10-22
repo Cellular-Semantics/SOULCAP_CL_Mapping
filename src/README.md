@@ -31,5 +31,6 @@ and must keep coverage at or above 80%.
 | | `snippet_cache.py`, `report_validator.py` (citation-traversal support) | `soulcap-cache`, `soulcap-validate-report` |
 | | `pro_species_support.py` (used by the `pro-marker-species-support` skill and `soulcap-audit`: scoping, plus the human/mouse status vocabulary and `not_applicable` rules) | library |
 | | `literature_evidence.py` (evidence table: migrate, verify against Europe PMC, views) | `soulcap-evidence` |
+| Checks | `id_check.py` (every ontology, UniProt and HGNC ID in curated tables and hand-written Markdown checked against OLS4, UniProt and HGNC: missing, obsolete or mislabelled IDs fail; reviewed exceptions in `reports/id_check_reviewed.tsv`) | `soulcap-check-ids` |
 
 See [docs/pipeline.md](../docs/pipeline.md) for how the stages connect.

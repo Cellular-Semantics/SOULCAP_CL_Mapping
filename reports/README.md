@@ -41,6 +41,7 @@ September 2026 run is [archived](../archive/2026-09_resolver_experiments/regress
 | [marker_validation.md](marker_validation.md) | Marker strings that fail the EBNF grammar | `uv run soulcap-sync` or `uv run soulcap-validate` | Generated |
 | [marker_string_issues.md](marker_string_issues.md) | Reviewed list of marker-string errors and inconsistencies in the sheet | Hand-written | Curated |
 | [proposed_marker_fixes.xlsx](proposed_marker_fixes.xlsx) | Proposed corrections to send to SOULCAP | Hand-written | Curated |
+| [id_check_reviewed.tsv](id_check_reviewed.tsv) | `soulcap-check-ids` findings a person has reviewed and accepted for now (e.g. a CL rename awaiting a mapping decision). A row covers only the exact written and current labels it names, so a later change at the source fails again. Columns: `path`, `id`, `kind`, `written_label`, `current_label`, `decision`, `reviewed_by`, `reviewed_on` | Hand-maintained after review; never added by an agent on its own | Curated |
 | [soulcap_feedback.tsv](soulcap_feedback.tsv) | **Draft, not sent.** Rows for SOULCAP to fix: (0) general rules, e.g. no spaces inside marker names; (a) marker strings with syntax errors or that split wrongly, with a suggested fix where one is obvious and passes the grammar; (b) rows with an empty *Required phenotypic markers* column. Built 2026-09-28 from the 2026-09-18 sync and `proposed_marker_fixes.xlsx` | One-off script, then hand-reviewed | Curated |
 
 ## Cell Ontology reference snapshots
