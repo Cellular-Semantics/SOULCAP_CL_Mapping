@@ -155,7 +155,7 @@ The committed `reports/matcher_evaluation.md` is from 18 September (commit
 ## 2. Ground rules
 
 - Read `CLAUDE.md`, `docs/curation_principles.md` and the
-  `soulcap-git-workflow` and `soulcap-meeting-brief` skills first.
+  `soulcap-git-workflow` and `progress-brief` skills first.
 - **Branch:** commit only to `Alzion_G_717`. Never create, switch, rebase,
   force-push or delete any branch. Never touch `pr-01-*` to `pr-09-*`,
   `diehl-2026-10-05-nk-species` or `fix-lf-hashed-inputs`. No tags. No
@@ -228,7 +228,7 @@ No commit in this task.
 ### T3. Update the 19 October brief
 
 Edit `docs/planning/2026-10-19_meeting_brief.md` with the
-`soulcap-meeting-brief` skill's style rules. Put David's items first, so the
+`progress-brief` skill's style rules. Put David's items first, so the
 order becomes:
 
 1. Making the PR stack reviewable (new; replaces the old section 6)

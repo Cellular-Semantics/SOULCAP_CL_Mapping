@@ -97,7 +97,7 @@ the commands above for anything that can be computed.
 | [roadmap-status-sync](.claude/skills/roadmap-status-sync/SKILL.md) | Correct stale milestone markers in ROADMAP.md from what is on disk | Repo files, issues → ROADMAP.md | Agent |
 | [cl-upstream-issue-filing](.claude/skills/cl-upstream-issue-filing/SKILL.md) | File a CL correction Dr. Diehl approved as an upstream CL issue, re-verifying IDs and quotes | Review doc draft → `obophenotype/cell-ontology` issue; `cl_term_issues.md`, `gaps.tsv`, ROADMAP.md updated | Agent + `gh` or browser, after explicit OK |
 | [soulcap-git-workflow](.claude/skills/soulcap-git-workflow/SKILL.md) | Commit and push work on the `Alzion_G_717` branch only, as small labelled commits; never creates branches | Working tree → commits on `Alzion_G_717` | Agent + git; same checks as CI |
-| [soulcap-meeting-brief](.claude/skills/soulcap-meeting-brief/SKILL.md) | Write a short brief or agenda for Dr. Diehl or David from what changed since the last one | git log, ROADMAP.md, reports → `docs/planning/<date>_<topic>.md` | Agent |
+| [progress-brief](.claude/skills/progress-brief/SKILL.md) | Write a short brief or agenda for Dr. Diehl or David from what changed since the last one | git log, ROADMAP.md, reports → `docs/planning/<date>_<topic>.md` | Agent |
 
 **Human review.** Every proposal starts as `review_status = needs_review` in
 `curated_mappings.tsv`. Per-cell-type evidence and verdicts are written in

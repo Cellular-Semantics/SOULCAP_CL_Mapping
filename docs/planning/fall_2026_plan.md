@@ -167,7 +167,7 @@ are in [curation_principles.md](../curation_principles.md).
 - **Weekly 30 minutes:** 5 min counts and what's done, 10 min the two or three
   decisions that matter most, 10 min a demo or evidence review, 5 min next
   week's owners and blockers. Send a short packet beforehand (the
-  `soulcap-meeting-brief` skill writes it).
+  `progress-brief` skill writes it).
 
 **Risks:**
 

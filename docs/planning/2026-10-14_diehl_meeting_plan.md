@@ -322,7 +322,7 @@ If the work is large, commit the data pull (step 2) separately first.
 ### T6. Brief for the meeting with David, Mon 19 October, 10:00 ET
 
 Only once David confirms on Slack (Alex will say). Use the
-`soulcap-meeting-brief` skill. Audience: David and Dr. Diehl.
+`progress-brief` skill. Audience: David and Dr. Diehl.
 
 - Start from `docs/planning/2026-10-12_meeting_summary.md`. If the 12 Oct
   meeting did not happen (0.4), carry its open items forward (marker
