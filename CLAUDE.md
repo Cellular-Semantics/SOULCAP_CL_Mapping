@@ -65,7 +65,7 @@ AST in `marker_syntax.py`, compiled/evaluated by `phenotype.py`.
 | [marker_mappings/](marker_mappings/README.md) | Token → PRO/UniProt/gene registry (`marker_protein_gene.csv`), per-token resolution policy (`marker_resolution.tsv`), token list, and PRO→UniProt overrides. Tracked, curated. |
 | [literature/](literature/README.md) | Milestone 2 literature evidence. `evidence.tsv` is the curated table (one row per cell type, marker and quote, with a `verified` flag from `soulcap-evidence verify`); `by_cell_type/` and `by_marker/` are generated views; `reviews/` indexes review papers; the original narrative `*_markers.md` files are archived in `archive/2026-09_literature_narratives/`. Moved from `reports/literature/` on 2026-09-28. |
 | [docs/](docs/README.md) | Detailed docs moved out of the README: `setup.md`, `pipeline.md`, `marker_resolution.md`, `matching_and_evaluation.md`. **`curation_principles.md` holds the collaborators' standing guidance (species rules, keep generic and add specific, granular issues); read it before any marker, species or CL proposal work.** **[`decisions_for_dr_diehl.md`](docs/decisions_for_dr_diehl.md) is the one list of every decision Dr. Diehl has to make, by stage (New, In between, Approved to file, Filed, Closed); keep it current when a decision moves.** Also review notes for Dr. Diehl: `diehl_review_2026-10.md` (CL issue drafts awaiting his decisions), `group1_ilc_species_hierarchy_proposal.md` with its `.tsv` (design proposal, nothing changed in CL) and `protege_ncam1_query_repro.md` (repro note for the Protégé NCAM1 query). |
-| [docs/planning/](docs/planning/) | Planning documents: `fall_2026_plan.md` (**the current semester plan**, 10 Oct 2026), `2026-10_collaborator_requests.md` (every request from the Sept/Oct meetings with its status; update it when an item moves), and superseded records kept for history, each marked at the top: `fall_2026_sprint_backlog.md` (18 Sept; no longer updated), the Sept 21 `fall_2026_semester_plan` draft (`.md`, `.pdf`, `.html`) and `2026-10-12_meeting_summary.md` (meeting did not take place; carried into the 19 Oct brief). |
+| [docs/planning/](docs/planning/) | Planning documents: `fall_2026_plan.md` (**the current semester plan**, 10 Oct 2026), `2026-10_collaborator_requests.md` (requests from the 28 Sept to 14 Oct meetings; no longer updated after 23 Oct 2026, see Meetings below), and superseded records kept for history, each marked at the top: `fall_2026_sprint_backlog.md` (18 Sept; no longer updated), the Sept 21 `fall_2026_semester_plan` draft (`.md`, `.pdf`, `.html`). Dated meeting notes, briefs and prep plans are not kept in the repo (see Meetings below). |
 | [archive/](archive/README.md) | Finished one-off experiments, one dated folder each with a README. Not current output; nothing regenerates it. |
 | [src/](src/README.md) `soulcap_cl_mapping/` | All Python code (module-by-stage table in `src/README.md`). `sync_sheets.py` → `soulcap-sync`; `marker_syntax.py` → `soulcap-validate` (EBNF validator); `snippet_cache.py` → `soulcap-cache`; `report_validator.py` → `soulcap-validate-report`; `id_check.py` → `soulcap-check-ids` (checks every CL/PR/GO/UBERON/CHEBI/NCBITaxon, UniProt and HGNC ID in curated tables and hand-written Markdown against OLS4/UniProt/HGNC: missing, obsolete or wrong label all fail; reviewed exceptions go in `reports/id_check_reviewed.tsv`); `cl_pro.py` → `soulcap-cl-pro` (CL→PR relationships via Ubergraph SPARQL); `cl_match.py` → `soulcap-match` (marker-axiom + lexical CL candidate scoring, single-profile or `--batch`); `oak_match.py` → `soulcap-oak-match` (OAK sqlite-backed lexical/synonym CL search — downloads/caches a local CL database on first use, ~100MB); `sssom_export.py` → `soulcap-sssom` (curated mappings → SSSOM TSV, with confidence derived from CL marker-axiom assertion status); `pro_species_support.py` (scopes the CL PRO markers to check and holds the human/mouse status vocabulary, `HUMAN_ONLY_MARKERS` and the `not_applicable` rules — no CLI, used by the `pro-marker-species-support` skill and by `soulcap-audit`); `europepmc_search.py` → `soulcap-europepmc` (free, keyless Europe PMC search — fallback literature source when the Asta MCP server isn't reachable); `pubmed_search.py` → `soulcap-pubmed` (NCBI E-utilities search — reads `PUBMED_API_KEY` from `.env` if set for the higher rate limit, otherwise works keyless; use when a task specifically needs NCBI's own index/query syntax rather than Europe PMC's mirror of it). |
 | `tests/` | Unit tests (mirror `src/` layout). |
@@ -96,7 +96,9 @@ README **in the same commit** as the change.
 | A per-cell-type review | `cell_type_reviews/<slug>.md` | Update the index in `cell_type_reviews/README.md`. |
 | A decision Dr. Diehl has to make | An item in `docs/decisions_for_dr_diehl.md` (section 1, New) | Details can live in a review doc; link it. Move the item through the stages as it progresses. |
 | Detailed documentation | `docs/` | Link it from `docs/README.md`. Keep the top-level README short. |
-| A planning document | `docs/planning/` | |
+| Feedback from David on improving the repo | An item in `docs/feedback_from_dr_osumi_sutherland.md` (as New, with a proposed action) | Move it through New, Planned, In progress, Done; list commits when done. |
+| Meeting notes, briefs, agendas, transcripts, recordings | **Not in the repo.** `C:\Users\s28al\Documents\SOULCAP_meeting_notes\` on Alex's machine | Never commit them. |
+| A planning document (semester plan) | `docs/planning/` | Not for meeting notes. |
 | Python code / tests | `src/soulcap_cl_mapping/` / `tests/` | Add the module to `src/README.md`; CLIs go in `pyproject.toml`. |
 
 Never create a new top-level folder or root-level file without updating the
@@ -147,6 +149,25 @@ don't update them.
 - The marker expression language is precisely defined in
   [MARKER_SYNTAX.md](MARKER_SYNTAX.md) — any parser/validator must conform to
   its EBNF (including the hyphen-disambiguation lexer rule).
+
+## Meetings
+
+The repo is for mapping SOULCAP cell types to CL and improving CL; it is not
+a meeting archive. Meeting notes, briefs, agendas, transcripts and recordings
+stay on Alex's machine in `C:\Users\s28al\Documents\SOULCAP_meeting_notes\`
+and are never committed. When Alex provides a meeting's recording, transcript
+or notes (from 23 Oct 2026 on):
+
+- **Meeting with Dr. Diehl:** update only
+  [`docs/decisions_for_dr_diehl.md`](docs/decisions_for_dr_diehl.md): record
+  each decision and its date, move items between stages, add new ones.
+- **Meeting with David:** update only
+  [`docs/feedback_from_dr_osumi_sutherland.md`](docs/feedback_from_dr_osumi_sutherland.md):
+  record his feedback with the action that answers it, and move items as
+  work progresses.
+- Nothing else is updated from a meeting unless Alex asks. Use
+  speaker-labelled notes (e.g. Fathom) before attributing anything:
+  Dr. Diehl and Alex are both "Alex".
 
 ## Branches
 
@@ -255,9 +276,10 @@ exact ontology labels via OLS4 — prefer it for term resolution.
   checks run first. Never creates new branches and never merges into `main`.
   See [SKILL.md](.claude/skills/soulcap-git-workflow/SKILL.md).
 - **`progress-brief`**: write a short progress brief or agenda for Dr. Diehl
-  or David from what changed since the last one, with every number recomputed
-  and the decisions needed taken from `docs/decisions_for_dr_diehl.md`. Saved
-  in `docs/planning/`; afterwards, records his decisions back in that doc.
+  or David from what changed since the last one, using the two tracker docs
+  (decisions for Dr. Diehl, feedback from David). Briefs are saved in the
+  meeting-notes folder on Alex's machine, never in the repo; afterwards it
+  updates only the matching tracker doc.
   See [SKILL.md](.claude/skills/progress-brief/SKILL.md).
 
 > Local RAG indexing (a `local-paper-index` skill) was trialled here but removed

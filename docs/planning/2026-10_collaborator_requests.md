@@ -13,9 +13,10 @@ Remove an item once it is done. General guidance from the same meetings is in
 | C. NK / group 1 ILC refactoring | 2026-10-05 | Dr. Diehl |
 | D. Decisions on the CL issue drafts | 2026-10-14 | Dr. Diehl |
 
-Decisions Dr. Diehl has to make are tracked, by stage, in
-[decisions_for_dr_diehl.md](../decisions_for_dr_diehl.md); this page keeps
-the requests themselves.
+> **No longer updated (23 Oct 2026).** Kept as the record of requests from
+> 28 September to 14 October. Decisions for Dr. Diehl are now tracked in
+> [decisions_for_dr_diehl.md](../decisions_for_dr_diehl.md), and David's
+> feedback in [feedback_from_dr_osumi_sutherland.md](../feedback_from_dr_osumi_sutherland.md).
 
 Status key: **waiting** (needs a decision or input from someone outside the
 repo), **on hold** (deliberately parked), **open** (Alex's to do), **outside**
@@ -25,11 +26,11 @@ repo), **on hold** (deliberately parked), **open** (Alex's to do), **outside**
 
 | # | Request | Status | Where |
 |---|---|---|---|
-| A1 | Unique list of confident CL matches where every marker maps to PRO, as the basis for an experimental CL import | **waiting**: the tool exists, but today 0 cell types are fully resolved until the CD3 / CD8 / GO complex decisions are made | `soulcap-resolved` → [fully_resolved_summary.md](../../reports/fully_resolved_summary.md); decisions in [marker_resolution.md](../marker_resolution.md#decisions-for-david) and the [12 Oct agenda](2026-10-12_meeting_summary.md) §2 |
+| A1 | Unique list of confident CL matches where every marker maps to PRO, as the basis for an experimental CL import | **waiting**: the tool exists, but today 0 cell types are fully resolved until the CD3 / CD8 / GO complex decisions are made | `soulcap-resolved` → [fully_resolved_summary.md](../../reports/fully_resolved_summary.md); decisions in [marker_resolution.md](../marker_resolution.md#decisions-for-david) |
 | A4 | Alex to add the NK cell reviews he collected to the literature folder, then other cell types | **open**: [reviews.tsv](../../literature/reviews/reviews.tsv) has only its header | [literature/reviews/](../../literature/reviews/README.md) |
 | A5 | Design a standard JSON object to attach to CL terms: markers, PRO links and SOULCAP shorthand tokens | **on hold** until A1 has entries (agenda "on hold" list, phase 5). Open design points: fields, validation, versioning | ROADMAP.md, [CL import](../../ROADMAP.md#cl-marker-profile-import-and-literature-test-set) |
 | A6 | Test the token approach on the NLM curated corpus of literature cell type mentions (non-matching immune mentions) | **waiting**: Dr. Osumi-Sutherland is checking publication status and permission. The curator's name is unclear in the transcript | ROADMAP.md, [same section](../../ROADMAP.md#cl-marker-profile-import-and-literature-test-set) |
-| A8 | Confidence levels, with items flagged for review | **on hold** (phase 7). A definition is proposed, not applied | [12 Oct agenda](2026-10-12_meeting_summary.md) §3 |
+| A8 | Confidence levels, with items flagged for review | **on hold** (phase 7). A definition is proposed, not applied | |
 | A9 | Use the mappings to propose markers missing from CL | **on hold** (phase 8) | |
 | A10 | Regular feedback to SOULCAP as a spreadsheet of rows to fix | **waiting** on format and cadence; draft not sent | [soulcap_feedback.tsv](../../reports/soulcap_feedback.tsv); agenda §4 |
 | A11 | Meeting with SOULCAP; Sony funding; Bron release; biweekly cadence with Courtney | **outside** | |
@@ -40,7 +41,7 @@ repo), **on hold** (deliberately parked), **open** (Alex's to do), **outside**
 | # | Request | Status | Where |
 |---|---|---|---|
 | B1 | For every mapped CL term, check whether each CL marker is valid in human, mouse or both | **open**: pilot done 2026-10-02; NK / group 1 ILC (66 pairs) and plasmablast (4 pairs) done 2026-10-05; other mapped terms not assessed yet | [pro_marker_species_support.tsv](../../reports/pro_marker_species_support.tsv); ROADMAP Milestone 2 |
-| B2 | Dr. Diehl to share his references | **waiting** (question a of the [2 Oct summary](2026-10-02_diehl_summary.md)) | goes in [literature/reviews/](../../literature/reviews/README.md) |
+| B2 | Dr. Diehl to share his references | **waiting** (asked 2 Oct 2026) | goes in [literature/reviews/](../../literature/reviews/README.md) |
 | B3 | Question b: accept "both" for lineage-negative markers (e.g. "lacks CD14 / CD19 / CD20") on biological grounds, without a quote per species? | **waiting** as a general rule: so far only his view that CD20 is safe for mouse, kept as expert opinion in `note` | [nk_marker_audit_2026-10.md](../../reports/nk_marker_audit_2026-10.md) "Lineage-negative markers" |
 
 ## C. 5 October, with Dr. Diehl
@@ -64,13 +65,13 @@ Decisions on each draft are recorded in [diehl_review_2026-10.md](../diehl_revie
 | D4 | Review every term under mature NK T cell: names, synonyms, structure (type 1 / type 2); full labels preferred, short forms as synonyms | **waiting**: review written 14 Oct (16 terms, 12 decisions; recommends keeping `CL:0000814` as the umbrella, which conflicts with our CL#3664) | [nkt_hierarchy_review_2026-10.md](../nkt_hierarchy_review_2026-10.md) |
 | D5 | Dr. Diehl reviews the two papers behind the wrong PMID (draft B6b) | **waiting** | [diehl_review_2026-10.md](../diehl_review_2026-10.md) (B6b, with links) |
 | D6 | Strategy for a human-only view of CL, to discuss with Dr. Osumi-Sutherland | **outside** | |
-| D7 | Meeting with Dr. Osumi-Sutherland, Mon 19 Oct, 10:00 ET (confirmed, with Dr. Diehl) | **outside**: brief written | [2026-10-19_meeting_brief.md](2026-10-19_meeting_brief.md) |
+| D7 | Meeting with Dr. Osumi-Sutherland, Mon 19 Oct, 10:00 ET (confirmed, with Dr. Diehl) | **outside**: held 19 Oct 2026 | |
 | D8 | How to explain generic vs species-specific terms to single-cell users | **waiting**: ask Dr. Diehl whether he wants anything from us | |
 
 ## Alex's open items
 
 1. A4: add the NK reviews to `literature/reviews/reviews.tsv`, with identifiers looked up.
 2. B1: carry on the species check past NK and plasmablast once question b is answered.
-3. Bring A1 (marker decisions), A8 (confidence bar) and A10 (feedback format) to the meeting with Dr. Osumi-Sutherland (19 Oct, confirmed; in the brief); the 12 October meeting did not take place.
+3. Bring A1 (marker decisions), A8 (confidence bar) and A10 (feedback format) to the meeting with Dr. Osumi-Sutherland (held 19 Oct 2026); the 12 October meeting did not take place.
 4. D2: send Dr. Diehl the reference pack for his B cell / plasmablast issue.
 5. D4: send Dr. Diehl the mature NKT review; if he picks Option A, comment on CL#3664.

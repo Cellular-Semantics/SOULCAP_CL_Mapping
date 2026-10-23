@@ -97,7 +97,7 @@ the commands above for anything that can be computed.
 | [roadmap-status-sync](.claude/skills/roadmap-status-sync/SKILL.md) | Correct stale milestone markers in ROADMAP.md from what is on disk | Repo files, issues → ROADMAP.md | Agent |
 | [cl-upstream-issue-filing](.claude/skills/cl-upstream-issue-filing/SKILL.md) | File a CL correction Dr. Diehl approved as an upstream CL issue, re-verifying IDs and quotes | Review doc draft → `obophenotype/cell-ontology` issue; `cl_term_issues.md`, `gaps.tsv`, ROADMAP.md updated | Agent + `gh` or browser, after explicit OK |
 | [soulcap-git-workflow](.claude/skills/soulcap-git-workflow/SKILL.md) | Commit and push work on the `Alzion_G_717` branch only, as small labelled commits; never creates branches | Working tree → commits on `Alzion_G_717` | Agent + git; same checks as CI |
-| [progress-brief](.claude/skills/progress-brief/SKILL.md) | Write a short brief or agenda for Dr. Diehl or David from what changed since the last one | git log, ROADMAP.md, reports → `docs/planning/<date>_<topic>.md` | Agent |
+| [progress-brief](.claude/skills/progress-brief/SKILL.md) | Write a short brief or agenda for Dr. Diehl or David from what changed since the last one; afterwards update the matching tracker doc | git log, ROADMAP.md, the two tracker docs → a brief saved outside the repo | Agent |
 
 **Human review.** Every proposal starts as `review_status = needs_review` in
 `curated_mappings.tsv`. Per-cell-type evidence and verdicts are written in
@@ -170,7 +170,10 @@ Agent guidance, including where new files go, is in [CLAUDE.md](CLAUDE.md).
 ## Planning
 
 - Milestones and status: [ROADMAP.md](ROADMAP.md)
+- Decisions Dr. Diehl has to make, by stage: [docs/decisions_for_dr_diehl.md](docs/decisions_for_dr_diehl.md)
+- David's feedback on the repo and the actions answering it: [docs/feedback_from_dr_osumi_sutherland.md](docs/feedback_from_dr_osumi_sutherland.md)
 - Current semester plan: [docs/planning/fall_2026_plan.md](docs/planning/fall_2026_plan.md)
+- Meeting notes and briefs are not kept in the repo.
 - Superseded, kept for the record:
   [sprint backlog](docs/planning/fall_2026_sprint_backlog.md) (18 Sept) and
   the Sept 21 semester plan draft
