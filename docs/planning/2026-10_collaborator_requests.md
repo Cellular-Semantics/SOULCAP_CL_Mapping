@@ -13,6 +13,10 @@ Remove an item once it is done. General guidance from the same meetings is in
 | C. NK / group 1 ILC refactoring | 2026-10-05 | Dr. Diehl |
 | D. Decisions on the CL issue drafts | 2026-10-14 | Dr. Diehl |
 
+Decisions Dr. Diehl has to make are tracked, by stage, in
+[decisions_for_dr_diehl.md](../decisions_for_dr_diehl.md); this page keeps
+the requests themselves.
+
 Status key: **waiting** (needs a decision or input from someone outside the
 repo), **on hold** (deliberately parked), **open** (Alex's to do), **outside**
 (not repo work).

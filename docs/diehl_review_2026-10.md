@@ -33,7 +33,7 @@ in his own CL branch, and open the CL issue himself.
 
 ## Decisions needed from Dr. Diehl
 
-Only open items are listed. B1 and B6c are filed, and B3a and B3b are
+Current status of every decision: [decisions_for_dr_diehl.md](decisions_for_dr_diehl.md). Only open items are listed. B1 and B6c are filed, and B3a and B3b are
 superseded by your own restructure: see
 [Decisions from 14 October 2026](#decisions-from-14-october-2026).
 

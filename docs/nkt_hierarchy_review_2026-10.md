@@ -11,7 +11,7 @@ All IDs were looked up there. The per-term data is in
 
 ## Decisions needed from Dr. Diehl
 
-File, change or drop for each:
+Current status: [decisions_for_dr_diehl.md](decisions_for_dr_diehl.md). File, change or drop for each:
 
 1. **N1. Structure: Option A or Option B** (see [Structure options](#structure-options)).
    The reviews below all treat NKT as an umbrella with type I and type II
