@@ -213,7 +213,7 @@ entries and is not a one-to-one accounting of the 47 entities without proposals.
 proposes a parallel human/mouse hierarchy under group 1 ILC → NK.
 - 6 new grouping terms, plus 2 recommended (uterine NK, human; group 1 ILC,
   human = #14) and 1 optional.
-- Awaiting Dr. Diehl's decisions ([docs/diehl_review_2026-10.md](docs/diehl_review_2026-10.md)).
+- Awaiting Dr. Diehl's decisions ([docs/decisions_for_dr_diehl.md](docs/decisions_for_dr_diehl.md)).
   No CL edits are made here; approved changes go to David's team as issues.
 
 ---

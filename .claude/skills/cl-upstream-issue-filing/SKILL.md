@@ -11,14 +11,14 @@ Not for mapping gaps in `reports/gaps.tsv` that only need a repo issue: that is 
 
 ## Gate: only approved items
 
-File an item only if Dr. Diehl marked it **file** in a review doc (for example `docs/diehl_review_2026-10.md`), or the user approves it explicitly in this conversation.
+File an item only if Dr. Diehl marked it **file** in `docs/decisions_for_dr_diehl.md`, or the user approves it explicitly in this conversation.
 - **change**: apply his change to the draft, show it, then file.
-- **drop**: record it as dropped in the review doc and `gaps.tsv`. Don't file.
+- **drop**: record it as dropped in `docs/decisions_for_dr_diehl.md` and `gaps.tsv`. Don't file.
 - **on hold** or no decision yet: leave it alone and say so.
 
 ## Step 1: gather the draft
 
-Collect everything about the item: its section in the review doc, its entry under "Candidates for review (not filed)" in `reports/cl_term_issues.md`, its `gaps.tsv` rows (status `draft_for_review`), and any audit report it came from (for example `reports/nk_marker_audit_2026-10.md`).
+Collect everything about the item: its section in `docs/decisions_for_dr_diehl.md` (section 6), its entry under "Candidates for review (not filed)" in `reports/cl_term_issues.md`, its `gaps.tsv` rows (status `draft_for_review`), and any audit report it came from (for example `reports/nk_marker_audit_2026-10.md`).
 
 ## Step 2: re-verify at filing time
 
@@ -62,7 +62,7 @@ Use `gh` if it works. If not, use the browser, or give the user the text and the
 - `reports/cl_term_issues.md`: move the entry from "Candidates for review (not filed)" to "Open issues", with **Repo issue**, **Upstream**, **Filed by**, the date and **Status**. Add "labels left to CL maintainers" to the upstream line.
 - `reports/gaps.tsv`: set `status` to `filed_as_issue` and `repo_issue` to the URL.
 - `ROADMAP.md`: update the row in the "CL term corrections" table.
-- The review doc: mark the decision as filed, with the link.
+- `docs/decisions_for_dr_diehl.md`: move the item to Filed, with the link, and add the link to its section 6 entry.
 
 Then run `uv run pytest` (it checks doc links) and commit on `Alzion_G_717`, following the `soulcap-git-workflow` skill.
 

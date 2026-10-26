@@ -107,7 +107,7 @@ following the same pattern as the existing group 2 and group 3 human terms.
 **Repo issue:** [#27](https://github.com/Cellular-Semantics/SOULCAP_CL_Mapping/issues/27)
 **Upstream:** [CL#3795](https://github.com/obophenotype/cell-ontology/issues/3795) (labels left to CL maintainers)
 **Filed by:** Alex (s28ale-maker) · 2026-10-14, approved by Dr. Diehl on 14 Oct 2026 ("safe to remove it for now")
-**Evidence:** [nk_hladr_conflicts_2026-10.tsv](nk_hladr_conflicts_2026-10.tsv); draft B1 in [docs/diehl_review_2026-10.md](../docs/diehl_review_2026-10.md)
+**Evidence:** [nk_hladr_conflicts_2026-10.tsv](nk_hladr_conflicts_2026-10.tsv); draft B1 in [docs/decisions_for_dr_diehl.md](../docs/decisions_for_dr_diehl.md)
 **Status:** Filed upstream, awaiting CL maintainer review
 
 Asks CL to remove `lacks_plasma_membrane_part` PR:000002015 from both terms (equivalent class and SubClassOf axioms) until a source is found. Neither definition source (PMID:19796267, PMID:22343568) states that NK cells lack HLA-DR. Earlier notes from the candidate stage:
@@ -228,7 +228,7 @@ SOULCAP's unqualified "NK" cell type.
 
 ### Plasmablast "lacks CD138" — CL:0000980, PR:000001935 (syndecan-1)
 
-**Status:** superseded 14 Oct 2026: Dr. Diehl is restructuring the mature B cell / plasmablast branch himself and will drop this axiom there (draft B3a in [docs/diehl_review_2026-10.md](../docs/diehl_review_2026-10.md))
+**Status:** superseded 14 Oct 2026: Dr. Diehl is restructuring the mature B cell / plasmablast branch himself and will drop this axiom there (draft B3a in [docs/decisions_for_dr_diehl.md](../docs/decisions_for_dr_diehl.md))
 
 CL asserts CL:0000980 "plasmablast" `lacks_plasma_membrane_part`
 PR:000001935 "syndecan-1" (CD138). Found during the human/mouse marker
