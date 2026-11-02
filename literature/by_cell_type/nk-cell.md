@@ -83,6 +83,22 @@ Do not edit by hand.
 
 — Andrews et al. 2010 (PMID:19949422) · `EV00275` · verified: not_checked
 
+> "The most immature subset is CD27highCD11blow, followed by CD27highCD11bhigh and CD27lowCD11bhigh subsets"
+
+— Michel et al. 2012 (PMID:23227255; DOI:10.1371/journal.pone.0051230; PMCID:PMC3515449) · `EV00288` · verified: yes
+
+> "Murine CD49b+ NK cells undergo three maturation stages determined by the expression of CD27 and CD11b: immature NK cells (R1: CD27highCD11blow), CD27 and CD11b double‐positive (R2), and CD27lowCD11bhigh mature NK cells (R3)"
+
+— Vasilyeva et al. 2024 (PMID:40705324; DOI:10.1002/eji.70009; PMCID:PMC12288813) · `EV00289` · verified: yes
+
+> "CD27 and CD11b expressing M1 NK cells have also been termed double-positive NK cells"
+
+— Goh et al. 2017 (PMID:28261203; DOI:10.3389/fimmu.2017.00130; PMCID:PMC5309223) · `EV00290` · verified: yes
+
+> "transitioning from immature NK cells (CD27+CD11b−, CD27+CD11b+) to mature NK cells (CD27−CD11b+)"
+
+— Deng et al. 2026 (PMID:42769371; DOI:10.1002/mco2.70983; PMCID:PMC13591226) · `EV00291` · verified: yes
+
 ## CD3
 
 **Candidate SOULCAP cell types (unreviewed):** SOULCAP:SC000001 (Natural Killer Cell), SOULCAP:SC000002 (Natural Killer Cell 2), SOULCAP:SC000003 (Cytotoxice Natural Killer Cell), SOULCAP:SC000004 (Natural Killer Cell 1), SOULCAP:SC000005 (Natural Killer Cell 3)
