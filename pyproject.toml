@@ -44,6 +44,7 @@ soulcap-oak-match = "soulcap_cl_mapping.oak_match:main"
 soulcap-sssom = "soulcap_cl_mapping.sssom_export:main"
 soulcap-europepmc = "soulcap_cl_mapping.europepmc_search:main"
 soulcap-pubmed = "soulcap_cl_mapping.pubmed_search:main"
+soulcap-cl-error-check = "soulcap_cl_mapping.cl_error_check:main"
 
 [project.optional-dependencies]
 dev = [
