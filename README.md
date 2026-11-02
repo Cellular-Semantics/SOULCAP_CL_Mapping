@@ -163,7 +163,7 @@ To change a mapping decision, edit
 | [cell_type_reviews/](cell_type_reviews/README.md) | One evidence-and-verdict file per SOULCAP cell type |
 | [reports/](reports/README.md) | Current outputs, each listed with its producer |
 | [docs/](docs/README.md) | Detailed documentation and planning documents |
-| [archive/](archive/README.md) | Finished experiments, kept for the record |
+| [archive/](archive/README.md) | Finished experiments and solved or no-longer-relevant work, kept for the record |
 | [src/](src/README.md), `tests/` | Python package and its unit tests |
 
 Agent guidance, including where new files go, is in [CLAUDE.md](CLAUDE.md).

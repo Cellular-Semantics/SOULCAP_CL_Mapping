@@ -1,10 +1,10 @@
 cl_id	cl_label	kind	detail	status	report	found_on	note
-CL:0001023	Kit-positive, CD34-positive common myeloid progenitor	near_miss_pmid	PMID:1261582	reported	docs/cl_error_check_2026-11.md	2026-11-02	E1: cardiology paper; meant PMID:12615892
-CL:0002005	CD34-positive, CD38-positive megakaryocyte erythroid progenitor cell	malformed_pmid	PMID:190227700	reported	docs/cl_error_check_2026-11.md	2026-11-02	E2: meant PMID:19022770
-CL:0000097	mast cell	malformed_pmid	PMID:212366338	reported	docs/cl_error_check_2026-11.md	2026-11-02	E3: probably PMID:21236338
-CL:0000959	T2 B cell	typo	postive	reported	docs/cl_error_check_2026-11.md	2026-11-02	E4
-CL:0001020	mature CD8-alpha-low Langerhans cell	typo	that that	reported	docs/cl_error_check_2026-11.md	2026-11-02	E4
-CL:0011024	double negative T regulatory cell	typo	that that	reported	docs/cl_error_check_2026-11.md	2026-11-02	E4
+CL:0001023	Kit-positive, CD34-positive common myeloid progenitor	near_miss_pmid	PMID:1261582	reported	archive/2026-11_cl_error_check_fixed/cl_error_check_2026-11_fixed.md	2026-11-02	E1: cardiology paper; meant PMID:12615892; fixed in CL PR #3836 (2 Nov 2026)
+CL:0002005	CD34-positive, CD38-positive megakaryocyte erythroid progenitor cell	malformed_pmid	PMID:190227700	reported	docs/cl_error_check_2026-11.md	2026-11-02	E2: meant PMID:19022770; fixed in CL PR #3836 (2 Nov 2026), human/mouse question open
+CL:0000097	mast cell	malformed_pmid	PMID:212366338	reported	archive/2026-11_cl_error_check_fixed/cl_error_check_2026-11_fixed.md	2026-11-02	E3: probably PMID:21236338; fixed in CL PR #3836 (2 Nov 2026)
+CL:0000959	T2 B cell	typo	postive	reported	archive/2026-11_cl_error_check_fixed/cl_error_check_2026-11_fixed.md	2026-11-02	E4; fixed in CL PR #3836 (2 Nov 2026)
+CL:0001020	mature CD8-alpha-low Langerhans cell	typo	that that	reported	archive/2026-11_cl_error_check_fixed/cl_error_check_2026-11_fixed.md	2026-11-02	E4; fixed in CL PR #3836 (2 Nov 2026)
+CL:0011024	double negative T regulatory cell	typo	that that	reported	archive/2026-11_cl_error_check_fixed/cl_error_check_2026-11_fixed.md	2026-11-02	E4; fixed in CL PR #3836 (2 Nov 2026)
 CL:0002301	type B synovial cell	near_miss_pmid	PMID:34772990	rejected		2026-11-02	PubMed title (fibroblast-like synoviocytes) fits the term; one-digit neighbour of PMID:34727990 is a coincidence
 CL:4052026	type IIx muscle cell	near_miss_pmid	PMID:34727990	rejected		2026-11-02	PubMed title (fiber types in human skeletal muscle) fits the term; coincidence
 CL:0020015	transitional principal-intercalated cell of kidney collecting duct	near_miss_pmid	PMID:33893305	rejected		2026-11-02	PubMed title (kidney intercalated cells) fits the term; coincidence

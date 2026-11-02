@@ -19,7 +19,7 @@ before-committing checks) and the existing
 |---|---|
 | `uv run soulcap-cl-error-check` | Downloads `cl-edit.owl` from CL `master`, checks every live definition, writes ranked candidates to `data/cl_error_candidates.tsv` (gitignored). Kinds, strongest first: `malformed_pmid`, `missing_pmid`, `near_miss_pmid`, `typo`. |
 | [reports/cl_error_check_ledger.tsv](../../../reports/cl_error_check_ledger.tsv) | Every candidate already decided: `reported` (written up) or `rejected` (checked, not an error). The CLI skips these. Add a row for **every** candidate you check, kept or not. |
-| `docs/cl_error_check_<YYYY-MM>.md` | The write-up for that month. Continue the numbering across months (E1, E2, ... never restart). |
+| `docs/cl_error_check_<YYYY-MM>.md` | The write-up for that month. Continue the numbering across months and archived items (E1, E2, ... never restart): take the highest E number in `docs/cl_error_check_*.md`, `archive/*cl_error_check*/` and the ledger's `note` column. |
 | [docs/decisions_for_dr_diehl.md](../../../docs/decisions_for_dr_diehl.md) | One item in section 1 (New) per run, pointing at the new E numbers. |
 
 ## Steps
