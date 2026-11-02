@@ -25,7 +25,7 @@ before-committing checks) and the existing
 ## Steps
 
 1. **Biweekly guard (scheduled runs only).** Find the latest `found_on` date
-   in the ledger. If it is less than 13 days before today, stop: say so and
+   in the ledger. If it is less than 10 days before today, stop (the routine fires every Saturday, so this makes it every other one): say so and
    change nothing.
 2. `uv sync --extra dev`, then `uv run soulcap-cl-error-check`. If NCBI is
    unreachable, rerun with `--offline` and say so in the write-up.
