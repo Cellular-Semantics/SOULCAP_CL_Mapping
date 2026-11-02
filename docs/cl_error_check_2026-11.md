@@ -1,6 +1,6 @@
-# CL definition PMID and typo check, November 2026
+# Cell Ontology error check, November 2026
 
-For Dr. Diehl (item B8 in [decisions_for_dr_diehl.md](decisions_for_dr_diehl.md)). Found 2 Nov 2026 by checking the definition PMIDs of the terms under hematopoietic cell.
+For Dr. Diehl (item B8 in [decisions_for_dr_diehl.md](decisions_for_dr_diehl.md)). Found 2 Nov 2026 by checking the CL terms under hematopoietic cell for errors: definition PMIDs that are wrong or don't exist, and typos. More checks will be added here.
 
 All checked today against CL release 2026-06-08 in OLS4, and each PMID in
 Europe PMC and NCBI PubMed. None is in our repo docs, and none is in an

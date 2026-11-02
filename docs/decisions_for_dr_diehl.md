@@ -68,7 +68,7 @@ File, change or drop each.
 | B6a | Review or remove DX5 (CD49b) positive on `CL:0002345 CD27-low, CD11b-low immature natural killer cell, mouse`; its sibling `CL:0002346 Dx5-negative, NK1.1-positive immature natural killer cell, mouse` is DX5-negative | Medium confidence; rests on Q3 |
 | B6d | Galectin-1 on `CL:0002343 decidual natural killer cell, human`: use `expresses` instead of `has plasma membrane part` | Medium confidence; quote verified (EV00273) |
 | B7b | Fix the "NKGA2" typo in the label and definition of `CL:0002439 NKGA2-positive natural killer cell, mouse` (should be NKG2A) | High confidence. CL PR #3386 carries the typo into a new label |
-| B8 | Three wrong or nonexistent definition PMIDs (`CL:0001023`, `CL:0002005`, `CL:0000097`) and three definition typos (E1 to E4 in [cl_pmid_check_2026-11.md](cl_pmid_check_2026-11.md)). File one batch issue with B7b and N8, or fix in his edits? | Found 2 Nov 2026; high confidence |
+| B8 | Three wrong or nonexistent definition PMIDs (`CL:0001023`, `CL:0002005`, `CL:0000097`) and three definition typos (E1 to E4 in [cl_error_check_2026-11.md](cl_error_check_2026-11.md)). File one batch issue with B7b and N8, or fix in his edits? | Found 2 Nov 2026; high confidence |
 
 ### Group 1 ILC species hierarchy (decisions 6 to 12)
 
