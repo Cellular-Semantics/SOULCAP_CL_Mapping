@@ -1,4 +1,4 @@
-"""Find candidate errors in Cell Ontology definitions: bad PMIDs and typos.
+"""Find candidate errors in Cell Ontology definitions: bad PMIDs, typos, hierarchy.
 
 Reads ``cl-edit.owl`` (OWL functional syntax) from CL ``master`` and flags:
 
@@ -9,17 +9,28 @@ Reads ``cl-edit.owl`` (OWL functional syntax) from CL ``master`` and flags:
   (dropped, added, doubled or swapped) from a PMID another CL term cites.
   Both sides of a pair are flagged; the PubMed titles decide which is wrong.
   This is how ``CL:0001023`` came to cite a cardiology paper.
+- ``genus_mismatch``: the definition opens "A <CL term> ..." but that term
+  is not among the asserted ancestors, e.g. a non-classical monocyte defined
+  as "A MHC-II-negative classical monocyte". Only asserted parents are
+  followed, so some of these are fine once the reasoner's inferred parents
+  are counted; the skill checks OLS4 before reporting one.
 - ``typo``: a repeated word ("that that") or a known misspelling.
+
+Each candidate is marked ``immune_hierarchy = yes`` if the term is under
+``CL:0000738 leukocyte`` (asserted parents), so immune-cell finds can be
+written up in their own document.
 
 Every row is a *candidate*, not a finding. The ``cl-error-check`` skill
 verifies each one (OLS4, PubMed, Europe PMC, existing CL issues) before it
-goes in ``docs/cl_error_check_<YYYY-MM>.md``. Candidates already in
+goes in ``docs/cl_error_check_<YYYY-MM>.md`` or, for immune cells,
+``docs/immune_cell_error_check_<YYYY-MM>.md``. Candidates already in
 ``reports/cl_error_check_ledger.tsv`` (reported or rejected) are skipped.
 
 Usage::
 
     uv run soulcap-cl-error-check              # download, check, write data/
     uv run soulcap-cl-error-check --offline    # skip the NCBI existence check
+    uv run soulcap-cl-error-check --immune-only
 """
 
 from __future__ import annotations
@@ -49,6 +60,8 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_OWL = REPO_ROOT / "data" / "cl-edit.owl"
 DEFAULT_OUT = REPO_ROOT / "data" / "cl_error_candidates.tsv"
 DEFAULT_LEDGER = REPO_ROOT / "reports" / "cl_error_check_ledger.tsv"
+# Root of the immune cell hierarchy ("immune cell" is a CL synonym of it).
+IMMUNE_ROOT = "CL:0000738"
 
 LEDGER_COLUMNS = [
     "cl_id",
@@ -65,13 +78,20 @@ CANDIDATE_COLUMNS = [
     "cl_id",
     "cl_label",
     "kind",
+    "immune_hierarchy",
     "detail",
     "suggestion",
     "pmid_title",
     "definition",
 ]
 # Lower rank = stronger candidate, reviewed first.
-KIND_RANK = {"malformed_pmid": 0, "missing_pmid": 1, "near_miss_pmid": 2, "typo": 3}
+KIND_RANK = {
+    "malformed_pmid": 0,
+    "missing_pmid": 1,
+    "near_miss_pmid": 2,
+    "genus_mismatch": 3,
+    "typo": 4,
+}
 
 # Misspellings seen in CL definitions or likely there; whole words only.
 MISSPELLINGS = {
@@ -116,6 +136,9 @@ _GENUS_RE = re.compile(
 )
 _REPEAT_RE = re.compile(r"\b([A-Za-z][A-Za-z']*)\s+\1\b", re.IGNORECASE)
 _WORD_RE = re.compile(r"[A-Za-z]+")
+_ARTICLE_RE = re.compile(r"^(?:An?|The)\s+(.*)", re.DOTALL)
+# Longest label (in words) tried when matching a definition's genus.
+MAX_GENUS_WORDS = 12
 
 
 @dataclass
@@ -137,6 +160,7 @@ class Candidate:
     suggestion: str = ""
     pmid_title: str = ""
     definition: str = ""
+    immune: bool = False
 
     def key(self) -> tuple[str, str, str]:
         return (self.cl_id, self.kind, self.detail)
@@ -291,6 +315,59 @@ def find_typos(terms: dict[str, Term]) -> list[Candidate]:
     return out
 
 
+def ancestors(terms: dict[str, Term]) -> dict[str, set[str]]:
+    """Every term's asserted (named) ancestors, transitively."""
+    out: dict[str, set[str]] = {}
+    for cl_id in terms:
+        seen: set[str] = set()
+        stack = list(terms[cl_id].parents)
+        while stack:
+            p = stack.pop()
+            if p not in seen:
+                seen.add(p)
+                stack.extend(terms[p].parents if p in terms else [])
+        out[cl_id] = seen
+    return out
+
+
+def definition_genus(definition: str, by_label: dict[str, str]) -> str | None:
+    """The CL term a definition opens with ("A <label> ..."), longest match."""
+    m = _ARTICLE_RE.match(definition)
+    if not m:
+        return None
+    words = [w.strip(",.;:()") for w in m[1].lower().split()[:MAX_GENUS_WORDS]]
+    for k in range(len(words), 0, -1):
+        if (hit := by_label.get(" ".join(words[:k]))) is not None:
+            return hit
+    return None
+
+
+def find_genus_mismatches(
+    terms: dict[str, Term], anc: dict[str, set[str]]
+) -> list[Candidate]:
+    """Definitions whose genus term isn't among the asserted ancestors."""
+    by_label = {
+        t.label.lower(): t.cl_id for t in terms.values() if t.label and not t.deprecated
+    }
+    out: list[Candidate] = []
+    for t in _live(terms):
+        genus = definition_genus(t.definition, by_label)
+        if genus is None or genus == t.cl_id or genus in anc[t.cl_id]:
+            continue
+        parents = ", ".join(f"{p} {terms[p].label}" for p in t.parents if p in terms)
+        out.append(
+            Candidate(
+                t.cl_id,
+                t.label,
+                "genus_mismatch",
+                f"{genus} {terms[genus].label}",
+                f"asserted parents: {parents}" if parents else "no asserted parents",
+                definition=t.definition,
+            )
+        )
+    return out
+
+
 def _live(terms: dict[str, Term]) -> list[Term]:
     return [t for t in terms.values() if t.definition and not t.deprecated]
 
@@ -356,7 +433,12 @@ def run_checks(
     titles: dict[str, str | None] | None = None,
 ) -> list[Candidate]:
     """All candidates not already in the ledger, ranked strongest first."""
-    cands = find_pmid_candidates(terms) + find_typos(terms)
+    anc = ancestors(terms)
+    cands = (
+        find_pmid_candidates(terms)
+        + find_genus_mismatches(terms, anc)
+        + find_typos(terms)
+    )
     if titles is not None:
         cands += find_missing_pmids(terms, titles)
         for c in cands:
@@ -367,6 +449,7 @@ def run_checks(
     for c in cands:
         if c.key() not in ledger and c.key() not in seen:
             seen.add(c.key())
+            c.immune = IMMUNE_ROOT in anc.get(c.cl_id, set())
             unique.append(c)
     unique.sort(key=lambda c: (KIND_RANK[c.kind], c.cl_id, c.detail))
     return unique
@@ -384,6 +467,7 @@ def write_candidates(cands: list[Candidate], path: Path) -> None:
                     c.cl_id,
                     c.cl_label,
                     c.kind,
+                    "yes" if c.immune else "no",
                     c.detail,
                     c.suggestion,
                     c.pmid_title,
@@ -394,7 +478,7 @@ def write_candidates(cands: list[Candidate], path: Path) -> None:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
-        description="List candidate errors (bad PMIDs, typos) in CL definitions."
+        description="List candidate errors (bad PMIDs, typos, hierarchy) in CL."
     )
     parser.add_argument(
         "--owl",
@@ -412,6 +496,11 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="Skip the NCBI check for PMIDs that don't exist.",
     )
+    parser.add_argument(
+        "--immune-only",
+        action="store_true",
+        help=f"Only terms under {IMMUNE_ROOT} leukocyte (the immune cell hierarchy).",
+    )
     parser.add_argument("--ledger", type=Path, default=DEFAULT_LEDGER)
     parser.add_argument("--out", type=Path, default=DEFAULT_OUT)
     args = parser.parse_args(argv)
@@ -428,6 +517,8 @@ def main(argv: list[str] | None = None) -> int:
         titles = fetch_titles(pmids)
 
     cands = run_checks(terms, load_ledger(args.ledger), titles)
+    if args.immune_only:
+        cands = [c for c in cands if c.immune]
     write_candidates(cands, args.out)
     counts: dict[str, int] = defaultdict(int)
     for c in cands:
@@ -438,6 +529,7 @@ def main(argv: list[str] | None = None) -> int:
     )
     for kind in KIND_RANK:
         print(f"  {kind}: {counts[kind]}")
+    print(f"  of which in the immune cell hierarchy: {sum(c.immune for c in cands)}")
     return 0
 
 

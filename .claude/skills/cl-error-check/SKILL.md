@@ -1,26 +1,31 @@
 ---
 name: cl-error-check
-description: Find 2 or 3 verified errors in Cell Ontology definitions (wrong or nonexistent definition PMIDs, typos) and write them up for Dr. Diehl in docs/cl_error_check_<YYYY-MM>.md. Runs every other Saturday as a cloud routine; also invoke when asked to look for CL errors, bad PMIDs or definition typos.
+description: Find a few verified errors in Cell Ontology terms (wrong or nonexistent definition PMIDs, typos, definitions that disagree with the hierarchy) and write them up for Dr. Diehl, in docs/immune_cell_error_check_<YYYY-MM>.md for immune cells and docs/cl_error_check_<YYYY-MM>.md for everything else. Runs every other Saturday as a cloud routine; also invoke when asked to look for CL errors, bad PMIDs, definition typos or immune cell hierarchy errors.
 ---
 
 You find a few real errors in the Cell Ontology each run and write them up so
 Dr. Diehl can decide whether to file them. Quality over quantity: **2 or 3
-verified finds per run**, never padding. Zero is an acceptable result if
+verified finds per document per run**, never padding. Dr. Diehl asked (3 Nov
+2026) for a focus on the **immune cell hierarchy** (terms under
+`CL:0000738 leukocyte`), so fill the immune document first. Zero is an acceptable result if
 nothing survives verification. You never file anything with CL: filing goes
 through the `cl-upstream-issue-filing` skill after Dr. Diehl says "file".
 
 Read [CLAUDE.md](../../../CLAUDE.md) first (identifier rules, branch rules,
 before-committing checks) and the existing
-`docs/cl_error_check_*.md` files to match their format.
+`docs/cl_error_check_*.md` and `docs/immune_cell_error_check_*.md` files to
+match their format.
 
 ## Files
 
 | File | Role |
 |---|---|
-| `uv run soulcap-cl-error-check` | Downloads `cl-edit.owl` from CL `master`, checks every live definition, writes ranked candidates to `data/cl_error_candidates.tsv` (gitignored). Kinds, strongest first: `malformed_pmid`, `missing_pmid`, `near_miss_pmid`, `typo`. |
+| `uv run soulcap-cl-error-check` | Downloads `cl-edit.owl` from CL `master`, checks every live definition, writes ranked candidates to `data/cl_error_candidates.tsv` (gitignored). Kinds, strongest first: `malformed_pmid`, `missing_pmid`, `near_miss_pmid`, `genus_mismatch` (definition opens "A <CL term>" that isn't an asserted ancestor), `typo`. Column `immune_hierarchy` is `yes` for terms under `CL:0000738 leukocyte`; `--immune-only` keeps just those. |
 | [reports/cl_error_check_ledger.tsv](../../../reports/cl_error_check_ledger.tsv) | Every candidate already decided: `reported` (written up) or `rejected` (checked, not an error). The CLI skips these. Add a row for **every** candidate you check, kept or not. |
-| `docs/cl_error_check_<YYYY-MM>.md` | The write-up for that month. Continue the numbering across months and archived items (E1, E2, ... never restart): take the highest E number in `docs/cl_error_check_*.md`, `archive/*cl_error_check*/` and the ledger's `note` column. |
-| [docs/decisions_for_dr_diehl.md](../../../docs/decisions_for_dr_diehl.md) | One item in section 1 (New) per run, pointing at the new E numbers. |
+| `docs/immune_cell_error_check_<YYYY-MM>.md` | Immune cell hierarchy finds (`immune_hierarchy = yes`) for that month, numbered I1, I2, ... |
+| `docs/cl_error_check_<YYYY-MM>.md` | All other finds for that month, numbered E1, E2, ... |
+| Numbering | Never restart either series: take the highest E or I number in both docs files, `archive/*error_check*/` and the ledger's `note` column. |
+| [docs/decisions_for_dr_diehl.md](../../../docs/decisions_for_dr_diehl.md) | One item in section 1 (New) per run, pointing at the new E and I numbers. |
 
 ## Steps
 
@@ -45,13 +50,21 @@ before-committing checks) and the existing
      one is fine, so reject it.
    - For typos: it's a real misspelling or doubled word, not a legitimate
      construction (e.g. "CD8-alpha alpha" is the CD8aa homodimer).
+   - For `genus_mismatch`: the CLI follows asserted parents only. Fetch the
+     term's `hierarchicalAncestors` from the OLS4 API; if the genus is among
+     them (inferred), reject it. Otherwise check the logical definition and
+     relations in `cl-edit.owl` (e.g. "develops from" the genus, as in I2)
+     and say which fix is plausible: reword the definition, or add a parent.
+     Which one is right is usually Dr. Diehl's call; say so.
    - No existing issue or PR already covers it: search
      `https://api.github.com/search/issues?q=repo:obophenotype/cell-ontology+<PMID or CL ID>`
      (or `gh search issues`), and grep this repo's `docs/` and `reports/`.
-   Stop once you have 2 or 3 verified finds. Group identical typos across
+   Work through `immune_hierarchy = yes` candidates first, then the rest.
+   Stop once each document has 2 or 3 verified finds. Group identical typos across
    terms (e.g. one misspelling in five definitions) into a single find.
-4. **Write up** each find in `docs/cl_error_check_<YYYY-MM>.md` (create it
-   from the previous month's header if new; link it from `docs/README.md`).
+4. **Write up** each find in the immune or general document for the month
+   (create it from the previous month's header if new; link it from
+   `docs/README.md`, the two rows next to each other).
    Per find: term as `` `CL:nnnnnnn exact label` `` with an OLS4 link, the
    definition text quoted from `cl-edit.owl`, what is cited (PMID, title,
    journal, year, PubMed link), what was probably meant and why, the fix,
@@ -60,7 +73,7 @@ before-committing checks) and the existing
 5. **Ledger:** one row per checked candidate (`reported` with the report
    path, or `rejected` with a one-line reason), `found_on` = today.
 6. **Decisions doc:** add one item to section 1 (New) in
-   `docs/decisions_for_dr_diehl.md` naming the terms and E numbers, matching
+   `docs/decisions_for_dr_diehl.md` naming the terms and E/I numbers, matching
    the existing B8 item's style. Don't touch other items.
 7. **Checks:** `uv run soulcap-check-ids`, `uv run soulcap-check-quotes`,
    `uv run pytest`, `uv run ruff check .`, `uv run ruff format --check .`.
@@ -69,12 +82,12 @@ before-committing checks) and the existing
    in the run summary and carry on.
 8. **Commit and push** on `Alzion_G_717` only (never create or switch
    branches, never touch the `pr-*` branches): `git pull --rebase origin
-   Alzion_G_717`, one commit `docs: CL error check, <date> (E<n>-E<m>)`, push.
+   Alzion_G_717`, one commit `docs: CL error check, <date> (E<n>-E<m>, I<n>-I<m>)`, push.
    If the push is rejected, pull --rebase once more and retry; if it still
    fails, stop and report.
 
 ## Output
 
-End with a short summary: how many candidates were checked, the finds (E
+End with a short summary: how many candidates were checked, the finds (E and I
 numbers, terms, one line each), what was rejected and why, and anything that
 failed (network, checks, push).

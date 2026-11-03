@@ -8,3 +8,11 @@ CL:0011024	double negative T regulatory cell	typo	that that	reported	archive/202
 CL:0002301	type B synovial cell	near_miss_pmid	PMID:34772990	rejected		2026-11-02	PubMed title (fibroblast-like synoviocytes) fits the term; one-digit neighbour of PMID:34727990 is a coincidence
 CL:4052026	type IIx muscle cell	near_miss_pmid	PMID:34727990	rejected		2026-11-02	PubMed title (fiber types in human skeletal muscle) fits the term; coincidence
 CL:0020015	transitional principal-intercalated cell of kidney collecting duct	near_miss_pmid	PMID:33893305	rejected		2026-11-02	PubMed title (kidney intercalated cells) fits the term; coincidence
+CL:0002475	lymphoid MHC-II-negative non-classical monocyte	genus_mismatch	CL:0002469 MHC-II-negative classical monocyte	reported	docs/immune_cell_error_check_2026-11.md	2026-11-03	I1: definition says classical, parent and label non-classical
+CL:0000818	transitional stage B cell	genus_mismatch	CL:0000816 immature B cell	reported	docs/immune_cell_error_check_2026-11.md	2026-11-03	I2: defined as immature B cell but asserted to develop from one
+CL:0002507	langerin-positive lymph node dendritic cell	genus_mismatch	CL:0001006 dermal dendritic cell	reported	docs/immune_cell_error_check_2026-11.md	2026-11-03	I3: defined as dermal DC, parent conventional DC
+CL:0002508	langerin-negative, CD103-negative lymph node dendritic cell	genus_mismatch	CL:0001006 dermal dendritic cell	reported	docs/immune_cell_error_check_2026-11.md	2026-11-03	I3
+CL:0000809	double-positive, alpha-beta thymocyte	genus_mismatch	CL:0000893 thymocyte	rejected		2026-11-03	genus is an inferred ancestor in OLS4
+CL:0000869	tonsillar macrophage	genus_mismatch	CL:0000885 gut-associated lymphoid tissue macrophage	rejected		2026-11-03	genus is an inferred ancestor in OLS4
+CL:0002677	naive regulatory T cell	genus_mismatch	CL:0000815 regulatory T cell	rejected		2026-11-03	genus is an inferred ancestor in OLS4
+CL:4052020	lung resident granzyme K-associated CD8 T cell	genus_mismatch	CL:4052021 granzyme K-associated CD8 T cell	rejected		2026-11-03	genus is an inferred ancestor in OLS4

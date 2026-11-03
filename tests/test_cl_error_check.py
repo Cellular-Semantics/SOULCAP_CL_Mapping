@@ -200,3 +200,90 @@ def test_main_online_uses_existing_owl(tmp_path: Path):
         )
     assert "55555555" in fetch.call_args.args[0]
     assert "missing_pmid" in out.read_text(encoding="utf-8")
+
+
+# The immune cell hierarchy, modelled on the real I1: a non-classical
+# monocyte whose definition calls it a classical monocyte.
+_IMMUNE_OWL = """\
+AnnotationAssertion(rdfs:label obo:CL_0000738 "leukocyte")
+AnnotationAssertion(obo:IAO_0000115 obo:CL_0000738 "An achromatic cell.")
+AnnotationAssertion(rdfs:label obo:CL_0002469 "MHC-II-negative classical monocyte")
+AnnotationAssertion(obo:IAO_0000115 obo:CL_0002469 "Gr1-high monocyte.")
+SubClassOf(obo:CL_0002469 obo:CL_0000738)
+AnnotationAssertion(rdfs:label obo:CL_0002471 "MHC-II-negative non-classical monocyte")
+AnnotationAssertion(obo:IAO_0000115 obo:CL_0002471 "A leukocyte that is Gr1-low.")
+SubClassOf(obo:CL_0002471 obo:CL_0000738)
+AnnotationAssertion(rdfs:label obo:CL_0002475 "lymphoid MHC-II-negative non-classical monocyte")
+AnnotationAssertion(obo:IAO_0000115 obo:CL_0002475 "A MHC-II-negative classical monocyte located in lymphoid tissue.")
+SubClassOf(obo:CL_0002475 obo:CL_0002471)
+AnnotationAssertion(rdfs:label obo:CL_0000100 "neuron")
+AnnotationAssertion(obo:IAO_0000115 obo:CL_0000100 "The leukocyte, by mistake.")
+"""
+
+
+def _immune_terms() -> dict[str, ce.Term]:
+    return ce.parse_owl(_IMMUNE_OWL.splitlines())
+
+
+def test_ancestors_is_transitive():
+    anc = ce.ancestors(_immune_terms())
+    assert anc["CL:0002475"] == {"CL:0002471", "CL:0000738"}
+    assert anc["CL:0000738"] == set()
+
+
+def test_definition_genus_takes_longest_label():
+    by_label = {t.label.lower(): t.cl_id for t in _immune_terms().values()}
+    assert (
+        ce.definition_genus("A MHC-II-negative classical monocyte in x.", by_label)
+        == "CL:0002469"
+    )
+    assert ce.definition_genus("An, leukocyte", by_label) is None
+    assert ce.definition_genus("Gr1-high monocyte.", by_label) is None
+
+
+def test_find_genus_mismatches_flags_off_hierarchy_genus_only():
+    terms = _immune_terms()
+    cands = ce.find_genus_mismatches(terms, ce.ancestors(terms))
+    by_id = {c.cl_id: c for c in cands}
+    i1 = by_id["CL:0002475"]
+    assert i1.detail == "CL:0002469 MHC-II-negative classical monocyte"
+    assert i1.suggestion == (
+        "asserted parents: CL:0002471 MHC-II-negative non-classical monocyte"
+    )
+    # Its own ancestor as genus is fine.
+    assert "CL:0002471" not in by_id
+    assert by_id["CL:0000100"].suggestion == "no asserted parents"
+
+
+def test_run_checks_marks_immune_hierarchy():
+    cands = ce.run_checks(_immune_terms(), set(), None)
+    immune = {c.cl_id: c.immune for c in cands}
+    assert immune == {"CL:0002475": True, "CL:0000100": False}
+
+
+def test_main_immune_only(tmp_path: Path, capsys):
+    owl = tmp_path / "cl-edit.owl"
+    owl.write_text(_IMMUNE_OWL, encoding="utf-8")
+    out = tmp_path / "cands.tsv"
+    assert (
+        ce.main(
+            [
+                "--owl",
+                str(owl),
+                "--no-download",
+                "--offline",
+                "--immune-only",
+                "--out",
+                str(out),
+                "--ledger",
+                str(tmp_path / "ledger.tsv"),
+            ]
+        )
+        == 0
+    )
+    with out.open(encoding="utf-8") as f:
+        rows = list(csv.DictReader(f, delimiter="\t"))
+    assert [(r["cl_id"], r["immune_hierarchy"]) for r in rows] == [
+        ("CL:0002475", "yes")
+    ]
+    assert "of which in the immune cell hierarchy: 1" in capsys.readouterr().out
