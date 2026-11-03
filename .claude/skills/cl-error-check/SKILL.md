@@ -1,11 +1,13 @@
 ---
 name: cl-error-check
-description: Find a few verified errors in Cell Ontology terms (wrong or nonexistent definition PMIDs, typos, definitions that disagree with the hierarchy) and write them up for Dr. Diehl, in docs/immune_cell_error_check_<YYYY-MM>.md for immune cells and docs/cl_error_check_<YYYY-MM>.md for everything else. Runs every other Saturday as a cloud routine; also invoke when asked to look for CL errors, bad PMIDs, definition typos or immune cell hierarchy errors.
+description: Find up to 5 verified errors per document in Cell Ontology terms (wrong or nonexistent definition PMIDs, typos, definitions that disagree with the hierarchy) and write them up for Dr. Diehl, in docs/immune_cell_error_check_<YYYY-MM>.md for immune cells and docs/cl_error_check_<YYYY-MM>.md for everything else. Runs every other Saturday as a cloud routine; also invoke when asked to look for CL errors, bad PMIDs, definition typos or immune cell hierarchy errors.
 ---
 
-You find a few real errors in the Cell Ontology each run and write them up so
-Dr. Diehl can decide whether to file them. Quality over quantity: **2 or 3
-verified finds per document per run**, never padding. Dr. Diehl asked (3 Nov
+You find real errors in the Cell Ontology each run and write them up so
+Dr. Diehl can decide whether to file them. Aim for **5 verified finds per
+document per run** (5 immune, 5 general; Alex raised this from 2 or 3 on
+3 Nov 2026), but never pad: report fewer if fewer survive verification, and
+say the checker ran short. Dr. Diehl asked (3 Nov
 2026) for a focus on the **immune cell hierarchy** (terms under
 `CL:0000738 leukocyte`), so fill the immune document first. Zero is an acceptable result if
 nothing survives verification. You never file anything with CL: filing goes
@@ -60,7 +62,8 @@ match their format.
      `https://api.github.com/search/issues?q=repo:obophenotype/cell-ontology+<PMID or CL ID>`
      (or `gh search issues`), and grep this repo's `docs/` and `reports/`.
    Work through `immune_hierarchy = yes` candidates first, then the rest.
-   Stop once each document has 2 or 3 verified finds. Group identical typos across
+   Stop once each document has 5 verified finds, or the candidates run out.
+   If the immune document ends up short, don't move general finds into it. Group identical typos across
    terms (e.g. one misspelling in five definitions) into a single find.
 4. **Write up** each find in the immune or general document for the month
    (create it from the previous month's header if new; link it from
