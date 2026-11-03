@@ -56,7 +56,7 @@ Current status: [decisions_for_dr_diehl.md](decisions_for_dr_diehl.md). File, ch
     `CL:0000814`. Leave it as is, or settle it together with N4?
 11. **N11. Species scope of the type I CD4 subsets.** `CL:0000923`,
     `CL:0000924` and their six children cite mouse studies and have no
-    taxon. Leave them generic?
+    taxon. Leave them species-agnostic?
 12. **N12. SOULCAP mappings (in this repo, not CL).** Under Option A,
     SOULCAP iNKT (`SOULCAP:SC000059`, now Exact to `CL:0000814`) would map
     Exact to `CL:0000921`. Separately, the 5 CD56+ gamma-delta T cell rows
@@ -114,7 +114,7 @@ subproperty of "has plasma membrane part", and innate immune response in
 mucosa is a subclass of innate immune response (all checked in OLS4). This
 started when CL PR #3655 (merged 1 June 2026) changed the CD161 axiom from
 "lacks" to "has high amount". Removing the KLRB1-like protein axiom from
-`CL:0000814` would not fix it: the generic MAIT term would then match too.
+`CL:0000814` would not fix it: the species-agnostic MAIT term would then match too.
 A CD1d element (N4) would.
 
 ## Naming evidence

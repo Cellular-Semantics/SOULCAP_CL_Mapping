@@ -1,7 +1,7 @@
 # Plasmablast marker audit, October 2026
 
 Task D from Dr. Diehl's 5 October 2026 meeting. His principle: **B cell stays
-markerless, "CD19-positive B cell" covers mammals, and the generic plasmablast
+markerless, "CD19-positive B cell" covers mammals, and the species-agnostic plasmablast
 term loses CD27 and similar markers, which move to a mammal-specific child
 term.** Row-level verdicts are in
 [pro_marker_species_support.tsv](pro_marker_species_support.tsv)
@@ -71,7 +71,7 @@ justify a **mammal**-level child. It supports a **human** child.
   Hsap/Mmus renaming). If Dr. Diehl prefers a single mammal-level child, it
   would need mouse evidence for CD27 and CD38, which wasn't found.
 - **Children:** the IgX plasmablast terms and CD86-positive plasmablast stay
-  under the generic term until their own markers are reviewed.
+  under the species-agnostic term until their own markers are reviewed.
 
 ## Questions for Alex and Dr. Diehl
 

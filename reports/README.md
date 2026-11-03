@@ -67,7 +67,7 @@ These are generated, but they are inputs to other code and need network access
 | [nk_t_cell_wording_2026-10.tsv](nk_t_cell_wording_2026-10.tsv) | The 11 NK terms (all mouse, under `CL:0000623`) whose definitions say "NK1.1-positive T cell" instead of natural killer cell (draft B6c, approved by Dr. Diehl on 14 Oct 2026): current and proposed definition, asserted parents, definition references. Pulled from Ubergraph and OLS4 on 14 Oct 2026 | Query, then hand-checked | Curated |
 | [cl_error_check_ledger.tsv](cl_error_check_ledger.tsv) | Every CL error candidate already decided by the `cl-error-check` skill: `reported` (written up in `docs/cl_error_check_<YYYY-MM>.md`) or `rejected` (checked, not an error), with the date and a reason. `soulcap-cl-error-check` skips these | `cl-error-check` skill | Curated |
 | [nkt_hierarchy_2026-10.tsv](nkt_hierarchy_2026-10.tsv) | Every term under `CL:0000814` mature NK T cell (16 terms, CL release 2026-06-08): parents, synonyms, definition and references, logical definition, taxon, marker axioms and a review note per term. Pulled from OLS4 on 14 Oct 2026 for the mature NKT review ([../docs/nkt_hierarchy_review_2026-10.md](../docs/nkt_hierarchy_review_2026-10.md)) | Query, then hand-checked | Curated |
-| [plasmablast_marker_audit_2026-10.md](plasmablast_marker_audit_2026-10.md) | Plasmablast markers and lineage, with a proposal to move them from the generic term to a species-specific child (meeting 2026-10-05) | Hand-written | Curated |
+| [plasmablast_marker_audit_2026-10.md](plasmablast_marker_audit_2026-10.md) | Plasmablast markers and lineage, with a proposal to move them from the species-agnostic term to a species-specific child (meeting 2026-10-05) | Hand-written | Curated |
 
 ## Not tracked
 

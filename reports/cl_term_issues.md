@@ -90,7 +90,7 @@ three canonical ILC groups:
 - `CL:0001081` — "group 2 innate lymphoid cell, **human**"
 - `CL:0001078` — "group 3 innate lymphoid cell, **human**"
 
-...but ILC1 only has the species-generic `CL:0001067` "group 1 innate
+...but ILC1 only has the species-agnostic `CL:0001067` "group 1 innate
 lymphoid cell," with no `, human`-suffixed counterpart. Confirmed by direct
 OLS4 search — querying "group 1 innate lymphoid cell, human" returns zero
 results, while the equivalent queries for group 2 and group 3 both return
@@ -195,7 +195,7 @@ Kept for the record. None of these will be filed.
 
 **Repo issue:** not yet filed
 **Reference:** SOULCAP `NK` row ([data/marker_combinations.csv](../data/marker_combinations.csv), regenerate via `uv run soulcap-sync`); literature in [archive/2026-09_literature_narratives/nk_cell_markers.md](../archive/2026-09_literature_narratives/nk_cell_markers.md)
-**Status:** Drafted during Milestone 4 candidate mapping work — **withdrawn 2026-10-05**. It conflicts with Dr. Diehl's rule that generic NK terms keep only lack statements; CD56 belongs on the human-specific children, which already assert it (see [nk_marker_audit_2026-10.md](nk_marker_audit_2026-10.md#ncam1--cd56)). Kept for the record.
+**Status:** Drafted during Milestone 4 candidate mapping work — **withdrawn 2026-10-05**. It conflicts with Dr. Diehl's rule that species-agnostic NK terms keep only lack statements; CD56 belongs on the human-specific children, which already assert it (see [nk_marker_audit_2026-10.md](nk_marker_audit_2026-10.md#ncam1--cd56)). Kept for the record.
 
 #### CL:0000623 — "natural killer cell"
 

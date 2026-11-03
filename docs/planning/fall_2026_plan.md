@@ -147,8 +147,8 @@ week from Dr. Diehl or a delegate.
 | Related | Useful link, but no equivalence or containment |
 | No supported match | Evidence doesn't justify any of the above yet; say why |
 
-Species and marker rules from the collaborators (keep generic and add
-specific, missing mouse data is not "human only", HLA-DR and implied markers)
+Species and marker rules from the collaborators (keep species-agnostic and add
+species-specific, missing mouse data is not "human only", HLA-DR and implied markers)
 are in [curation_principles.md](../curation_principles.md).
 
 ## 7. Ground rules

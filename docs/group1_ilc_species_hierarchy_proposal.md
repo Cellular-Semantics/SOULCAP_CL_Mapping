@@ -6,7 +6,7 @@ second pass. Every term, its current parent and its proposed parents are listed
 in [group1_ilc_species_hierarchy_proposal.tsv](group1_ilc_species_hierarchy_proposal.tsv).
 
 **Updated 2026-10-26** with Dr. Diehl's decisions from that day's meeting:
-create both group 1 ILC species terms (G7), assert the generic parent and let
+create both group 1 ILC species terms (G7), assert the species-agnostic parent and let
 the reasoner infer the species parent (G8), move `CL:0002349` to immature NK
 (G9), and his fix for the CD27/CD11b mouse subsets in place of a merge (G10).
 He will make the CL edits himself. Decision status is tracked in
@@ -16,8 +16,8 @@ He will make the CL edits himself. Decision status is tracked in
 
 Grouping all human NK terms under one node and all mouse NK terms under
 another makes species-specific terms easy to find, instead of having them
-interleaved under the same generic parents. It also lines SOULCAP's human
-cell types up against a human-only branch of CL. The generic terms stay free of
+interleaved under the same species-agnostic parents. It also lines SOULCAP's human
+cell types up against a human-only branch of CL. The species-agnostic terms stay free of
 species markers, so zebrafish and other non-mammal users can still use them.
 The cost is extra grouping terms: 6 required (NEW:1 to NEW:6), 2 approved by
 Dr. Diehl (NEW:8, NEW:9), 1 recommended (NEW:7) and 1 from his CD27/CD11b fix
@@ -37,11 +37,11 @@ it from a parent.
 - Keep the ", human" / ", mouse" label convention and `in taxon` axioms
   (Homo sapiens `NCBITaxon:9606`, Mus musculus `NCBITaxon:10090`).
   Hsap/Mmus-style labels are only a possible future option, not proposed here.
-- Terms not marked as species-specific stay in the generic hierarchy.
+- Terms not marked as species-specific stay in the species-agnostic hierarchy.
 - Pattern to follow: group 2 ILC already has "group 2 innate lymphoid cell,
   human" (`CL:0001081`) and "…, mouse" (`CL:0002089`) side by side. Group 3
   has only the human one (`CL:0001078`). In Protégé (26 Oct) Dr. Diehl showed
-  that the generic group 2 term carries only a basic statement true in every
+  that the species-agnostic group 2 term carries only a basic statement true in every
   species, while the human and mouse terms carry the markers and an
   `in taxon` axiom.
 - **One asserted parent in the editor's file** (26 Oct). CL's editor's file
@@ -83,14 +83,14 @@ group 1 innate lymphoid cell  CL:0001067
         └── decidual natural killer cell, human  CL:0002343  [Hs]
 ```
 
-Human and mouse terms are interleaved under the same generic parents, and
+Human and mouse terms are interleaved under the same species-agnostic parents, and
 there is no node that collects "all human NK" or "all mouse NK".
 
 ## After (proposed)
 
 `NEW:n` = proposed new grouping term (IDs to be assigned by CL). The drawing
 shows the hierarchy **after reasoning**, as the CL release would show it. In
-the editor's file each term keeps one asserted parent (the generic one); the
+the editor's file each term keeps one asserted parent (the species-agnostic one); the
 species parent is inferred (see [Two parents](#two-parents-decided-2026-10-26)).
 
 ```
@@ -101,7 +101,7 @@ group 1 innate lymphoid cell  CL:0001067
 ├── group 1 innate lymphoid cell, mouse  NEW:9   ── parent of NEW:2
 └── natural killer cell  CL:0000623
     │
-    │  generic branch (no species)
+    │  species-agnostic branch (no species)
     ├── pre-natural killer cell  CL:0000937
     ├── immature natural killer cell  CL:0000823
     │   ├── immature natural killer cell, human  NEW:3
@@ -146,7 +146,7 @@ group 1 innate lymphoid cell  CL:0001067
 ```
 
 NEW:3–NEW:6 appear twice in the drawing because each has two parents: the
-generic stage and the species branch. `CL:0002347`–`CL:0002349` and
+species-agnostic stage and the species branch. `CL:0002347`–`CL:0002349` and
 `CL:0002426` also appear twice: under their stage and under NEW:10.
 
 ## New grouping terms
@@ -184,7 +184,7 @@ been through this check yet.
 ### Two parents (decided 2026-10-26)
 
 **Decision:** logical definitions, not hand-asserted parents. Dr. Diehl's
-rule: the editor's file asserts only the parent on the generic branch, and the
+rule: the editor's file asserts only the parent on the species-agnostic branch, and the
 reasoner infers the species parent when the CL release is built.
 
 - Each species grouping term gets a minimal equivalence axiom, for example:
@@ -195,7 +195,7 @@ reasoner infers the species parent when the CL release is built.
   - NEW:2 natural killer cell, mouse ≡ `CL:0000623` natural killer cell
     **and** `in taxon` some Mus musculus. Markers can be added if any hold for
     every mouse NK cell (see [Next step](#next-step-markers-for-the-new-terms)).
-- An existing species term keeps its generic stage as its only asserted parent,
+- An existing species term keeps its species-agnostic stage as its only asserted parent,
   for example `CL:0002345` under immature NK. The reasoner then places it under
   NEW:4: it is an immature NK cell and in taxon mouse, so it meets NEW:4's
   definition. The same reasoning puts NEW:4 under NEW:2.
@@ -300,7 +300,7 @@ under NEW:10 in his view, although the same rule would seem to include it.
 ## Existing terms that move
 
 With the G8 rule, most moves are inferred: the asserted parent stays the
-generic stage, and the species parent comes from reasoning.
+species-agnostic stage, and the species parent comes from reasoning.
 
 | Term | Asserted parent now | Asserted parent after | Inferred parents after |
 |---|---|---|---|
@@ -316,7 +316,7 @@ generic stage, and the species parent comes from reasoning.
 | `CL:0002442` | natural killer cell `CL:0000623` | `CL:0002438` NK1.1-positive NK cell, mouse (its definition says NK1.1-positive; all its siblings are there) | NEW:6 through `CL:0002438` |
 
 Nothing else moves: the other 10 subsets under `CL:0002438` go along with it,
-and all generic terms stay where they are.
+and all species-agnostic terms stay where they are.
 
 ## Next step: markers for the new terms
 
@@ -336,14 +336,14 @@ also covers writing out the equivalence axiom of NEW:10.
 ### Terms with unclear species: recommended defaults
 
 On 26 Oct Dr. Diehl agreed that liver-resident NK and hepatic pit cell stay
-generic. Uterine NK and cycling NK were not discussed.
+species-agnostic. Uterine NK and cycling NK were not discussed.
 
 | Term | Evidence | Recommended default |
 |---|---|---|
-| `CL:4052028` uterine natural killer cell | Mice have uterine NK cells too: "The conserved CD94/NKG2A inhibitory receptor is expressed by nearly all human and ∼50% of mouse uterine natural killer (uNK) cells." (Shreeve N et al. 2021, PMID:33887202). But the current definition describes changes over the menstrual cycle, which is human wording. | **Keep generic.** Rewrite its definition to be species-neutral and move the menstrual-cycle wording to NEW:7 "uterine natural killer cell, human" (recommended). |
-| `CL:4047101` liver-resident natural killer cell | Generic label; the definition adds human markers ("In humans this cell type is distinguished from circulating natural killer cells by CD49a or CD69 gene expression"). | **Keep generic** (agreed 26 Oct). A separate draft (`gaps.tsv`, status `draft_for_review`) proposes moving the human-marker sentences to a human child term. |
-| `CL:2000054` hepatic pit cell | First described in rat: "The pit cell: description of a new type of cell occurring in rat liver sinusoids and peripheral blood." (Wisse E et al. 1976, PMID:991252, title). CL's definition cites a later review (Wisse E et al. 1997, PMID:9408963) that names no species. | **Keep generic** under liver-resident NK (agreed 26 Oct). It isn't human- or mouse-specific, and the original species is rat. |
-| `CL:4033071` cycling natural killer cell | The only definition source is a human study: "a CITE-seq dataset of 211,000 human peripheral blood mononuclear cells (PBMCs)", in which "a small population of NK cells expressing proliferation and cell-cycle genes (NK_proliferation), consistently increased upon vaccination" (Hao Y et al. 2021, PMID:34062119). | **Keep generic.** A cycling state isn't species-specific, even though the source is human. Note the human source in the definition. |
+| `CL:4052028` uterine natural killer cell | Mice have uterine NK cells too: "The conserved CD94/NKG2A inhibitory receptor is expressed by nearly all human and ∼50% of mouse uterine natural killer (uNK) cells." (Shreeve N et al. 2021, PMID:33887202). But the current definition describes changes over the menstrual cycle, which is human wording. | **Keep species-agnostic.** Rewrite its definition to be species-neutral and move the menstrual-cycle wording to NEW:7 "uterine natural killer cell, human" (recommended). |
+| `CL:4047101` liver-resident natural killer cell | Species-agnostic label; the definition adds human markers ("In humans this cell type is distinguished from circulating natural killer cells by CD49a or CD69 gene expression"). | **Keep species-agnostic** (agreed 26 Oct). A separate draft (`gaps.tsv`, status `draft_for_review`) proposes moving the human-marker sentences to a human child term. |
+| `CL:2000054` hepatic pit cell | First described in rat: "The pit cell: description of a new type of cell occurring in rat liver sinusoids and peripheral blood." (Wisse E et al. 1976, PMID:991252, title). CL's definition cites a later review (Wisse E et al. 1997, PMID:9408963) that names no species. | **Keep species-agnostic** under liver-resident NK (agreed 26 Oct). It isn't human- or mouse-specific, and the original species is rat. |
+| `CL:4033071` cycling natural killer cell | The only definition source is a human study: "a CITE-seq dataset of 211,000 human peripheral blood mononuclear cells (PBMCs)", in which "a small population of NK cells expressing proliferation and cell-cycle genes (NK_proliferation), consistently increased upon vaccination" (Hao Y et al. 2021, PMID:34062119). | **Keep species-agnostic.** A cycling state isn't species-specific, even though the source is human. Note the human source in the definition. |
 
 ### Other questions
 

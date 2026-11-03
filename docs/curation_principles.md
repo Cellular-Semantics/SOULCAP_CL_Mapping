@@ -20,9 +20,13 @@ to-do list from the same meetings is in
 
 ## Species
 
-- **Keep generic, add specific.** High-level CL terms keep only assertions that
-  hold across species, mainly lineage negatives such as lacks CD3, CD19, CD20,
-  CD14. This keeps generic terms usable for zebrafish and other non-mammals,
+- **Say "species-agnostic terms", not "generic terms".** CL terms with no
+  taxon are called species-agnostic: "they're generic, but I think it's
+  better to say species agnostic, because that's really what's going on".
+  (Diehl, 2026-11-02)
+- **Keep species-agnostic, add species-specific.** High-level CL terms keep
+  only assertions that hold across species, mainly lineage negatives such as
+  lacks CD3, CD19, CD20, CD14. This keeps species-agnostic terms usable for zebrafish and other non-mammals,
   where reagents are limited. Species-specific positives (for example CD56 on
   NK cells) go on new ", human" or ", mouse" terms with `in taxon`, such as
   "plasmablast, human", not on new mammal-level terms. Existing
@@ -44,13 +48,20 @@ to-do list from the same meetings is in
 - **Label convention:** keep ", human" / ", mouse" for now; taxon suffixes are a
   possible later change. (Diehl, 2026-10-05)
 - **To widen a mammal-specific term, keep its IRI and relabel it.** Give it a
-  qualifier (for example "mature B cell, CD19-positive") and add a new generic
-  parent above it, so existing annotations keep their meaning.
-  (Diehl, 2026-10-14)
-- **Generic terms may carry no markers.** That is accepted: the
+  qualifier (for example "mature B cell, CD19-positive") and add a new
+  species-agnostic parent above it, so existing annotations keep their
+  meaning. (Diehl, 2026-10-14)
+- **Species-agnostic terms may carry no markers.** That is accepted: the
   species-specific children carry the markers single-cell users need.
-  Annotating to the generic term is not wrong, only less informative.
-  (Diehl, 2026-10-14)
+  Annotating to the species-agnostic term is not wrong, only less
+  informative. (Diehl, 2026-10-14)
+- **But a species-agnostic term can carry a marker that is fundamental to the
+  cell type.** Some markers define the cell's function and identity across
+  vertebrates, so the term keeps them: CD4-positive, alpha-beta T cell exists
+  in "mammals, birds, reptiles, amphibians, and fish". There are few of these.
+  Where a marker's status outside mammals is unknown (CD19 on B cells), it
+  goes on a qualified term such as "mature B cell, CD19-positive" instead.
+  (Diehl, 2026-11-02)
 - **Don't restrict a term to mammals when the cell type is reported outside
   mammals.** Plasmablasts are reported in birds, and possibly in reptiles and
   fish. (Diehl, 2026-10-14)

@@ -35,14 +35,14 @@ plasmablast part of the same request is in
 
 | Term group | Pairs | Human: supported / contradicted / no evidence / not applicable | Mouse: supported / contradicted / no evidence / not applicable |
 |---|---|---|---|
-| Generic (no species in label) | 5 | 5 / 0 / 0 / 0 | 0 / 1 / 4 / 0 |
+| Species-agnostic (no species in label) | 5 | 5 / 0 / 0 / 0 | 0 / 1 / 4 / 0 |
 | Human-specific (", human") | 34 | 21 / 2 / 11 / 0 | 0 / 0 / 0 / 34 |
 | Mouse-specific (", mouse") | 27 | 0 / 0 / 0 / 27 | 21 / 1 / 5 / 0 |
 | **All NK / group 1 ILC** | **66** | **26 / 2 / 11 / 27** | **21 / 2 / 9 / 34** |
 
-Only 5 pairs sit on generic terms: the two lineage-negative markers on
+Only 5 pairs sit on species-agnostic terms: the two lineage-negative markers on
 `CL:0000623` and the three positive markers on `CL:0000937` pre-natural killer
-cell. Generic `CL:0000623` asserts no positive marker, which matches Dr.
+cell. Species-agnostic `CL:0000623` asserts no positive marker, which matches Dr.
 Diehl's principle that high-level terms stay (near) markerless.
 
 ## Cases requested in the meeting
@@ -77,7 +77,7 @@ Diehl's principle that high-level terms stay (near) markerless.
 
 CD56 is asserted on 5 NK terms, all of them human-specific (`CL:0000938`,
 `CL:0000939`, `CL:0002338`, `CL:0002343`, `CL:0002344`). All have
-`mouse_status = not_applicable`. **No generic or cross-species NK term asserts
+`mouse_status = not_applicable`. **No species-agnostic or cross-species NK term asserts
 CD56.** For mouse: "Because mice lack CD56, murine NK cell subsets are
 classified using alternative markers, particularly CD27 and Mac-1" (Kim 2026,
 PMID:41898531).
@@ -85,17 +85,17 @@ PMID:41898531).
 This conflicts with an earlier draft in this repo: the unfiled `NK` row in
 [gaps.tsv](gaps.tsv) and the "Natural killer cell missing CD56 marker axiom"
 entry in [cl_term_issues.md](cl_term_issues.md) propose *adding* CD56 to
-generic `CL:0000623`. That proposal conflicts with Dr. Diehl's rule and was
+species-agnostic `CL:0000623`. That proposal conflicts with Dr. Diehl's rule and was
 **withdrawn** on 2026-10-05.
 
 ### Terms that mix human-only and mouse-only markers
 
 **None found.** Every human-labelled term carries only human-applicable
 markers, and every mouse-labelled term only mouse-applicable ones (NK1.1,
-Ly49, DX5, CD27/CD11b subsets). The generic terms carry only lineage-negative
+Ly49, DX5, CD27/CD11b subsets). The species-agnostic terms carry only lineage-negative
 markers (`CL:0000623`) or progenitor markers (`CL:0000937`).
 
-### Lineage-negative markers on generic NK (`CL:0000623`)
+### Lineage-negative markers on species-agnostic NK (`CL:0000623`)
 
 `lacks CD20` and `lacks CD14` are both `supported` in human and
 `no_evidence_found` in mouse. Mouse NK studies gate out CD3/TCR and CD19, not
@@ -110,7 +110,7 @@ opinion.
 | 1 | `CL:0002348`, `CL:0002349` | The definitions cite **PMID:1994922**, which is an unrelated 1991 paper (Liang MH, pulmonary venoocclusive disease). This is probably a typo for PMID:19949422 (Andrews 2010), which `CL:0002345` and `CL:0002347` cite. | Citation error |
 | 2 | `CL:0002439`–`CL:0002448` (10 terms) | The definitions read "A NK1.1-positive T cell that is …", but the terms are NK cells (parent `CL:0002438` NK1.1-positive natural killer cell, mouse). | Definition error |
 | 3 | `CL:0002345` | Asserts DX5 (CD49b, `PR:000001008`) **positive** on an immature NK cell. Mouse iNK cells "lack CD49b expression" (Riggan 2019, PMID:31500958). Its sibling `CL:0002346` is DX5-negative. | Mouse contradicted |
-| 4 | `CL:0000937` pre-NK (generic) | Asserts CD122 positive. The earliest mouse pre-NKP "does not express IL-2Rβ (CD122)" (Fathman 2011, PMID:21931117); only the later rNKP does. | Mouse contradicted |
+| 4 | `CL:0000937` pre-NK (species-agnostic) | Asserts CD122 positive. The earliest mouse pre-NKP "does not express IL-2Rβ (CD122)" (Fathman 2011, PMID:21931117); only the later rNKP does. | Mouse contradicted |
 | 5 | `CL:0002343` decidual NK, human | Asserts galectin-1 as `has plasma membrane part`. The cited source calls it one of "two secreted proteins". Its expression is supported but the relation isn't; `expresses` would fit the evidence. | Relation question |
 | 6 | `CL:0002438` and children | NK1.1 is strain-restricted: "C57BL/6 and SJL mice use NK1.1 for identification, whereas BALB/c mice … rely on CD49b and NKp46" (Qin 2024, PMID:39628473). | Note for definition |
 | 7 | `CL:0002338`, `CL:0002344` (human) | The definitions of these human immature NK terms cite only a mouse NK progenitor review (PMID:12457618). | Citation scope |
@@ -124,7 +124,7 @@ opinion.
    curation spreadsheet, not in CL. The HLA-DRA issue draft now covers both
    `CL:0000938` and `CL:0000939`.
 2. **CD14 in mouse NK:** `no_evidence_found`, not contradicted. Is that good
-   enough to keep the axiom on generic `CL:0000623`, or do you want a mouse
+   enough to keep the axiom on species-agnostic `CL:0000623`, or do you want a mouse
    source before it stays?
 3. **Pre-NK (`CL:0000937`):** its CD34/CD117/CD122 markers are supported in
    human only if CL's "pre-NK" corresponds to human stage 2, and CD122 is
