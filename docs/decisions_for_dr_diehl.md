@@ -4,8 +4,9 @@ Every decision this project needs from Dr. Diehl, in one place, sorted by
 where it stands. The details and evidence stay in the linked documents; this
 page says what is being decided, what has been decided, and what happens next.
 
-Last updated: 30 October 2026, after his email reply. Next meeting with
-Dr. Diehl: Monday 2 November 2026.
+Last updated: 2 November 2026, after the meeting with Dr. Diehl. Next
+meeting with Dr. Diehl: not yet set (he will miss the 9 November project
+meeting with Dr. Osumi-Sutherland because of a faculty meeting).
 
 This is the only document he needs. The full text of each CL issue draft
 (B items) is in [section 6](#6-details-of-the-cl-issue-drafts); it replaces
@@ -26,10 +27,11 @@ to **Approved** if something has to be filed or changed, or to **Closed** if
 not. CL issues are filed with the `cl-upstream-issue-filing` skill. Nothing
 moves to Approved without his decision.
 
-**Start here:** how to handle his CL fixes (B6b and D2 in
-[section 2](#2-in-between-waiting-on-reading-or-an-action): his edits only, or
-CL issues too), then Q1 to Q4 (quick; Q4 is already in the abstract), M1,
-then N1 and N6 (they hold up CL#3663, CL#3664 and 14 SOULCAP mappings).
+**Start here:** the next batch of small fixes (B7b, N8, and B6b if he has not
+fixed it himself; see R3 in [section 5](#5-closed)), then how to handle D2 in
+[section 2](#2-in-between-waiting-on-reading-or-an-action), then Q1 to Q4
+(quick; Q4 is already in the abstract), M1, then N1 and N6 (they hold up
+CL#3663, CL#3664 and 14 SOULCAP mappings).
 
 ## 1. New: waiting for a decision
 
@@ -67,8 +69,7 @@ File, change or drop each.
 |---|---|---|
 | B6a | Review or remove DX5 (CD49b) positive on `CL:0002345 CD27-low, CD11b-low immature natural killer cell, mouse`; its sibling `CL:0002346 Dx5-negative, NK1.1-positive immature natural killer cell, mouse` is DX5-negative | Medium confidence; rests on Q3 |
 | B6d | Galectin-1 on `CL:0002343 decidual natural killer cell, human`: use `expresses` instead of `has plasma membrane part` | Medium confidence; quote verified (EV00273) |
-| B7b | Fix the "NKGA2" typo in the label and definition of `CL:0002439 NKGA2-positive natural killer cell, mouse` (should be NKG2A) | High confidence. CL PR #3386 carries the typo into a new label |
-| B8 | Three wrong or nonexistent definition PMIDs (`CL:0001023`, `CL:0002005`, `CL:0000097`) and three definition typos (E1 to E4 in [cl_error_check_2026-11.md](cl_error_check_2026-11.md)). File one batch issue with B7b and N8, or fix in his edits? | Found 2 Nov 2026; high confidence |
+| B7b | Fix the "NKGA2" typo in the label and definition of `CL:0002439 NKGA2-positive natural killer cell, mouse` (should be NKG2A) | High confidence. CL PR #3386 carries the typo into a new label. Candidate for the next batch issue (R3) |
 
 ### Group 1 ILC species hierarchy (decisions 6 to 12)
 
@@ -80,7 +81,7 @@ under `CL:0002438 NK1.1-positive natural killer cell, mouse`.
 
 | # | Question |
 |---|---|
-| G6 | Terms with unclear species. **Agreed 26 Oct:** liver-resident NK and hepatic pit cell stay generic. Still open: keep uterine NK and cycling NK generic; make the uterine NK definition species-neutral; move liver-resident NK's human sentences to a human child (draft C1 in [gaps.tsv](../reports/gaps.tsv))? |
+| G6 | Terms with unclear species. **Agreed 26 Oct:** liver-resident NK and hepatic pit cell stay species-agnostic. Still open: keep uterine NK and cycling NK species-agnostic; make the uterine NK definition species-neutral; move liver-resident NK's human sentences to a human child (draft C1 in [gaps.tsv](../reports/gaps.tsv))? |
 | G7b | NEW:7 "uterine natural killer cell, human" (recommended): adopt? Not discussed on 26 Oct, when NEW:8 and NEW:9 were approved |
 | G11 | Keep `CL:0002346 Dx5-negative, NK1.1-positive immature natural killer cell, mouse` under NK despite its overlap with ILC1? |
 | G12 | Name of his new grouping term NEW:10 "CD27-positive, CD11b-positive natural killer cell, mouse". In his reasoned view, high and low amounts count as positive, so the CD27-high, CD11b-low and CD27-low, CD11b-high terms fall under it. In the literature, "CD27+CD11b+" usually means the double-positive stage only (`CL:0002347 CD27-high, CD11b-high natural killer cell, mouse`). Keep the name, or say in the definition that low levels count? Details in the [proposal](group1_ilc_species_hierarchy_proposal.md#dr-diehls-fix-for-the-cd27--cd11b-mouse-subsets-g9-g10) |
@@ -100,10 +101,10 @@ File, change or drop each.
 | N5 | `CL:0020002 mucosal-associated invariant T cell, human` is inferred under NKT; N4 would fix it. If not, file separately? |
 | **N6** | `CL:4052055 mature NK T cell, human`: keep as human NKT, or rename it "CD56-positive T cell, human" as our CL#3663 asks, and move it out of the NKT branch? |
 | N7 | Fix the definition genus of the four type I cytokine terms (one batch issue)? |
-| N8 | Typo in `CL:0000922 type II NK T cell`: "NK call markers" |
+| N8 | Typo in `CL:0000922 type II NK T cell`: "NK call markers". Candidate for the next batch issue (R3) |
 | N9 | Type II cytokine terms: move under activated type II NKT, or drop the CD69 / "recently activated" wording? |
 | N10 | "Downregulated NK markers" in the activated terms vs their inherited CD161 axiom: leave, or settle with N4? |
-| N11 | Leave the type I CD4 subsets generic (no taxon)? |
+| N11 | Leave the type I CD4 subsets species-agnostic (no taxon)? |
 | N12 | Our mappings follow N1 and N6: iNKT to `CL:0000921 type I NK T cell` under Option A; the 13 CD56+ T cell rows depend on N6 |
 
 ### Mature B cell / plasmablast restructure (his own CL edit)
@@ -114,7 +115,7 @@ Open questions in
 | # | Question |
 |---|---|
 | P1 | Relabel `CL:0000980 plasmablast` (for example "plasmablast, CD19-positive"), or keep the label? |
-| P2 | Assert the new generic plasmablast under antibody secreting cell, or rely on the reasoner? |
+| P2 | Assert the new species-agnostic plasmablast under antibody secreting cell, or rely on the reasoner? |
 | P3 | SOULCAP's `PB` row (`SOULCAP:SC000025`) is CD138-, matching the axiom he is dropping. Add a note to the SOULCAP feedback list? |
 
 ### General rules
@@ -122,18 +123,35 @@ Open questions in
 | # | Question | Detail |
 |---|---|---|
 | R1 | Accept "both species" for lineage-negative markers (e.g. lacks CD14 / CD19 / CD20) on biological grounds, without a quote per species? | Request B3 in the [request tracker](planning/2026-10_collaborator_requests.md) |
-| R2 | How should generic vs species-specific terms be explained to single-cell users, and does he want anything from us? | Request D8 |
+
+R2 was answered on 2 November 2026 (section 5).
 
 ### On hold (raise when he is ready)
 
 - Pre-NK markers on `CL:0000937 pre-natural killer cell`: move CD34/CD117/CD122 to a human child?
+- **E2 species (raised 2 Nov 2026).** The markers in the definition of
+  `CL:0002005 CD34-positive, CD38-positive megakaryocyte erythroid progenitor cell`
+  are the human ones from the definition source (PMID:19022770, 2008), which
+  lists different markers for mouse. He knows they hold for human, doesn't
+  know that they fail in mouse, and doesn't want the term called human-only,
+  but wants the point "captured somewhere". He asked to leave it "until
+  later". CL already has a comment on the term: "Markers are associated with
+  human cell type." Details in [cl_error_check_2026-11.md](cl_error_check_2026-11.md#e2-a-pmid-that-does-not-exist).
+- **Talk to Dr. Osumi-Sutherland about species-agnostic terms (from R2).** He
+  thinks David agrees with the principles, and noted the tension between
+  single-cell RNA-seq users (CL's main community now) and other CL users.
+- **A human cell ontology derived from CL (from R2).** Long term: keep the
+  species-agnostic terms and the human terms and leave the rest out; decide
+  whether terms like "mature B cell, CD19-positive" are relabelled or at least
+  get a broad synonym ("mature B cell"). A big project, to discuss with
+  David and others. For now, our NK hierarchy work should support this goal.
 
 ## 2. In between: waiting on reading or an action
 
 | # | Item | Waiting on |
 |---|---|---|
-| B6b | Wrong PMID (1994922) in `CL:0002348 CD27-low, CD11b-high natural killer cell, mouse` and `CL:0002349 CD27-high, CD11b-low natural killer cell, mouse`. **26 Oct:** typo confirmed, should be 19949422; he will fix it in CL himself. **30 Oct (email):** fix both terms | Dr. Diehl: make the fix. Approach (his edits only, or a CL issue too) to discuss on 2 Nov ([details](#b6b-wrong-pmid-in-two-definitions)) |
-| D2 | Group 1 ILC species hierarchy (G7, G8) and the CD27/CD11b mouse fix (G9, G10) in CL, made by hand by Dr. Diehl ("perhaps I should edit the ontology manually", 26 Oct). Design in the [proposal](group1_ilc_species_hierarchy_proposal.md) | Dr. Diehl. Approach (his edits only, or CL issues too) to discuss on 2 Nov (his email, 30 Oct) |
+| B6b | Wrong PMID (1994922) in `CL:0002348 CD27-low, CD11b-high natural killer cell, mouse` and `CL:0002349 CD27-high, CD11b-low natural killer cell, mouse`. **26 Oct:** typo confirmed, should be 19949422; he will fix it in CL himself. **30 Oct (email):** fix both terms | Dr. Diehl: make the fix. Not discussed on 2 Nov, and no CL pull request from him yet (checked 2 Nov). Could go in the next batch issue instead (R3) ([details](#b6b-wrong-pmid-in-two-definitions)) |
+| D2 | Group 1 ILC species hierarchy (G7, G8) and the CD27/CD11b mouse fix (G9, G10) in CL, made by hand by Dr. Diehl ("perhaps I should edit the ontology manually", 26 Oct). Design in the [proposal](group1_ilc_species_hierarchy_proposal.md) | Dr. Diehl. Approach (his edits only, or CL issues too) not discussed on 2 Nov; still open |
 | C7 | Protégé query for "has plasma membrane part NCAM1" returned too few classes | Dr. Diehl reproducing it ([protege_ncam1_query_repro.md](protege_ncam1_query_repro.md)) |
 | B2 | His reference list for the literature folder | Dr. Diehl sharing it |
 | S1 | SOULCAP ID column in the SOULCAP sheet: download the sheet, add the IDs from [soulcap_entities.tsv](../mappings/soulcap_entities.tsv), return it to Kelly (agreed 20 Oct 2026) | Dr. Diehl (Fathom action item) |
@@ -168,11 +186,14 @@ the decision, the date and the exact next step, for example: file with the
 | B7a | Parent of `CL:0002442 CD94-negative, Ly49CI-negative natural killer cell, mouse` | Folded into the group 1 ILC decisions (G6 to G12) |
 | Q5 | Andrews DM et al. 2010 quote (EV00275, PMID:19949422) | 26 Oct 2026: accepted. He read the abstract in the meeting: "this statement here is very clear that they're calling this immature". Recorded in [quote_check_reviewed.tsv](../literature/quote_check_reviewed.tsv) |
 | G7 | New group 1 ILC grouping terms | 26 Oct 2026: create both NEW:8 "group 1 innate lymphoid cell, human" and NEW:9 "…, mouse". NEW:7 is still open (G7b) |
-| G8 | Two parents | 26 Oct 2026: logical definitions. Assert only the generic parent in the editor's file, with a minimal equivalence axiom per species term (for example immature natural killer cell and in taxon some Homo sapiens); the reasoner infers the species parent |
+| G8 | Two parents | 26 Oct 2026: logical definitions. Assert only the species-agnostic parent in the editor's file, with a minimal equivalence axiom per species term (for example immature natural killer cell and in taxon some Homo sapiens); the reasoner infers the species parent |
 | G9 | `CL:0002349 CD27-high, CD11b-low natural killer cell, mouse` | 26 Oct 2026: move to immature NK ("many mouse papers call this immature"); its equivalence axiom changes from mature to immature. CL edit: D2 |
 | G10 | Merge `CL:0002426 CD11b-positive, CD27-positive natural killer cell, mouse` with `CL:0002347 CD27-high, CD11b-high natural killer cell, mouse`? | 26 Oct 2026: no merge. New grouping term NEW:10 "CD27-positive, CD11b-positive natural killer cell, mouse"; `CL:0002426` renamed "NK1.1-positive, CD27-positive, CD11b-positive natural killer cell, mouse", because NK1.1 is found in B6-type mice but not in strains such as BALB/c. CL edit: D2; naming question: G12 |
 | — | Fold his CD27/CD11b fix into the group 1 ILC proposal | Done 26 Oct 2026 ([proposal](group1_ilc_species_hierarchy_proposal.md)) |
-| — | Add CD56 to `CL:0000623 natural killer cell` | Withdrawn: generic NK terms keep only lack statements |
+| — | Add CD56 to `CL:0000623 natural killer cell` | Withdrawn: species-agnostic NK terms keep only lack statements |
+| B8 | Three wrong or nonexistent definition PMIDs (`CL:0001023`, `CL:0002005`, `CL:0000097`) and three definition typos (E1 to E4 in [cl_error_check_2026-11.md](cl_error_check_2026-11.md)) | 2 Nov 2026: he rechecked each corrected paper in the meeting ("clearly the correct article") and filed all six as one issue, [CL#3835](https://github.com/obophenotype/cell-ontology/issues/3835). CL's bot opened [PR #3836](https://github.com/obophenotype/cell-ontology/pull/3836), which he merged the same day. E1, E3, E4 archived in [archive/2026-11_cl_error_check_fixed/](../archive/2026-11_cl_error_check_fixed/README.md). E2's species question is on hold (section 1) |
+| R2 | How to explain species-agnostic vs species-specific terms to single-cell users (request D8) | 2 Nov 2026: call them **species-agnostic terms**, not "generic terms" ("they're generic, but I think it's better to say species agnostic, because that's really what's going on"). Species-agnostic terms can still carry markers that are fundamental to the cell type across species, for example CD4-positive, alpha-beta T cell; where a marker's status outside mammals is unknown (CD19 on B cells), the marker goes on a qualified term such as "mature B cell, CD19-positive". Recorded in [curation_principles.md](curation_principles.md). Follow-ups on hold (section 1) |
+| R3 | How small CL fixes get made | 2 Nov 2026: one batch issue (CL's "Typos/Bugs/Errors" template) linking our write-up, which he files after rechecking the papers; Dr. Osumi-Sutherland asks CL's bot (`@ai4c-agent please fix`) to open the pull request, and Dr. Diehl reviews and merges it. About six fixes per issue is a good size. For new error checks, focus on the immune cell hierarchy terms for now |
 
 ## 6. Details of the CL issue drafts
 
@@ -255,12 +276,12 @@ plasmablasts as CD138-low. No quote supporting "lacks CD138" was found.
 #### B3b. Move plasmablast markers to a species-specific child
 
 **Decision (14 Oct 2026):** superseded by his B cell restructure: a new
-generic plasmablast, with `CL:0000980` kept as the CD19-positive (mammal)
+species-agnostic plasmablast, with `CL:0000980` kept as the CD19-positive (mammal)
 term. The species-specific term should just be human (for example
 "plasmablast, human", as in Option 1), not a "human child" or a mammal-level
 child. Open questions are P1 to P3 in section 1.
 
-**CL ID:** `CL:0000980` plasmablast (generic term keeps no markers)
+**CL ID:** `CL:0000980` plasmablast (species-agnostic term keeps no markers)
 
 **Markers to move:** CD38 high, CD27 high, lacks CD20 (with B3a, CD138 is
 dropped).
@@ -281,7 +302,7 @@ dropped).
 
 **Note for either option:** plasmablast is *already* mammal-only. Its parent
 "mature B cell" sits under "B cell, CD19-positive", whose parent
-`CL:0001200` is `in taxon Mammalia`. So stripping markers from the generic
+`CL:0001200` is `in taxon Mammalia`. So stripping markers from the species-agnostic
 term alone won't make it usable for zebrafish; the mature B cell link would
 also have to change.
 
@@ -414,5 +435,5 @@ into the new label.
 - **Pre-NK markers** (`CL:0000937`, CD34/CD117/CD122). In mouse, the earliest
   pre-NK "does not express IL-2Rβ (CD122)" (Fathman JW et al. 2011,
   PMID:21931117). Should these move to a human child, as for plasmablast?
-- **Withdrawn:** our old draft to *add* CD56 to generic NK (`CL:0000623`).
-  It conflicts with his rule that generic NK terms keep only lack statements.
+- **Withdrawn:** our old draft to *add* CD56 to species-agnostic NK (`CL:0000623`).
+  It conflicts with his rule that species-agnostic NK terms keep only lack statements.
