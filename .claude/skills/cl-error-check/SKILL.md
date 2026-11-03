@@ -22,7 +22,7 @@ match their format.
 
 | File | Role |
 |---|---|
-| `uv run soulcap-cl-error-check` | Downloads `cl-edit.owl` from CL `master`, checks every live definition, writes ranked candidates to `data/cl_error_candidates.tsv` (gitignored). Kinds, strongest first: `malformed_pmid`, `missing_pmid`, `near_miss_pmid`, `genus_mismatch` (definition opens "A <CL term>" that isn't an asserted ancestor), `typo`. Column `immune_hierarchy` is `yes` for terms under `CL:0000738 leukocyte`; `--immune-only` keeps just those. |
+| `uv run soulcap-cl-error-check` | Downloads `cl-edit.owl` from CL `master`, checks every live definition, writes ranked candidates to `data/cl_error_candidates.tsv` (gitignored). Kinds, strongest first: `malformed_pmid`, `missing_pmid`, `near_miss_pmid`, `marker_conflict` (a marker stated one way and asserted another: label or definition vs the term's own or inherited marker axioms, label vs definition, or an axiom vs the same marker on an ancestor), `genus_mismatch` (definition opens "A <CL term>" that isn't an asserted ancestor), `typo`. Marker names and relation senses come from `reports/cl_pro_relationships.tsv` and `marker_mappings/marker_protein_gene.csv`. Column `immune_hierarchy` is `yes` for terms under `CL:0000738 leukocyte`; `--immune-only` keeps just those. |
 | [reports/cl_error_check_ledger.tsv](../../../reports/cl_error_check_ledger.tsv) | Every candidate already decided: `reported` (written up) or `rejected` (checked, not an error). The CLI skips these. Add a row for **every** candidate you check, kept or not. |
 | `docs/immune_cell_error_check_<YYYY-MM>.md` | Immune cell hierarchy finds (`immune_hierarchy = yes`) for that month, numbered I1, I2, ... |
 | `docs/cl_error_check_<YYYY-MM>.md` | All other finds for that month, numbered E1, E2, ... |
@@ -58,6 +58,16 @@ match their format.
      relations in `cl-edit.owl` (e.g. "develops from" the genus, as in I2)
      and say which fix is plausible: reword the definition, or add a parent.
      Which one is right is usually Dr. Diehl's call; say so.
+   - For `marker_conflict`: find the axiom in `data/cl-edit.owl` and quote
+     it; look up the PR term in OLS4 and confirm it is the protein the text
+     names (the matcher goes by CD names and gene symbols, so check, e.g.,
+     that a "CD45RA" mention really meets a CD45RA isoform term). Reject it
+     if the text is about another cell ("presents antigen to CD8-positive
+     T cells") or the two senses can both hold. Check whether a species
+     difference explains it (human vs mouse markers; see
+     `docs/curation_principles.md`); if so, say so rather than calling it a
+     plain error. Say which side looks wrong (text, label or axiom) and
+     leave the choice of fix to Dr. Diehl.
    - No existing issue or PR already covers it: search
      `https://api.github.com/search/issues?q=repo:obophenotype/cell-ontology+<PMID or CL ID>`
      (or `gh search issues`), and grep this repo's `docs/` and `reports/`.

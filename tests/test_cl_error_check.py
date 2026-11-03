@@ -287,3 +287,158 @@ def test_main_immune_only(tmp_path: Path, capsys):
         ("CL:0002475", "yes")
     ]
     assert "of which in the immune cell hierarchy: 1" in capsys.readouterr().out
+
+
+# Marker axioms, modelled on the real CL:0002044 (label "Kit-positive", axiom
+# "lacks Kit"), CL:0002123 (label "IgG-negative", definition "IgG-positive")
+# and CL:0002466 (CD11c low, parent CD11c high).
+_MARKER_OWL = """\
+AnnotationAssertion(rdfs:label obo:CL_0000738 "leukocyte")
+AnnotationAssertion(obo:IAO_0000115 obo:CL_0000738 "An achromatic cell.")
+AnnotationAssertion(rdfs:label obo:CL_0000990 "conventional dendritic cell")
+AnnotationAssertion(obo:IAO_0000115 obo:CL_0000990 "Dendritic cell, CD11c-high.")
+EquivalentClasses(obo:CL_0000990 ObjectIntersectionOf(obo:CL_0000738 ObjectSomeValuesFrom(obo:RO_0015015 obo:PR_000001013)))
+AnnotationAssertion(rdfs:label obo:CL_0002466 "small intestine serosal dendritic cell")
+AnnotationAssertion(obo:IAO_0000115 obo:CL_0002466 "A dendritic cell that is CD11c-low.")
+SubClassOf(obo:CL_0002466 obo:CL_0000990)
+SubClassOf(obo:CL_0002466 ObjectSomeValuesFrom(obo:RO_0015016 obo:PR_000001013))
+AnnotationAssertion(rdfs:label obo:CL_0002044 "Kit-positive, integrin beta7-high basophil mast progenitor cell")
+AnnotationAssertion(obo:IAO_0000115 obo:CL_0002044 "A progenitor that is Kit-positive and CD8-alpha-bright.")
+EquivalentClasses(obo:CL_0002044 ObjectIntersectionOf(obo:CL_0000738 ObjectSomeValuesFrom(obo:CL_4030046 obo:PR_000002065) ObjectSomeValuesFrom(obo:RO_0002104 obo:PR_000001084)))
+AnnotationAssertion(rdfs:label obo:CL_0002123 "B220-low CD38-positive IgG-negative class switched memory B cell")
+AnnotationAssertion(obo:IAO_0000115 obo:CL_0002123 "A memory B cell with the phenotype B220-low and IgG-positive. It presents antigen to Kit-negative T cells.")
+SubClassOf(obo:CL_0002123 obo:CL_0000738)
+SubClassOf(obo:CL_0002123 ObjectSomeValuesFrom(obo:RO_0002104 obo:PR_000002065))
+"""
+
+_PRO_HEADER = (
+    "cell\tcell_label\trelation\trelation_label\tsense\tasserted\tpr\tpr_label\t"
+    "cd_synonym\tuniprot_human\tuniprot_mouse\txrefs\thgnc_id\thgnc_symbol\n"
+)
+_PRO_ROWS = [
+    ["RO:0015015", "has high plasma membrane amount", "high"]
+    + ["PR:000001013", "integrin alpha-X", "CD11c (exact)", "ITGAX"],
+    ["RO:0015016", "has low plasma membrane amount", "low"]
+    + ["PR:000001013", "integrin alpha-X", "CD11c (exact)", "ITGAX"],
+    ["CL:4030046", "lacks_plasma_membrane_part", "negative"]
+    + ["PR:000002065", "mast/stem cell growth factor receptor", "", "KIT"],
+    ["RO:0002104", "has plasma membrane part", "positive"]
+    + ["PR:000001084", "T-cell surface glycoprotein CD8 alpha chain", "", "CD8A"],
+]
+
+
+def _write_pro_tsv(path: Path) -> None:
+    lines = [
+        "\t".join(
+            ["CL:0000001", "x", rel, rel_label, sense, "True", pr, label, cd]
+            + ["", "", "", "", symbol]
+        )
+        for rel, rel_label, sense, pr, label, cd, symbol in _PRO_ROWS
+    ]
+    path.write_text(_PRO_HEADER + "\n".join(lines) + "\n", encoding="utf-8")
+
+
+def _marker_setup(tmp_path: Path) -> tuple[dict[str, ce.Term], ce.MarkerNames]:
+    pro = tmp_path / "cl_pro.tsv"
+    _write_pro_tsv(pro)
+    registry = tmp_path / "registry.csv"
+    registry.write_text(
+        "marker_token,marker_synonyms,pro_id\nCD117,c-Kit|SCFR,PR:000002065\nIgG,,\n",
+        encoding="utf-8",
+    )
+    return ce.parse_owl(_MARKER_OWL.splitlines()), ce.load_marker_names(pro, registry)
+
+
+def test_parse_owl_collects_marker_axioms():
+    terms = ce.parse_owl(_MARKER_OWL.splitlines())
+    assert terms["CL:0002044"].markers == [
+        ("CL:4030046", "PR:000002065"),
+        ("RO:0002104", "PR:000001084"),
+    ]
+    assert terms["CL:0002466"].markers == [("RO:0015016", "PR:000001013")]
+    assert terms["CL:0002466"].parents == ["CL:0000990"]
+
+
+def test_load_marker_names(tmp_path: Path):
+    _, names = _marker_setup(tmp_path)
+    assert names.relations["CL:4030046"] == ("negative", "lacks_plasma_membrane_part")
+    assert names.pr_labels["PR:000001013"] == "integrin alpha-X"
+    assert names.by_name["cd11c"] == {"PR:000001013"}  # CD synonym
+    assert names.by_name["kit"] == {"PR:000002065"}  # HGNC symbol
+    assert names.by_name["ckit"] == {"PR:000002065"}  # registry synonym
+    assert names.by_name["cd8alpha"] == {"PR:000001084"}  # alias via CD8A
+    assert names.by_name["langerin"] == set()  # alias whose symbol is absent
+
+
+def test_load_marker_names_without_registry(tmp_path: Path):
+    pro = tmp_path / "cl_pro.tsv"
+    _write_pro_tsv(pro)
+    names = ce.load_marker_names(pro, tmp_path / "missing.csv")
+    assert "cd117" not in names.by_name
+
+
+def test_marker_mentions_and_masking():
+    assert ce.marker_mentions("MHC-II-negative, CD8-alpha-low and CD25-bright") == [
+        ("MHC-II-negative", "mhcii", "negative"),
+        ("CD8-alpha-low", "cd8alpha", "low"),
+        ("CD25-bright", "cd25", "high"),
+    ]
+    masked = ce.mask_other_cells(
+        "It is CD4-negative. It signals to CD4-positive T cells."
+    )
+    assert ce.marker_mentions(masked) == [("CD4-negative", "cd4", "negative")]
+    # "of" phrases describe the term itself and are kept.
+    kept = ce.mask_other_cells("A subset of CD4-positive T cells.")
+    assert ce.marker_mentions(kept) == [("CD4-positive", "cd4", "positive")]
+
+
+def test_find_marker_conflicts(tmp_path: Path):
+    terms, names = _marker_setup(tmp_path)
+    found = {
+        (c.cl_id, c.detail): c.suggestion
+        for c in ce.find_marker_conflicts(terms, ce.ancestors(terms), names)
+    }
+    # 1. Label and definition against the term's own axiom.
+    assert found[("CL:0002044", 'label "Kit-positive" vs PR:000002065 negative')] == (
+        "own axiom: lacks_plasma_membrane_part PR:000002065 "
+        "mast/stem cell growth factor receptor"
+    )
+    assert ("CL:0002044", 'definition "Kit-positive" vs PR:000002065 negative') in found
+    # 2. Label against definition (IgG has no PR term, so only this catches it).
+    key = ("CL:0002123", 'label "IgG-negative" vs definition "IgG-positive"')
+    assert found[key] == "the label and definition disagree"
+    # 3. Own axiom against an ancestor's.
+    assert found[("CL:0002466", "PR:000001013 low vs high on CL:0000990")] == (
+        "own axiom: has low plasma membrane amount PR:000001013 integrin alpha-X; "
+        "axiom on CL:0000990 conventional dendritic cell: "
+        "has high plasma membrane amount PR:000001013 integrin alpha-X"
+    )
+    # Text that agrees with one related axiom ("CD11c-low" vs its own low axiom),
+    # compatible senses ("bright" vs "has plasma membrane part") and markers of
+    # other cells ("to Kit-negative T cells") are not flagged.
+    assert not any("CD11c-low" in d for _, d in found)
+    assert not any("CD8-alpha" in d for _, d in found)
+    assert not any("Kit-negative" in d for _, d in found)
+    assert len(found) == 4
+
+
+def test_run_checks_and_main_include_marker_conflicts(tmp_path: Path):
+    terms, names = _marker_setup(tmp_path)
+    cands = ce.run_checks(terms, set(), None, names)
+    markers = [c for c in cands if c.kind == "marker_conflict"]
+    assert len(markers) == 4
+    # All three fixture terms sit under CL:0000738 leukocyte.
+    assert all(c.immune for c in markers)
+    without = ce.run_checks(ce.parse_owl(_MARKER_OWL.splitlines()), set(), None)
+    assert all(c.kind != "marker_conflict" for c in without)
+
+    owl = tmp_path / "cl-edit.owl"
+    owl.write_text(_MARKER_OWL, encoding="utf-8")
+    out = tmp_path / "cands.tsv"
+    args = ["--owl", str(owl), "--no-download", "--offline", "--out", str(out)]
+    args += ["--ledger", str(tmp_path / "ledger.tsv")]
+    assert ce.main([*args, "--pro-tsv", str(tmp_path / "cl_pro.tsv")]) == 0
+    assert out.read_text(encoding="utf-8").count("marker_conflict") == 4
+    # Without the marker table the marker check is skipped, not an error.
+    assert ce.main([*args, "--pro-tsv", str(tmp_path / "nope.tsv")]) == 0
+    assert "marker_conflict" not in out.read_text(encoding="utf-8")
