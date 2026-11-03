@@ -275,10 +275,13 @@ exact ontology labels via OLS4 — prefer it for term resolution.
   `Alzion_G_717` branch only, as small, clearly labelled commits with the CI
   checks run first. Never creates new branches and never merges into `main`.
   See [SKILL.md](.claude/skills/soulcap-git-workflow/SKILL.md).
-- **`cl-error-check`**: find 2 or 3 verified errors in CL definitions
-  (wrong, nonexistent or one-digit-off definition PMIDs; typos) from
-  `soulcap-cl-error-check` candidates, write them up in
-  `docs/cl_error_check_<YYYY-MM>.md` for Dr. Diehl, log every candidate in
+- **`cl-error-check`**: find up to 5 verified immune cell errors and 5
+  other CL errors per run (wrong, nonexistent or one-digit-off definition
+  PMIDs; typos; definitions that disagree with the hierarchy) from
+  `soulcap-cl-error-check` candidates, write them up for Dr. Diehl in
+  `docs/immune_cell_error_check_<YYYY-MM>.md` (terms under
+  `CL:0000738 leukocyte`, numbered I1...) and
+  `docs/cl_error_check_<YYYY-MM>.md` (the rest, E1...), log every candidate in
   `reports/cl_error_check_ledger.tsv`, add an item to the decisions doc and
   push to `Alzion_G_717`. Runs as a cloud routine every other Saturday at
   1 p.m. New York time; never files with CL itself. See
