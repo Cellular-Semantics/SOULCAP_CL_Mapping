@@ -32,8 +32,8 @@ written up in their own document.
 
 Every row is a *candidate*, not a finding. The ``cl-error-check`` skill
 verifies each one (OLS4, PubMed, Europe PMC, existing CL issues) before it
-goes in ``docs/cl_error_check_<YYYY-MM>.md`` or, for immune cells,
-``docs/immune_cell_error_check_<YYYY-MM>.md``. Candidates already in
+goes in that run's ``docs/cl_error_check_<YYYY-MM-DD>.md`` or, for immune
+cells, ``docs/immune_cell_error_check_<YYYY-MM-DD>.md``. Candidates already in
 ``reports/cl_error_check_ledger.tsv`` (reported or rejected) are skipped.
 
 Usage::
